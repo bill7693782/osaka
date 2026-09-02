@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#131A22">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>關西五日</title>
 <style>
 :root{--ground:#131A22;--surface:#1B242F;--surface2:#222D3A;--paper:#EDE8DF;--dim:#8A97A6;
@@ -154,7 +157,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 </header>
 <main id="main"></main>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v3</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v7</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -278,6 +281,7 @@ s:[
 {a:"23:10",b:"23:59",t:"🛫 GK057 返台",g:["01:30 抵桃園"]}]},
 split:{label:"分帳",date:"五人"},
 pack:{label:"行李",date:"打包"},
+share:{label:"分享",date:"QR"},
 prep:{label:"準備",date:"行前"}};
 
 var BOOK=[["10/13 二","① 線上買 Pass ×5","開始日填 11/13・10/13 才開賣"],["10/13 二","② 買完立刻劃 Day 1 はるか ×5","WEST-TR"],["10/14 三 09:00","🚨 搶劃 はしだて1號 ×5","全車指定席・週六・五連號"],["10/14 三 09:00","🚨 搶劃 はしだて8號 ×5",""],["10/16 五","電話訂 万正","11/15 18:00 ×5"],["10/17 六 09:00","劃 Day 5 はるか ×5",""],["10/20 二","電話訂 志津香大宮店","11/15 12:25 ×5・要先點好餐"],["11/01 日","網路訂 はり重","11/16 17:45 ×5・問價位"],["11/01 日","網路訂 にし家","11/17 13:30 ×5"],["11/03 二","海遊館 eTicket ×5","同一入館時段"],["11/06 五","Visit Japan Web ×5",""],["11/08 日","電話：奈良觀光案內所","明講「五個 28–32 吋」"],["11/08 日","電話：伊根午餐","11/14 12:05 ×5"],["11/08 日","電話：向井酒造","營業＋庫存＋300ml"],["11/08 日","電話：ニューベイブ","問五人可否訂位"],["11/10 二","鳥貴族 App 訂位","11/13 19:45 ×5"]];
@@ -351,6 +355,7 @@ if(!ST.members||ST.members.length!==5)ST.members=["","","","",""];
 if(!ST.exp)ST.exp=[];
 if(!ST.avatars||ST.avatars.length!==5)ST.avatars=["","","","",""];
 if(ST.album===undefined)ST.album="";
+if(ST.room===undefined)ST.room="";
 ["d1","d2","d3","d4","d5"].forEach(function(k){if(!ST.adhoc[k])ST.adhoc[k]=[];if(!ST.edit[k])ST.edit[k]={};if(!ST.done[k])ST.done[k]={}});
 function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
 function mem(i){return ST.members[i]||("成員"+(i+1))}
@@ -447,6 +452,7 @@ function render(){
  if(cur==='prep')return renderPrep();
  if(cur==='split')return renderSplit();
  if(cur==='pack')return renderPack();
+ if(cur==='share')return renderShare();
  var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=j.getHours()*60+j.getMinutes(),ni=-1;
  if(isT)list.forEach(function(s,i){var A=toMin(s.a),B=toMin(s.b);if(B<A)B+=1440;if(nowM>=A&&nowM<B)ni=i});
  var dn=ST.done[cur]||{},dl=delayOf(cur);
@@ -494,8 +500,9 @@ var wa=wxAlert();
    'UID:kansai-'+cur+'-'+one.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,one.a,0),
    'DTSTART:'+jstStamp(v.dnum,one.a,0),'DTEND:'+jstStamp(v.dnum,one.b,0),
    'SUMMARY:'+icsEsc('🚨 '+one.t),'LOCATION:'+icsEsc(one.q||(one.dir?one.dir[1]:'')),
-   'BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(one.t+'（15 分鐘後）'),
-   'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+   'BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(one.t+'（30 分鐘後）'),'END:VALARM',
+   'BEGIN:VALARM','TRIGGER:-PT10M','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(one.t+'（10 分鐘後）'),'END:VALARM',
+   'END:VEVENT','END:VCALENDAR'].join('\r\n');
   var bl=new Blob([txt],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(bl),a=document.createElement('a');
   a.href=u;a.download='kansai-'+one.id+'.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);
   setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('已產生提醒 ・ 開啟檔案加入行事曆')}});
@@ -578,14 +585,16 @@ function makeICS(k,only){
  list.forEach(function(s,i){
   if(only&&!s.dead)return;
   var st=jstStamp(v.dnum,s.a,0),en=jstStamp(v.dnum,s.b,0);
-  var alarm=s.dead?15:10;
-  ev.push(['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
+  var al=s.dead?[30,10]:[10];
+  var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
    'DTSTART:'+st,'DTEND:'+en,
    'SUMMARY:'+icsEsc((s.dead?'🚨 ':'')+s.t),
    'LOCATION:'+icsEsc(s.q||(s.dir?s.dir[1]:'')),
-   'DESCRIPTION:'+icsEsc((s.g||[]).join(' / ')+(s.dead?'\n※ 這是死線，不能遲到':'')),
-   'BEGIN:VALARM','TRIGGER:-PT'+alarm+'M','ACTION:DISPLAY',
-   'DESCRIPTION:'+icsEsc(s.t+'（'+alarm+' 分鐘後開始）'),'END:VALARM','END:VEVENT'].join('\r\n'))});
+   'DESCRIPTION:'+icsEsc((s.g||[]).join(' / ')+(s.dead?'\n※ 這是死線，不能遲到':''))];
+  al.forEach(function(mn){body=body.concat(['BEGIN:VALARM','TRIGGER:-PT'+mn+'M','ACTION:DISPLAY',
+   'DESCRIPTION:'+icsEsc(s.t+'（'+mn+' 分鐘後開始）'),'END:VALARM'])});
+  body.push('END:VEVENT');
+  ev.push(body.join('\r\n'))});
  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//kansai5//TW','CALSCALE:GREGORIAN','METHOD:PUBLISH',
   'X-WR-CALNAME:'+icsEsc('關西五日 '+v.label)].concat(ev).concat(['END:VCALENDAR']).join('\r\n')}
 
@@ -597,6 +606,212 @@ function dlICS(k,only){
  document.body.appendChild(a);a.click();document.body.removeChild(a);
  setTimeout(function(){URL.revokeObjectURL(url)},4000);
  toast(only?'已產生死線提醒<br><span style="font-weight:400">開啟檔案加入行事曆</span>':'已產生整天行程<br><span style="font-weight:400">開啟檔案加入行事曆</span>')}
+
+
+/* ---- 極簡 QR (Model 2, byte mode, EC-L) ---- */
+var QR=(function(){
+ var EXP=[],LOG=[];(function(){var x=1;for(var i=0;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&256)x^=0x11d}for(var i2=255;i2<512;i2++)EXP[i2]=EXP[i2-255]})();
+ function gmul(a,b){if(!a||!b)return 0;return EXP[(LOG[a]+LOG[b])%255]}
+ function genPoly(n){var p=[1];for(var i=0;i<n;i++){var np=[];for(var j=0;j<=p.length;j++){var v=0;if(j<p.length)v^=p[j];if(j>0)v^=gmul(p[j-1],EXP[i]);np[j]=v}p=np}return p}
+ function rs(data,ecLen){var res=data.slice().concat(new Array(ecLen).fill(0)),g=genPoly(ecLen);
+  for(var i=0;i<data.length;i++){var c=res[i];if(!c)continue;for(var j=0;j<g.length;j++)res[i+j]^=gmul(g[j],c)}
+  return res.slice(data.length)}
+ /* 版本表：ver -> [總碼字, ecPerBlock, 區塊數]（EC-L，單一區塊組，涵蓋 v1..v10） */
+ var VT={1:[26,7,1],2:[44,10,1],3:[70,15,1],4:[100,20,1],5:[134,26,1],6:[172,18,2],7:[196,20,2],8:[242,24,2],9:[292,30,2],10:[346,18,4]};
+ function cap(v){var t=VT[v];return t[0]-t[1]*t[2]}
+ function build(txt){
+  var b=[],i;for(i=0;i<txt.length;i++){var c=txt.charCodeAt(i);
+   if(c<128)b.push(c);else if(c<2048){b.push(192|c>>6,128|c&63)}else{b.push(224|c>>12,128|(c>>6&63),128|c&63)}}
+  var ver=0;for(var v=1;v<=10;v++){var lenBits=(v<10)?8:16;if(4+lenBits+b.length*8<=cap(v)*8){ver=v;break}}
+  if(!ver)return null;
+  var t=VT[ver],total=t[0],ecl=t[1],blocks=t[2],dataLen=cap(ver);
+  var bits=[];function put(val,n){for(var k=n-1;k>=0;k--)bits.push((val>>k)&1)}
+  put(4,4);put(b.length,(ver<10)?8:16);for(i=0;i<b.length;i++)put(b[i],8);
+  var rem=dataLen*8-bits.length;put(0,Math.min(4,rem));
+  while(bits.length%8)bits.push(0);
+  var pads=[236,17],pi=0;while(bits.length/8<dataLen){put(pads[pi++%2],8)}
+  var dc=[];for(i=0;i<bits.length;i+=8){var byte=0;for(var k2=0;k2<8;k2++)byte=(byte<<1)|bits[i+k2];dc.push(byte)}
+  var per=dataLen/blocks,db=[],eb=[];
+  for(i=0;i<blocks;i++){var seg=dc.slice(i*per,(i+1)*per);db.push(seg);eb.push(rs(seg,ecl))}
+  var out=[];for(i=0;i<per;i++)for(var j=0;j<blocks;j++)out.push(db[j][i]);
+  for(i=0;i<ecl;i++)for(var j2=0;j2<blocks;j2++)out.push(eb[j2][i]);
+  return {ver:ver,bytes:out}}
+ function matrix(txt){
+  var r=build(txt);if(!r)return null;
+  var ver=r.ver,n=ver*4+17,m=[],res=[],i,j;
+  for(i=0;i<n;i++){m.push(new Array(n).fill(null));res.push(new Array(n).fill(false))}
+  function fp(x,y){for(i=-1;i<=7;i++)for(j=-1;j<=7;j++){var xx=x+i,yy=y+j;if(xx<0||yy<0||xx>=n||yy>=n)continue;
+   var on=(i>=0&&i<=6&&(j===0||j===6))||(j>=0&&j<=6&&(i===0||i===6))||(i>=2&&i<=4&&j>=2&&j<=4);
+   m[yy][xx]=on?1:0;res[yy][xx]=true}}
+  fp(0,0);fp(n-7,0);fp(0,n-7);
+  for(i=8;i<n-8;i++){var v=(i%2===0)?1:0;if(m[6][i]===null){m[6][i]=v;res[6][i]=true}if(m[i][6]===null){m[i][6]=v;res[i][6]=true}}
+  if(ver>=2){var pos=[6,n-7];for(var a=0;a<pos.length;a++)for(var b2=0;b2<pos.length;b2++){
+   var cx=pos[a],cy=pos[b2];if((cx===6&&cy===6)||(cx===6&&cy===n-7)||(cx===n-7&&cy===6))continue;
+   for(i=-2;i<=2;i++)for(j=-2;j<=2;j++){var on2=(Math.abs(i)===2||Math.abs(j)===2||(i===0&&j===0));
+    m[cy+j][cx+i]=on2?1:0;res[cy+j][cx+i]=true}}}
+  for(i=0;i<9;i++){if(m[8][i]===null){m[8][i]=0;res[8][i]=true}if(m[i][8]===null){m[i][8]=0;res[i][8]=true}}
+  for(i=0;i<8;i++){if(m[8][n-1-i]===null){m[8][n-1-i]=0;res[8][n-1-i]=true}if(m[n-1-i][8]===null){m[n-1-i][8]=0;res[n-1-i][8]=true}}
+  m[n-8][8]=1;res[n-8][8]=true;
+  var bytes=r.bytes,bi=0,bit=7,up=true,col=n-1;
+  while(col>0){if(col===6)col--;
+   for(var rowi=0;rowi<n;rowi++){var y=up?(n-1-rowi):rowi;
+    for(var c2=0;c2<2;c2++){var x=col-c2;if(res[y][x])continue;
+     var dv=0;if(bi<bytes.length)dv=(bytes[bi]>>bit)&1;
+     if((y+x)%2===0)dv^=1;
+     m[y][x]=dv;bit--;if(bit<0){bit=7;bi++}}}
+   up=!up;col-=2}
+  var fmt=(1<<3)|0;/* EC-L=01, mask0=000 → 01000 */
+  var f=0x0<<0;var data=(1<<13);/* 直接用查表 */
+  var FMT={0:0x77c4};var bitsF=0x77c4;
+  for(i=0;i<15;i++){var v2=(bitsF>>i)&1;
+   if(i<6)m[i][8]=v2;else if(i<8)m[i+1][8]=v2;else if(i===8)m[8][7]=v2;else m[8][14-i]=v2;
+   if(i<8)m[8][n-1-i]=v2;else m[n-15+i][8]=v2}
+  for(i=0;i<n;i++)for(j=0;j<n;j++)if(m[i][j]===null)m[i][j]=0;
+  return m}
+ return {svg:function(txt,px){var m=matrix(txt);if(!m)return '';
+  var n=m.length,q=4,S=n+q*2,sc=(px||280)/S,d='';
+  for(var y=0;y<n;y++)for(var x=0;x<n;x++)if(m[y][x])d+='M'+(x+q)+' '+(y+q)+'h1v1h-1z';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+px+'" height="'+px+'" viewBox="0 0 '+S+' '+S+'" shape-rendering="crispEdges">'+
+   '<rect width="'+S+'" height="'+S+'" fill="#EDE8DF"/><path d="'+d+'" fill="#131A22"/></svg>'}}
+})();
+
+function renderShare(){
+ var url=location.href.split('?')[0].split('#')[0];
+ var q='';try{q=QR.svg(url,260)}catch(e){q=''}
+ var h='<h2 class="sec">分享給另外四個人</h2>';
+ h+='<div class="note">讓他們用手機相機掃這個碼，就會直接開啟這個 App。<br>開啟後按<b>分享 → 加入主畫面</b>，就有 icon 了。</div>';
+ h+='<div style="text-align:center;padding:18px 0">'+(q||'<div class="note">此環境無法產生 QR</div>')+'</div>';
+ h+='<div class="note" style="word-break:break-all"><b>網址</b><br><span style="color:var(--cyan)">'+url+'</span>'+
+    '<div class="tags" style="margin-top:9px"><button class="lk map" id="cpurl">複製網址</button>'+
+    '<button class="lk web" id="shurl">用系統分享</button></div></div>';
+ h+='<h2 class="sec">離線狀態</h2><div id="swbox"></div>';
+ h+='<h2 class="sec">給組員的一段話</h2><div class="note" id="msgbox" style="word-break:break-all"></div>'+
+    '<div class="tags"><button class="lk map" id="cpmsg">複製這段話貼到群組</button></div>';
+ main.innerHTML=h;
+ var msg='關西五日行程 App（五人共用）\n'+url+'\n\n打開後按「分享→加入主畫面」，就能像 App 一樣用。\n離線也能開，地圖、路線、行事曆提醒都在裡面。\n有問題看「準備」分頁。';
+ document.getElementById('msgbox').textContent=msg;
+ function cp(t,ok){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast(ok)})['catch'](function(){toast('複製失敗')});
+  else{var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(ok)}catch(e){toast('複製失敗')}document.body.removeChild(ta)}}
+ document.getElementById('cpurl').onclick=function(){cp(url,'已複製網址')};
+ document.getElementById('cpmsg').onclick=function(){cp(msg,'已複製，貼到群組')};
+ document.getElementById('shurl').onclick=function(){
+  if(navigator.share)navigator.share({title:'關西五日行程',text:'五人共用行程 App',url:url})['catch'](function(){});
+  else cp(url,'此裝置不支援系統分享，已複製網址')};
+ var sb=document.getElementById('swbox');
+ if(location.protocol==='file:')sb.innerHTML='<div class="store off">目前是本機檔案，離線快取無法啟用<br>上傳到網站後才會生效</div>';
+ else if(!('serviceWorker' in navigator))sb.innerHTML='<div class="store off">此瀏覽器不支援離線快取</div>';
+ else navigator.serviceWorker.getRegistration().then(function(r){
+  sb.innerHTML=r?'<div class="store on">✅ 離線快取已啟用<br><span style="font-weight:400">飛航模式、地下鐵、訊號差的地方都能開</span></div>'
+                :'<div class="store off">離線快取尚未就緒 ・ 重新整理一次頁面</div>'});
+ window.scrollTo(0,0)}
+
+
+
+/* ---- 全程死線一次匯入 ---- */
+function allDeadICS(){
+ var ev=[];
+ ['d1','d2','d3','d4','d5'].forEach(function(k){
+  var v=D[k];slotsOf(k).forEach(function(s){
+   if(!s.dead)return;
+   var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
+    'DTSTART:'+jstStamp(v.dnum,s.a,0),'DTEND:'+jstStamp(v.dnum,s.b,0),
+    'SUMMARY:'+icsEsc('🚨 '+v.label+' '+s.t),
+    'LOCATION:'+icsEsc(s.q||(s.dir?s.dir[1]:'')),
+    'DESCRIPTION:'+icsEsc('這是死線，不能遲到')];
+   [30,10].forEach(function(mn){body=body.concat(['BEGIN:VALARM','TRIGGER:-PT'+mn+'M','ACTION:DISPLAY',
+    'DESCRIPTION:'+icsEsc(s.t+'（'+mn+' 分鐘後）'),'END:VALARM'])});
+   body.push('END:VEVENT');ev.push(body.join('\r\n'))})});
+ var txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//kansai5//TW','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+  'X-WR-CALNAME:關西五日 死線'].concat(ev).concat(['END:VCALENDAR']).join('\r\n');
+ var bl=new Blob([txt],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(bl),a=document.createElement('a');
+ a.href=u;a.download='kansai-all-deadlines.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(u)},4000);
+ toast('已產生全程死線<br><span style="font-weight:400">開啟檔案加入行事曆</span>')}
+
+function alarmList(){
+ var out=[];
+ ['d1','d2','d3','d4','d5'].forEach(function(k){var v=D[k];
+  slotsOf(k).forEach(function(s){if(s.dead)out.push({d:v.dnum,dl:v.label,t:s.a,n:s.t})})});
+ return out}
+
+
+/* ---- 即時同步房間（jsonblob，免帳號） ---- */
+var JB='https://jsonblob.com/api/jsonBlob';
+var SYNCING=false,LASTPULL=0;
+function roomPayload(){return {v:1,members:ST.members,exp:ST.exp,at:Date.now()}}
+function mergeRoom(o){
+ if(!o||!o.exp)return 0;
+ var have={};ST.exp.forEach(function(x){if(x.id)have[x.id]=1});
+ var n=0;o.exp.forEach(function(x){if(x&&x.id&&!have[x.id]){ST.exp.push(x);n++}});
+ if(o.members)for(var i=0;i<5;i++){if(!ST.members[i]&&o.members[i])ST.members[i]=o.members[i]}
+ if(n)save();return n}
+function roomCreate(cb){
+ fetch(JB,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+  body:JSON.stringify(roomPayload())}).then(function(r){
+   var loc=r.headers.get('Location')||r.headers.get('location');
+   if(!loc)throw new Error('no-location');
+   var id=loc.split('/').pop();ST.room=id;save();cb(null,id)})
+ .catch(function(e){cb(e)})}
+function roomPush(cb){
+ if(!ST.room)return cb&&cb('no-room');
+ fetch(JB+'/'+ST.room,{method:'PUT',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify(roomPayload())}).then(function(r){cb&&cb(r.ok?null:'push-fail')})
+ .catch(function(){cb&&cb('offline')})}
+function roomPull(cb){
+ if(!ST.room)return cb&&cb('no-room',0);
+ fetch(JB+'/'+ST.room,{headers:{'Accept':'application/json'}}).then(function(r){return r.json()})
+ .then(function(o){var n=mergeRoom(o);LASTPULL=Date.now();cb&&cb(null,n)})
+ .catch(function(){cb&&cb('offline',0)})}
+function roomSync(silent){
+ if(!ST.room||SYNCING)return;SYNCING=true;
+ roomPull(function(e,n){
+  if(e){SYNCING=false;if(!silent)toast('同步失敗 ・ 檢查網路');return}
+  roomPush(function(){SYNCING=false;
+   if(cur==='split')renderSplit();
+   if(!silent)toast(n?('已同步 ・ 收到 '+n+' 筆新紀錄'):'已同步 ・ 沒有新紀錄')})})}
+setInterval(function(){if(ST.room&&cur==='split')roomSync(true)},20000);
+
+/* ---- 分帳同步碼 ---- */
+function b64e(str){return btoa(unescape(encodeURIComponent(str))).replace(/=+$/,'')}
+function b64d(str){try{return decodeURIComponent(escape(atob(str)))}catch(e){return null}}
+function ledgerCode(){
+ var m=ST.members.map(function(x){return (x||'').replace(/[|;,]/g,'')}).join(',');
+ var e=ST.exp.map(function(x){return [x.id||'',x.amt,x.by,x.who.join('.'),(x.note||'').replace(/[|;,]/g,' ')].join(',')}).join(';');
+ return 'K5'+b64e(m+'|'+e)}
+function ledgerImport(code){
+ code=(code||'').trim();
+ if(code.indexOf('K5')!==0)return {ok:false,msg:'這不是分帳同步碼'};
+ var raw=b64d(code.slice(2));if(raw===null)return {ok:false,msg:'同步碼壞了或不完整'};
+ var parts=raw.split('|'),mm=parts[0].split(','),ee=(parts[1]||'').split(';');
+ var have={};ST.exp.forEach(function(x){if(x.id)have[x.id]=1});
+ var added=0;
+ ee.forEach(function(row){if(!row)return;var f=row.split(',');
+  if(f.length<4)return;var id=f[0];if(!id||have[id])return;
+  ST.exp.push({id:id,amt:parseInt(f[1],10)||0,by:parseInt(f[2],10)||0,
+   who:(f[3]||'').split('.').filter(function(x){return x!==''}).map(Number),note:f.slice(4).join(',')||''});
+  added++});
+ for(var i=0;i<5;i++){if(!ST.members[i]&&mm[i])ST.members[i]=mm[i]}
+ save();return {ok:true,msg:'已合併 '+added+' 筆（重複的自動略過）'}}
+
+/* ---- 前景死線提醒 ---- */
+var NOTIFIED={};
+function notifyOK(){return ('Notification' in window)&&Notification.permission==='granted'}
+function askNotify(){
+ if(!('Notification' in window))return toast('此瀏覽器不支援通知');
+ if(Notification.permission==='granted')return toast('已經開啟了');
+ Notification.requestPermission().then(function(p){
+  if(p==='granted'){toast('已開啟 ・ App 開著時死線前 15 分鐘會提醒');checkNotify()}
+  else toast('你拒絕了通知權限')})}
+function checkNotify(){
+ if(!notifyOK())return;
+ var tk=todayKey();if(!tk)return;
+ var j=jstNow(),nowM=j.getHours()*60+j.getMinutes(),list=slotsOf(tk);
+ list.forEach(function(s){
+  if(!s.dead)return;var key=tk+':'+s.id,d=toMin(s.a)-nowM;
+  if(d<=15&&d>0&&!NOTIFIED[key]){NOTIFIED[key]=1;
+   try{var n=new Notification('🚨 '+d+' 分鐘後：'+s.t,{body:D[tk].label+' ・ '+s.a+' 開始 ・ 這是死線',tag:key,requireInteraction:false});
+    if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}}})}
+setInterval(checkNotify,60000);
 
 /* ---------- 分帳 ---------- */
 function renderSplit(){
@@ -620,6 +835,21 @@ function renderSplit(){
   '<div class="row"><input id="eamt" inputmode="numeric" placeholder="金額（日圓）"></div>'+
   '<div class="row"><input id="enote" placeholder="項目，例如 奈良寄物"></div>'+
   '<button class="go" id="eadd">記下來</button></div>';
+ h+='<h2 class="sec">即時同步房間</h2>';
+ if(ST.room){
+  h+='<div class="store on" style="margin-bottom:10px">✅ 已加入房間 <span class="mono">'+ST.room.slice(-8)+'</span>'+
+     (LASTPULL?'<br><span style="font-weight:400">最後同步 '+new Date(LASTPULL).toLocaleTimeString('zh-TW',{hour:"2-digit",minute:"2-digit"})+'</span>':'')+'</div>';
+  h+='<div class="note">每 20 秒自動同步一次（停在這一頁時）。記完帳按「立即同步」最保險。'+
+     '<div class="tags" style="margin-top:9px"><button class="lk go" id="rsync">立即同步</button>'+
+     '<button class="lk map" id="rshare">分享房間</button><button class="lk rm" id="rleave">離開房間</button></div></div>'}
+ else{
+  h+='<div class="note">建立房間後，五個人的分帳會<b>自動互相同步</b>。<br>'+
+     '<span style="color:var(--dim)">用免帳號的公開儲存服務，只有拿到房號的人看得到。不要放敏感資料。</span>'+
+     '<div class="tags" style="margin-top:9px"><button class="lk go" id="rnew">建立房間</button>'+
+     '<button class="lk map" id="rjoin">加入房間</button></div></div>'}
+ h+='<h2 class="sec">離線同步碼（備援）</h2>';
+ h+='<div class="note">記帳的人按「產生同步碼」，其他人掃 QR 或貼上代碼就會<b>合併</b>進自己的 App。<br>重複的紀錄會自動略過，不用怕按兩次。<br><span style="color:var(--dim)">不經過任何伺服器，資料不外流。</span></div>';
+ h+='<div class="tags" style="margin-bottom:12px"><button class="lk map" id="mkcode">產生同步碼</button><button class="lk web" id="imcode">貼上別人的碼</button></div><div id="codebox"></div>';
  h+='<h2 class="sec">明細</h2>';
  h+=ST.exp.length?ST.exp.map(function(e,i){
   return '<div class="exp"><span class="l">'+(e.note||'—')+'<small>'+mem(e.by)+' 付 ・ '+(e.who.length&&e.who.length<5?e.who.map(mem).join('、')+' 分攤':'五人均分')+'</small></span>'+
@@ -633,9 +863,39 @@ function renderSplit(){
   var by=+main.querySelector('input[name=by]:checked').value;
   var who=[].filter.call(main.querySelectorAll('#wsh input'),function(c){return c.checked}).map(function(c){return +c.value});
   if(!who.length)who=[0,1,2,3,4];
-  ST.exp.push({amt:amt,by:by,who:who,note:document.getElementById('enote').value.trim()});
-  save();renderSplit();toast('已記錄')};
+  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:amt,by:by,who:who,note:document.getElementById('enote').value.trim()});
+  save();renderSplit();toast('已記錄');if(ST.room)roomSync(true)};
  [].forEach.call(main.querySelectorAll('[data-x]'),function(b){b.onclick=function(){ST.exp.splice(+b.dataset.x,1);save();renderSplit()}});
+ var rn=document.getElementById('rnew');
+ if(rn)rn.onclick=function(){toast('建立中…');roomCreate(function(e,id){
+  if(e)return toast('建立失敗 ・ 改用下面的離線同步碼');
+  renderSplit();toast('房間已建立 ・ 把房號分享給其他人')})};
+ var rj=document.getElementById('rjoin');
+ if(rj)rj.onclick=function(){var id=prompt('貼上房號');if(!id)return;
+  ST.room=id.trim().split('/').pop();save();toast('加入中…');
+  roomPull(function(e,n){if(e){ST.room='';save();renderSplit();return toast('房號無效或沒網路')}
+   renderSplit();toast('已加入 ・ 收到 '+n+' 筆紀錄')})};
+ var rs=document.getElementById('rsync');
+ if(rs)rs.onclick=function(){toast('同步中…');roomSync(false)};
+ var rl=document.getElementById('rleave');
+ if(rl)rl.onclick=function(){if(confirm('離開房間？本機紀錄會保留。')){ST.room='';save();renderSplit()}};
+ var rsh=document.getElementById('rshare');
+ if(rsh)rsh.onclick=function(){var t='關西五日分帳房號：'+ST.room+'\n在 App 的「分帳」頁按「加入房間」貼上即可。';
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast('已複製房號 ・ 貼到群組')});
+  else toast(ST.room)};
+ document.getElementById('mkcode').onclick=function(){
+  var code=ledgerCode(),box=document.getElementById('codebox'),q='';
+  if(code.length<250){try{q=QR.svg(code,240)}catch(e){q=''}}
+  box.innerHTML='<div class="form" style="border-style:solid">'+
+   (q?'<div style="text-align:center;padding:6px 0 12px">'+q+'</div>':'<div class="hint" style="margin:0 0 9px">紀錄較多，QR 放不下 —— 請用複製代碼。</div>')+
+   '<div style="word-break:break-all;font-size:11.5px;color:var(--dim);background:var(--ground);padding:9px;border-radius:3px;max-height:110px;overflow:auto">'+code+'</div>'+
+   '<div class="tags" style="margin-top:9px"><button class="lk map" id="cpcode">複製代碼</button></div></div>';
+  document.getElementById('cpcode').onclick=function(){
+   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(function(){toast('已複製 ・ 貼到群組')});
+   else toast('請長按上面的代碼手動複製')}};
+ document.getElementById('imcode').onclick=function(){
+  var c=prompt('貼上別人的分帳同步碼');if(!c)return;
+  var r=ledgerImport(c);toast(r.msg);if(r.ok)renderSplit()};
  window.scrollTo(0,0)}
 
 function renderPack(){
@@ -672,6 +932,19 @@ function renderPrep(){
    return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[1]+'<small>'+x[0]+(x[2]?' ・ '+x[2]:'')+'</small></span></label>'}).join('')+
   '<h2 class="sec">電話簿</h2>'+
   TEL.map(function(t){return '<a class="tel" href="tel:'+t[2].replace(/-/g,'')+'"><span class="n">'+t[0]+'<small>'+t[1]+'</small></span><span class="num mono">'+t[2]+'</span></a>'}).join('')+
+  '<h2 class="sec">死線提醒（鎖屏也會響）</h2>'+
+  '<div class="note" style="border-left-color:var(--moss)"><b>🥇 行事曆提醒 —— 最可靠，這就是鎖屏提醒</b><br>'+
+  '死線會設<b>兩段提醒：前 30 分鐘 ＋ 前 10 分鐘</b>。鎖屏會跳、會出聲，<b>離線也會響</b>，不用開著 App。'+
+  '<div class="tags" style="margin-top:9px"><button class="lk go" id="allics">⏰ 一次匯入全程死線</button></div>'+
+  '<div class="hint">五個人各自匯入一次就好。單日版在每天頁面上。</div></div>'+
+  '<div class="note"><b>🥈 手機內建鬧鐘 —— 最兇的一層</b><br>'+
+  'iOS 的鬧鐘<b>連靜音模式都會響</b>。下面是全程死線時間，複製後手動設進鬧鐘 App。'+
+  '<div class="tags" style="margin-top:9px"><button class="lk map" id="cpalarm">複製鬧鐘清單</button><button class="lk web" id="shalarm">看清單</button></div></div>'+
+  '<div id="alarmbox"></div>'+
+  '<div class="note"><b>🥉 App 內通知 —— 加分用</b><br>'+
+  'App 開著時死線前 15 分鐘跳通知＋震動。<span style="color:var(--dim)">鎖屏久了不保證，所以只當備援。</span>'+
+  '<div class="tags" style="margin-top:9px"><button class="lk map" id="asknoti">'+
+  (('Notification' in window)&&Notification.permission==='granted'?'✅ 已開啟':'開啟通知權限')+'</button></div></div>'+
   '<h2 class="sec">共享相簿</h2>'+
   '<div class="note"><b>'+(ST.album?'已設定':'尚未設定')+'</b><br>'+(ST.album?'<span style="word-break:break-all;color:var(--cyan)">'+ST.album+'</span>':'貼上 LINE 相簿或 Google 相簿的共享連結，之後每天頁面上的「📷 共享相簿」就能一鍵開啟。')+
   '<div class="tags" style="margin-top:9px"><button class="lk map" id="setalb">'+(ST.album?'更改連結':'設定連結')+'</button>'+(ST.album?'<button class="lk rm" id="clralb">清除</button>':'')+'</div></div>'+
@@ -681,6 +954,23 @@ function renderPrep(){
    return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span></label>'}).join('');
  [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
   cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save()}});
+ var an=document.getElementById('asknoti');
+ if(an)an.onclick=askNotify;
+ var ai=document.getElementById('allics');
+ if(ai)ai.onclick=allDeadICS;
+ var al=alarmList();
+ var atxt='關西五日 死線鬧鐘\n（時間為日本時間，建議提前 15–30 分鐘設）\n\n'+
+  al.map(function(x){return '11/'+x.d+'  '+x.t+'  '+x.n}).join('\n');
+ var ca=document.getElementById('cpalarm');
+ if(ca)ca.onclick=function(){
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(atxt).then(function(){toast('已複製 '+al.length+' 個死線時間')});
+  else toast('請用「看清單」手動選取')};
+ var sa2=document.getElementById('shalarm');
+ if(sa2)sa2.onclick=function(){var bx=document.getElementById('alarmbox');
+  if(bx.innerHTML){bx.innerHTML='';return}
+  bx.innerHTML='<div class="form" style="border-style:solid">'+
+   al.map(function(x){return '<div class="bal"><span class="p mono">11/'+x.d+' '+x.t+'</span><span style="font-size:13px;text-align:right">'+x.n+'</span></div>'}).join('')+
+   '<div class="hint">共 '+al.length+' 個死線。<b>Day 2 那個 14:31 建議設提前 30 分鐘</b> —— 那時你們正在走 1.5 公里海邊路。</div></div>'};
  var sa=document.getElementById('setalb');
  if(sa)sa.onclick=function(){var u=prompt('貼上共享相簿連結',ST.album||'');
   if(u&&/^https?:\/\//.test(u)){ST.album=u;save();renderPrep();toast('已設定')}else if(u)toast('請貼完整網址')};
@@ -692,6 +982,9 @@ document.getElementById('fstore').textContent=CAN?'儲存已啟用':'下載後�
 setInterval(updLive,30000);
 var t0=todayKey();if(t0)cur=t0;
 render();fetchWX();
+if('serviceWorker' in navigator && location.protocol!=='file:'){
+ window.addEventListener('load',function(){
+  navigator.serviceWorker.register('sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
