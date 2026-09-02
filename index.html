@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#131A22">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
@@ -157,7 +158,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 </header>
 <main id="main"></main>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v7</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v9</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -361,7 +362,7 @@ function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}
 function mem(i){return ST.members[i]||("成員"+(i+1))}
 
 var nav=document.getElementById('nav'),main=document.getElementById('main'),toastEl=document.getElementById('toast'),live=document.getElementById('live');
-var cur='d1',editing=null,WX={};
+var cur='d1',editing=null,WX={},WXFAR=0;
 function jstNow(){var n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+9*3600000)}
 function toMin(t){var p=t.split(':');return (+p[0])*60+(+p[1])}
 function m2s(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
@@ -389,13 +390,18 @@ function delayOf(k){var dn=ST.done[k]||{},list=slotsOf(k),last=null;
  return {min:d,slot:last.s}}
 
 function fetchWX(){
+ /* 免費預報只到未來約 16 天，太遠就別打，否則伺服器回 400 */
+ var j=jstNow(),start=new Date(2026,10,13);
+ var days=Math.round((start-new Date(j.getFullYear(),j.getMonth(),j.getDate()))/86400000);
+ if(days>15){WXFAR=days;return}
+ WXFAR=0;
  var pts={};Object.keys(D).forEach(function(k){if(D[k].lat)pts[D[k].lat+','+D[k].lon]=1});
  Object.keys(pts).forEach(function(p){
   var c=p.split(',');
   var u="https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+
    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date=2026-11-13&end_date=2026-11-17";
-  fetch(u).then(function(r){return r.json()}).then(function(j){
-   if(!j.daily)return;WX[p]=j.daily;if(D[cur]&&D[cur].lat)render()}).catch(function(){})})}
+  fetch(u).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(o){
+   if(!o.daily)return;WX[p]=o.daily;if(D[cur]&&D[cur].lat)render()}).catch(function(){})})}
 
 function wxFor(k){var v=D[k];if(!v.lat)return null;var w=WX[v.lat+','+v.lon];if(!w)return null;
  var d="2026-11-"+pad(v.dnum),i=w.time.indexOf(d);if(i<0)return null;
@@ -463,7 +469,7 @@ var wa=wxAlert();
  var h=wa;
  h+='<div class="crux"><div class="lab">今日最硬</div><div class="t mono">'+v.crux.t+'</div><div class="w">'+v.crux.w+'</div><div class="n">'+v.crux.n+'</div></div>';
  if(w)h+='<div class="wx"><span class="ic">'+w.ic+'</span><span class="tx"><b>'+w.txt+' '+w.hi+'° / '+w.lo+'°</b><small>'+v.wxc+' ・ 降雨機率 '+(w.pop==null?'—':w.pop+'%')+'</small></span></div>';
- else h+='<div class="wx"><span class="ic">🌡️</span><span class="tx"><b>天氣預報尚未取得</b><small>需要網路，且預報通常只涵蓋未來約 16 天</small></span></div>';
+ else h+='<div class="wx"><span class="ic">🌡️</span><span class="tx"><b>'+(WXFAR?('還有 '+WXFAR+' 天，預報尚未開放'):'天氣預報尚未取得')+'</b><small>'+(WXFAR?'免費預報只涵蓋未來約 16 天，接近日期會自動顯示':'需要網路')+'</small></span></div>';
  h+='<div class="bar">'+(isT?'<button id="jump">跳到現在</button>':'')+'<button id="album">📷 共享相簿</button><button id="addon" class="pri">＋ 新增</button><button id="copy">複製這天</button>'+
    '<button id="ics1">⏰ 死線加入行事曆</button><button id="ics2">📅 整天加入行事曆</button>'+
    ((changed||Object.keys(dn).length)?'<button id="reset">還原</button>':'')+'</div><div id="formwrap"></div>';
@@ -735,41 +741,48 @@ function alarmList(){
  return out}
 
 
-/* ---- 即時同步房間（jsonblob，免帳號） ---- */
-var JB='https://jsonblob.com/api/jsonBlob';
-var SYNCING=false,LASTPULL=0;
+/* ---- 即時同步房間（Firebase Realtime Database） ---- */
+/* 在下面填入你的 Firebase databaseURL，例如：
+   var FB_DB="https://xxxx-default-rtdb.asia-southeast1.firebasedatabase.app";
+   沒填就自動隱藏即時同步，只用離線同步碼。 */
+var FB_DB="https://kansai-a631b-default-rtdb.asia-southeast1.firebasedatabase.app";
+
+var SYNCING=false,LASTPULL=0,FBPOLL=null;
+function fbReady(){return !!FB_DB && !!ST.room}
+function fbURL(){return FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'.json'}
 function roomPayload(){return {v:1,members:ST.members,exp:ST.exp,at:Date.now()}}
 function mergeRoom(o){
- if(!o||!o.exp)return 0;
+ if(!o)return 0;
  var have={};ST.exp.forEach(function(x){if(x.id)have[x.id]=1});
- var n=0;o.exp.forEach(function(x){if(x&&x.id&&!have[x.id]){ST.exp.push(x);n++}});
+ var n=0,list=o.exp||[];
+ if(!Array.isArray(list))list=Object.keys(list).map(function(k){return list[k]});
+ list.forEach(function(x){if(x&&x.id&&!have[x.id]){ST.exp.push(x);n++}});
  if(o.members)for(var i=0;i<5;i++){if(!ST.members[i]&&o.members[i])ST.members[i]=o.members[i]}
  if(n)save();return n}
 function roomCreate(cb){
- fetch(JB,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
-  body:JSON.stringify(roomPayload())}).then(function(r){
-   var loc=r.headers.get('Location')||r.headers.get('location');
-   if(!loc)throw new Error('no-location');
-   var id=loc.split('/').pop();ST.room=id;save();cb(null,id)})
- .catch(function(e){cb(e)})}
+ if(!FB_DB)return cb('no-config');
+ var id=Math.random().toString(36).slice(2,6)+Math.random().toString(36).slice(2,6);
+ ST.room=id;
+ fetch(fbURL(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(roomPayload())})
+ .then(function(r){if(!r.ok)throw 0;save();cb(null,id)})
+ .catch(function(){ST.room='';cb('write-fail')})}
 function roomPush(cb){
- if(!ST.room)return cb&&cb('no-room');
- fetch(JB+'/'+ST.room,{method:'PUT',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify(roomPayload())}).then(function(r){cb&&cb(r.ok?null:'push-fail')})
- .catch(function(){cb&&cb('offline')})}
+ if(!fbReady())return cb&&cb('no-room');
+ fetch(fbURL(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(roomPayload())})
+ .then(function(r){cb&&cb(r.ok?null:'push-fail')}).catch(function(){cb&&cb('offline')})}
 function roomPull(cb){
- if(!ST.room)return cb&&cb('no-room',0);
- fetch(JB+'/'+ST.room,{headers:{'Accept':'application/json'}}).then(function(r){return r.json()})
+ if(!fbReady())return cb&&cb('no-room',0);
+ fetch(fbURL()).then(function(r){if(!r.ok)throw 0;return r.json()})
  .then(function(o){var n=mergeRoom(o);LASTPULL=Date.now();cb&&cb(null,n)})
  .catch(function(){cb&&cb('offline',0)})}
 function roomSync(silent){
- if(!ST.room||SYNCING)return;SYNCING=true;
+ if(!fbReady()||SYNCING)return;SYNCING=true;
  roomPull(function(e,n){
   if(e){SYNCING=false;if(!silent)toast('同步失敗 ・ 檢查網路');return}
   roomPush(function(){SYNCING=false;
    if(cur==='split')renderSplit();
    if(!silent)toast(n?('已同步 ・ 收到 '+n+' 筆新紀錄'):'已同步 ・ 沒有新紀錄')})})}
-setInterval(function(){if(ST.room&&cur==='split')roomSync(true)},20000);
+FBPOLL=setInterval(function(){if(fbReady()&&cur==='split')roomSync(true)},10000);
 
 /* ---- 分帳同步碼 ---- */
 function b64e(str){return btoa(unescape(encodeURIComponent(str))).replace(/=+$/,'')}
@@ -836,7 +849,11 @@ function renderSplit(){
   '<div class="row"><input id="enote" placeholder="項目，例如 奈良寄物"></div>'+
   '<button class="go" id="eadd">記下來</button></div>';
  h+='<h2 class="sec">即時同步房間</h2>';
- if(ST.room){
+ if(!FB_DB){
+  h+='<div class="store off" style="margin-bottom:10px">尚未設定 Firebase —— 即時同步停用中</div>'+
+     '<div class="note">請把 Firebase 的 <b>databaseURL</b> 填進 index.html 第一段的 <span class="mono">FB_DB</span>。<br>'+
+     '<span style="color:var(--dim)">設定完成前，請用下面的「離線同步碼」，功能完全可用。</span></div>'}
+ else if(ST.room){
   h+='<div class="store on" style="margin-bottom:10px">✅ 已加入房間 <span class="mono">'+ST.room.slice(-8)+'</span>'+
      (LASTPULL?'<br><span style="font-weight:400">最後同步 '+new Date(LASTPULL).toLocaleTimeString('zh-TW',{hour:"2-digit",minute:"2-digit"})+'</span>':'')+'</div>';
   h+='<div class="note">每 20 秒自動同步一次（停在這一頁時）。記完帳按「立即同步」最保險。'+
