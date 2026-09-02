@@ -158,7 +158,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 </header>
 <main id="main"></main>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v9</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v12</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -188,24 +188,28 @@ s:[
 {a:"21:05",b:"21:25",t:"🏨 回飯店 Check-in",q:HK}]},
 
 d2:{label:"Day 2",date:"11/14 六",dnum:14,title:"伊根・傘松・觀光船",lat:35.5686,lon:135.1938,wxc:"天橋立",
-crux:{t:"14:31",w:"日出站牌上回程巴士",n:"全程唯一不可失守的死線・緩衝 6 分鐘"},
+crux:{t:"13:10",w:"從海宮離席",n:"散策、遊覽船、傘松、觀光船全部靠這個時間點"},
 s:[
-{a:"08:00",b:"08:25",t:"🚉 京都站 30–33 號月台",g:["買早餐"],q:"京都駅",x:"<ul><li>月台<b>距中央口很遠，預留 25 分</b></li><li>確認有<b>千圓鈔與硬幣</b></li></ul>"},
-{a:"08:38",b:"10:39",t:"🚆 はしだて1號 → 天橋立",g:["全車指定席"],k:"move",dir:["京都駅","天橋立駅","transit"],x:"<ul><li>綾部分離，<b>務必坐對車廂</b></li></ul>",w:[["京都丹後鉄道","https://trains.willer.co.jp/"]]},
-{a:"10:39",b:"11:03",t:"🚏 站前 Buffer 24 分",g:["ATM"],dead:1,q:"天橋立駅",x:"<ul><li>超商 ATM <b>補足現金</b>（進伊根後就沒有了）</li><li>大鈔換千圓鈔</li></ul>"},
-{a:"11:03",b:"11:58",t:"🚌 天橋立 → 伊根（坐到底站）",g:["¥400現金"],k:"move",dir:["天橋立駅","伊根 バス停 京都府与謝郡伊根町","transit"],x:"<ul><li>站牌：天橋立駅前 → <b>ケーブル下</b> → <b>日出</b> → <b>伊根</b></li></ul>",w:[["丹後海陸交通","https://www.tankai.jp/"]]},
-{a:"12:05",b:"12:50",t:"🍜 午餐：伊根海鮮",bk:12,g:["現金"],k:"eat",q:"舟屋日和 伊根",food:"舟屋日和 伊根",x:"<ul><li>舟屋日和／割烹海陸・<b>鰤魚丼</b></li><li class='warn'>排隊 &gt;20 分改買便當，<b>船優先</b></li></ul>"},
-{a:"12:50",b:"13:15",t:"🍶 向井酒造",g:["現金"],q:"向井酒造 伊根",x:"<ul><li><b>伊根滿開</b>・<b>必託運</b>・建議買 300ml</li></ul>"},
-{a:"13:15",b:"13:50",t:"🚶 舟屋散策：伊根 → 日出",g:["1.5km・30分"],dead:1,k:"move",dir:["伊根町観光案内所","伊根湾めぐり遊覧船のりば","walking"],x:"<ul><li class='warn'>13:50 前一定要到日出乘船處</li></ul>"},
-{a:"14:00",b:"14:25",t:"🛥️ 伊根灣遊覽船",g:["¥1000"],dead:1,q:"伊根湾めぐり遊覧船のりば",x:"<ul><li>每小時 0 分、30 分發船</li><li>蝦味先 ¥100 餵海鷗</li></ul>"},
-{a:"14:25",b:"14:31",t:"🚨 日出売店 ＋ 等巴士",g:["緩衝6分"],dead:1,x:"<ul><li class='warn'><b>全程緩衝最薄的一段</b></li><li class='warn'>沒搭上 14:00 那班船就<b>放棄遊覽船</b></li></ul>"},
-{a:"14:31",b:"15:15",t:"🚌 日出 → 天橋立ケーブル下",g:["¥400"],k:"move",dir:["伊根湾めぐり遊覧船のりば","天橋立ケーブル下","transit"]},
-{a:"15:15",b:"15:22",t:"🚨 決策點：看觀光船末班",dead:1,q:"天橋立ケーブル下",x:"<ul><li>≥16:30 照走｜16:00 縮成 25 分</li><li class='warn'>&lt;16:00 → <b>放棄搭船</b></li></ul>"},
-{a:"15:30",b:"16:05",t:"🌲 傘松公園 昇龍觀",g:["纜車¥800"],q:"傘松公園",x:"<ul><li><b>股のぞき</b> → 昇龍觀</li><li>下山吊椅單人座，約好山下集合</li></ul>"},
-{a:"16:30",b:"16:42",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["¥800"],k:"move",dir:["一の宮桟橋 天橋立","天橋立桟橋","transit"]},
-{a:"16:45",b:"17:55",t:"🍱 智恩寺 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'><b>一到站就先買便當</b></li></ul>"},
-{a:"18:09",b:"20:21",t:"🚆 はしだて8號 → 京都",g:["直達"],k:"move",dir:["天橋立駅","京都駅","transit"]},
-{a:"20:30",b:"21:00",t:"🏨 回飯店",q:HK,x:"<ul><li><b>買明早早餐 ×5</b>・大行李收 80%</li></ul>"}]},
+{a:"08:00",b:"08:25",t:"🚉 京都站 30–33 號月台",g:["買早餐","領現金"],q:"京都駅",x:"<ul><li>月台<b>距中央口很遠，預留 25 分</b></li><li class='warn'><b>ATM 領足現金，每人 ¥8,000 以上</b> —— 伊根完全沒有 ATM</li></ul>"},
+{a:"08:38",b:"10:39",t:"🚆 はしだて1號 → 天橋立",g:["全車指定席"],k:"move",dir:["京都駅","天橋立駅","transit"],x:"<ul><li>綾部與まいづる1號分離，<b>務必坐對車廂</b></li><li>車上吃早餐</li></ul>",w:[["京都丹後鉄道","https://trains.willer.co.jp/"]]},
+{a:"10:39",b:"10:52",t:"🎫 丹鐵窗口買周遊券 ×5",g:["¥3,500"],dead:1,q:"天橋立駅",x:"<ul><li class='warn'><b>只做這件事，不要再排 ATM</b></li><li>一個人買五張，其他人先去站牌卡位</li><li>涵蓋：丹海巴士・遊覽船・傘松纜車吊椅・觀光船</li></ul>",w:[["丹後海陸交通","https://www.tankai.jp/"]]},
+{a:"10:52",b:"10:57",t:"🚶 移動至站前 2 號公車牌",k:"move"},
+{a:"10:57",b:"11:55",t:"🚌 天橋立駅前 → 伊根漁協前",g:["周遊券"],k:"move",dir:["天橋立駅","伊根漁協前 バス停 京都府与謝郡伊根町","transit"],x:"<ul><li>站牌順序：天橋立駅前 → <b>ケーブル下</b> → <b>日出</b> → <b>伊根漁協前</b></li><li class='warn'><b>在「伊根漁協前」下車</b>，不要坐到「伊根」（那站要走 15 分）</li><li>五人擠不上 → 分兩批，先到的先去餐廳報到</li></ul>"},
+{a:"11:55",b:"12:00",t:"🚶 伊根漁協前 → 舟屋日和",g:["5分"],k:"move",dir:["伊根漁協前 バス停","京都府与謝郡伊根町字平田593-1","walking"]},
+{a:"12:00",b:"13:10",t:"🍣 午餐：鮨割烹 海宮",bk:12,g:["可刷卡"],dead:1,k:"eat",q:"京都府与謝郡伊根町字平田593-1",food:"鮨割烹 海宮 伊根",x:"<ul><li><b>食べログ 4.07</b>・舟屋日和施設內・窗外一覽伊根灣</li><li>當日伊根漁港現撈・伊根鰤魚</li><li>11:30–14:30（L.O.14:00）・水曜公休・☎0772-32-1710</li><li class='warn'><b>13:10 準時離席，後面全靠這個時間點</b></li></ul>"},
+{a:"13:10",b:"14:20",t:"🚶 舟屋散策 ＋ 向井酒造",g:["2.1km"],k:"move",dir:["京都府与謝郡伊根町字平田593-1","伊根湾めぐり遊覧船のりば","walking"],x:"<ul><li>邊走邊逛就是行程本身，230 間舟屋一路看過去</li><li><b>向井酒造「伊根滿開」</b>：赤米釀造、紅寶石色澤</li><li class='warn'>現金｜<b>必託運</b>｜Day 5 要買獺祭就<b>這裡買 300ml 小瓶</b></li><li class='warn'>14:20 前抵達「日出」乘船處</li></ul>"},
+{a:"14:30",b:"14:55",t:"🛥️ 伊根灣遊覽船",g:["周遊券"],q:"伊根湾めぐり遊覧船のりば",x:"<ul><li><b>每小時 00 分、30 分發船</b>，約 25 分鐘</li><li>蝦味先 ¥100 餵海鷗｜船一開鳥就跟上來，<b>先開好連拍</b></li></ul>"},
+{a:"14:55",b:"15:12",t:"🍢 日出売店 ＋ 等巴士",g:["緩衝17分"],x:"<ul><li>名物<b>焼きちくわ</b></li></ul>"},
+{a:"15:12",b:"15:39",t:"🚌 日出 → 天橋立ケーブル下",g:["周遊券"],k:"move",dir:["伊根湾めぐり遊覧船のりば","天橋立ケーブル下","transit"],x:"<ul><li>前一班 14:46 發車（15:13 抵達）—— 提早完成可搭那班，傘松多 26 分鐘</li></ul>"},
+{a:"15:39",b:"15:45",t:"🚶 步行至府中駅",k:"move"},
+{a:"15:45",b:"15:53",t:"🚡 吊椅上山",g:["周遊券","8分"],x:"<ul><li class='warn'><b>吊椅 11 月只到 16:00</b> → 上山吊椅、下山纜車</li><li>11 月吊椅上很冷，<b>外套先穿好</b></li></ul>"},
+{a:"15:53",b:"16:26",t:"🌲 傘松公園 昇龍觀",g:["33分"],q:"傘松公園",x:"<ul><li><b>股のぞき</b> → 這裡是「昇龍觀／斜め一文字」</li><li>「飛龍觀」在對岸ビューランド，<b>兩邊只能擇一</b></li><li>不上成相寺</li><li class='warn'><b>16:26 必須抵達纜車站</b></li></ul>"},
+{a:"16:30",b:"16:34",t:"🚡 纜車下山",g:["4分"],dead:1,x:"<ul><li class='warn'><b>纜車每小時 00／15／30／45 發車，11 月開到 17:00</b></li></ul>"},
+{a:"16:34",b:"16:42",t:"🚶 纜車站 → 一の宮桟橋",g:["8分"],dead:1,k:"move",dir:["傘松公園ケーブル下","一の宮桟橋 天橋立","walking"],x:"<ul><li class='warn'><b>下纜車直接快走，只有 3 分鐘餘裕</b></li></ul>"},
+{a:"16:45",b:"16:57",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["周遊券","冬季末班"],dead:1,x:"<ul><li class='warn'><b>這是冬季末班船</b></li><li>橫渡沙洲的正解 —— 走要 50～60 分鐘</li><li>靠岸前留意 90 度旋轉的迴旋橋</li><li class='warn'>沒趕上 → <b>就地搭 16:44 巴士</b>（17:11 抵達）<b>或 17:24</b>（17:51 抵達）</li></ul>"},
+{a:"16:57",b:"18:00",t:"⛩️ 站前散策 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'><b>一到就先買便當</b></li><li>丹後花蛤便當／丹後牛燒肉便當・丹後黑豆茶包</li><li>智恩寺・<b>迴旋橋</b>・<b>日本三景碑</b></li><li>改搭巴士（17:11 抵達）→ 只剩 50 分鐘，<b>只買便當</b></li></ul>"},
+{a:"18:09",b:"20:21",t:"🚆 はしだて8號 → 京都",g:["直達"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li>車上吃便當</li></ul>"},
+{a:"20:30",b:"21:00",t:"🏨 回飯店",q:HK,x:"<ul><li>京都站超商<b>買明早早餐 ×5</b></li><li>今晚把大行李收 80%</li></ul>"}]},
 
 d3:{label:"Day 3",date:"11/15 日",dnum:15,title:"東大寺・志津香・藥師寺・鶴橋",lat:34.6851,lon:135.8048,wxc:"奈良",
 crux:{t:"15:50",w:"搭上 JR 奈良 → 天王寺",n:"後面接的是已訂位的万正燒肉"},
@@ -237,7 +241,7 @@ s:[
 {a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",q:"LIFE 大国町店",x:"<ul><li>20:00 後<b>半額戰場</b>・買 Day 4 早餐 ×5</li></ul>"}]},
 
 d4:{label:"Day 4",date:"11/16 一",dnum:16,title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
-crux:{t:"16:30",w:"大阪城天守閣入館截止",n:"票 ¥1,200 含豊臣石垣館"},
+crux:{t:"17:45",w:"はり重 訂位入座",n:"已訂位 5 人・遲到會被取消。大阪城 15:50 就要離場"},
 s:[
 {a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HO,"大国町駅","walking"]},
 {a:"08:15",b:"08:50",t:"🚇 大國町 → 大阪梅田",g:["¥240"],k:"move",dir:["大国町駅","大阪梅田駅","transit"]},
@@ -285,9 +289,9 @@ pack:{label:"行李",date:"打包"},
 share:{label:"分享",date:"QR"},
 prep:{label:"準備",date:"行前"}};
 
-var BOOK=[["10/13 二","① 線上買 Pass ×5","開始日填 11/13・10/13 才開賣"],["10/13 二","② 買完立刻劃 Day 1 はるか ×5","WEST-TR"],["10/14 三 09:00","🚨 搶劃 はしだて1號 ×5","全車指定席・週六・五連號"],["10/14 三 09:00","🚨 搶劃 はしだて8號 ×5",""],["10/16 五","電話訂 万正","11/15 18:00 ×5"],["10/17 六 09:00","劃 Day 5 はるか ×5",""],["10/20 二","電話訂 志津香大宮店","11/15 12:25 ×5・要先點好餐"],["11/01 日","網路訂 はり重","11/16 17:45 ×5・問價位"],["11/01 日","網路訂 にし家","11/17 13:30 ×5"],["11/03 二","海遊館 eTicket ×5","同一入館時段"],["11/06 五","Visit Japan Web ×5",""],["11/08 日","電話：奈良觀光案內所","明講「五個 28–32 吋」"],["11/08 日","電話：伊根午餐","11/14 12:05 ×5"],["11/08 日","電話：向井酒造","營業＋庫存＋300ml"],["11/08 日","電話：ニューベイブ","問五人可否訂位"],["11/10 二","鳥貴族 App 訂位","11/13 19:45 ×5"]];
+var BOOK=[["10/13 二","① 線上買 Pass ×5","開始日填 11/13・10/13 才開賣"],["10/13 二","② 買完立刻劃 Day 1 はるか ×5","WEST-TR"],["10/14 三 09:00","🚨 搶劃 はしだて1號 ×5","全車指定席・週六・五連號"],["10/14 三 09:00","🚨 搶劃 はしだて8號 ×5",""],["10/16 五","電話訂 万正","11/15 18:00 ×5"],["10/17 六 09:00","劃 Day 5 はるか ×5",""],["10/20 二","電話訂 志津香大宮店","11/15 12:25 ×5・要先點好餐"],["11/01 日","網路訂 はり重","11/16 17:45 ×5・問價位"],["11/01 日","網路訂 にし家","11/17 13:30 ×5"],["11/03 二","海遊館 eTicket ×5","同一入館時段"],["11/06 五","Visit Japan Web ×5",""],["11/08 日","電話：奈良觀光案內所","明講「五個 28–32 吋」"],["11/08 日","電話：鮨割烹 海宮","11/14 12:00 ×5 ・0772-32-1710"],["11/08 日","電話：向井酒造","營業＋庫存＋300ml"],["11/08 日","電話：ニューベイブ","問五人可否訂位"],["11/10 二","鳥貴族 App 訂位","11/13 19:45 ×5"]];
 var TEL=[["万正","燒肉・Day 3","090-2592-9687"],["志津香 大宮店","釜飯・Day 3","0742-93-8029"],["ちいかわもぐもぐ本舗","Day 1","075-643-0050"],["藥師寺","Day 3","0742-33-6001"],["木津市場","Day 5","06-6631-1139"],["MONday Apart 京都駅","Day 1–2 住宿","075-353-1922"],["MONday Apart 大阪難波WEST","Day 3–4 住宿","06-6645-1700"],["福太郎","備案・大阪燒","06-6634-2951"],["日本 警察","緊急","110"],["日本 救護・消防","緊急","119"]];
-var CHECK=[["叡電 11/13 實際時刻","官方接近日期才公布"],["丹海巴士 日出站牌通過時刻","Day 2 死線所在"],["天橋立觀光船 11 月末班",""],["傘松纜車 11 月末班",""],["はり重 五人份價位","訂位時一併問"],["奈良案內所可否收 5 個大箱",""],["ニューベイブ 可否訂位",""],["大阪城開館時間","2025/4 起已變更"],["1kuji.com 查 11 月檔期",""]];
+var CHECK=[["叡電 11/13 實際時刻","官方接近日期才公布"],["丹海巴士 11/14 實際時刻","10:57／15:12／16:44／17:24"],["天橋立觀光船 11 月末班",""],["傘松纜車 11 月末班",""],["はり重 五人份價位","訂位時一併問"],["奈良案內所可否收 5 個大箱",""],["ニューベイブ 可否訂位",""],["大阪城開館時間","2025/4 起已變更"],["1kuji.com 查 11 月檔期",""]];
 var HOTELS=[
 {n:"MONday Apart Premium 京都駅",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 "+HK,tel:"075-353-1922",q:HK,note:"京都站步行約 11 分・全室附廚房與洗衣機・2021/12 開業",web:"https://hotel-monday.com/apartment/kyoto/"},
 {n:"MONday Apart Premium 大阪難波 WEST",d:"Day 3–4（11/15、11/16）",addr:HO,tel:"06-6645-1700",q:HO,note:"大國町 7–8 分・なんば 8–9 分・難波八阪神社 5–7 分・木津市場 10 分<br>30–50 ㎡・全室洗衣乾衣機＋調理器具・2024/12 開業<br>官網會員首訂 10% 折扣＋14:00 早入住",web:"https://hotel-monday.com/apartment/osakanambawest/"}];
@@ -357,6 +361,7 @@ if(!ST.exp)ST.exp=[];
 if(!ST.avatars||ST.avatars.length!==5)ST.avatars=["","","","",""];
 if(ST.album===undefined)ST.album="";
 if(ST.room===undefined)ST.room="";
+if(!ST.rate)ST.rate={v:0,at:0,manual:false};
 ["d1","d2","d3","d4","d5"].forEach(function(k){if(!ST.adhoc[k])ST.adhoc[k]=[];if(!ST.edit[k])ST.edit[k]={};if(!ST.done[k])ST.done[k]={}});
 function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
 function mem(i){return ST.members[i]||("成員"+(i+1))}
@@ -741,6 +746,25 @@ function alarmList(){
  return out}
 
 
+
+/* ---- 匯率（JPY → TWD，免金鑰） ---- */
+function rateVal(){return ST.rate&&ST.rate.v?ST.rate.v:0}
+function fmtNT(n){return 'NT$'+Math.round(n).toLocaleString()}
+function fmtJP(n){return '¥'+Math.round(n).toLocaleString()}
+function toJPY(e){var r=e.rate||rateVal();
+ if(e.cur==='TWD')return r?e.amt/r:e.amt*5;return e.amt}
+function rateAge(){if(!ST.rate.at)return '';
+ var h=Math.floor((Date.now()-ST.rate.at)/3600000);
+ if(h<1)return '剛剛更新';if(h<24)return h+' 小時前';return Math.floor(h/24)+' 天前'}
+function fetchRate(cb){
+ if(ST.rate.manual)return cb&&cb(null);
+ fetch('https://open.er-api.com/v6/latest/JPY').then(function(r){return r.json()})
+ .then(function(o){
+  if(o&&o.rates&&o.rates.TWD){ST.rate={v:o.rates.TWD,at:Date.now(),manual:false};save();
+   if(cur==='split')renderSplit();cb&&cb(null)}
+  else cb&&cb('bad')})
+ .catch(function(){cb&&cb('offline')})}
+
 /* ---- 即時同步房間（Firebase Realtime Database） ---- */
 /* 在下面填入你的 Firebase databaseURL，例如：
    var FB_DB="https://xxxx-default-rtdb.asia-southeast1.firebasedatabase.app";
@@ -828,24 +852,36 @@ setInterval(checkNotify,60000);
 
 /* ---------- 分帳 ---------- */
 function renderSplit(){
- var bal=[0,0,0,0,0],tot=0;
- ST.exp.forEach(function(e){tot+=e.amt;bal[e.by]+=e.amt;
-  var n=e.who.length||5;e.who.forEach(function(i){bal[i]-=e.amt/n})});
+ var bal=[0,0,0,0,0],tot=0,r=rateVal();
+ ST.exp.forEach(function(e){var j=toJPY(e);tot+=j;bal[e.by]+=j;
+  var n=e.who.length||5;e.who.forEach(function(i){bal[i]-=j/n})});
  var h='<h2 class="sec">成員</h2><div class="form" style="border-style:solid;border-color:var(--line)">'+
   [0,1,2,3,4].map(function(i){
    var av=ST.avatars[i]?'<img class="av" src="'+ST.avatars[i]+'" alt="">':'<div class="av">＋</div>';
    return '<div class="mem"><span class="avwrap">'+av+'<input type="file" accept="image/*" data-av="'+i+'"></span><input data-m="'+i+'" value="'+(ST.members[i]||'').replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+' 的名字"></div>'}).join('')+
   '<div class="hint">點頭像可以從相簿選照片。填好名字，記帳時就能直接選人。</div></div>';
+ h+='<h2 class="sec">匯率</h2>';
+ h+='<div class="note">'+(r?('<b>¥1 = '+r.toFixed(4)+' 台幣</b> ・ ¥1,000 ≈ '+fmtNT(1000*r)+'<br><span style="color:var(--dim)">'+
+    (ST.rate.manual?'手動設定':'自動取得 ・ '+rateAge())+'</span>')
+   :'<b style="color:#F09A90">尚未取得匯率</b><br><span style="color:var(--dim)">需要網路。也可以手動輸入。</span>')+
+   '<div class="tags" style="margin-top:9px"><button class="lk map" id="rtupd">重新取得</button>'+
+   '<button class="lk web" id="rtman">手動輸入</button>'+(ST.rate.manual?'<button class="lk rm" id="rtauto">改回自動</button>':'')+'</div></div>';
  h+='<h2 class="sec">結算</h2>';
- h+='<div class="note">總支出 <b>¥'+Math.round(tot).toLocaleString()+'</b> ・ 共 '+ST.exp.length+' 筆</div>';
+ h+='<div class="note">總支出 <b>'+fmtJP(tot)+'</b>'+(r?' <span style="color:var(--dim)">≈ '+fmtNT(tot*r)+'</span>':'')+' ・ 共 '+ST.exp.length+' 筆<br>'+
+   (r?'<span style="color:var(--dim)">每人平均 '+fmtJP(tot/5)+' ≈ '+fmtNT(tot/5*r)+'</span>':'')+'</div>';
  h+=[0,1,2,3,4].map(function(i){var b=Math.round(bal[i]);
   var ic=ST.avatars[i]?'<img class="av" style="width:26px;height:26px;margin-right:8px;vertical-align:-8px" src="'+ST.avatars[i]+'">':'';
-  return '<div class="bal"><span class="p">'+ic+mem(i)+'</span><span class="'+(b>0?'plus':(b<0?'minus':''))+'">'+
-   (b>0?'應收 ¥'+b.toLocaleString():(b<0?'應付 ¥'+(-b).toLocaleString():'—'))+'</span></div>'}).join('');
+  var sub=r?('<br><span style="font-size:12px;color:var(--dim)">≈ '+fmtNT(Math.abs(b)*r)+'</span>'):'';
+  return '<div class="bal"><span class="p">'+ic+mem(i)+'</span><span class="'+(b>0?'plus':(b<0?'minus':''))+'" style="text-align:right">'+
+   (b>0?'應收 '+fmtJP(b)+sub:(b<0?'應付 '+fmtJP(-b)+sub:'—'))+'</span></div>'}).join('');
  h+='<h2 class="sec">記一筆</h2><div class="form"><h4>誰付的</h4>'+
   '<div class="who" id="wby">'+[0,1,2,3,4].map(function(i){return '<label><input type="radio" name="by" value="'+i+'"'+(i===0?' checked':'')+'><span>'+mem(i)+'</span></label>'}).join('')+'</div>'+
   '<h4>誰要分攤（不選＝五人均分）</h4><div class="who" id="wsh">'+[0,1,2,3,4].map(function(i){return '<label><input type="checkbox" value="'+i+'"><span>'+mem(i)+'</span></label>'}).join('')+'</div>'+
-  '<div class="row"><input id="eamt" inputmode="numeric" placeholder="金額（日圓）"></div>'+
+  '<h4>幣別</h4><div class="who" id="wcur">'+
+   '<label><input type="radio" name="ecur" value="JPY" checked><span>¥ 日圓</span></label>'+
+   '<label><input type="radio" name="ecur" value="TWD"><span>NT$ 台幣</span></label></div>'+
+  '<div class="row"><input id="eamt" inputmode="numeric" placeholder="金額"></div>'+
+  '<div class="hint" id="econv" style="margin:0 0 8px"></div>'+
   '<div class="row"><input id="enote" placeholder="項目，例如 奈良寄物"></div>'+
   '<button class="go" id="eadd">記下來</button></div>';
  h+='<h2 class="sec">即時同步房間</h2>';
@@ -870,17 +906,35 @@ function renderSplit(){
  h+='<h2 class="sec">明細</h2>';
  h+=ST.exp.length?ST.exp.map(function(e,i){
   return '<div class="exp"><span class="l">'+(e.note||'—')+'<small>'+mem(e.by)+' 付 ・ '+(e.who.length&&e.who.length<5?e.who.map(mem).join('、')+' 分攤':'五人均分')+'</small></span>'+
-   '<span class="r"><b>¥'+e.amt.toLocaleString()+'</b><button data-x="'+i+'">刪除</button></span></div>'}).reverse().join(''):'<div class="note">還沒有紀錄。</div>';
+   '<span class="r"><b>'+(e.cur==='TWD'?fmtNT(e.amt):fmtJP(e.amt))+'</b>'+
+   '<div style="font-size:11.5px;color:var(--dim)">'+(e.cur==='TWD'?('≈ '+fmtJP(toJPY(e))):(r?('≈ '+fmtNT(e.amt*(e.rate||r))):''))+'</div>'+
+   '<button data-x="'+i+'">刪除</button></span></div>'}).reverse().join(''):'<div class="note">還沒有紀錄。</div>';
  main.innerHTML=h;
  [].forEach.call(main.querySelectorAll('[data-m]'),function(inp){inp.onchange=function(){ST.members[+inp.dataset.m]=inp.value.trim();save();renderSplit()}});
  [].forEach.call(main.querySelectorAll('[data-av]'),function(inp){inp.onchange=function(){pickAvatar(+inp.dataset.av,inp.files[0])}});
+ var ru=document.getElementById('rtupd');
+ if(ru)ru.onclick=function(){toast('取得中…');ST.rate.manual=false;fetchRate(function(e){
+  if(e)toast('取得失敗 ・ 可手動輸入');else toast('匯率已更新')})};
+ var rm=document.getElementById('rtman');
+ if(rm)rm.onclick=function(){var v=prompt('輸入 1 日圓等於多少台幣\n（例如 0.21）',rateVal()||'0.21');
+  var f=parseFloat(v);if(!f||f<=0)return toast('請輸入正確數字');
+  ST.rate={v:f,at:Date.now(),manual:true};save();renderSplit();toast('已設定')};
+ var ra=document.getElementById('rtauto');
+ if(ra)ra.onclick=function(){ST.rate.manual=false;save();toast('取得中…');fetchRate(function(){renderSplit()})};
+ var ea=document.getElementById('eamt'),ec=document.getElementById('econv');
+ function upd(){var v=parseFloat(ea.value)||0,c=(main.querySelector('input[name=ecur]:checked')||{value:'JPY'}).value;
+  if(!v||!r){ec.textContent='';return}
+  ec.innerHTML=(c==='JPY')?(fmtJP(v)+' ≈ <b style="color:var(--amber)">'+fmtNT(v*r)+'</b>')
+                          :(fmtNT(v)+' ≈ <b style="color:var(--amber)">'+fmtJP(v/r)+'</b>')}
+ if(ea){ea.oninput=upd;[].forEach.call(main.querySelectorAll('input[name=ecur]'),function(x){x.onchange=upd})}
  document.getElementById('eadd').onclick=function(){
   var amt=parseInt(document.getElementById('eamt').value,10);
   if(!amt||amt<=0)return toast('請填金額');
   var by=+main.querySelector('input[name=by]:checked').value;
   var who=[].filter.call(main.querySelectorAll('#wsh input'),function(c){return c.checked}).map(function(c){return +c.value});
   if(!who.length)who=[0,1,2,3,4];
-  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:amt,by:by,who:who,note:document.getElementById('enote').value.trim()});
+  var ec=(main.querySelector('input[name=ecur]:checked')||{value:'JPY'}).value;
+  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:amt,cur:ec,rate:rateVal(),by:by,who:who,note:document.getElementById('enote').value.trim()});
   save();renderSplit();toast('已記錄');if(ST.room)roomSync(true)};
  [].forEach.call(main.querySelectorAll('[data-x]'),function(b){b.onclick=function(){ST.exp.splice(+b.dataset.x,1);save();renderSplit()}});
  var rn=document.getElementById('rnew');
@@ -941,7 +995,7 @@ function renderPrep(){
  var cash='<div class="note"><b>只收現金</b><br>Day 2 丹後全境・Day 4 きすけ・Day 5 木津市場（<b>場內無 ATM</b>）、OS DRUG</div>'+
  '<div class="note"><b>每人 ¥60,000 以上</b>，其中 <b>¥10,000 換千圓鈔與硬幣</b> —— 公車兌幣機只吃 ¥1,000。</div>'+
  '<div class="note"><b>ATM 最後補給點</b><br>Day 2：天橋立站前超商｜Day 5：木津市場東側大樓下超商</div>';
- var rules='<div class="note"><b>三個不准討論、直接執行</b><br>1. Day 2 沒搭到 14:00 那班船 → 放棄遊覽船，走回伊根搭 14:28<br>2. Day 3 沒趕上 15:50 的 JR → 搭下一班並打給万正<br>3. Day 5 はるか 有異狀 → 立刻改南海空港急行</div>'+
+ var rules='<div class="note"><b>三個不准討論、直接執行</b><br>1. Day 2 午餐拖到 14:00 後 → 放棄遊覽船，直接走到日出搭 15:12 巴士<br>2. Day 3 沒趕上 15:50 的 JR → 搭下一班並打給万正<br>3. Day 5 はるか 有異狀 → 立刻改南海空港急行</div>'+
  '<div class="note"><b>五個角色</b><br>總決策者・財務・訂位窗口・行李長・計時員</div>'+
  '<div class="note"><b>20 分鐘法則</b><br>任何排隊超過 20 分鐘就換或不吃。</div>';
  main.innerHTML=st+hot+'<h2 class="sec">訂位與劃位</h2>'+
@@ -998,7 +1052,7 @@ function renderPrep(){
 document.getElementById('fstore').textContent=CAN?'儲存已啟用':'下載後用瀏覽器開啟才能保存';
 setInterval(updLive,30000);
 var t0=todayKey();if(t0)cur=t0;
-render();fetchWX();
+render();fetchWX();fetchRate();
 if('serviceWorker' in navigator && location.protocol!=='file:'){
  window.addEventListener('load',function(){
   navigator.serviceWorker.register('sw.js').catch(function(){})})}

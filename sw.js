@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v4 */
-var CACHE='kansai5-v7';
+var CACHE='kansai5-v12';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
@@ -23,7 +23,7 @@ self.addEventListener('fetch',function(e){
   var url=new URL(req.url);
 
   // 天氣 API：網路優先，失敗就用快取（離線時顯示上次結果）
-  if(url.hostname.indexOf('open-meteo.com')>=0){
+  if(url.hostname.indexOf('open-meteo.com')>=0||url.hostname.indexOf('er-api.com')>=0){
     e.respondWith(
       fetch(req).then(function(r){
         var cp=r.clone();
