@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#131A22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>關西五日</title>
+<style>
+:root{--ground:#131A22;--surface:#1B242F;--surface2:#222D3A;--paper:#EDE8DF;--dim:#8A97A6;
+--amber:#E8A33D;--red:#E4574A;--moss:#63A46C;--line:#2C3A49;--cyan:#5BA8C4;--violet:#9B8BC4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--ground);color:var(--paper);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC","Segoe UI",sans-serif;font-size:16px;line-height:1.55;padding-bottom:env(safe-area-inset-bottom)}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+header{position:sticky;top:0;z-index:20;background:rgba(19,26,34,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(env(safe-area-inset-top) + 9px) 0 0}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px 9px}
+.brand b{font-size:16px;font-weight:650}
+.clock{display:flex;align-items:center;gap:7px}
+.clock .jst{font-size:19px;font-weight:600;color:var(--amber)}
+.clock .zn{font-size:10.5px;color:var(--dim);line-height:1.15;text-align:right}
+nav{display:flex;gap:6px;overflow-x:auto;padding:0 16px 9px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:6px 13px;font-size:13.5px;font-family:inherit;cursor:pointer;white-space:nowrap}
+nav button .d{font-size:10.5px;display:block;line-height:1.2;opacity:.7}
+nav button[aria-selected="true"]{background:var(--paper);color:var(--ground);border-color:var(--paper);font-weight:600}
+nav button.today{border-color:var(--cyan);color:var(--cyan)}
+#live{padding:11px 16px;border-bottom:1px solid rgba(91,168,196,.4);background:linear-gradient(180deg,rgba(91,168,196,.18),rgba(91,168,196,.06))}
+#live.late{border-bottom-color:rgba(228,87,74,.5);background:linear-gradient(180deg,rgba(228,87,74,.2),rgba(228,87,74,.06))}
+#live .l1{font-size:11.5px;color:var(--cyan);font-weight:700;letter-spacing:.06em;display:flex;justify-content:space-between}
+#live.late .l1{color:var(--red)}
+#live .l2{font-size:21px;font-weight:700;margin:3px 0 3px;line-height:1.3}
+#live .l3{font-size:12.5px;color:#B5C2CE}
+#live .l3 b{color:var(--amber)}
+#live .pb{height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:7px 0 5px;overflow:hidden}
+#live .pb i{display:block;height:100%;background:var(--cyan);border-radius:2px}
+#live.late .pb i{background:var(--red)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);object-fit:cover;flex:0 0 auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--dim)}
+.avwrap{position:relative;flex:0 0 auto}
+.avwrap input{position:absolute;inset:0;opacity:0;cursor:pointer}
+main{padding:0 16px 70px;max-width:640px;margin:0 auto}
+.crux{margin:14px 0 10px;padding:9px 12px;border:1px solid rgba(228,87,74,.55);border-radius:4px;background:rgba(228,87,74,.09);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.crux .lab{color:var(--red);font-size:10.5px;font-weight:700;letter-spacing:.06em;flex:0 0 auto}
+.crux .t{font-size:19px;font-weight:700;color:var(--red);flex:0 0 auto}
+.crux .w{font-size:13.5px;flex:1 1 auto;min-width:120px}
+.crux .n{font-size:11.5px;color:var(--dim);flex:1 0 100%}
+.wx{display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px 13px;margin-bottom:12px;font-size:13.5px}
+.wx .ic{font-size:24px}
+.wx .tx{flex:1}
+.wx .tx b{font-size:15px}
+.wx .tx small{display:block;color:var(--dim);font-size:12px}
+.bar{display:flex;gap:7px;margin:0 0 14px;flex-wrap:wrap}
+.bar button{flex:1 1 auto;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:4px;padding:9px 10px;font-size:13px;font-family:inherit;cursor:pointer}
+.bar button.pri{background:var(--cyan);color:var(--ground);border-color:var(--cyan);font-weight:650}
+.slot{display:grid;grid-template-columns:60px 1fr;gap:11px;position:relative}
+.slot .rail{position:relative}
+.slot .rail::before{content:"";position:absolute;left:calc(100% + 5px);top:9px;bottom:-6px;width:1px;background:var(--line)}
+.slot:last-child .rail::before{display:none}
+.slot .tm{font-size:15px;font-weight:600;color:var(--amber)}
+.slot .te{font-size:11.5px;color:var(--dim)}
+.slot .eta{font-size:11px;color:var(--red);font-weight:600;margin-top:2px}
+.slot.past{opacity:.42}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:11px 13px;margin-bottom:10px}
+.card.dead{border-left:3px solid var(--red);background:var(--surface2)}
+.card.eat{border-left:3px solid var(--moss)}
+.card.move{border-left:3px solid var(--violet)}
+.card.adhoc{border-style:dashed;border-color:var(--cyan)}
+.card.now{box-shadow:0 0 0 2px var(--cyan);border-color:var(--cyan)}
+.card.ok{opacity:.55}
+.nowtag{display:inline-block;font-size:10.5px;font-weight:700;color:var(--ground);background:var(--cyan);border-radius:3px;padding:1px 6px;margin-bottom:5px}
+.hd{display:flex;align-items:flex-start;gap:8px}
+.hd h3{margin:0;font-size:15px;font-weight:600;flex:1;line-height:1.4;cursor:pointer}
+.chev{color:var(--dim);font-size:12px;margin-top:3px}
+.card.open .chev{transform:rotate(90deg)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center}
+.tag{font-size:11px;padding:2px 7px;border-radius:3px;background:#2A3746;color:var(--dim)}
+.tag.r{background:rgba(228,87,74,.2);color:#F09A90}
+.tag.a{background:rgba(232,163,61,.18);color:var(--amber)}
+.tag.g{background:rgba(99,164,108,.18);color:#8FCB97}
+.tag.v{background:rgba(155,139,196,.2);color:#C4B8E0}
+.tag.c{background:rgba(91,168,196,.2);color:var(--cyan)}
+.lk{font-size:11.5px;padding:3px 9px;border-radius:3px;text-decoration:none;border:1px solid;display:inline-block;font-family:inherit;cursor:pointer}
+.lk.map{background:rgba(91,168,196,.16);color:var(--cyan);border-color:rgba(91,168,196,.35)}
+.lk.dir{background:rgba(155,139,196,.16);color:#C4B8E0;border-color:rgba(155,139,196,.4)}
+.lk.food{background:rgba(99,164,108,.14);color:#8FCB97;border-color:rgba(99,164,108,.35)}
+.lk.web{background:rgba(232,163,61,.13);color:var(--amber);border-color:rgba(232,163,61,.3)}
+.lk.ed{background:#2A3746;color:var(--paper);border-color:var(--line)}
+.lk.rm{background:rgba(228,87,74,.14);color:#F09A90;border-color:rgba(228,87,74,.3)}
+.lk.go{background:var(--moss);color:#0E1712;border-color:var(--moss);font-weight:700}
+.lk.gone{background:rgba(99,164,108,.16);color:#8FCB97;border-color:rgba(99,164,108,.4)}
+.body{display:none;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:14px;color:#C9D2DC}
+.card.open .body{display:block}
+.body ul{margin:0;padding-left:17px}.body li{margin:4px 0}
+.body b{color:var(--paper)}.body .warn{color:#F09A90}
+.form{background:var(--surface2);border:1px dashed var(--cyan);border-radius:4px;padding:13px;margin:0 0 14px}
+.form h4{margin:0 0 9px;font-size:13.5px;color:var(--cyan);font-weight:650}
+.form .row{display:flex;gap:7px;margin-bottom:7px}
+.form input,.form select{background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit;width:100%}
+.form input.t{flex:0 0 84px;text-align:center}
+.form input::placeholder{color:#5C6B7C}
+.form .btns{display:flex;gap:7px}
+.form .go{flex:1;background:var(--cyan);border:0;color:var(--ground);font-weight:650;border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
+.form .cx{flex:0 0 84px;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
+.hint{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5}
+.who{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px}
+.who label{font-size:13px;padding:6px 11px;border-radius:999px;background:var(--ground);border:1px solid var(--line);cursor:pointer;color:var(--dim)}
+.who input{display:none}
+.who input:checked+span{color:var(--cyan);font-weight:600}
+.who label:has(input:checked){border-color:var(--cyan);background:rgba(91,168,196,.12)}
+h2.sec{font-size:13px;font-weight:700;color:var(--amber);margin:26px 0 10px;letter-spacing:.04em}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:7px;cursor:pointer}
+.chk input{margin:3px 0 0;width:17px;height:17px;accent-color:var(--moss);flex:0 0 auto}
+.chk .x{flex:1;font-size:14px}
+.chk .x small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
+.chk.done .x{opacity:.42;text-decoration:line-through}
+.tel{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:7px;color:var(--paper);text-decoration:none}
+.tel .n{font-size:14.5px}.tel .n small{display:block;color:var(--dim);font-size:12px}
+.tel .num{font-size:14px;color:var(--amber);white-space:nowrap}
+.note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:4px;padding:12px;font-size:13.5px;color:#C9D2DC;margin-bottom:10px}
+.note b{color:var(--paper)}
+.hotel{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:13px;margin-bottom:10px}
+.hotel h4{margin:0 0 3px;font-size:15px}
+.hotel .sub{font-size:12.5px;color:var(--dim);margin-bottom:9px}
+.store{font-size:11.5px;padding:6px 10px;border-radius:4px;margin-bottom:12px;text-align:center}
+.store.on{background:rgba(99,164,108,.14);color:#8FCB97;border:1px solid rgba(99,164,108,.3)}
+.store.off{background:rgba(228,87,74,.12);color:#F09A90;border:1px solid rgba(228,87,74,.3)}
+.exp{display:flex;justify-content:space-between;gap:10px;padding:11px 12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:7px}
+.exp .l{flex:1;font-size:14px}
+.exp .l small{display:block;color:var(--dim);font-size:12px;margin-top:2px}
+.exp .r{text-align:right;white-space:nowrap}
+.exp .r b{font-size:15px;color:var(--amber)}
+.exp .r button{display:block;margin-top:4px;font-size:11px;background:transparent;border:0;color:#F09A90;cursor:pointer;font-family:inherit}
+.bal{display:flex;justify-content:space-between;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:6px;font-size:14px}
+.bal .p{font-size:15px;font-weight:600}
+.bal .plus{color:#8FCB97}.bal .minus{color:#F09A90}
+.mem{display:flex;gap:7px;margin-bottom:7px;align-items:center}
+.mem input{flex:1;background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit}
+.mem span{color:var(--dim);font-size:13px;width:22px;text-align:center}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--paper);color:var(--ground);padding:10px 18px;border-radius:4px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;max-width:88%;text-align:center}
+.toast.on{opacity:1}
+footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;line-height:1.7}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><b>關西五日</b>
+    <div class="clock"><span class="jst mono" id="jst">--:--</span><span class="zn">日本時間<br>JST</span></div>
+  </div>
+  <nav id="nav" role="tablist"></nav>
+  <div id="live" style="display:none"></div>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<footer>關西五日 <b style="color:var(--amber)">v3</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<script>
+var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
+var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
+var TAB=function(n){return "https://www.google.com/search?q="+encodeURIComponent(n+" 食べログ")};
+var HK="京都市下京区七条通東堀川西入八百屋町1番地",HO="大阪市浪速区元町3-1-14";
+
+var D={
+d1:{label:"Day 1",date:"11/13 五",dnum:13,title:"鞍馬・貴船・伏見稻荷",lat:35.0116,lon:135.7681,wxc:"京都",
+crux:{t:"16:15",w:"進 ちいかわもぐもぐ本舗",n:"店 17:30 關門"},
+s:[
+{a:"06:00",b:"07:00",t:"🛬 KIX 入境・領行李",g:["5人5大箱"],q:"関西国際空港 第1ターミナル",x:"<ul><li><b>自動通關者務必請官員補蓋入境章</b>，沒章無法退稅</li><li>順手買早餐</li></ul>"},
+{a:"07:00",b:"07:45",t:"🎫 人工窗口兌換 JR Pass ×5",g:["護照正本"],dead:1,q:"関西空港駅 みどりの窓口",x:"<ul><li>只領 <b>Day 1 與 Day 5</b> 指定席券</li><li class='warn'>人工排太長就拆兩組</li></ul>"},
+{a:"07:54",b:"09:12",t:"🚆 HARUKA → 京都",g:["JR Pass"],k:"move",dir:["関西空港駅","京都駅","transit"]},
+{a:"09:20",b:"10:00",t:"🏨 飯店寄大行李",q:HK,x:"<ul><li>京都站↔飯店<b>單程 11 分，來回 22 分</b></li><li>只放行李，不辦 Check-in</li></ul>"},
+{a:"10:15",b:"10:35",t:"🚆 京阪 東福寺 → 出町柳",g:["¥280"],k:"move",dir:["京阪 東福寺駅","出町柳駅","transit"]},
+{a:"10:40",b:"11:15",t:"🚋 叡電 出町柳 → 鞍馬",g:["¥500"],k:"move",dir:["出町柳駅","鞍馬駅","transit"],x:"<ul><li>途中經過<b>もみじ隧道</b>，車內關燈慢行</li><li class='warn'>紅葉期特別班表</li></ul>",w:[["叡電官網","https://eizandensha.co.jp/"]]},
+{a:"11:25",b:"12:30",t:"⛩️ 鞍馬寺",g:["愛山費¥200~300","纜車¥200"],q:"鞍馬寺",x:"<ul><li>纜車每 20 分一班</li><li class='warn'>纜車只到多宝塔，<b>到本殿還要走 10 分鐘上坡</b></li></ul>"},
+{a:"12:35",b:"13:05",t:"🍱 午餐：鞍馬駅前",g:["現金"],k:"eat",q:"鞍馬駅",x:"<ul><li><b>有座位的只有這裡，貴船沒有</b></li></ul>"},
+{a:"13:10",b:"13:15",t:"🚋 叡電 鞍馬 → 貴船口",g:["¥210"],k:"move",dir:["鞍馬駅","貴船口駅","transit"]},
+{a:"13:20",b:"13:40",t:"🚌🚶 貴船口 → 貴船神社",g:["巴士¥160 或走20分"],k:"move",dir:["貴船口駅","貴船神社","walking"],x:"<ul><li class='warn'>巴士排隊超過 10 分鐘就直接走</li></ul>"},
+{a:"13:40",b:"14:40",t:"⛩️ 貴船神社",g:["水占¥200"],q:"貴船神社",x:"<ul><li><b>水占みくじ</b>：紙浮在御神水上字才浮現</li></ul>",w:[["官網","https://kifunejinja.jp/"]]},
+{a:"15:45",b:"16:00",t:"🚆 京阪 出町柳 → 伏見稻荷",g:["直達14分 ¥300"],k:"move",dir:["出町柳駅","京阪 伏見稲荷駅","transit"]},
+{a:"16:15",b:"17:15",t:"🧸 ちいかわもぐもぐ本舗",g:["9:30-17:30"],dead:1,q:"京都市伏見区深草稲荷中之町46-1",x:"<ul><li><b>稻荷達摩玩偶全 8 種</b>、京都限定巾着</li><li class='warn'>可能有入店管制</li></ul>",w:[["官網","https://www.chiikawamogumogu.jp/stores/fushimi/"]]},
+{a:"17:15",b:"18:45",t:"⛩️ 伏見稻荷 千本鳥居",g:["24h開放"],q:"伏見稲荷大社",x:"<ul><li><b>夜間打燈，人比白天少很多</b></li><li>奧社折返不攻頂</li></ul>",w:[["官網","http://inari.jp/"]]},
+{a:"19:15",b:"19:25",t:"🎰 一番くじ 京都イオンモール店",g:["10分快閃"],q:"イオンモールKYOTO",x:"<ul><li>Sakura 館 4F，21:00 關</li></ul>",w:[["一番くじ倶楽部","https://1kuji.com/"]]},
+{a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都站前店",bk:15,k:"eat",q:"鳥貴族 京都駅前店",food:"鳥貴族 京都駅前店",x:"<ul><li><b>回飯店前買明早早餐 ×5</b></li></ul>"},
+{a:"21:05",b:"21:25",t:"🏨 回飯店 Check-in",q:HK}]},
+
+d2:{label:"Day 2",date:"11/14 六",dnum:14,title:"伊根・傘松・觀光船",lat:35.5686,lon:135.1938,wxc:"天橋立",
+crux:{t:"14:31",w:"日出站牌上回程巴士",n:"全程唯一不可失守的死線・緩衝 6 分鐘"},
+s:[
+{a:"08:00",b:"08:25",t:"🚉 京都站 30–33 號月台",g:["買早餐"],q:"京都駅",x:"<ul><li>月台<b>距中央口很遠，預留 25 分</b></li><li>確認有<b>千圓鈔與硬幣</b></li></ul>"},
+{a:"08:38",b:"10:39",t:"🚆 はしだて1號 → 天橋立",g:["全車指定席"],k:"move",dir:["京都駅","天橋立駅","transit"],x:"<ul><li>綾部分離，<b>務必坐對車廂</b></li></ul>",w:[["京都丹後鉄道","https://trains.willer.co.jp/"]]},
+{a:"10:39",b:"11:03",t:"🚏 站前 Buffer 24 分",g:["ATM"],dead:1,q:"天橋立駅",x:"<ul><li>超商 ATM <b>補足現金</b>（進伊根後就沒有了）</li><li>大鈔換千圓鈔</li></ul>"},
+{a:"11:03",b:"11:58",t:"🚌 天橋立 → 伊根（坐到底站）",g:["¥400現金"],k:"move",dir:["天橋立駅","伊根 バス停 京都府与謝郡伊根町","transit"],x:"<ul><li>站牌：天橋立駅前 → <b>ケーブル下</b> → <b>日出</b> → <b>伊根</b></li></ul>",w:[["丹後海陸交通","https://www.tankai.jp/"]]},
+{a:"12:05",b:"12:50",t:"🍜 午餐：伊根海鮮",bk:12,g:["現金"],k:"eat",q:"舟屋日和 伊根",food:"舟屋日和 伊根",x:"<ul><li>舟屋日和／割烹海陸・<b>鰤魚丼</b></li><li class='warn'>排隊 &gt;20 分改買便當，<b>船優先</b></li></ul>"},
+{a:"12:50",b:"13:15",t:"🍶 向井酒造",g:["現金"],q:"向井酒造 伊根",x:"<ul><li><b>伊根滿開</b>・<b>必託運</b>・建議買 300ml</li></ul>"},
+{a:"13:15",b:"13:50",t:"🚶 舟屋散策：伊根 → 日出",g:["1.5km・30分"],dead:1,k:"move",dir:["伊根町観光案内所","伊根湾めぐり遊覧船のりば","walking"],x:"<ul><li class='warn'>13:50 前一定要到日出乘船處</li></ul>"},
+{a:"14:00",b:"14:25",t:"🛥️ 伊根灣遊覽船",g:["¥1000"],dead:1,q:"伊根湾めぐり遊覧船のりば",x:"<ul><li>每小時 0 分、30 分發船</li><li>蝦味先 ¥100 餵海鷗</li></ul>"},
+{a:"14:25",b:"14:31",t:"🚨 日出売店 ＋ 等巴士",g:["緩衝6分"],dead:1,x:"<ul><li class='warn'><b>全程緩衝最薄的一段</b></li><li class='warn'>沒搭上 14:00 那班船就<b>放棄遊覽船</b></li></ul>"},
+{a:"14:31",b:"15:15",t:"🚌 日出 → 天橋立ケーブル下",g:["¥400"],k:"move",dir:["伊根湾めぐり遊覧船のりば","天橋立ケーブル下","transit"]},
+{a:"15:15",b:"15:22",t:"🚨 決策點：看觀光船末班",dead:1,q:"天橋立ケーブル下",x:"<ul><li>≥16:30 照走｜16:00 縮成 25 分</li><li class='warn'>&lt;16:00 → <b>放棄搭船</b></li></ul>"},
+{a:"15:30",b:"16:05",t:"🌲 傘松公園 昇龍觀",g:["纜車¥800"],q:"傘松公園",x:"<ul><li><b>股のぞき</b> → 昇龍觀</li><li>下山吊椅單人座，約好山下集合</li></ul>"},
+{a:"16:30",b:"16:42",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["¥800"],k:"move",dir:["一の宮桟橋 天橋立","天橋立桟橋","transit"]},
+{a:"16:45",b:"17:55",t:"🍱 智恩寺 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'><b>一到站就先買便當</b></li></ul>"},
+{a:"18:09",b:"20:21",t:"🚆 はしだて8號 → 京都",g:["直達"],k:"move",dir:["天橋立駅","京都駅","transit"]},
+{a:"20:30",b:"21:00",t:"🏨 回飯店",q:HK,x:"<ul><li><b>買明早早餐 ×5</b>・大行李收 80%</li></ul>"}]},
+
+d3:{label:"Day 3",date:"11/15 日",dnum:15,title:"東大寺・志津香・藥師寺・鶴橋",lat:34.6851,lon:135.8048,wxc:"奈良",
+crux:{t:"15:50",w:"搭上 JR 奈良 → 天王寺",n:"後面接的是已訂位的万正燒肉"},
+s:[
+{a:"08:00",b:"08:20",t:"🏨 退房 → JR 京都站",g:["買早餐"],k:"move",dir:[HK,"京都駅","walking"]},
+{a:"08:40",b:"09:30",t:"🚆 みやこ路快速 → 奈良",g:["JR Pass"],k:"move",dir:["京都駅","JR奈良駅","transit"]},
+{a:"09:30",b:"09:55",t:"🧳 JR 奈良站人工寄行李 ×5",g:["¥3000~4000"],dead:1,q:"奈良市総合観光案内所",x:"<ul><li class='warn'><b>寄放成功後行程才正式開始</b></li></ul>"},
+{a:"09:55",b:"10:05",t:"🚌 JR 奈良 → 東大寺",g:["¥250"],k:"move",dir:["JR奈良駅","東大寺","transit"]},
+{a:"10:05",b:"10:25",t:"🦌 奈良公園餵鹿",g:["鹿仙貝¥200"],q:"奈良公園",x:"<ul><li><b>紙袋、地圖要收好</b></li></ul>"},
+{a:"10:30",b:"11:35",t:"🏯 東大寺大佛殿",g:["¥800"],q:"東大寺",w:[["官網","https://www.todaiji.or.jp/"]]},
+{a:"11:40",b:"11:55",t:"🚌 東大寺 → 近鐵奈良",g:["¥250"],k:"move",dir:["東大寺","近鉄奈良駅","transit"]},
+{a:"11:55",b:"12:05",t:"🍡 中谷堂",g:["現金¥200"],k:"eat",q:"奈良市橋本町29",food:"中谷堂 奈良",x:"<ul><li>高速搗餅，<b>站著吃掉</b></li></ul>"},
+{a:"12:10",b:"12:20",t:"🚆 近鐵 奈良 → 新大宮",g:["¥180"],k:"move",dir:["近鉄奈良駅","新大宮駅","transit"]},
+{a:"12:25",b:"13:15",t:"🍚 午餐：志津香 大宮店",bk:6,k:"eat",q:"奈良市大宮町4-249-4",food:"釜めし志津香 大宮店",x:"<ul><li><b>已先點餐 → 坐下就有得吃</b></li><li class='warn'>最後刮釜底的鍋巴</li></ul>"},
+{a:"13:20",b:"13:45",t:"🚆 近鐵 新大宮 → 西ノ京",g:["¥300"],k:"move",dir:["新大宮駅","西ノ京駅","transit"]},
+{a:"13:50",b:"14:50",t:"⛩️ 藥師寺",g:["¥1000"],q:"奈良市西ノ京町457",x:"<ul><li><b>東塔（國寶）＋ 西塔</b></li></ul>",w:[["官網","https://yakushiji.or.jp/"]]},
+{a:"14:55",b:"15:15",t:"🚆 近鐵 西ノ京 → 新大宮",g:["¥300"],k:"move",dir:["西ノ京駅","新大宮駅","transit"]},
+{a:"15:27",b:"15:42",t:"🧳 取回大行李 ×5",q:"奈良市総合観光案内所"},
+{a:"15:42",b:"15:50",t:"🚉 進站上月台",g:["8分"],dead:1,q:"JR奈良駅",x:"<ul><li class='warn'>案內所在<b>站外舊站房</b></li></ul>"},
+{a:"15:50",b:"16:25",t:"🚆 大和路快速 → 天王寺",g:["JR Pass"],k:"move",dir:["JR奈良駅","天王寺駅","transit"],x:"<ul><li class='warn'>大和路快速<b>不到 JR 難波</b>，一定要在天王寺下車轉 Metro</li></ul>"},
+{a:"16:35",b:"16:45",t:"🚇 天王寺 → 大國町",g:["¥190"],k:"move",dir:["天王寺駅","大国町駅","transit"]},
+{a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HO,x:"<ul><li><b>換上舊的那件帽 T</b>，燒肉會沾味道</li></ul>"},
+{a:"17:20",b:"17:30",t:"🚶 飯店 → なんば站",k:"move",dir:[HO,"なんば駅","walking"]},
+{a:"17:33",b:"17:43",t:"🚇 なんば → 鶴橋",g:["¥190"],k:"move",dir:["なんば駅","鶴橋駅","transit"]},
+{a:"17:43",b:"18:00",t:"🚶 鶴橋站 → 万正",g:["15分"],k:"move",dir:["鶴橋駅","大阪市生野区桃谷3-3-2","walking"],x:"<ul><li class='warn'>穿過住宅區，<b>先開好導航</b></li></ul>"},
+{a:"18:00",b:"19:45",t:"🔥 晚餐：万正 燒肉",bk:4,g:["可吸菸"],k:"eat",q:"大阪市生野区桃谷3-3-2",food:"万正 焼肉 桃谷",x:"<ul><li>鹽牛舌 → 橫膈膜 → 內臟拼盤 → おまかせ ×2</li></ul>"},
+{a:"20:15",b:"20:30",t:"🐙 たこ焼道楽わなか 千日前本店",k:"eat",q:"大阪市中央区難波千日前11-19",food:"たこ焼道楽わなか 千日前本店",x:"<ul><li>なんば グランド花月旁</li><li>銅板現烤，行列名店</li></ul>",w:[["官網","http://takoyaki-wanaka.com/"]]},
+{a:"20:30",b:"20:45",t:"🥟 551蓬莱 本店（宵夜）",k:"eat",q:"大阪市中央区難波3-6-3",food:"551蓬莱 本店",x:"<ul><li>なんば站 11 號出口步行 1 分</li><li class='warn'>豬肉包<b>絕對不可帶回台灣</b></li></ul>"},
+{a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",q:"LIFE 大国町店",x:"<ul><li>20:00 後<b>半額戰場</b>・買 Day 4 早餐 ×5</li></ul>"}]},
+
+d4:{label:"Day 4",date:"11/16 一",dnum:16,title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
+crux:{t:"16:30",w:"大阪城天守閣入館截止",n:"票 ¥1,200 含豊臣石垣館"},
+s:[
+{a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HO,"大国町駅","walking"]},
+{a:"08:15",b:"08:50",t:"🚇 大國町 → 大阪梅田",g:["¥240"],k:"move",dir:["大国町駅","大阪梅田駅","transit"]},
+{a:"09:00",b:"09:30",t:"🚆 阪急梅田 → 箕面",g:["¥280"],k:"move",dir:["阪急大阪梅田駅","箕面駅","transit"],x:"<ul><li>石橋阪大前<b>同月台對側</b>轉箕面線</li></ul>"},
+{a:"09:35",b:"11:30",t:"🍁 箕面瀑布健行",g:["來回5.4km"],dead:1,q:"箕面大滝",x:"<ul><li>沿途<b>炸楓葉</b></li><li class='warn'>11:00 沒到瀑布就折返</li></ul>"},
+{a:"11:41",b:"12:10",t:"🚆 箕面 → 阪急梅田",g:["¥280"],k:"move",dir:["箕面駅","阪急大阪梅田駅","transit"]},
+{a:"12:20",b:"13:10",t:"🍜 午餐：うどん屋 きすけ",g:["只收現金","25席"],k:"eat",q:"大阪市北区鶴野町4-1",food:"うどん屋 きすけ 中津",x:"<ul><li class='warn'><b>只收現金</b></li><li class='warn'>沒有 5 人桌 → <b>拆 4+1 或 3+2</b></li></ul>"},
+{a:"13:40",b:"13:55",t:"🚆 JR 大阪 → 大阪城公園",g:["Pass免費"],k:"move",dir:["大阪駅","大阪城公園駅","transit"]},
+{a:"14:00",b:"15:50",t:"🏯 大阪城",g:["¥1200"],dead:1,q:"大阪城天守閣",x:"<ul><li>含 <b>豊臣石垣館</b></li><li class='warn'>入館截止 16:30</li></ul>",w:[["官網","https://www.osakacastle.net/guide/"]]},
+{a:"15:55",b:"16:10",t:"🚆 JR 大阪城公園 → 新今宮",g:["Pass免費"],k:"move",dir:["大阪城公園駅","新今宮駅","transit"]},
+{a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["約¥1500"],q:"通天閣",x:"<ul><li>日落約 16:50</li><li class='warn'>不要吃東西，肚子留給壽喜燒</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
+{a:"17:25",b:"17:45",t:"🚇 惠美須町 → 難波",g:["¥190"],k:"move",dir:["恵美須町駅","なんば駅","transit"]},
+{a:"17:45",b:"19:45",t:"🍲 晚餐：はり重 道頓堀本店",bk:7,k:"eat",q:"大阪市中央区道頓堀1-9-17",food:"はり重 道頓堀本店",x:"<ul><li>難波站 14 號出口步行 3 分</li><li><b>秘傳割下以牛筋熬煮</b></li></ul>"},
+{a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關"],q:"大阪市中央区千日前2-10-1",x:"<ul><li><b>看看就好</b></li></ul>"},
+{a:"21:05",b:"21:20",t:"🚶 走回飯店",dead:1,k:"move",dir:["なんば駅",HO,"walking"],x:"<ul><li class='warn'><b>回房後打包八成</b></li></ul>"}]},
+
+d5:{label:"Day 5",date:"11/17 二",dnum:17,title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
+crux:{t:"18:47",w:"抵達天王寺轉 JR",n:"最不能遲到的一班車"},
+s:[
+{a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HO,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
+{a:"08:10",b:"08:20",t:"🚶 飯店 → 木津市場",k:"move",dir:[HO,"大阪木津卸売市場","walking"]},
+{a:"08:20",b:"09:20",t:"🐟 木津市場",g:["只收現金","無ATM"],dead:1,k:"eat",q:"大阪市浪速区敷津東2-2-8",x:"<ul><li class='warn'><b>11:00 就幾乎全關</b></li><li>市場北側就是黑貓宅急便</li></ul>",w:[["官網","https://kizu-ichiba.com/"],["市場日曆","https://kizu-ichiba.com/calendar/"]]},
+{a:"09:20",b:"09:35",t:"🚶 木津市場 → 難波八阪神社",g:["約1km"],k:"move",dir:["大阪木津卸売市場","難波八阪神社","walking"]},
+{a:"09:35",b:"09:55",t:"🦁 難波八阪神社",g:["社務所9:00開"],q:"大阪市浪速区元町2-9-19",x:"<ul><li><b>獅子頭御守</b></li></ul>"},
+{a:"10:10",b:"10:40",t:"🚇 なんば → 本町 → 大阪港",g:["¥290"],k:"move",dir:["なんば駅","大阪港駅","transit"]},
+{a:"10:45",b:"13:00",t:"🐋 海遊館",bk:9,g:["¥2700~3500"],dead:1,q:"海遊館",x:"<ul><li>需線上購票，<b>5 人同時段</b></li><li class='warn'><b>不可再入館</b></li></ul>",w:[["官網","https://www.kaiyukan.com/"]]},
+{a:"13:05",b:"13:25",t:"🚇 大阪港 → 心齋橋",g:["¥290"],k:"move",dir:["大阪港駅","心斎橋駅","transit"]},
+{a:"13:30",b:"14:20",t:"🍜 午餐：にし家 本店",bk:8,g:["180席"],k:"eat",q:"にし家 本店 心斎橋",food:"にし家 本店 心斎橋",x:"<ul><li>心齋橋站步行 2 分，全店禁菸</li></ul>"},
+{a:"14:25",b:"14:45",t:"💊 OS DRUG 心齋橋店",g:["只收現金"],q:"OS DRUG 心斎橋店",x:"<ul><li><b>不退稅只收現金</b>，但未稅標價最低</li><li class='warn'>藥品每種最多 12 瓶，合計 36 瓶</li></ul>"},
+{a:"14:45",b:"14:55",t:"🍮 りくろーおじさん なんば本店",k:"eat",q:"大阪市中央区難波3-2-28",food:"りくろーおじさんの店 なんば本店",x:"<ul><li>現烤起司蛋糕，一顆五人分</li></ul>"},
+{a:"15:00",b:"15:30",t:"🔪 千日前道具屋筋",g:["18:00打烊"],q:"千日前道具屋筋商店街",x:"<ul><li><b>Design Pocket 食品模型磁鐵</b></li><li>買刀 → <b>必託運</b></li></ul>"},
+{a:"15:35",b:"16:35",t:"🧸 でんでんタウン ＋ 一番くじ日本橋店",g:["9:00-23:30"],q:"大阪市浪速区難波中2-1-17",x:"<ul><li>一番くじ公式ショップ コスモビル 1F</li></ul>",w:[["一番くじ倶楽部","https://1kuji.com/"]]},
+{a:"16:40",b:"17:40",t:"🍖 晚餐：ニューベイブ 難波店",g:["通し營業"],k:"eat",q:"大阪市浪速区難波中1-14-12",food:"ニューベイブ 難波 とんかつ",x:"<ul><li>11:00–20:00 <b>無午休</b>・<b>白飯無限續</b></li></ul>"},
+{a:"17:45",b:"18:00",t:"🚶 走回飯店",k:"move",dir:["大阪市浪速区難波中1-14-12",HO,"walking"]},
+{a:"18:00",b:"18:25",t:"🏨 取行李・最終打包",g:["25分"],q:HO,x:"<ul><li><b>託運</b>：液體、刀具｜<b>隨身</b>：行動電源、護照、收據</li></ul>"},
+{a:"18:35",b:"18:47",t:"🚇 大國町 → 天王寺",g:["¥190"],k:"move",dir:["大国町駅","天王寺駅","transit"]},
+{a:"18:47",b:"19:02",t:"🚶 天王寺站轉乘",g:["15分"],dead:1,q:"天王寺駅",x:"<ul><li class='warn'>はるか 有異狀 → <b>立刻改南海空港急行</b></li></ul>"},
+{a:"19:05",b:"19:50",t:"🚆 はるか → 關西機場",g:["JR Pass"],k:"move",dir:["天王寺駅","関西空港駅","transit"]},
+{a:"19:55",b:"20:40",t:"🚨 Tax-Free KIOSK 退稅查驗",g:["3F中央"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>絕對不能先去託運行李</b></li></ul>"},
+{a:"20:40",b:"21:15",t:"✈️ 捷星報到托運",x:"<ul><li class='warn'>行動電源<b>嚴禁託運</b></li></ul>"},
+{a:"21:15",b:"22:20",t:"🛍️ KIX 免稅店",g:["65分"],dead:1,x:"<ul><li class='warn'><b>先買便當帶去登機門</b></li><li>酒類每人 1 公升，<b>五人分裝</b></li></ul>"},
+{a:"23:10",b:"23:59",t:"🛫 GK057 返台",g:["01:30 抵桃園"]}]},
+split:{label:"分帳",date:"五人"},
+pack:{label:"行李",date:"打包"},
+prep:{label:"準備",date:"行前"}};
+
+var BOOK=[["10/13 二","① 線上買 Pass ×5","開始日填 11/13・10/13 才開賣"],["10/13 二","② 買完立刻劃 Day 1 はるか ×5","WEST-TR"],["10/14 三 09:00","🚨 搶劃 はしだて1號 ×5","全車指定席・週六・五連號"],["10/14 三 09:00","🚨 搶劃 はしだて8號 ×5",""],["10/16 五","電話訂 万正","11/15 18:00 ×5"],["10/17 六 09:00","劃 Day 5 はるか ×5",""],["10/20 二","電話訂 志津香大宮店","11/15 12:25 ×5・要先點好餐"],["11/01 日","網路訂 はり重","11/16 17:45 ×5・問價位"],["11/01 日","網路訂 にし家","11/17 13:30 ×5"],["11/03 二","海遊館 eTicket ×5","同一入館時段"],["11/06 五","Visit Japan Web ×5",""],["11/08 日","電話：奈良觀光案內所","明講「五個 28–32 吋」"],["11/08 日","電話：伊根午餐","11/14 12:05 ×5"],["11/08 日","電話：向井酒造","營業＋庫存＋300ml"],["11/08 日","電話：ニューベイブ","問五人可否訂位"],["11/10 二","鳥貴族 App 訂位","11/13 19:45 ×5"]];
+var TEL=[["万正","燒肉・Day 3","090-2592-9687"],["志津香 大宮店","釜飯・Day 3","0742-93-8029"],["ちいかわもぐもぐ本舗","Day 1","075-643-0050"],["藥師寺","Day 3","0742-33-6001"],["木津市場","Day 5","06-6631-1139"],["MONday Apart 京都駅","Day 1–2 住宿","075-353-1922"],["MONday Apart 大阪難波WEST","Day 3–4 住宿","06-6645-1700"],["福太郎","備案・大阪燒","06-6634-2951"],["日本 警察","緊急","110"],["日本 救護・消防","緊急","119"]];
+var CHECK=[["叡電 11/13 實際時刻","官方接近日期才公布"],["丹海巴士 日出站牌通過時刻","Day 2 死線所在"],["天橋立觀光船 11 月末班",""],["傘松纜車 11 月末班",""],["はり重 五人份價位","訂位時一併問"],["奈良案內所可否收 5 個大箱",""],["ニューベイブ 可否訂位",""],["大阪城開館時間","2025/4 起已變更"],["1kuji.com 查 11 月檔期",""]];
+var HOTELS=[
+{n:"MONday Apart Premium 京都駅",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 "+HK,tel:"075-353-1922",q:HK,note:"京都站步行約 11 分・全室附廚房與洗衣機・2021/12 開業",web:"https://hotel-monday.com/apartment/kyoto/"},
+{n:"MONday Apart Premium 大阪難波 WEST",d:"Day 3–4（11/15、11/16）",addr:HO,tel:"06-6645-1700",q:HO,note:"大國町 7–8 分・なんば 8–9 分・難波八阪神社 5–7 分・木津市場 10 分<br>30–50 ㎡・全室洗衣乾衣機＋調理器具・2024/12 開業<br>官網會員首訂 10% 折扣＋14:00 早入住",web:"https://hotel-monday.com/apartment/osakanambawest/"}];
+var WMO={0:["☀️","晴"],1:["🌤️","大致晴"],2:["⛅","多雲時晴"],3:["☁️","陰"],45:["🌫️","霧"],48:["🌫️","霧凇"],51:["🌦️","毛毛雨"],53:["🌦️","毛毛雨"],55:["🌧️","毛毛雨"],61:["🌦️","小雨"],63:["🌧️","中雨"],65:["🌧️","大雨"],71:["🌨️","小雪"],73:["🌨️","中雪"],75:["❄️","大雪"],80:["🌦️","陣雨"],81:["🌧️","陣雨"],82:["⛈️","強陣雨"],95:["⛈️","雷雨"]};
+
+var PACK=[
+["🔌 電力（最容易忘、忘了最痛）",[
+ ["充電線 ×2","一條放隨身包、一條放行李。斷一條不會死"],
+ ["充電頭 ×1–2",""],
+ ["行動電源 ×1–2","🚨 必須隨身，嚴禁託運。外殼標示要清晰可辨"],
+ ["延長線 ×2（五人共用）","飯店插座絕對不夠，這是救命裝備"],
+ ["❌ 電源轉接頭 —— 不用帶","日本 100V、兩腳扁插，跟台灣一樣"]]],
+["👕 衣物（每人）",[
+ ["帽 T ×2","中層主力。1 件穿著出發。燒肉那晚穿舊的"],
+ ["發熱衣／長袖薄內搭 ×3","早晚 8°C 沒這個會冷"],
+ ["短袖 T ×2–3","白天 18°C 脫到剩這件"],
+ ["防風防潑水外套 ×1","🚨 Day 2 天橋立海邊、傘松吊椅一定要"],
+ ["長褲 ×2","一件要好走耐髒（箕面健行）"],
+ ["內褲 ×4","飯店有洗衣機，原本 6 條可減"],
+ ["襪子 ×5","同上，原本 7 雙可減"],
+ ["圍巾 ×1","保暖 CP 值最高"],
+ ["薄手套 ×1","Day 2 傘松吊椅很冷"],
+ ["穿習慣的步行鞋","🚨 絕對不要穿新鞋"],
+ ["室內拖鞋",""]]],
+["💊 藥品（個人必帶）",[
+ ["個人處方藥","帶足全程＋2 天，附英文說明"],
+ ["腸胃藥、止瀉藥","🚨 這趟大量生食：伊根鰤魚丼、木津市場"],
+ ["暈車暈船藥","🚨 Day 2 有兩趟船"],
+ ["OK 繃 ＋ 水泡貼布","🚨 Day 4 箕面來回 5.4 公里"],
+ ["感冒藥、退燒止痛藥",""]]],
+["🪪 證件與金錢",[
+ ["護照正本","效期 6 個月以上"],
+ ["護照影本 ＋ 手機翻拍","分開存放"],
+ ["信用卡 ×2（不同銀行）","已向銀行報備海外刷卡"],
+ ["現金 ¥60,000 以上","其中 ¥10,000 換成千圓鈔與硬幣"],
+ ["西瓜卡（餘額 ¥3,000 以上）",""],
+ ["JR Pass 兌換券",""],
+ ["VJW QR Code 已截圖存相簿",""]]],
+["🧴 盥洗保養",[
+ ["牙刷牙膏、洗面乳",""],
+ ["保養品（分裝 <100ml）",""],
+ ["刮鬍刀",""],
+ ["隱形眼鏡＋藥水、備用眼鏡","日拋多帶 2 天份"],
+ ["護唇膏","11 月關西很乾"],
+ ["濕紙巾","🚨 Day 1 沒房間，很重要"],
+ ["手帕／小毛巾 ×1–2","🚨 日本很多廁所沒擦手紙"]]],
+["🎒 這趟專屬",[
+ ["頸枕 ＋ 眼罩 ＋ 耳塞","🚨 02:30 紅眼班機，睡不好整個 Day 1 都廢"],
+ ["零錢包","Day 2 巴士投幣專用"],
+ ["摺疊購物袋 ×2","Day 3 LIFE、Day 5 藥妝都會爆量"],
+ ["保溫瓶／水壺",""],
+ ["收據夾／小信封","🚨 退稅新制要保留紙本收據"],
+ ["消臭噴霧（五人共用）","Day 3 万正全面可吸菸"],
+ ["指甲剪（⚠️ 必須託運）",""],
+ ["行李秤","回程秤重"],
+ ["輕便雨具、口罩、小夾鏈袋",""]]],
+["⭐ 到日本再買",[
+ ["暖暖包（カイロ）","日本最便宜好用，帶去反而佔空間"],
+ ["雨傘","超商約 ¥600，用完留飯店"],
+ ["❌ 洗髮沐浴、毛巾、吹風機","飯店都有"]]]];
+
+var KEY="kansai5_v3",ST={adhoc:{},edit:{},hide:{},chk:{},done:{},members:["","","","",""],exp:[],avatars:["","","","",""],album:""},CAN=false;
+try{var raw=localStorage.getItem(KEY);if(raw)ST=JSON.parse(raw);localStorage.setItem(KEY+"_t","1");localStorage.removeItem(KEY+"_t");CAN=true}catch(e){CAN=false}
+["adhoc","edit","hide","chk","done"].forEach(function(p){if(!ST[p])ST[p]={}});
+if(!ST.members||ST.members.length!==5)ST.members=["","","","",""];
+if(!ST.exp)ST.exp=[];
+if(!ST.avatars||ST.avatars.length!==5)ST.avatars=["","","","",""];
+if(ST.album===undefined)ST.album="";
+["d1","d2","d3","d4","d5"].forEach(function(k){if(!ST.adhoc[k])ST.adhoc[k]=[];if(!ST.edit[k])ST.edit[k]={};if(!ST.done[k])ST.done[k]={}});
+function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
+function mem(i){return ST.members[i]||("成員"+(i+1))}
+
+var nav=document.getElementById('nav'),main=document.getElementById('main'),toastEl=document.getElementById('toast'),live=document.getElementById('live');
+var cur='d1',editing=null,WX={};
+function jstNow(){var n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+9*3600000)}
+function toMin(t){var p=t.split(':');return (+p[0])*60+(+p[1])}
+function m2s(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function pad(n){return String(n).padStart(2,'0')}
+function todayKey(){var j=jstNow();if(j.getFullYear()!==2026||j.getMonth()!==10)return null;
+ for(var k in D){if(D[k].dnum===j.getDate())return k}return null}
+function toast(m){toastEl.innerHTML=m;toastEl.classList.add('on');setTimeout(function(){toastEl.classList.remove('on')},2200)}
+Object.keys(D).forEach(function(k){var v=D[k],b=document.createElement('button');b.setAttribute('role','tab');
+ b.innerHTML=(k==='prep'||k==='split')?v.label:v.label+'<span class="d">'+v.date.slice(0,5)+'</span>';
+ b.onclick=function(){cur=k;editing=null;render()};b.dataset.k=k;nav.appendChild(b)});
+
+function slotsOf(k){var out=[];
+ D[k].s.forEach(function(s,i){var id='b'+i;if(ST.hide[k+':'+id])return;
+  var o={};for(var p in s)o[p]=s[p];o.id=id;
+  var e=ST.edit[k][id];if(e){for(var p2 in e)o[p2]=e[p2];o.edited=true}out.push(o)});
+ (ST.adhoc[k]||[]).forEach(function(x,i){var id='a'+i;if(ST.hide[k+':'+id])return;
+  var o={};for(var p in x)o[p]=x[p];o.id=id;o.adhoc=true;out.push(o)});
+ return out.sort(function(p,q){return toMin(p.a)-toMin(q.a)})}
+
+/* 落後計算：取最後一個打卡的項目，比較實際 vs 表定 */
+function delayOf(k){var dn=ST.done[k]||{},list=slotsOf(k),last=null;
+ list.forEach(function(s){if(dn[s.id]!==undefined)last={s:s,at:dn[s.id]}});
+ if(!last)return null;
+ var d=last.at-toMin(last.s.a);
+ return {min:d,slot:last.s}}
+
+function fetchWX(){
+ var pts={};Object.keys(D).forEach(function(k){if(D[k].lat)pts[D[k].lat+','+D[k].lon]=1});
+ Object.keys(pts).forEach(function(p){
+  var c=p.split(',');
+  var u="https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+
+   "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date=2026-11-13&end_date=2026-11-17";
+  fetch(u).then(function(r){return r.json()}).then(function(j){
+   if(!j.daily)return;WX[p]=j.daily;if(D[cur]&&D[cur].lat)render()}).catch(function(){})})}
+
+function wxFor(k){var v=D[k];if(!v.lat)return null;var w=WX[v.lat+','+v.lon];if(!w)return null;
+ var d="2026-11-"+pad(v.dnum),i=w.time.indexOf(d);if(i<0)return null;
+ var c=WMO[w.weather_code[i]]||["🌡️","—"];
+ return {ic:c[0],txt:c[1],hi:Math.round(w.temperature_2m_max[i]),lo:Math.round(w.temperature_2m_min[i]),pop:w.precipitation_probability_max[i]}}
+
+function updLive(){
+ var j=jstNow();document.getElementById('jst').textContent=pad(j.getHours())+':'+pad(j.getMinutes());
+ var tk=todayKey();
+ [].forEach.call(nav.children,function(b){b.classList.toggle('today',b.dataset.k===tk)});
+ live.style.display='block';
+ if(!tk){
+  var start=new Date(2026,10,13),now=new Date(j.getFullYear(),j.getMonth(),j.getDate());
+  var dd=Math.round((start-now)/86400000);
+  live.classList.remove('late');
+  live.innerHTML='<div class="l1"><span>出發倒數</span></div><div class="l2">'+(dd>0?'還有 '+dd+' 天':(dd<0?'旅程已結束':'今天出發'))+'</div>'+
+   '<div class="l3">2026/11/13（五）02:30 桃園起飛 ・ 最近死線：10/13 買 Pass、10/14 09:00 搶橋立</div>';
+  return}
+ var list=slotsOf(tk),nowM=j.getHours()*60+j.getMinutes(),ci=-1,ni=-1;
+ for(var i=0;i<list.length;i++){var A=toMin(list[i].a),B=toMin(list[i].b);if(B<A)B+=1440;
+  if(nowM>=A&&nowM<B){ci=i;break}if(nowM<A){ni=i;break}}
+ var v=D[tk],dl=delayOf(tk),n=list.length;
+ var idx=ci>=0?ci:(ni>=0?ni:n-1),stage=idx+1;
+ var pct=Math.round(stage/n*100);
+ var lateTxt='';
+ if(dl&&dl.min>=5){live.classList.add('late');
+  var nd=null;list.forEach(function(s){if(!nd&&s.dead&&toMin(s.a)>nowM)nd=s});
+  lateTxt='<div class="l3" style="color:#F09A90;margin-top:4px">⚠️ <b style="color:#F09A90">落後 '+dl.min+' 分鐘</b>'+
+   (nd?' ・ '+nd.t+' 預估 <b style="color:#F09A90">'+m2s(toMin(nd.a)+dl.min)+'</b>（表定 '+nd.a+'）':'')+'</div>'}
+ else if(dl&&dl.min<=-5){live.classList.remove('late');lateTxt='<div class="l3" style="color:#8FCB97;margin-top:4px">✅ 比表定快 '+(-dl.min)+' 分鐘</div>'}
+ else live.classList.remove('late');
+ var head='<div class="l1"><span>'+(ci>=0?'現在應該在':'空檔中')+' ・ '+v.label+'</span><span>階段 '+stage+' / '+n+'</span></div>';
+ var pbar='<div class="pb"><i style="width:'+pct+'%"></i></div>';
+ if(ci>=0){var s0=list[ci],B2=toMin(s0.b);if(B2<toMin(s0.a))B2+=1440;var nx=list[ci+1];
+  live.innerHTML=head+'<div class="l2">'+s0.t+'</div>'+pbar+
+   '<div class="l3">剩 <b>'+(B2-nowM)+' 分鐘</b>'+(nx?' ・ 下一站 <b>'+nx.a+'</b> '+nx.t:' ・ 今天最後一站')+'</div>'+lateTxt}
+ else if(ni>=0){var s2=list[ni];
+  live.innerHTML=head+'<div class="l2">下一站：'+s2.t+'</div>'+pbar+
+   '<div class="l3">還有 <b>'+(toMin(s2.a)-nowM)+' 分鐘</b>（'+s2.a+' 開始） ・ 今日最硬 <b>'+v.crux.t+'</b></div>'+lateTxt}
+ else live.innerHTML=head+'<div class="l2">今天的行程已結束</div>'+pbar+lateTxt}
+
+function wxAlert(){
+ var out='';
+ ['d2','d4'].forEach(function(k){var w=wxFor(k);if(!w||w.pop==null||w.pop<50)return;
+  var v=D[k];
+  out+='<div class="note" style="border-left-color:var(--red)"><b>☔ '+v.label+'（'+v.date+'）'+v.wxc+' 降雨機率 '+w.pop+'%</b><br>'+
+   (k==='d2'?'傘松視野會歸零，強風還會讓<b>船與纜車全部停駛</b>。考慮改玩京都：嵐山＋錦市場（Pass 涵蓋）。'
+            :'箕面健行淋雨不會開心。考慮改成梅田室內一日：Bic Camera 提前、中崎町巷弄、中之島。')+'</div>'});
+ return out}
+
+function render(){
+ [].forEach.call(nav.children,function(b){b.setAttribute('aria-selected',b.dataset.k===cur)});
+ updLive();
+ if(cur==='prep')return renderPrep();
+ if(cur==='split')return renderSplit();
+ if(cur==='pack')return renderPack();
+ var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=j.getHours()*60+j.getMinutes(),ni=-1;
+ if(isT)list.forEach(function(s,i){var A=toMin(s.a),B=toMin(s.b);if(B<A)B+=1440;if(nowM>=A&&nowM<B)ni=i});
+ var dn=ST.done[cur]||{},dl=delayOf(cur);
+ var nEdit=Object.keys(ST.edit[cur]).length,nHide=Object.keys(ST.hide).filter(function(x){return x.indexOf(cur+':')===0}).length,nAdd=ST.adhoc[cur].length;
+ var changed=nEdit+nHide+nAdd;
+ var w=wxFor(cur);
+var wa=wxAlert();
+ var h=wa;
+ h+='<div class="crux"><div class="lab">今日最硬</div><div class="t mono">'+v.crux.t+'</div><div class="w">'+v.crux.w+'</div><div class="n">'+v.crux.n+'</div></div>';
+ if(w)h+='<div class="wx"><span class="ic">'+w.ic+'</span><span class="tx"><b>'+w.txt+' '+w.hi+'° / '+w.lo+'°</b><small>'+v.wxc+' ・ 降雨機率 '+(w.pop==null?'—':w.pop+'%')+'</small></span></div>';
+ else h+='<div class="wx"><span class="ic">🌡️</span><span class="tx"><b>天氣預報尚未取得</b><small>需要網路，且預報通常只涵蓋未來約 16 天</small></span></div>';
+ h+='<div class="bar">'+(isT?'<button id="jump">跳到現在</button>':'')+'<button id="album">📷 共享相簿</button><button id="addon" class="pri">＋ 新增</button><button id="copy">複製這天</button>'+
+   '<button id="ics1">⏰ 死線加入行事曆</button><button id="ics2">📅 整天加入行事曆</button>'+
+   ((changed||Object.keys(dn).length)?'<button id="reset">還原</button>':'')+'</div><div id="formwrap"></div>';
+ if(dl)h+='<div class="store '+(dl.min>=5?'off':'on')+'" style="margin-bottom:12px">最後打卡：'+dl.slot.t+' ・ '+
+   (dl.min>0?'落後 '+dl.min+' 分鐘':(dl.min<0?'超前 '+(-dl.min)+' 分鐘':'準時'))+'</div>';
+ if(changed)h+='<div class="store on" style="margin-bottom:12px">這天有 '+changed+' 項改動 ・ 按「複製這天」貼給我更新手冊</div>';
+ h+=list.map(function(s,i){
+  var okd=dn[s.id]!==undefined;
+  var cls=['card',s.dead?'dead':'',s.k==='eat'?'eat':'',s.k==='move'?'move':'',(s.adhoc||s.edited)?'adhoc':'',i===ni?'now':'',okd?'ok':''].filter(Boolean).join(' ');
+  var tg=(s.g||[]).map(function(t){return '<span class="tag '+(s.dead?'r':(s.k==='eat'?'g':(s.k==='move'?'v':'a')))+'">'+t+'</span>'}).join('');
+  if(s.bk!==undefined)tg=(ST.chk['b'+s.bk]?'<span class="tag g">✓ 已訂位</span>':'<span class="tag r">⚠️ 待訂位</span>')+tg;
+  if(s.adhoc)tg='<span class="tag c">臨時</span>'+tg;else if(s.edited)tg='<span class="tag c">已改</span>'+tg;
+  var lk='';
+  if(s.dir)lk+='<a class="lk dir" target="_blank" rel="noopener" href="'+DIR(s.dir[0],s.dir[1],s.dir[2])+'">🧭 '+(s.dir[2]==='walking'?'步行路線':'交通路線')+'</a>';
+  if(s.q)lk+='<a class="lk map" target="_blank" rel="noopener" href="'+MAP(s.q)+'">🗺️ 地圖</a>';
+  if(s.food)lk+='<a class="lk food" target="_blank" rel="noopener" href="'+TAB(s.food)+'">🍽️ 食記</a>';
+  (s.w||[]).forEach(function(x){lk+='<a class="lk web" target="_blank" rel="noopener" href="'+x[1]+'">🔗 '+x[0]+'</a>'});
+  lk+='<button class="lk '+(okd?'gone':'go')+'" data-go="'+s.id+'">'+(okd?'✓ '+m2s(dn[s.id]):'✓ 到了')+'</button>';
+  if(s.dead)lk+='<button class="lk web" data-ics="'+s.id+'">⏰ 提醒</button>';
+  lk+='<button class="lk ed" data-ed="'+s.id+'">✎</button><button class="lk rm" data-rm="'+s.id+'">✕</button>';
+  var eta=(dl&&dl.min>=5&&toMin(s.a)>nowM)?'<div class="eta">→'+m2s(toMin(s.a)+dl.min)+'</div>':'';
+  return '<div class="slot'+((isT&&ni>=0&&i<ni)?' past':'')+'" id="s'+i+'"><div class="rail"><div class="tm mono">'+s.a+'</div><div class="te mono">'+s.b+'</div>'+eta+'</div>'+
+   '<div class="'+cls+'">'+(i===ni?'<div class="nowtag">現在</div>':'')+'<div class="hd"><h3>'+s.t+'</h3>'+(s.x?'<span class="chev">›</span>':'')+'</div>'+
+   '<div class="tags">'+tg+lk+'</div>'+(s.x?'<div class="body">'+s.x+'</div>':'')+'</div></div>'}).join('');
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('.card'),function(c){var t=c.querySelector('h3');if(c.querySelector('.body'))t.onclick=function(){c.classList.toggle('open')}});
+ [].forEach.call(main.querySelectorAll('[data-go]'),function(b){b.onclick=function(e){e.stopPropagation();
+  var id=b.dataset.go;if(dn[id]!==undefined)delete ST.done[cur][id];
+  else{var n=jstNow();ST.done[cur][id]=n.getHours()*60+n.getMinutes()}save();render()}});
+ [].forEach.call(main.querySelectorAll('[data-ics]'),function(b){b.onclick=function(e){e.stopPropagation();
+  var one=null,l2=slotsOf(cur);for(var i=0;i<l2.length;i++)if(l2[i].id===b.dataset.ics)one=l2[i];
+  if(!one)return;var v=D[cur];
+  var txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//kansai5//TW','BEGIN:VEVENT',
+   'UID:kansai-'+cur+'-'+one.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,one.a,0),
+   'DTSTART:'+jstStamp(v.dnum,one.a,0),'DTEND:'+jstStamp(v.dnum,one.b,0),
+   'SUMMARY:'+icsEsc('🚨 '+one.t),'LOCATION:'+icsEsc(one.q||(one.dir?one.dir[1]:'')),
+   'BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(one.t+'（15 分鐘後）'),
+   'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  var bl=new Blob([txt],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(bl),a=document.createElement('a');
+  a.href=u;a.download='kansai-'+one.id+'.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('已產生提醒 ・ 開啟檔案加入行事曆')}});
+ [].forEach.call(main.querySelectorAll('[data-ed]'),function(b){b.onclick=function(e){e.stopPropagation();openForm(b.dataset.ed)}});
+ [].forEach.call(main.querySelectorAll('[data-rm]'),function(b){b.onclick=function(e){e.stopPropagation();
+  ST.hide[cur+':'+b.dataset.rm]=true;save();render();toast('已刪除 ・ 可按「還原」復原')}});
+ var jb=document.getElementById('jump');
+ if(jb)jb.onclick=function(){var el=document.getElementById('s'+ni);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});else toast('現在不在行程時段內')};
+ document.getElementById('copy').onclick=function(){copyDay(cur,list)};
+ document.getElementById('addon').onclick=function(){openForm(null)};
+ document.getElementById('album').onclick=openAlbum;
+ document.getElementById('ics1').onclick=function(){dlICS(cur,true)};
+ document.getElementById('ics2').onclick=function(){dlICS(cur,false)};
+ var rb=document.getElementById('reset');
+ if(rb)rb.onclick=function(){ST.edit[cur]={};ST.adhoc[cur]=[];ST.done[cur]={};
+  Object.keys(ST.hide).forEach(function(x){if(x.indexOf(cur+':')===0)delete ST.hide[x]});
+  save();render();toast('已還原這天')};
+ window.scrollTo(0,0)}
+
+function openForm(id){
+ var w=document.getElementById('formwrap');
+ if(editing===id&&w.innerHTML){w.innerHTML='';editing=null;return}
+ editing=id;var cu={a:'',b:'',t:'',q:''};
+ if(id){var l=slotsOf(cur);for(var i=0;i<l.length;i++)if(l[i].id===id){cu.a=l[i].a;cu.b=l[i].b;cu.t=l[i].t.replace(/^[^\s]*\s/,'');cu.q=l[i].q||''}}
+ w.innerHTML='<div class="form"><h4>'+(id?'替換這一項':'新增一站')+'</h4>'+
+ '<div class="row"><input class="t mono" id="ia" placeholder="14:00" maxlength="5" value="'+cu.a+'"><input class="t mono" id="ib" placeholder="15:00" maxlength="5" value="'+cu.b+'"></div>'+
+ '<div class="row"><input id="it" placeholder="要去哪／做什麼" value="'+cu.t.replace(/"/g,'&quot;')+'"></div>'+
+ '<div class="row"><input id="iq" placeholder="地址或地圖關鍵字（選填）" value="'+cu.q.replace(/"/g,'&quot;')+'"></div>'+
+ '<div class="row"><input id="in" placeholder="備註（選填）"></div>'+
+ '<div class="btns"><button class="go" id="iok">'+(id?'替換':'加入')+'</button><button class="cx" id="ix">取消</button></div></div>';
+ document.getElementById('ix').onclick=function(){w.innerHTML='';editing=null};
+ document.getElementById('iok').onclick=function(){
+  var g=function(x){return document.getElementById(x).value.trim()};
+  var a=g('ia'),b=g('ib'),t=g('it');
+  if(!/^\d{1,2}:\d{2}$/.test(a)||!/^\d{1,2}:\d{2}$/.test(b))return toast('時間格式要像 14:00');
+  if(!t)return toast('請填要去哪');
+  if(a.length===4)a='0'+a;if(b.length===4)b='0'+b;
+  var o={a:a,b:b,t:'📍 '+t,q:g('iq')||''};if(g('in'))o.x='<ul><li>'+g('in')+'</li></ul>';
+  if(id&&id.charAt(0)==='b')ST.edit[cur][id]=o;
+  else if(id&&id.charAt(0)==='a')ST.adhoc[cur][+id.slice(1)]=o;
+  else ST.adhoc[cur].push(o);
+  save();editing=null;render();toast(id?'已替換':'已加入')}}
+
+function copyDay(k,list){var v=D[k],dn=ST.done[k]||{};
+ var txt='【'+v.label+' '+v.date+'】'+v.title+'\n今日最硬：'+v.crux.t+' '+v.crux.w+'\n\n'+
+  list.map(function(s){return s.a+'-'+s.b+'  '+s.t+((s.g&&s.g.length)?'  ['+s.g.join('/')+']':'')+(s.q?'\n        📍 '+s.q:'')+(s.adhoc?'  ←臨時':(s.edited?'  ←已改':''))}).join('\n');
+ var hid=Object.keys(ST.hide).filter(function(x){return x.indexOf(k+':')===0});
+ if(hid.length)txt+='\n\n（已刪除 '+hid.length+' 項）';
+ function done(){toast('已複製 '+v.label+'<br><span style="font-weight:400">貼給我，我幫你更新手冊</span>')}
+ function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity=0;
+  document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){toast('複製失敗')}document.body.removeChild(ta)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done)['catch'](fb);else fb()}
+
+function openAlbum(){
+ if(ST.album){window.open(ST.album,'_blank','noopener');return}
+ var u=prompt('貼上共享相簿連結\n（LINE 相簿、Google 相簿共享連結都可以）');
+ if(u&&/^https?:\/\//.test(u)){ST.album=u;save();toast('已設定，下次點就直接開啟');window.open(u,'_blank','noopener')}
+ else if(u)toast('請貼完整網址，要以 http 開頭')}
+
+function pickAvatar(i,file){
+ if(!file)return;var fr=new FileReader();
+ fr.onload=function(){var im=new Image();im.onload=function(){
+  var c=document.createElement('canvas'),n=96;c.width=n;c.height=n;var g=c.getContext('2d');
+  var side=Math.min(im.width,im.height);
+  g.drawImage(im,(im.width-side)/2,(im.height-side)/2,side,side,0,0,n,n);
+  ST.avatars[i]=c.toDataURL('image/jpeg',0.7);save();renderSplit();toast('已更新大頭貼')};im.src=fr.result};
+ fr.readAsDataURL(file)}
+
+function icsEsc(t){return String(t).replace(/[\\;,]/g,function(m){return '\\'+m}).replace(/\n/g,'\\n')}
+function pad2(n){return String(n).padStart(2,'0')}
+/* JST 轉 UTC 字串 */
+function jstStamp(dnum,hhmm,offMin){
+ var p=hhmm.split(':'),mm=(+p[0])*60+(+p[1])-(offMin||0);
+ var d=new Date(Date.UTC(2026,10,dnum,0,0,0));
+ d=new Date(d.getTime()+(mm-540)*60000);
+ return d.getUTCFullYear()+pad2(d.getUTCMonth()+1)+pad2(d.getUTCDate())+'T'+pad2(d.getUTCHours())+pad2(d.getUTCMinutes())+'00Z'}
+
+function makeICS(k,only){
+ var v=D[k],list=slotsOf(k),ev=[];
+ list.forEach(function(s,i){
+  if(only&&!s.dead)return;
+  var st=jstStamp(v.dnum,s.a,0),en=jstStamp(v.dnum,s.b,0);
+  var alarm=s.dead?15:10;
+  ev.push(['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
+   'DTSTART:'+st,'DTEND:'+en,
+   'SUMMARY:'+icsEsc((s.dead?'🚨 ':'')+s.t),
+   'LOCATION:'+icsEsc(s.q||(s.dir?s.dir[1]:'')),
+   'DESCRIPTION:'+icsEsc((s.g||[]).join(' / ')+(s.dead?'\n※ 這是死線，不能遲到':'')),
+   'BEGIN:VALARM','TRIGGER:-PT'+alarm+'M','ACTION:DISPLAY',
+   'DESCRIPTION:'+icsEsc(s.t+'（'+alarm+' 分鐘後開始）'),'END:VALARM','END:VEVENT'].join('\r\n'))});
+ return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//kansai5//TW','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+  'X-WR-CALNAME:'+icsEsc('關西五日 '+v.label)].concat(ev).concat(['END:VCALENDAR']).join('\r\n')}
+
+function dlICS(k,only){
+ var txt=makeICS(k,only);
+ var blob=new Blob([txt],{type:'text/calendar;charset=utf-8'});
+ var url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='kansai-'+k+(only?'-deadlines':'')+'.ics';
+ document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(url)},4000);
+ toast(only?'已產生死線提醒<br><span style="font-weight:400">開啟檔案加入行事曆</span>':'已產生整天行程<br><span style="font-weight:400">開啟檔案加入行事曆</span>')}
+
+/* ---------- 分帳 ---------- */
+function renderSplit(){
+ var bal=[0,0,0,0,0],tot=0;
+ ST.exp.forEach(function(e){tot+=e.amt;bal[e.by]+=e.amt;
+  var n=e.who.length||5;e.who.forEach(function(i){bal[i]-=e.amt/n})});
+ var h='<h2 class="sec">成員</h2><div class="form" style="border-style:solid;border-color:var(--line)">'+
+  [0,1,2,3,4].map(function(i){
+   var av=ST.avatars[i]?'<img class="av" src="'+ST.avatars[i]+'" alt="">':'<div class="av">＋</div>';
+   return '<div class="mem"><span class="avwrap">'+av+'<input type="file" accept="image/*" data-av="'+i+'"></span><input data-m="'+i+'" value="'+(ST.members[i]||'').replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+' 的名字"></div>'}).join('')+
+  '<div class="hint">點頭像可以從相簿選照片。填好名字，記帳時就能直接選人。</div></div>';
+ h+='<h2 class="sec">結算</h2>';
+ h+='<div class="note">總支出 <b>¥'+Math.round(tot).toLocaleString()+'</b> ・ 共 '+ST.exp.length+' 筆</div>';
+ h+=[0,1,2,3,4].map(function(i){var b=Math.round(bal[i]);
+  var ic=ST.avatars[i]?'<img class="av" style="width:26px;height:26px;margin-right:8px;vertical-align:-8px" src="'+ST.avatars[i]+'">':'';
+  return '<div class="bal"><span class="p">'+ic+mem(i)+'</span><span class="'+(b>0?'plus':(b<0?'minus':''))+'">'+
+   (b>0?'應收 ¥'+b.toLocaleString():(b<0?'應付 ¥'+(-b).toLocaleString():'—'))+'</span></div>'}).join('');
+ h+='<h2 class="sec">記一筆</h2><div class="form"><h4>誰付的</h4>'+
+  '<div class="who" id="wby">'+[0,1,2,3,4].map(function(i){return '<label><input type="radio" name="by" value="'+i+'"'+(i===0?' checked':'')+'><span>'+mem(i)+'</span></label>'}).join('')+'</div>'+
+  '<h4>誰要分攤（不選＝五人均分）</h4><div class="who" id="wsh">'+[0,1,2,3,4].map(function(i){return '<label><input type="checkbox" value="'+i+'"><span>'+mem(i)+'</span></label>'}).join('')+'</div>'+
+  '<div class="row"><input id="eamt" inputmode="numeric" placeholder="金額（日圓）"></div>'+
+  '<div class="row"><input id="enote" placeholder="項目，例如 奈良寄物"></div>'+
+  '<button class="go" id="eadd">記下來</button></div>';
+ h+='<h2 class="sec">明細</h2>';
+ h+=ST.exp.length?ST.exp.map(function(e,i){
+  return '<div class="exp"><span class="l">'+(e.note||'—')+'<small>'+mem(e.by)+' 付 ・ '+(e.who.length&&e.who.length<5?e.who.map(mem).join('、')+' 分攤':'五人均分')+'</small></span>'+
+   '<span class="r"><b>¥'+e.amt.toLocaleString()+'</b><button data-x="'+i+'">刪除</button></span></div>'}).reverse().join(''):'<div class="note">還沒有紀錄。</div>';
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('[data-m]'),function(inp){inp.onchange=function(){ST.members[+inp.dataset.m]=inp.value.trim();save();renderSplit()}});
+ [].forEach.call(main.querySelectorAll('[data-av]'),function(inp){inp.onchange=function(){pickAvatar(+inp.dataset.av,inp.files[0])}});
+ document.getElementById('eadd').onclick=function(){
+  var amt=parseInt(document.getElementById('eamt').value,10);
+  if(!amt||amt<=0)return toast('請填金額');
+  var by=+main.querySelector('input[name=by]:checked').value;
+  var who=[].filter.call(main.querySelectorAll('#wsh input'),function(c){return c.checked}).map(function(c){return +c.value});
+  if(!who.length)who=[0,1,2,3,4];
+  ST.exp.push({amt:amt,by:by,who:who,note:document.getElementById('enote').value.trim()});
+  save();renderSplit();toast('已記錄')};
+ [].forEach.call(main.querySelectorAll('[data-x]'),function(b){b.onclick=function(){ST.exp.splice(+b.dataset.x,1);save();renderSplit()}});
+ window.scrollTo(0,0)}
+
+function renderPack(){
+ var tot=0,dn=0;
+ PACK.forEach(function(sec,si){sec[1].forEach(function(it,ii){if(it[0].charAt(0)!=='❌'){tot++;if(ST.chk['p'+si+'_'+ii])dn++}})});
+ var h='<div class="store '+(dn===tot?'on':'off')+'" style="margin-bottom:14px">已打包 '+dn+' / '+tot+' 項</div>';
+ h+='<div class="note"><b>行李箱出發時只裝五到六成</b><br>3C 家電、藥妝、清酒、伴手禮都要帶回來。裝滿出門＝回程一定爆炸。</div>';
+ PACK.forEach(function(sec,si){
+  h+='<h2 class="sec">'+sec[0]+'</h2>';
+  h+=sec[1].map(function(it,ii){var id='p'+si+'_'+ii,on=ST.chk[id],no=it[0].charAt(0)==='❌';
+   if(no)return '<div class="note" style="border-left-color:var(--dim)">'+it[0]+(it[1]?'<br><span style="color:var(--dim);font-size:12.5px">'+it[1]+'</span>':'')+'</div>';
+   return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+it[0]+(it[1]?'<small>'+it[1]+'</small>':'')+'</span></label>'}).join('')});
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
+  cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save();renderPack()}});
+ window.scrollTo(0,0)}
+
+function renderPrep(){
+ var st=CAN?'<div class="store on">✅ 儲存已啟用</div>':'<div class="store off">⚠️ 目前無法儲存 —— 請下載到手機用瀏覽器開啟</div>';
+ var hot='<h2 class="sec">住宿</h2>'+HOTELS.map(function(h){
+  return '<div class="hotel"><h4>'+h.n+'</h4><div class="sub">'+h.d+'<br>'+h.addr+'</div>'+
+  '<div class="tags"><a class="lk map" target="_blank" rel="noopener" href="'+MAP(h.q)+'">🗺️ 地圖</a>'+
+  '<a class="lk web" target="_blank" rel="noopener" href="'+h.web+'">🔗 官網</a>'+
+  '<a class="lk food" href="tel:'+h.tel.replace(/-/g,'')+'">📞 '+h.tel+'</a></div>'+
+  '<div class="hint">'+h.note+'</div></div>'}).join('');
+ var cash='<div class="note"><b>只收現金</b><br>Day 2 丹後全境・Day 4 きすけ・Day 5 木津市場（<b>場內無 ATM</b>）、OS DRUG</div>'+
+ '<div class="note"><b>每人 ¥60,000 以上</b>，其中 <b>¥10,000 換千圓鈔與硬幣</b> —— 公車兌幣機只吃 ¥1,000。</div>'+
+ '<div class="note"><b>ATM 最後補給點</b><br>Day 2：天橋立站前超商｜Day 5：木津市場東側大樓下超商</div>';
+ var rules='<div class="note"><b>三個不准討論、直接執行</b><br>1. Day 2 沒搭到 14:00 那班船 → 放棄遊覽船，走回伊根搭 14:28<br>2. Day 3 沒趕上 15:50 的 JR → 搭下一班並打給万正<br>3. Day 5 はるか 有異狀 → 立刻改南海空港急行</div>'+
+ '<div class="note"><b>五個角色</b><br>總決策者・財務・訂位窗口・行李長・計時員</div>'+
+ '<div class="note"><b>20 分鐘法則</b><br>任何排隊超過 20 分鐘就換或不吃。</div>';
+ main.innerHTML=st+hot+'<h2 class="sec">訂位與劃位</h2>'+
+  BOOK.map(function(x,i){var id='b'+i,on=ST.chk[id];
+   return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[1]+'<small>'+x[0]+(x[2]?' ・ '+x[2]:'')+'</small></span></label>'}).join('')+
+  '<h2 class="sec">電話簿</h2>'+
+  TEL.map(function(t){return '<a class="tel" href="tel:'+t[2].replace(/-/g,'')+'"><span class="n">'+t[0]+'<small>'+t[1]+'</small></span><span class="num mono">'+t[2]+'</span></a>'}).join('')+
+  '<h2 class="sec">共享相簿</h2>'+
+  '<div class="note"><b>'+(ST.album?'已設定':'尚未設定')+'</b><br>'+(ST.album?'<span style="word-break:break-all;color:var(--cyan)">'+ST.album+'</span>':'貼上 LINE 相簿或 Google 相簿的共享連結，之後每天頁面上的「📷 共享相簿」就能一鍵開啟。')+
+  '<div class="tags" style="margin-top:9px"><button class="lk map" id="setalb">'+(ST.album?'更改連結':'設定連結')+'</button>'+(ST.album?'<button class="lk rm" id="clralb">清除</button>':'')+'</div></div>'+
+  '<h2 class="sec">現金</h2>'+cash+'<h2 class="sec">團隊規則</h2>'+rules+
+  '<h2 class="sec">出發前還要查</h2>'+
+  CHECK.map(function(x,i){var id='c'+i,on=ST.chk[id];
+   return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span></label>'}).join('');
+ [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
+  cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save()}});
+ var sa=document.getElementById('setalb');
+ if(sa)sa.onclick=function(){var u=prompt('貼上共享相簿連結',ST.album||'');
+  if(u&&/^https?:\/\//.test(u)){ST.album=u;save();renderPrep();toast('已設定')}else if(u)toast('請貼完整網址')};
+ var ca=document.getElementById('clralb');
+ if(ca)ca.onclick=function(){ST.album='';save();renderPrep()};
+ window.scrollTo(0,0)}
+
+document.getElementById('fstore').textContent=CAN?'儲存已啟用':'下載後用瀏覽器開啟才能保存';
+setInterval(updLive,30000);
+var t0=todayKey();if(t0)cur=t0;
+render();fetchWX();
+</script>
+</body>
+</html>
