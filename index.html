@@ -158,7 +158,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 </header>
 <main id="main"></main>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v16</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v18</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -288,6 +288,7 @@ split:{label:"分帳",date:"五人"},
 shop:{label:"購物",date:"個人"},
 pack:{label:"行李",date:"打包"},
 info:{label:"資訊",date:"預算・退稅"},
+help:{label:"說明",date:"怎麼用"},
 share:{label:"分享",date:"QR"},
 prep:{label:"準備",date:"行前"}};
 
@@ -491,12 +492,14 @@ function wxAlert(){
 function render(){
  [].forEach.call(nav.children,function(b){b.setAttribute('aria-selected',b.dataset.k===cur)});
  updLive();
+ if(cur==='help')return renderHelp();
  if(ST.me===null)return renderWho();
  if(cur==='prep')return renderPrep();
  if(cur==='split')return renderSplit();
  if(cur==='shop')return renderShop();
  if(cur==='pack')return renderPack();
  if(cur==='info')return renderInfo();
+ if(cur==='help')return renderHelp();
  if(cur==='share')return renderShare();
  var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=j.getHours()*60+j.getMinutes(),ni=-1;
  if(isT)list.forEach(function(s,i){var A=toMin(s.a),B=toMin(s.b);if(B<A)B+=1440;if(nowM>=A&&nowM<B)ni=i});
@@ -826,7 +829,8 @@ function renderWho(){
   '<div style="font-size:34px;margin-bottom:6px">⛩️</div>'+
   '<div style="font-size:20px;font-weight:700">你是哪一位？</div>'+
   '<div style="font-size:13.5px;color:var(--dim);margin-top:8px;line-height:1.7">'+
-  '選好之後，你對行程的調整、你的購物清單，都會記在你名下，<br>不會影響其他四個人。分帳也會知道是誰付的。</div></div>';
+  '選好之後，你對行程的調整、你的購物清單，都會記在你名下，<br>不會影響其他四個人。分帳也會知道是誰付的。<br>'+
+  '<span style="color:var(--cyan);font-size:12.5px">不確定怎麼用？先看上面的「說明」分頁。</span></div></div>';
  h+='<div class="form" style="border-style:solid;margin-top:18px">';
  for(var i=0;i<5;i++){
   h+='<div class="mem"><span class="avwrap">'+avatarHTML(i,40)+'<input type="file" accept="image/*" data-wa="'+i+'"></span>'+
@@ -986,6 +990,107 @@ function shopForm(i){
   if(i!==null){for(var k in o)ST.shop[i][k]=o[k]}
   else{o.id=Date.now().toString(36)+Math.random().toString(36).slice(2,5);o.photo='';o.done=false;ST.shop.push(o)}
   save();renderShop();toast(i!==null?'已儲存':'已加入');if(ST.room)roomSync(true)}}
+
+
+/* ---- 使用說明 ---- */
+function renderHelp(){
+ var h='';
+ function sec(t){return '<h2 class="sec">'+t+'</h2>'}
+ function n(t){return '<div class="note">'+t+'</div>'}
+ function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
+ function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
+
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v18</span>');
+
+ h+=sec('最先做的三件事');
+ h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
+   '<br><br><b>② 加到主畫面</b><br>iPhone：Safari 下方分享鈕 → 加入主畫面。<br>Android：Chrome 右上三點 → 加到主畫面。<br>加完桌面會出現鳥居圖示，點開是全螢幕、沒有網址列。'+
+   '<br><br><b>③ 加入同步房間</b><br>到「分帳」分頁，一個人按「建立房間」，把房號分享到群組，其他四個人按「加入房間」貼上。之後分帳和購物清單就會自動互通。');
+
+ h+=sec('每天最常看的：日期分頁');
+ h+=n('<b>頂部橫幅「現在應該在」</b><br>旅行當天會自動出現，顯示你這個時間點應該在哪一站、還剩幾分鐘、下一站是什麼、今天走到第幾階段（有進度條）。<b>每 30 秒更新一次。</b>'+
+   '<br><br><b>「今日最硬」紅框</b><br>那一天唯一不能錯過的時間點。錯過它整天會連鎖崩掉，所以獨立標出來。'+
+   '<br><br><b>時間軸顏色的意思</b><br>'+
+   '🔴 紅色左邊條＝<b>死線</b>，不能遲到<br>'+
+   '🟢 綠色左邊條＝<b>吃飯</b><br>'+
+   '🟣 紫色左邊條＝<b>移動</b>（電車、巴士、步行）<br>'+
+   '🔵 青色虛線框＝<b>你自己加的或改過的</b><br>'+
+   '青框發光＝<b>現在正在進行的那一格</b>');
+
+ h+=sec('每一格上面的按鈕');
+ h+=n('<b>🧭 交通路線</b>　開 Google Maps 導航，<b>交通方式已經設定好</b>：電車段是大眾運輸、走路段是步行。<br><br>'+
+   '<b>🗺️ 地圖</b>　開 Google Maps 顯示那個地點。<br><br>'+
+   '<b>🍽️ 食記</b>　開 Google 搜尋那家店的食べログ 評價。<br><br>'+
+   '<b>🔗 官網</b>　開該景點或交通公司的官方網站。<br><br>'+
+   '<b>✓ 到了</b>　<b>這是最重要的一顆。</b>抵達時按一下，App 會記錄實際時間，然後算出你比表定快還是慢。<br><br>'+
+   '<b>⏰ 提醒</b>（只有死線有）　產生單項的行事曆提醒檔。<br><br>'+
+   '<b>✎</b>　修改這一格的時間或內容。<br><br>'+
+   '<b>✕</b>　刪掉這一格。<br><br>'+
+   '<span style="color:var(--dim)">點標題文字可以展開／收合詳細說明。</span>');
+
+ h+=sec('落後偵測怎麼運作');
+ h+=w('<b>按「✓ 到了」是啟動這個功能的唯一方法。</b><br><br>'+
+   '按下去之後，App 拿實際時間跟表定時間相減，得出你落後或超前幾分鐘。然後：<br><br>'+
+   '・頂部橫幅<b>變紅色</b>，顯示「⚠️ 落後 14 分鐘」<br>'+
+   '・<b>下一個死線的預估抵達時間</b>會算給你看（表定 14:31 → 預估 14:45）<br>'+
+   '・時間軸左邊每個還沒到的項目，都會出現紅色的推算時間<br><br>'+
+   '<b>不用心算，直接看到哪個死線要爆。</b>再按一次「✓ 到了」可以取消記錄。');
+
+ h+=sec('臨時改行程');
+ h+=n('<b>＋ 新增</b>　加一站臨時想去的地方。填開始／結束時間、要去哪、地圖關鍵字、備註，會依時間自動插到正確位置。<br><br>'+
+   '<b>✎ 改</b>　修改原本的行程。<br><br>'+
+   '<b>✕ 刪</b>　刪掉不想去的。<br><br>'+
+   '<b>還原</b>　一鍵回到原始行程。只有在那天有改動時才會出現。<br><br>'+
+   '<b style="color:#8FCB97">你的所有改動只會出現在你自己的手機上，不會影響其他四個人。</b>加的東西會標「'+meName()+' 加的」，改過的標「'+meName()+' 改過」。');
+
+ h+=sec('把改動告訴別人');
+ h+=n('<b>複製這天</b>　把整天行程（含你加的、改的）複製成純文字，可以直接貼到 LINE 群組。<br><br>'+
+   '那天有改動時，上方會出現提示告訴你有幾項。<b>貼給 Claude 可以幫你更新完整手冊。</b>');
+
+ h+=sec('死線提醒 —— 三層，鎖屏也會響');
+ h+=g('<b>🥇 行事曆（最可靠）</b><br>「準備」分頁 → <b>⏰ 一次匯入全程死線</b>，會下載一個 .ics 檔，點開加進手機行事曆。<br>'+
+   '每個死線設<b>兩段提醒：前 30 分鐘與前 10 分鐘</b>。<b>鎖屏會跳、會出聲、離線也會響</b>，不需要開著 App，也不吃電。<br>'+
+   '<span style="color:var(--dim)">每天頁面上也有單日版和單項版。</span>');
+ h+=n('<b>🥈 手機內建鬧鐘（最兇）</b><br>「準備」分頁 → <b>複製鬧鐘清單</b>，把全程死線時間複製起來，手動設進鬧鐘 App。<br>iOS 的鬧鐘<b>連靜音模式都會響</b>，這是行事曆做不到的。');
+ h+=n('<b>🥉 App 內通知（備援）</b><br>「準備」分頁開啟通知權限後，App 開著時死線前 15 分鐘會跳通知並震動。<br><span style="color:var(--dim)">手機鎖屏久了不保證會響 —— 網頁做不到背景推播，所以只當備援。</span>');
+
+ h+=sec('分帳怎麼用');
+ h+=n('<b>① 先填五個人的名字</b>（分帳分頁最上面）<br>打完名字會自動生成大頭貼，<b>點頭像可以換成自己的照片</b>。<br><br>'+
+   '<b>② 建立或加入房間</b><br>一個人建立，把房號分享到群組，其他人貼上加入。<b>停在分帳頁時每 10 秒自動同步，記完一筆帳也會立刻推送。</b><br><br>'+
+   '<b>③ 記一筆</b><br>選誰付的、誰分攤（不選就是五人均分）、金額、項目。<br><b>幣別可以選日圓或台幣</b>，打金額時下方會即時顯示換算。<br><br>'+
+   '<b>④ 看結算</b><br>自動算出每個人應收或應付，日圓和台幣都顯示。');
+ h+=n('<b>匯率</b><br>開 App 時自動抓，也可以<b>手動輸入</b>（例如用你在機場實際換到的匯率）。手動設定後不會被自動覆蓋。<br><br>'+
+   '<b>離線同步碼</b><br>網路不通時的備援。按「產生同步碼」得到 QR 和文字代碼，其他人掃或貼上就會合併。<b>重複的紀錄自動略過</b>，不用怕按兩次。');
+
+ h+=sec('購物清單');
+ h+=n('<b>兩層結構</b><br>下方「推薦清單」是通用建議，按 <b>＋ 加入我的</b> 才會進你的清單。你自己加的<b>只記在你名下</b>。<br><br>'+
+   '<b>每一項的按鈕</b><br>'+
+   '🗺️ 地圖　開店家位置<br>'+
+   '⭐ 評價　Google 搜尋這個商品的評價<br>'+
+   '🖼️ 找圖　開 Google 圖片搜尋<br>'+
+   (gcseReady()?'🔍 自動找圖　直接抓 4 張商品圖，點一張就設為這項的圖片<br>':'')+
+   '📷 上傳照片　用自己拍的或存的圖<br>'+
+   '標記已買　買到了就按<br><br>'+
+   '<b>加入房間後可以互看</b><br>「其他人想買什麼」會列出另外四個人的清單 —— 可以互相代購、避免五個人都買同一樣。');
+
+ h+=sec('其他分頁');
+ h+=n('<b>行李</b>　七組打包清單，電力放第一組（充電線、行動電源最容易忘）。可勾選，上方顯示進度。<br><br>'+
+   '<b>資訊</b>　每人預算彙總（含台幣換算）、2026 退稅新制、隨身 vs 託運、台灣海關規定。<br><br>'+
+   '<b>分享</b>　QR Code 給其他人掃、共享相簿連結、離線快取狀態。<br><br>'+
+   '<b>準備</b>　你的身分、住宿資料、訂位與劃位清單、電話簿（可直接撥號）、現金配置、團隊規則、出發前還要查的事。');
+
+ h+=sec('離線與更新');
+ h+=g('<b>離線可用</b><br>App 會把自己整份存進手機，<b>飛航模式、地下鐵、訊號差的地方都能開</b>。天氣和匯率會顯示上次抓到的資料。<br>'+
+   '<span style="color:var(--dim)">地圖、路線、搜尋這些需要網路的功能離線時無法使用。</span>');
+ h+=n('<b>更新到新版</b><br>如果底部版本號不是最新，在網址後面加上 <b>?v=數字</b>（例如 ?v=17）強制更新。<br>已經加到主畫面的話快取會很頑固 —— <b>把桌面圖示刪掉，用瀏覽器重開網址，再重新加入主畫面。</b>');
+ h+=w('<b>資料存在哪裡</b><br>勾選、購物清單、分帳、大頭貼都存在<b>你自己的手機裡</b>，不會自動備份。<br>清除瀏覽器資料會全部消失。重要的東西（例如分帳）記得用「複製」功能備份到群組。');
+
+ h+=sec('五人團最重要的三條');
+ h+=w('<b>1. 三個不准現場討論的決定</b><br>Day 2 午餐拖到 14:00 後就放棄遊覽船；Day 3 沒趕上 15:50 的 JR 就搭下一班並打給万正；Day 5 はるか 有異狀立刻改南海空港急行。<b>詳見「準備」分頁。</b>'+
+   '<br><br><b>2. 分配五個角色</b><br>總決策者、財務、訂位窗口、行李長、計時員。出發前寫在群組置頂。'+
+   '<br><br><b>3. 20 分鐘法則</b><br>任何排隊超過 20 分鐘就換一家或不吃。五個人的時間要乘以五。');
+
+ main.innerHTML=h;window.scrollTo(0,0)}
 
 /* ---- 資訊頁：預算・退稅・海關 ---- */
 function renderInfo(){
