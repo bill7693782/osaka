@@ -193,8 +193,11 @@ main.anim{animation:fadein .22s ease-out}
 .form h4{margin:0 0 9px;font-size:13.5px;color:var(--cyan);font-weight:650}
 .form .row{display:flex;gap:7px;margin-bottom:7px}
 .form select{appearance:none;-webkit-appearance:none;background-image:none}
+.form input[type=time]{-webkit-appearance:none;appearance:none;min-width:0}
+.form input[type=time]::-webkit-calendar-picker-indicator{filter:invert(.72);cursor:pointer}
+.form .t{flex:1 1 0;text-align:center;min-width:0}
 .form input,.form select{background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit;width:100%}
-.form input.t{flex:0 0 84px;text-align:center}
+.form input.t{flex:1 1 0;text-align:center;min-width:0}
 .form input::placeholder{color:#5C6B7C}
 .form .btns{display:flex;gap:7px}
 .form .go{flex:1;background:var(--cyan);border:0;color:var(--ground);font-weight:650;border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
@@ -292,7 +295,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v72</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v75</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -613,6 +616,14 @@ var nav=document.getElementById('nav'),main=document.getElementById('main'),toas
 var cur='d1',editing=null,WX={},WXFAR=0;
 /* 只有切換分頁時才捲到頂；同頁內互動保持原位 */
 var LASTTAB=null,KEEPSCROLL=false;
+/* 表單開在頁面上方，若使用者在下方按編輯會看不到 —— 開完捲過去並閃一下 */
+function focusForm(id){
+ setTimeout(function(){
+  var el=document.getElementById(id);
+  if(!el||!el.innerHTML)return;
+  try{el.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){try{el.scrollIntoView()}catch(e2){}}
+  if(el.classList){el.classList.add('flash');setTimeout(function(){el.classList.remove('flash')},900)}
+ },30)}
 /* 有表單開著時，背景同步不要重繪，否則使用者填到一半會被清掉 */
 function formOpen(){
  var a=document.getElementById('formwrap'),b=document.getElementById('editexp'),c=document.getElementById('sform');
@@ -931,7 +942,7 @@ function render(){
    '<button id="ics1">⏰ 死線加入行事曆</button>'+
    '<button id="compact">'+(ST.compact?'📐 顯示交通段':'📐 緊湊模式')+'</button>'+
    '<button id="ics2">📅 整天加入行事曆</button>'+
-   ((changed||!list.length)?'<button id="reset">↩️ 還原行程</button>':'')+
+   ((changed||!list.length)?'<button id="reset">↩️ 全部還原</button>':'')+
    (Object.keys(dn).length?'<button id="resetdone">🧹 清除打卡</button>':'')+
    '</div><div id="formwrap"></div>';
  var nDone=Object.keys(dn).length;
@@ -976,7 +987,9 @@ function render(){
   (s.w||[]).forEach(function(x){lk2+='<a class="lk web" target="_blank" rel="noopener" href="'+x[1]+'">🔗 '+x[0]+'</a>'});
 
   if(s.dead)lk2+='<button class="lk web" data-ics="'+s.id+'">⏰ 提醒</button>';
-  lk2+='<button class="lk ed" data-ed="'+s.id+'">✎ 改</button><button class="lk rm" data-rm="'+s.id+'">✕ 刪</button>';
+  lk2+='<button class="lk ed" data-ed="'+s.id+'">✎ 改</button>';
+  if(s.edited&&s.id.charAt(0)==='b')lk2+='<button class="lk map" data-un="'+s.id+'">↩️ 還原原始</button>';
+  lk2+='<button class="lk rm" data-rm="'+s.id+'">✕ 刪</button>';
   if(lk2)lk+='<button class="lk mo" data-mo="'+s.id+'">⋯</button>';
   var eta='';
   if(dl&&tnorm(cur,s.a)>nowM){
@@ -1013,6 +1026,13 @@ function render(){
  [].forEach.call(main.querySelectorAll('[data-go]'),function(b){b.onclick=function(e){e.stopPropagation();
   var id=b.dataset.go;if(dn[id]!==undefined)delete ST.done[cur][id];
   else{ST.done[cur][id]=nowMinFor(cur)}save();keepScroll(render)}});
+ [].forEach.call(main.querySelectorAll('[data-un]'),function(b){b.onclick=function(e){e.stopPropagation();
+  var id=b.dataset.un,src=D[cur].s[+id.slice(1)];
+  ask('還原這一項？',(src?stripEmoji(stripTag(src.t))+'\n回到原本的 '+src.a+' – '+src.b:'')+'\n\n只影響這一項，其他改動保留。',function(){
+   delete ST.edit[cur][id];save();keepScroll(render);toast('已還原這一項')},true)}});
+ [].forEach.call(main.querySelectorAll('[data-un]'),function(b){b.onclick=function(e){e.stopPropagation();
+  var id=b.dataset.un;
+  delete ST.edit[cur][id];save();keepScroll(render);toast('已還原這一項的原始內容')}});
  [].forEach.call(main.querySelectorAll('[data-du]'),function(b){b.onclick=function(e){e.preventDefault();e.stopPropagation();
   delete ST.hide[b.dataset.du];save();keepScroll(render);toast('已還原這一項')}});
  [].forEach.call(main.querySelectorAll('[data-ics]'),function(b){b.onclick=function(e){e.stopPropagation();
@@ -1077,31 +1097,49 @@ function render(){
 function openForm(id){
  var w=document.getElementById('formwrap');
  if(editing===id&&w.innerHTML&&w.dataset.mode==='ed'){w.innerHTML='';editing=null;return}
- w.dataset.mode='ed';editing=id;var cu={a:'',b:'',t:'',q:''};
- if(id){var l=slotsOf(cur);for(var i=0;i<l.length;i++)if(l[i].id===id){cu.a=l[i].a;cu.b=l[i].b;cu.t=l[i].t.replace(/^[^\s]*\s/,'');cu.q=l[i].q||''}}
- w.innerHTML='<div class="form"><h4>'+(id?'替換這一項':'新增一站')+'</h4>'+
- '<div class="row"><input class="t mono" id="ia" placeholder="14:00" maxlength="5" value="'+cu.a+'"><input class="t mono" id="ib" placeholder="15:00" maxlength="5" value="'+cu.b+'"></div>'+
+ w.dataset.mode='ed';editing=id;
+ var cu={a:'',b:'',t:'',q:'',n:''},orig=null;
+ if(id){var l=slotsOf(cur);for(var i=0;i<l.length;i++)if(l[i].id===id)orig=l[i]}
+ if(orig){
+  cu.a=orig.a;cu.b=orig.b;cu.q=orig.q||'';
+  cu.t=stripEmoji(String(orig.t)).trim();
+  /* 只有「單行備註」格式才帶回輸入框；原本豐富的說明保留不動 */
+  var m=/^<ul><li>([^<]*)<\/li><\/ul>$/.exec(orig.x||'');
+  if(m)cu.n=m[1];
+ }
+ var rich=!!(orig&&orig.x&&!/^<ul><li>[^<]*<\/li><\/ul>$/.test(orig.x));
+ w.innerHTML='<div class="form"><h4>'+(id?'修改這一項':'新增一站')+'</h4>'+
+ '<h4 style="margin-top:2px">時間</h4>'+
+ '<div class="row"><input type="time" class="t mono" id="ia" value="'+cu.a+'"><input type="time" class="t mono" id="ib" value="'+cu.b+'"></div>'+
  '<div class="row"><input id="it" placeholder="要去哪／做什麼" value="'+cu.t.replace(/"/g,'&quot;')+'"></div>'+
  '<div class="row"><input id="iq" placeholder="地址或地圖關鍵字（選填）" value="'+cu.q.replace(/"/g,'&quot;')+'"></div>'+
- '<div class="row"><input id="in" placeholder="備註（選填）"></div>'+
- '<div class="btns"><button class="go" id="iok">'+(id?'替換':'加入')+'</button><button class="cx" id="ix">取消</button></div>'+
+ '<div class="row"><input id="inote" placeholder="備註（選填）" value="'+cu.n.replace(/"/g,'&quot;')+'"></div>'+
+ (rich?'<div class="hint" style="margin:0 0 10px;color:#8FCB97">原本的詳細說明會保留 —— 備註留空就不會動到它。</div>':'')+
+ '<div class="btns"><button class="go" id="iok">'+(id?'儲存':'加入')+'</button><button class="cx" id="ix">取消</button></div>'+
  '<div class="hint">這是<b>你（'+meName()+'）的個人調整，只會出現在你的手機上</b>，不會改到其他四個人的行程。<br>'+
  '<b style="color:#F5A79E">改時間後，後面的項目不會自動順延</b> —— 電車班次與訂位都是固定時刻，硬推會變成不存在的車。有重疊會標紅提醒你。<br>'+
- '按「⋯ → 還原行程」可以回到原始版本，<b>只想救回其中一項的話，捲到那天最下面的「🗑️ 這天被你刪掉的」逐項還原</b>。</div></div>';
+ '改過的項目可以用 <b>⋯ → ↩️ 還原原始</b> 單獨還原；刪掉的在那天最下面的「🗑️ 這天被你刪掉的」還原。</div></div>';
+ focusForm('formwrap');
  document.getElementById('ix').onclick=function(){w.innerHTML='';editing=null};
  document.getElementById('iok').onclick=function(){
-  var g=function(x){return document.getElementById(x).value.trim()};
+  var g=function(x){var el=document.getElementById(x);return el?String(el.value||'').trim():''};
   var a=g('ia'),b=g('ib'),t=g('it');
-  if(!/^\d{1,2}:\d{2}$/.test(a)||!/^\d{1,2}:\d{2}$/.test(b))return toast('時間格式要像 14:00');
+  if(!/^\d{1,2}:\d{2}$/.test(a)||!/^\d{1,2}:\d{2}$/.test(b))return toast('請選開始與結束時間');
   if(!t)return toast('請填要去哪');
   if(a.length===4)a='0'+a;if(b.length===4)b='0'+b;
-  var o={a:a,b:b,t:'📍 '+t,q:g('iq')||'',by:(ST.me===null?'':mem(ST.me))};if(g('in'))o.x='<ul><li>'+g('in')+'</li></ul>';
+  var o={a:a,b:b,t:'📍 '+t,q:g('iq')||'',by:(ST.me===null?'':mem(ST.me))};
+  var note=g('inote');
+  if(note)o.x='<ul><li>'+note+'</li></ul>';
+  else if(orig&&orig.x&&rich)o.x=orig.x;      /* 保留原本的詳細說明 */
+  if(orig){                                    /* 保留不該被編輯洗掉的欄位 */
+   ['dir','k','g','w','food','dead','bk','pic'].forEach(function(f){if(orig[f]!==undefined&&o[f]===undefined)o[f]=orig[f]});
+  }
   if(id&&id.charAt(0)==='b')ST.edit[cur][id]=o;
   else if(id&&id.charAt(0)==='a')ST.adhoc[cur][+id.slice(1)]=o;
   else ST.adhoc[cur].push(o);
   save();editing=null;render();
   var c=Object.keys(conflictIds(slotsOf(cur))).length;
-  toast(c?((id?'已替換':'已加入')+'<br><span style="font-weight:400;color:#C0392B">⚠️ 造成 '+c+' 個項目時間重疊</span>'):(id?'已替換':'已加入'))}}
+  toast(c?((id?'已儲存':'已加入')+'<br><span style="font-weight:400;color:#C0392B">⚠️ 造成 '+c+' 個項目時間重疊</span>'):(id?'已儲存':'已加入'))}}
 
 function copyDay(k,list){var v=D[k],dn=ST.done[k]||{};
  var txt='【'+v.label+' '+v.date+'】'+v.title+'\n今日最硬：'+v.crux.t+' '+v.crux.w+'\n\n'+
@@ -1349,6 +1387,7 @@ function editExp(id){
   xc.innerHTML=(c==='JPY')?(fmtJP(v)+' ≈ <b style="color:var(--amber)">'+fmtNT(v*r)+'</b>')
                           :(fmtNT(v)+' ≈ <b style="color:var(--amber)">'+fmtJP(v/r)+'</b>')}
  xa.oninput=upd2;[].forEach.call(box.querySelectorAll('input[name=xc]'),function(x){x.onchange=upd2});upd2();
+ focusForm('editexp');
  document.getElementById('xcx').onclick=function(){box.innerHTML='';box.dataset.id=''};
  document.getElementById('xok').onclick=function(){
   var amt=parseInt(xa.value,10);
@@ -1362,7 +1401,7 @@ function editExp(id){
   e.rate=rateVal();e.edited=Date.now();
   save();box.innerHTML='';box.dataset.id='';
   keepScroll(renderSplit);toast('已修改');if(ST.room)roomSync(true)};
- window.scrollTo(0,0)}
+ focusForm('editexp')}
 
 /* ---- 快速記帳（走在路上用，預設自己付、五人均分） ---- */
 function quickExp(){
@@ -1472,11 +1511,17 @@ function voiceHowTo(){
   ipados:'<b>iPad</b>（iPadOS 中文介面叫「<b>語音內容</b>」）<br>'+
    '設定 → <b>輔助使用</b> → <b>語音內容</b>（Spoken Content）→ <b>語音</b> → 中文 → <b>國語（台灣）</b> → 下載 美佳 或 婷婷<br>'+
    '<span style="color:var(--dim)">裝完記得重新整理本頁。</span>',
-  android:'<b>Android</b>：設定 → 系統 → 語言與輸入法 → <b>文字轉語音輸出</b><br>'+
-   '<span style="color:var(--dim)">路徑因廠牌而異：Samsung 在「一般管理」底下，小米在「其他設定」。</span><br>'+
-   '① 偏好的引擎選 <b>Google 文字轉語音</b>（沒有就去 Play 商店裝）<br>'+
-   '② 點引擎旁的齒輪 ⚙️ → 安裝語音資料 → <b>中文（台灣）</b><br>'+
-   '<b style="color:#F09A90">換了還是唸英文 → 把「偏好的引擎」改成 Google 文字轉語音</b>，廠商自家的 TTS 對網頁支援常常不完整。',
+  android:'<b>找到設定頁</b>（各廠牌路徑不同，<b>直接用設定搜尋「文字轉語音」最快</b>）<br>'+
+   '<span style="color:var(--dim)">原生／Pixel：設定 → 系統 → 語言與輸入法 → 文字轉語音輸出<br>'+
+   'Samsung：設定 → 一般管理 → 文字轉語音<br>小米：設定 → 其他設定 → 語言與輸入法 → 文字轉語音</span><br><br>'+
+   '<b>① 引擎選 Google</b><br>「偏好的引擎」改成 <b>Google 文字轉語音引擎</b>。沒有就去 Play 商店搜尋這個名字安裝。<br>'+
+   '<span style="color:#F5A79E">三星、華為自家的引擎對網頁支援常常不完整，一定要換成 Google。</span><br><br>'+
+   '<b>② 裝中文語音</b><br>點引擎右邊的<b>齒輪 ⚙️</b> → <b>安裝語音資料</b> → 找 <b>中文（台灣）</b> → 點進去下載。<br>'+
+   '<span style="color:var(--dim)">清單很長且按英文名排序，中文在 Chinese 那一段。</span><br><br>'+
+   '<b>③ 把語言設成中文</b><br>回到文字轉語音頁面 → <b>語言</b> → 選 <b>中文（台灣）</b>。<br>'+
+   '<span style="color:#F5A79E">這步最常被漏掉 —— 只下載不設定，系統還是唸英文。</span><br><br>'+
+   '<b>④ 測試並重開</b><br>同一頁有<b>「播放範例」</b>，按下去聽到中文才算成功。<br>'+
+   '然後<b>把瀏覽器完全關掉重開</b>（不是重新整理），回來按「🔄 重新偵測」。',
   win:'<b style="color:#8FCB97">最快的方法：用 Chrome 開，而且要有網路</b><br>'+
    'Chrome 連線時會多出「<b>Google 國語（臺灣）</b>」，音質比系統內建好，不用安裝任何東西。<br>'+
    '<span style="color:#F5A79E">⚠️ 這個 App 有離線快取，可能是離線載入的 —— 確認網路通了再按下面的「重新偵測」。Edge 沒有這個線上語音。</span><br><br>'+
@@ -1880,6 +1925,7 @@ function shopForm(i){
   '<div class="row"><input id="so" placeholder="備註（選填）" value="'+(c.note||'').replace(/"/g,'&quot;')+'"></div>'+
   '<div class="btns"><button class="go" id="sok">'+(i!==null?'儲存':'加入')+'</button><button class="cx" id="scx">取消</button></div>'+
   '<div class="hint">加入後會自動產生地圖、評價、找圖三個連結。</div></div>';
+ focusForm('sform');
  document.getElementById('scx').onclick=function(){f.innerHTML=''};
  document.getElementById('sok').onclick=function(){
   var g=function(x){return document.getElementById(x).value.trim()};
@@ -1893,6 +1939,7 @@ function shopForm(i){
 
 
 /* ---- 使用說明 ---- */
+
 function renderHelp(){
  var h='';
  function sec(t){return '<h2 class="sec">'+t+'</h2>'}
@@ -1900,7 +1947,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v72</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v75</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -1955,6 +2002,17 @@ function renderHelp(){
    '<b>✎ 改</b>　修改時間或內容　<b>✕ 刪</b>　刪掉這一格<br><br>'+
    '<span style="color:var(--dim)">點標題文字可以展開／收合詳細說明。</span>');
 
+ h+=sec('🔊 語音導覽');
+ h+=n('每一格的 <b>🔊</b> 會唸出這一站的時間、重點、拍照提示。<b>戴耳機邊走邊聽，不用看螢幕。</b>播放中變 ⏹，再按停止。<br>'+
+   '<span style="color:var(--dim)">用手機內建語音，免網路。日文店名可能唸得怪，那是正常的。</span>');
+ h+=w('<b>沒聲音或唸成英文腔？</b><br>'+
+   '到「<b>準備 → 語音朗讀</b>」，那裡會顯示目前用哪個語音、可以手動換、有試聽鈕，<b>還會列出你這台裝置實際偵測到的所有語音</b>。<br>'+
+   '沒有中文語音時，同一區塊會直接給你<b>這台裝置專屬的安裝步驟</b>。');
+
+ h+=sec('📸 拍照重點');
+ h+=n('主要景點有琥珀色的 <b>📸 拍照重點</b>，<b>預設收起來</b>（不然行程太長）—— 點一下展開，告訴你該拍什麼、怎麼拍。<br>'+
+   '<span style="color:var(--dim)">想預設全部展開，到「準備 → 顯示偏好」切換。</span>');
+
  h+=sec('落後偵測怎麼運作');
  h+=w('<b>按「✓ 到了」是啟動這個功能的唯一方法。</b><br><br>'+
    '按下去之後，App 拿實際時間跟表定時間相減，得出你落後或超前幾分鐘。然後：<br><br>'+
@@ -1976,21 +2034,13 @@ function renderHelp(){
    '<span style="color:var(--dim)">緊湊模式適合出發前確認大方向、或回國後回顧。費用試算不受影響，仍計算全部。</span>');
 
  h+=sec('臨時改行程');
- h+=n('<b>＋ 新增</b>　加一站臨時想去的地方。填開始／結束時間、要去哪、地圖關鍵字、備註，會依時間自動插到正確位置。<br><br>'+
-   '<b>✎ 改</b>　修改原本的行程。<br><br>'+
-   '<b>✕ 刪</b>　刪掉不想去的。<br><br>'+
-   '<b>還原行程</b>　在「⋯」裡，一鍵回到原始版本。<br>'+
-   '<b>只想救回一項</b>　捲到那天最下面，有「🗑️ 這天被你刪掉的」清單，每項旁邊都有還原鈕。<br><br>'+
-   '<b style="color:#8FCB97">你的所有改動只會出現在你自己的手機上，不會影響其他四個人。</b>加的東西會標「'+meName()+' 加的」，改過的標「'+meName()+' 改過」。');
-
- h+=w('<b>改了時間，後面的項目會自動順延嗎？</b><br>'+
-   '<b>不會。</b>因為多數項目是固定時刻 —— 電車班次、開店時間、訂位、纜車末班。自動把 15:12 的巴士推成 15:57，那是一班不存在的車，<b>產生假資訊比不處理更危險</b>。<br><br>'+
-   '所以 App 的做法是：<br>'+
-   '・改過的項目會<b>依新時間自動重新排序</b>到正確位置<br>'+
-   '・<b>費用試算、進度階段、落後偵測都會跟著更新</b><br>'+
-   '・如果跟其他項目<b>時間重疊，會標紅色「⚠️ 時間衝突」</b>，時間軸的節點也變紅，上方還會出現警示列告訴你有幾項撞在一起<br>'+
-   '・儲存時如果造成衝突，提示訊息也會講<br><br>'+
-   '<b>要怎麼處理衝突：</b>自己把後面的項目也改掉，或按「⋯ → 還原行程」回到原版。');
+ h+=n('每一格的 <b>⋯ → ✎ 改</b> 可以調整時間或內容，<b>＋ 新增</b> 可以自己加一站，<b>⋯ → ✕ 刪</b> 可以刪掉。<br>'+
+   '<span style="color:var(--dim)">這些都<b>只存在你的手機上</b>，不會改到其他四個人的行程。</span>');
+ h+=g('<b>三種改動都能單獨還原</b><br><br>'+
+   '<b>改過的</b>　那一格的 <b>⋯ → ↩️ 還原原始</b>，只影響這一項<br>'+
+   '<b>刪掉的</b>　捲到那天最下面的「<b>🗑️ 這天被你刪掉的</b>」，逐項還原<br>'+
+   '<b>自己加的</b>　直接 <b>⋯ → ✕ 刪</b> 掉<br><br>'+
+   '要一次清光就按 <b>⋯ → ↩️ 全部還原</b>，會先告訴你會清掉幾項。<b>打卡紀錄不受影響</b>，那是另一顆「🧹 清除打卡」。');
 
  h+=sec('把改動告訴別人');
  h+=n('<b>複製這天</b>　把整天行程（含你加的、改的）複製成純文字，可以直接貼到 LINE 群組。<br><br>'+
@@ -2720,6 +2770,7 @@ function packForm(id){
  var sel=document.getElementById('pks'),gw=document.getElementById('pkgwrap');
  if(sel)sel.onchange=function(){gw.style.display=(sel.value==='new')?'block':'none';
   if(sel.value==='new'){var gi=document.getElementById('pkg');if(gi)gi.focus()}};
+ focusForm('packform');
  document.getElementById('pkcx').onclick=function(){f.innerHTML='';f.dataset.id=''};
  document.getElementById('pkok').onclick=function(){
   var nm=document.getElementById('pkn').value.trim();
