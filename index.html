@@ -41,8 +41,9 @@ nav button.today{border-color:var(--cyan);color:var(--cyan)}
 #live .pb i{display:block;height:100%;background:var(--cyan);border-radius:2px}
 #live.late .pb i{background:var(--red)}
 .av{width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);object-fit:cover;flex:0 0 auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--dim)}
-.avwrap{position:relative;flex:0 0 auto}
-.avwrap input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.avwrap{position:relative;display:inline-block;vertical-align:middle;line-height:0;flex:0 0 auto}
+.avwrap input[type=file]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2}
+.av{position:relative;z-index:1}
 main{padding:0 16px 70px;max-width:640px;margin:0 auto}
 .crux{margin:14px 0 10px;padding:9px 12px;border:1px solid rgba(228,87,74,.55);border-radius:4px;background:rgba(228,87,74,.09);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
 .crux .lab{color:var(--red);font-size:10.5px;font-weight:700;letter-spacing:.06em;flex:0 0 auto}
@@ -93,6 +94,20 @@ main{padding:0 16px 70px;max-width:640px;margin:0 auto}
 .lk.rm{background:rgba(228,87,74,.14);color:#F09A90;border-color:rgba(228,87,74,.3)}
 .lk.go{background:var(--moss);color:#0E1712;border-color:var(--moss);font-weight:700}
 .lk.gone{background:rgba(99,164,108,.16);color:#8FCB97;border-color:rgba(99,164,108,.4)}
+.cost{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:10px 13px;margin:0 0 12px}
+.cost .c1{font-size:11px;color:var(--dim);font-weight:700;letter-spacing:.05em}
+.cost .c2{display:flex;gap:16px;margin:5px 0 3px;font-size:13px;color:#C9D2DC;flex-wrap:wrap}
+.cost .c2 b{color:var(--paper);font-size:14.5px}
+.cost .c3{font-size:13px;color:#C9D2DC}
+.cost .c3 b{color:var(--amber);font-size:16px}
+.tonight{background:linear-gradient(180deg,rgba(155,139,196,.13),rgba(155,139,196,.05));border:1px solid rgba(155,139,196,.4);border-radius:4px;padding:13px;margin:16px 0 8px}
+.tonight .t1{font-size:12.5px;font-weight:700;color:#C4B8E0;letter-spacing:.04em;margin-bottom:6px}
+.tonight ul{margin:0;padding-left:18px;font-size:13.5px;color:#C9D2DC}
+.tonight li{margin:4px 0}
+.tonight b{color:var(--paper)}
+.tonight .t2{margin-top:9px;padding-top:9px;border-top:1px solid rgba(155,139,196,.3);font-size:13px;color:var(--amber);font-weight:600}
+.pic{margin-top:8px;padding:9px 11px;background:rgba(232,163,61,.09);border:1px solid rgba(232,163,61,.28);border-radius:4px;font-size:13px;color:#E4D3B4;line-height:1.6}
+.pic b{color:var(--amber)}
 .body{display:none;margin-top:9px;padding-top:9px;border-top:1px solid var(--line);font-size:14px;color:#C9D2DC}
 .card.open .body{display:block}
 .body ul{margin:0;padding-left:17px}.body li{margin:4px 0}
@@ -100,6 +115,7 @@ main{padding:0 16px 70px;max-width:640px;margin:0 auto}
 .form{background:var(--surface2);border:1px dashed var(--cyan);border-radius:4px;padding:13px;margin:0 0 14px}
 .form h4{margin:0 0 9px;font-size:13.5px;color:var(--cyan);font-weight:650}
 .form .row{display:flex;gap:7px;margin-bottom:7px}
+.form select{appearance:none;-webkit-appearance:none;background-image:none}
 .form input,.form select{background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit;width:100%}
 .form input.t{flex:0 0 84px;text-align:center}
 .form input::placeholder{color:#5C6B7C}
@@ -153,45 +169,70 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
   <div class="brand"><b>關西五日</b>
     <div class="clock"><span class="jst mono" id="jst">--:--</span><span class="zn">日本時間<br>JST</span></div>
   </div>
+  <div style="padding:0 16px 9px;position:relative"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
   <div id="live" style="display:none"></div>
 </header>
 <main id="main"></main>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v19</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v37</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
 var TAB=function(n){return "https://www.google.com/search?q="+encodeURIComponent(n+" 食べログ")};
 var HK="京都市下京区七条通東堀川西入八百屋町1番地",HO="大阪市浪速区元町3-1-14";
+/* 地圖查詢用：飯店名稱比純地址精準得多 */
+var HKQ="〒600-8262 京都府京都市下京区八百屋町1",
+    HOQ="〒556-0016 大阪府大阪市浪速区元町3-1-14";
 
 var D={
+help:{label:"使用說明",date:"先看這個"},
+d0:{label:"Day 0",date:"11/12 四",dnum:12,title:"出發前夜・桃園 T1",lat:25.0777,lon:121.2328,wxc:"桃園",
+crux:{t:"22:30",w:"搭上台北車站直達車",n:"機捷往機場的直達車末班是 23:00，之後只剩普通車、23:30 前後全線收班。五個人只要一個遲到就沒有備援班次，只剩客運或計程車"},
+s:[
+{a:"20:00",b:"21:00",t:"🧳 最終打包 ＋ 全員檢查",g:["五人各自確認"],dead:1,x:"<ul><li><b>護照正本</b>（效期 6 個月以上）＋ 影本 ＋ 手機翻拍</li><li><b>JR Pass 兌換券</b>（10/13 線上買的那張）</li><li><b>VJW QR Code 已截圖存相簿</b> —— 機場可能沒網路</li><li><b>現金 ¥60,000 以上，其中 ¥10,000 是千圓鈔與硬幣</b></li><li>信用卡 ×2（已向銀行報備海外刷卡、OTP 可收）</li><li class='warn'><b>eSIM 已安裝並測試過</b>｜台灣門號保留收簡訊、關閉數據漫遊</li><li class='warn'><b>行動電源放隨身包，嚴禁託運</b></li><li class='warn'>&gt;100ml 液體、指甲剪全部進託運箱</li><li><b>託運箱只裝五到六成</b> —— 回程要帶 3C、藥妝、清酒、伴手禮</li></ul>"},
+{a:"21:00",b:"21:30",t:"📱 群組最後對表",x:"<ul><li>五個角色分配完成：<b>總決策者・財務・訂位窗口・行李長・計時員</b></li><li>確認所有人都已<b>加入 App 同步房間</b>、填好名字</li><li>確認所有人都已<b>匯入死線行事曆</b>（準備分頁 → 一次匯入全程死線）</li><li class='warn'>再唸一次三個不准討論的決定（見「備案」分頁）</li></ul>"},
+{a:"21:45",b:"22:20",t:"🚶 前往台北車站 機捷 A1",g:["提前 10 分到"],k:"move",dir:["台北車站","桃園機場捷運 台北車站 A1","walking"],x:"<ul><li>機捷 A1 在<b>台北車站 B1，往市民大道方向</b>，跟著「桃園機場」指標走</li><li>五個人＋五個大行李箱，<b>提前抓 10 分鐘找月台</b></li></ul>"},
+{a:"22:30",b:"23:05",t:"🚄 機捷直達車 台北車站 → 機場第一航廈",g:["35分鐘","NT$160"],dead:1,k:"move",dir:["桃園機場捷運 台北車站 A1","桃園機場捷運 機場第一航廈站 A12","transit"],x:"<ul><li><b>紫色的直達車</b>，只停台北車站、新北產業園區、長庚醫院、第一航廈、第二航廈</li><li>普通車（藍色）站站停，要 50 分鐘 —— <b>別上錯車</b></li><li class='warn'><b>末班直達車是 23:00，不要賭那班</b></li><li>直達車有行李車廂，座位旁有手機充電孔</li></ul>"},
+{a:"23:05",b:"23:30",t:"🛬 抵達 T1 ＋ 找捷星櫃檯",g:["第一航廈"],q:"桃園國際機場 第一航廈",x:"<ul><li>捷星在 <b>T1</b>，看電子看板確認櫃檯號碼</li><li>櫃檯約 <b>23:30</b>（起飛前 3 小時）才開，先去也是排隊</li><li>順便上廁所、裝水</li></ul>"},
+{a:"23:30",b:"00:30",t:"✈️ 捷星報到託運",g:["01:30 截止"],dead:1,x:"<ul><li class='warn'><b>櫃檯起飛前 60 分鐘（01:30）關閉</b></li><li>五個人一起排，行李長負責清點五件</li><li class='warn'>再確認一次：<b>行動電源在隨身包、不在託運箱</b></li></ul>"},
+{a:"00:30",b:"01:30",t:"🛂 過安檢 ＋ 出境",x:"<ul><li>深夜櫃檯少，<b>安檢可能比白天慢</b></li><li>出境後可逛免稅店，但<b>回程才是採購重點</b>，去程別買重的</li></ul>"},
+{a:"01:30",b:"02:20",t:"😴 登機門候機",g:["補眠"],x:"<ul><li class='warn'><b>紅眼班機睡不好，整個 Day 1 都會廢</b> —— 頸枕、眼罩、耳塞現在拿出來</li><li>手機與行動電源充飽</li></ul>"},
+{a:"02:30",b:"06:00",t:"🛫 GK050 桃園 → 關西",g:["3小時30分"],x:"<ul><li>機上盡量睡</li><li class='warn'>降落後直接領行李、<b>自動通關者務必請官員補蓋入境章</b></li></ul>"}]},
 d1:{label:"Day 1",date:"11/13 五",dnum:13,title:"鞍馬・貴船・伏見稻荷",lat:35.0116,lon:135.7681,wxc:"京都",
 crux:{t:"16:15",w:"進 ちいかわもぐもぐ本舗",n:"店 17:30 關門，晚到就買不到稻荷達摩玩偶。人多時可能還有入店整理券。"},
 s:[
-{a:"06:00",b:"07:00",t:"🛬 KIX 入境・領行李",g:["5人5大箱"],q:"関西国際空港 第1ターミナル",x:"<ul><li><b>自動通關者務必請官員補蓋入境章</b>，沒章無法退稅</li><li>順手在機場超商買早餐，HARUKA 車上吃</li></ul>"},
+{a:"06:00",b:"07:00",t:"🛬 KIX 入境・領行李",g:["5人5大箱"],q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>自動通關者務必請官員補蓋入境章</b>，沒章無法退稅</li><li class='warn'><b>落地先開 eSIM 數據漫遊</b>，五個人互相確認都連上了</li><li><b>早餐在 KIX 買</b>：Lawson、FamilyMart 或自動販賣機都可以，帶上 HARUKA 吃</li><li>順便買熱飲 —— 11 月京都早上很冷</li><li>領完行李在轉盤旁集合，不要各自往前走</li></ul>"},
 {a:"07:00",b:"07:45",t:"🎫 人工窗口兌換 JR Pass ×5",g:["護照正本"],dead:1,q:"関西空港駅 みどりの窓口",x:"<ul><li>只領 <b>Day 1 與 Day 5</b> 指定席券</li><li class='warn'>人工排太長就拆兩組</li></ul>"},
 {a:"07:54",b:"09:12",t:"🚆 HARUKA → 京都",g:["JR Pass"],k:"move",dir:["関西空港駅","京都駅","transit"]},
-{a:"09:20",b:"10:00",t:"🏨 飯店寄大行李",q:HK,x:"<ul><li>京都站↔飯店<b>單程 11 分，來回 22 分</b></li><li>只放行李，不辦 Check-in</li></ul>"},
-{a:"10:15",b:"10:35",t:"🚆 京阪 東福寺 → 出町柳",g:["¥280"],k:"move",dir:["京阪 東福寺駅","出町柳駅","transit"]},
+{a:"09:20",b:"10:00",t:"🏨 飯店寄大行李",q:HKQ,x:"<ul><li>京都站↔飯店<b>單程 11 分，來回 22 分</b></li><li>只放行李，不辦 Check-in</li></ul>"},
+{a:"10:02",b:"10:12",t:"🚆 JR 京都 → 東福寺",g:["JR Pass","1站"],k:"move",dir:["京都駅","JR東福寺駅","transit"],x:"<ul><li>JR 奈良線一站就到，<b>普通車不用劃位</b></li><li>下車後走到<b>京阪東福寺站</b>只要 2～3 分鐘，兩站相鄰</li></ul>"},
+{a:"10:15",b:"10:35",t:"🚆 京阪 東福寺 → 出町柳",g:["¥280"],k:"move",dir:["京阪 東福寺駅","出町柳駅","transit"],x:"<ul><li class='warn'><b>京阪不在 JR Pass 內，刷西瓜卡</b></li><li>坐到終點出町柳，直接轉叡電</li></ul>"},
 {a:"10:40",b:"11:15",t:"🚋 叡電 出町柳 → 鞍馬",g:["¥500"],k:"move",dir:["出町柳駅","鞍馬駅","transit"],x:"<ul><li>途中經過<b>もみじ隧道</b>，車內關燈慢行</li><li class='warn'>紅葉期特別班表</li></ul>",w:[["叡電官網","https://eizandensha.co.jp/"]]},
 {a:"11:25",b:"12:30",t:"⛩️ 鞍馬寺",g:["愛山費¥200~300","纜車¥200"],q:"鞍馬寺",x:"<ul><li>纜車每 20 分一班</li><li class='warn'>纜車只到多宝塔，<b>到本殿還要走 10 分鐘上坡</b></li></ul>"},
 {a:"12:35",b:"13:05",t:"🍱 午餐：鞍馬駅前",g:["現金"],k:"eat",q:"鞍馬駅",x:"<ul><li><b>有座位的只有這裡，貴船沒有</b></li></ul>"},
 {a:"13:10",b:"13:15",t:"🚋 叡電 鞍馬 → 貴船口",g:["¥210"],k:"move",dir:["鞍馬駅","貴船口駅","transit"]},
 {a:"13:20",b:"13:40",t:"🚌🚶 貴船口 → 貴船神社",g:["巴士¥160 或走20分"],k:"move",dir:["貴船口駅","貴船神社","walking"],x:"<ul><li class='warn'>巴士排隊超過 10 分鐘就直接走</li></ul>"},
 {a:"13:40",b:"14:40",t:"⛩️ 貴船神社",g:["水占¥200"],q:"貴船神社",x:"<ul><li><b>水占みくじ</b>：紙浮在御神水上字才浮現</li></ul>",w:[["官網","https://kifunejinja.jp/"]]},
-{a:"15:45",b:"16:00",t:"🚆 京阪 出町柳 → 伏見稻荷",g:["直達14分 ¥300"],k:"move",dir:["出町柳駅","京阪 伏見稲荷駅","transit"]},
+{a:"14:40",b:"15:00",t:"🚌🚶 貴船神社 → 貴船口",g:["巴士5分 或走20分"],k:"move",dir:["貴船神社","貴船口駅","walking"],x:"<ul><li>京都巴士 33 系統約 5 分鐘（📱¥160），或沿貴船川走 20 分鐘</li><li class='warn'>紅葉期巴士會排隊，<b>排超過 10 分鐘就直接走</b></li></ul>"},
+{a:"15:05",b:"15:35",t:"🚋 叡電 貴船口 → 出町柳",g:["¥470","約27分"],k:"move",dir:["貴船口駅","出町柳駅","transit"],x:"<ul><li class='warn'>叡電不在 JR Pass 內，刷西瓜卡</li><li>回程一樣會經過<b>もみじ隧道</b>，坐右側</li></ul>"},
+{a:"15:45",b:"16:00",t:"🚆 京阪 出町柳 → 伏見稻荷",g:["直達14分 ¥300"],k:"move",dir:["出町柳駅","京阪 伏見稲荷駅","transit"],x:"<ul><li><b>出町柳有始發的普通車直達，不用換車</b></li><li class='warn'>特急不停伏見稻荷，<b>要搭普通車</b></li></ul>"},
+{a:"16:00",b:"16:12",t:"🚶 京阪伏見稻荷站 → 參道",g:["約10分"],k:"move",dir:["京阪 伏見稲荷駅","京都市伏見区深草稲荷中之町46-1","walking"],x:"<ul><li>京阪站走過去約 10 分鐘；<b>JR 稻荷站只要 5 分鐘</b>，但今天從出町柳來搭京阪比較順</li></ul>"},
 {a:"16:15",b:"17:15",t:"🧸 ちいかわもぐもぐ本舗",g:["9:30-17:30"],dead:1,q:"京都市伏見区深草稲荷中之町46-1",x:"<ul><li><b>稻荷達摩玩偶全 8 種</b>、京都限定巾着</li><li class='warn'>可能有入店管制</li></ul>",w:[["官網","https://www.chiikawamogumogu.jp/stores/fushimi/"]]},
 {a:"17:15",b:"18:45",t:"⛩️ 伏見稻荷 千本鳥居",g:["24h開放"],q:"伏見稲荷大社",x:"<ul><li><b>夜間打燈，人比白天少很多</b></li><li>奧社折返不攻頂</li></ul>",w:[["官網","http://inari.jp/"]]},
+{a:"18:45",b:"18:55",t:"🚶 參道 → JR 稻荷站",k:"move",x:"<ul><li>JR 稻荷站就在大鳥居正對面，步行 3～5 分</li></ul>"},
+{a:"18:55",b:"19:05",t:"🚆 JR 稻荷 → 京都",g:["JR Pass"],k:"move",dir:["JR稲荷駅","京都駅","transit"]},
+{a:"19:07",b:"19:15",t:"🚶 京都站 → イオンモールKYOTO",g:["8分"],k:"move",dir:["京都駅","イオンモールKYOTO","walking"],x:"<ul><li>從<b>八条口／南側</b>出站往南走</li></ul>"},
 {a:"19:15",b:"19:25",t:"🎰 一番くじ 京都イオンモール店",g:["10分快閃"],q:"イオンモールKYOTO",x:"<ul><li>Sakura 館 4F，21:00 關</li></ul>",w:[["一番くじ倶楽部","https://1kuji.com/"]]},
-{a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都站前店",bk:15,k:"eat",q:"鳥貴族 京都駅前店",food:"鳥貴族 京都駅前店",x:"<ul><li><b>回飯店前買明早早餐 ×5</b></li></ul>"},
+{a:"19:27",b:"19:35",t:"🚶 走回京都站前",k:"move"},
+{a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都站前店",bk:"torikizoku",k:"eat",q:"鳥貴族 京都駅前店",food:"鳥貴族 京都駅前店",x:"<ul><li><b>回飯店前買明早早餐 ×5</b></li></ul>"},
 {a:"21:05",b:"21:25",t:"🏨 回飯店 Check-in",q:HK}]},
 
 d2:{label:"Day 2",date:"11/14 六",dnum:14,title:"伊根・昇龍觀・飛龍觀",lat:35.5686,lon:135.1938,wxc:"天橋立",
 crux:{t:"08:55",w:"福知山接上たんごリレー1號",n:"只有 8 分鐘轉乘。接不上就得等 09:59 的はしだて1號，早班的好處全沒了 —— 早上的觀光船和傍晚的飛龍觀都要砍掉"},
 s:[
 {a:"06:15",b:"06:50",t:"⏰ 起床整理",g:["今天最早"],x:"<ul><li class='warn'><b>比其他天早一小時</b> —— Day 1 回到飯店已是 21:25，前一晚早點睡</li></ul>"},
-{a:"06:50",b:"07:15",t:"🚶 走到 JR 京都站 ＋ 買早餐",g:["領現金"],k:"move",dir:[HK,"京都駅","walking"],x:"<ul><li class='warn'><b>順便在 ATM 領足現金，每人 ¥8,000 以上</b> —— 伊根完全沒有 ATM</li></ul>"},
+{a:"06:50",b:"07:15",t:"🚶 走到 JR 京都站 ＋ 買早餐",g:["領現金"],k:"move",dir:[HKQ,"京都駅","walking"],x:"<ul><li class='warn'><b>順便在 ATM 領足現金，每人 ¥8,000 以上</b> —— 伊根完全沒有 ATM</li></ul>"},
 {a:"07:32",b:"08:47",t:"🚆 特急 きのさき1號 京都 → 福知山",g:["JR Pass","已劃位"],k:"move",dir:["京都駅","福知山駅","transit"],x:"<ul><li>車上吃早餐</li><li>這班可以用 WEST-TR 線上劃位</li></ul>"},
 {a:"08:47",b:"08:55",t:"🚉 福知山轉乘",g:["只有8分鐘"],dead:1,q:"福知山駅",x:"<ul><li class='warn'><b>同站轉月台，不出閘門。下車就走，不要買東西</b></li><li class='warn'>沒接上 → 等 09:59 的はしだて1號（10:40 到天橋立），<b>回到原案，後面仍走得完</b></li></ul>"},
 {a:"08:55",b:"09:33",t:"🚆 特急 たんごリレー1號 福知山 → 天橋立",g:["JR Pass","自由席"],k:"move",dir:["福知山駅","天橋立駅","transit"],x:"<ul><li class='warn'><b>丹後鐵道路段無法用 Pass 線上劃位</b>，連綠色窗口也不行</li><li><b>直接搭 2 號車自由席</b>，不用劃位</li><li>想要指定席就到日本後在丹鐵有人車站窗口買</li></ul>",w:[["京都丹後鉄道","https://trains.willer.co.jp/"]]},
@@ -200,7 +241,7 @@ s:[
 {a:"10:00",b:"10:12",t:"⛴️ 觀光船 天橋立 → 一の宮",g:["周遊券","12分"],x:"<ul><li><b>早上就橫渡沙洲</b>，比坐巴士繞一圈有趣</li><li>留意 90 度旋轉的迴旋橋</li></ul>"},
 {a:"10:12",b:"10:27",t:"🚶 一の宮桟橋 → 元伊勢籠神社巴士站",k:"move",dir:["一の宮桟橋 天橋立","元伊勢籠神社","walking"]},
 {a:"10:27",b:"10:57",t:"🚌 籠神社 → 伊根漁協前",g:["周遊券"],k:"move",dir:["元伊勢籠神社","伊根漁協前 バス停 京都府与謝郡伊根町","transit"],x:"<ul><li class='warn'>也可以省略早上的船，<b>直接搭 10:00 天橋立駅前 → 伊根的巴士</b>（10:58 到，時間一樣）</li></ul>"},
-{a:"11:00",b:"12:30",t:"🍣 午餐：鮨割烹 海宮",bk:12,g:["可刷卡","90分"],dead:1,k:"eat",q:"京都府与謝郡伊根町字平田593-1",food:"鮨割烹 海宮 伊根",x:"<ul><li><b>食べログ 4.07</b>・舟屋日和施設內・窗外一覽伊根灣</li><li><b>11:30 開店，你們 11:00 到就是第一輪</b></li><li>當日伊根漁港現撈・伊根鰤魚</li><li>11:30–14:30（L.O.14:00）・水曜公休・☎0772-32-1710</li></ul>"},
+{a:"11:00",b:"12:30",t:"🍣 午餐：鮨割烹 海宮",bk:"wadatsumi",g:["可刷卡","90分"],dead:1,k:"eat",q:"京都府与謝郡伊根町字平田593-1",food:"鮨割烹 海宮 伊根",x:"<ul><li><b>食べログ 4.07</b>・舟屋日和施設內・窗外一覽伊根灣</li><li><b>11:30 開店，你們 11:00 到就是第一輪</b></li><li>當日伊根漁港現撈・伊根鰤魚</li><li>11:30–14:30（L.O.14:00）・水曜公休・☎0772-32-1710</li></ul>"},
 {a:"12:30",b:"13:50",t:"🚶 舟屋散策 ＋ 向井酒造",g:["2.1km"],k:"move",dir:["京都府与謝郡伊根町字平田593-1","伊根湾めぐり遊覧船のりば","walking"],x:"<ul><li>邊走邊逛就是行程本身，230 間舟屋一路看過去</li><li><b>向井酒造「伊根滿開」</b>：赤米釀造、紅寶石色澤</li><li class='warn'>現金｜<b>必託運</b>｜Day 5 要買獺祭就<b>這裡買 300ml 小瓶</b></li><li class='warn'>13:50 前抵達「日出」乘船處</li></ul>"},
 {a:"14:00",b:"14:25",t:"🛥️ 伊根灣遊覽船",g:["周遊券","25分"],q:"伊根湾めぐり遊覧船のりば",x:"<ul><li><b>每小時 00 分、30 分發船</b></li><li>蝦味先 ¥100 餵海鷗｜船一開鳥就跟上來，<b>先開好連拍</b></li></ul>"},
 {a:"14:25",b:"14:46",t:"🍢 日出売店 ＋ 等巴士",g:["緩衝21分"],x:"<ul><li>名物<b>焼きちくわ</b></li></ul>"},
@@ -214,12 +255,12 @@ s:[
 {a:"16:32",b:"17:20",t:"🚠 天橋立ビューランド 飛龍觀",g:["約¥1,000","選配"],q:"天橋立ビューランド",x:"<ul><li>這裡是<b>「飛龍觀」</b> —— 與傘松的昇龍觀完全不同角度，<b>一天看完兩個展望台</b></li><li class='warn'><b>16:40 前一定要上去</b>，17:20 下來</li><li>不想拚就跳過，改成站前慢慢逛</li></ul>"},
 {a:"17:20",b:"18:00",t:"⛩️ 站前散策 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'><b>先買便當</b>，站前 17:00～17:30 陸續打烊 —— 時間已晚，<b>便當優先</b></li><li>丹後花蛤便當／丹後牛燒肉便當・丹後黑豆茶包</li><li>智恩寺・<b>迴旋橋</b>・<b>日本三景碑</b></li></ul>"},
 {a:"18:09",b:"20:21",t:"🚆 特急 はしだて8號 → 京都",g:["全車指定席","已劃位"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li>直達不換車，車上吃便當</li></ul>"},
-{a:"20:30",b:"21:00",t:"🏨 回飯店",q:HK,x:"<ul><li>京都站超商<b>買明早早餐 ×5</b></li><li>今晚把大行李收 80%</li></ul>"}]},
+{a:"20:30",b:"21:00",t:"🏨 回飯店",q:HKQ,x:"<ul><li>京都站超商<b>買明早早餐 ×5</b></li><li>今晚把大行李收 80%</li></ul>"}]},
 
 d3:{label:"Day 3",date:"11/15 日",dnum:15,title:"東大寺・志津香・藥師寺・鶴橋",lat:34.6851,lon:135.8048,wxc:"奈良",
 crux:{t:"15:50",w:"搭上 JR 奈良 → 天王寺",n:"後面接的是已訂位的万正燒肉（18:00）。錯過這班就搭下一班，同時打電話 090-2592-9687 跟店家說會晚到。"},
 s:[
-{a:"08:00",b:"08:20",t:"🏨 退房 → JR 京都站",g:["買早餐"],k:"move",dir:[HK,"京都駅","walking"]},
+{a:"08:00",b:"08:20",t:"🏨 退房 → JR 京都站",g:["買早餐"],k:"move",dir:[HKQ,"京都駅","walking"]},
 {a:"08:40",b:"09:30",t:"🚆 みやこ路快速 → 奈良",g:["JR Pass"],k:"move",dir:["京都駅","JR奈良駅","transit"]},
 {a:"09:30",b:"09:55",t:"🧳 JR 奈良站人工寄行李 ×5",g:["¥3000~4000"],dead:1,q:"奈良市総合観光案内所",x:"<ul><li class='warn'><b>寄放成功後行程才正式開始</b></li></ul>"},
 {a:"09:55",b:"10:05",t:"🚌 JR 奈良 → 東大寺",g:["¥250"],k:"move",dir:["JR奈良駅","東大寺","transit"]},
@@ -228,19 +269,19 @@ s:[
 {a:"11:40",b:"11:55",t:"🚌 東大寺 → 近鐵奈良",g:["¥250"],k:"move",dir:["東大寺","近鉄奈良駅","transit"]},
 {a:"11:55",b:"12:05",t:"🍡 中谷堂",g:["現金¥200"],k:"eat",q:"奈良市橋本町29",food:"中谷堂 奈良",x:"<ul><li>高速搗餅，<b>站著吃掉</b></li></ul>"},
 {a:"12:10",b:"12:20",t:"🚆 近鐵 奈良 → 新大宮",g:["¥180"],k:"move",dir:["近鉄奈良駅","新大宮駅","transit"]},
-{a:"12:25",b:"13:15",t:"🍚 午餐：志津香 大宮店",bk:6,k:"eat",q:"奈良市大宮町4-249-4",food:"釜めし志津香 大宮店",x:"<ul><li><b>已先點餐 → 坐下就有得吃</b></li><li class='warn'>最後刮釜底的鍋巴</li></ul>"},
+{a:"12:25",b:"13:15",t:"🍚 午餐：志津香 大宮店",bk:"shizuka",k:"eat",q:"奈良市大宮町4-249-4",food:"釜めし志津香 大宮店",x:"<ul><li><b>已先點餐 → 坐下就有得吃</b></li><li class='warn'>最後刮釜底的鍋巴</li></ul>"},
 {a:"13:20",b:"13:45",t:"🚆 近鐵 新大宮 → 西ノ京",g:["¥300"],k:"move",dir:["新大宮駅","西ノ京駅","transit"]},
-{a:"13:50",b:"14:50",t:"⛩️ 藥師寺",g:["¥1000"],q:"奈良市西ノ京町457",x:"<ul><li><b>東塔（國寶）＋ 西塔</b></li></ul>",w:[["官網","https://yakushiji.or.jp/"]]},
+{a:"13:50",b:"14:50",t:"⛩️ 藥師寺",g:["¥1000"],q:"奈良市西ノ京町457",x:"<ul><li>🎯 <b>大講堂的「佛足石」是這裡的重點</b> —— 753 年（奈良時代）製作，<b>日本現存最古的佛足石</b>，國寶。石上刻的是釋迦的足跡。</li><li class='warn'><b>2026 年 4 月被潑灑甘油汙損</b>，上部四處留下 1～2 平方公分的痕跡。犯人 8 月從關西機場再入境時被捕，坦承「會對感動的東西潑油祈禱」。<br>寺方維持正常參拜，但已表示要強化警備 —— <b>現場可能新增玻璃罩、拉繩或禁止拍照，以現場指示為準</b>。</li><li><b>東塔（國寶）＋ 西塔</b> —— 一座千年、一座昭和再建，站遠一點同框</li><li>金堂的<b>藥師三尊像</b>也值得停留</li></ul>",w:[["官網","https://yakushiji.or.jp/"]]},
 {a:"14:55",b:"15:15",t:"🚆 近鐵 西ノ京 → 新大宮",g:["¥300"],k:"move",dir:["西ノ京駅","新大宮駅","transit"]},
 {a:"15:27",b:"15:42",t:"🧳 取回大行李 ×5",q:"奈良市総合観光案内所"},
 {a:"15:42",b:"15:50",t:"🚉 進站上月台",g:["8分"],dead:1,q:"JR奈良駅",x:"<ul><li class='warn'>案內所在<b>站外舊站房</b></li></ul>"},
 {a:"15:50",b:"16:25",t:"🚆 大和路快速 → 天王寺",g:["JR Pass"],k:"move",dir:["JR奈良駅","天王寺駅","transit"],x:"<ul><li class='warn'>大和路快速<b>不到 JR 難波</b>，一定要在天王寺下車轉 Metro</li></ul>"},
 {a:"16:35",b:"16:45",t:"🚇 天王寺 → 大國町",g:["¥190"],k:"move",dir:["天王寺駅","大国町駅","transit"]},
-{a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HO,x:"<ul><li><b>換上舊的那件帽 T</b>，燒肉會沾味道</li></ul>"},
-{a:"17:20",b:"17:30",t:"🚶 飯店 → なんば站",k:"move",dir:[HO,"なんば駅","walking"]},
+{a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HOQ,x:"<ul><li><b>換上舊的那件帽 T</b>，燒肉會沾味道</li></ul>"},
+{a:"17:20",b:"17:30",t:"🚶 飯店 → なんば站",k:"move",dir:[HOQ,"なんば駅","walking"]},
 {a:"17:33",b:"17:43",t:"🚇 なんば → 鶴橋",g:["¥190"],k:"move",dir:["なんば駅","鶴橋駅","transit"]},
 {a:"17:43",b:"18:00",t:"🚶 鶴橋站 → 万正",g:["15分"],k:"move",dir:["鶴橋駅","大阪市生野区桃谷3-3-2","walking"],x:"<ul><li class='warn'>穿過住宅區，<b>先開好導航</b></li></ul>"},
-{a:"18:00",b:"19:45",t:"🔥 晚餐：万正 燒肉",bk:4,g:["可吸菸"],k:"eat",q:"大阪市生野区桃谷3-3-2",food:"万正 焼肉 桃谷",x:"<ul><li>鹽牛舌 → 橫膈膜 → 內臟拼盤 → おまかせ ×2</li></ul>"},
+{a:"18:00",b:"19:45",t:"🔥 晚餐：万正 燒肉",bk:"manmasa",g:["可吸菸"],k:"eat",q:"大阪市生野区桃谷3-3-2",food:"万正 焼肉 桃谷",x:"<ul><li>鹽牛舌 → 橫膈膜 → 內臟拼盤 → おまかせ ×2</li></ul>"},
 {a:"20:15",b:"20:30",t:"🐙 たこ焼道楽わなか 千日前本店",k:"eat",q:"大阪市中央区難波千日前11-19",food:"たこ焼道楽わなか 千日前本店",x:"<ul><li>なんば グランド花月旁</li><li>銅板現烤，行列名店</li></ul>",w:[["官網","http://takoyaki-wanaka.com/"]]},
 {a:"20:30",b:"20:45",t:"🥟 551蓬莱 本店（宵夜）",k:"eat",q:"大阪市中央区難波3-6-3",food:"551蓬莱 本店",x:"<ul><li>なんば站 11 號出口步行 1 分</li><li class='warn'>豬肉包<b>絕對不可帶回台灣</b></li></ul>"},
 {a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",q:"LIFE 大国町店",x:"<ul><li>20:00 後<b>半額戰場</b>・買 Day 4 早餐 ×5</li></ul>"}]},
@@ -248,7 +289,7 @@ s:[
 d4:{label:"Day 4",date:"11/16 一",dnum:16,title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"17:45",w:"はり重 訂位入座",n:"已訂位 5 人・遲到會被取消。大阪城 15:50 就要離場"},
 s:[
-{a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HO,"大国町駅","walking"]},
+{a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HOQ,"大国町駅","walking"]},
 {a:"08:15",b:"08:50",t:"🚇 大國町 → 大阪梅田",g:["¥240"],k:"move",dir:["大国町駅","大阪梅田駅","transit"]},
 {a:"09:00",b:"09:30",t:"🚆 阪急梅田 → 箕面",g:["¥280"],k:"move",dir:["阪急大阪梅田駅","箕面駅","transit"],x:"<ul><li>石橋阪大前<b>同月台對側</b>轉箕面線</li></ul>"},
 {a:"09:35",b:"11:30",t:"🍁 箕面瀑布健行",g:["來回5.4km"],dead:1,q:"箕面大滝",x:"<ul><li>沿途老店有<b>炸楓葉（紅葉天婦羅）</b>，食用楓葉醃過裹麵糊現炸，箕面獨有</li><li class='warn'>11:00 沒到瀑布就折返</li></ul>"},
@@ -259,29 +300,29 @@ s:[
 {a:"15:55",b:"16:10",t:"🚆 JR 大阪城公園 → 新今宮",g:["Pass免費"],k:"move",dir:["大阪城公園駅","新今宮駅","transit"]},
 {a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["約¥1500"],q:"通天閣",x:"<ul><li>日落約 16:50</li><li class='warn'>不要吃東西，肚子留給壽喜燒</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
 {a:"17:25",b:"17:45",t:"🚇 惠美須町 → 難波",g:["¥190"],k:"move",dir:["恵美須町駅","なんば駅","transit"]},
-{a:"17:45",b:"19:45",t:"🍲 晚餐：はり重 道頓堀本店",bk:7,k:"eat",q:"大阪市中央区道頓堀1-9-17",food:"はり重 道頓堀本店",x:"<ul><li>難波站 14 號出口步行 3 分</li><li><b>秘傳割下以牛筋熬煮</b></li></ul>"},
+{a:"17:45",b:"19:45",t:"🍲 晚餐：はり重 道頓堀本店",bk:"harijyu",k:"eat",q:"大阪市中央区道頓堀1-9-17",food:"はり重 道頓堀本店",x:"<ul><li>難波站 14 號出口步行 3 分</li><li><b>秘傳割下以牛筋熬煮</b></li></ul>"},
 {a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關"],q:"大阪市中央区千日前2-10-1",x:"<ul><li><b>定位是看看就好，沒有一定要買。</b>吹風機、美容儀、耳機、相機都有，21:00 硬關門</li></ul>"},
-{a:"21:05",b:"21:20",t:"🚶 走回飯店",dead:1,k:"move",dir:["なんば駅",HO,"walking"],x:"<ul><li class='warn'><b>回房後打包八成</b></li></ul>"}]},
+{a:"21:05",b:"21:20",t:"🚶 走回飯店",dead:1,k:"move",dir:["なんば駅",HOQ,"walking"],x:"<ul><li class='warn'><b>回房後打包八成</b></li></ul>"}]},
 
 d5:{label:"Day 5",date:"11/17 二",dnum:17,title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"18:47",w:"抵達天王寺轉 JR",n:"五個人拖五個大行李箱出 Metro 閘門走到 JR 月台，要 15 分鐘。19:05 的はるか 是回國班機前最後一班順的車，はるか 有異狀就立刻改南海空港急行。"},
 s:[
-{a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HO,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
-{a:"08:10",b:"08:20",t:"🚶 飯店 → 木津市場",k:"move",dir:[HO,"大阪木津卸売市場","walking"]},
+{a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HOQ,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
+{a:"08:10",b:"08:20",t:"🚶 飯店 → 木津市場",k:"move",dir:[HOQ,"大阪木津卸売市場","walking"]},
 {a:"08:20",b:"09:20",t:"🐟 木津市場",g:["只收現金","無ATM"],dead:1,k:"eat",q:"大阪市浪速区敷津東2-2-8",x:"<ul><li class='warn'><b>11:00 就幾乎全關</b></li><li>市場北側就是黑貓宅急便</li></ul>",w:[["官網","https://kizu-ichiba.com/"],["市場日曆","https://kizu-ichiba.com/calendar/"]]},
 {a:"09:20",b:"09:35",t:"🚶 木津市場 → 難波八阪神社",g:["約1km"],k:"move",dir:["大阪木津卸売市場","難波八阪神社","walking"]},
 {a:"09:35",b:"09:55",t:"🦁 難波八阪神社",g:["社務所9:00開"],q:"大阪市浪速区元町2-9-19",x:"<ul><li>主要目標是<b>獅子頭御守</b>，社務所 9:00 才開，你們 9:35 到剛好</li></ul>"},
 {a:"10:10",b:"10:40",t:"🚇 なんば → 本町 → 大阪港",g:["¥290"],k:"move",dir:["なんば駅","大阪港駅","transit"]},
-{a:"10:45",b:"13:00",t:"🐋 海遊館",bk:9,g:["¥2700~3500"],dead:1,q:"海遊館",x:"<ul><li>需線上購票，<b>5 人同時段</b></li><li class='warn'><b>2026/6/15 起不可再入館，一次逛完</b></li></ul>",w:[["官網","https://www.kaiyukan.com/"]]},
+{a:"10:45",b:"13:00",t:"🐋 海遊館",bk:"kaiyukan",g:["¥2700~3500"],dead:1,q:"海遊館",x:"<ul><li>需線上購票，<b>5 人同時段</b></li><li class='warn'><b>2026/6/15 起不可再入館，一次逛完</b></li></ul>",w:[["官網","https://www.kaiyukan.com/"]]},
 {a:"13:05",b:"13:25",t:"🚇 大阪港 → 心齋橋",g:["¥290"],k:"move",dir:["大阪港駅","心斎橋駅","transit"]},
-{a:"13:30",b:"14:20",t:"🍜 午餐：にし家 本店",bk:8,g:["180席"],k:"eat",q:"にし家 本店 心斎橋",food:"にし家 本店 心斎橋",x:"<ul><li>心齋橋站步行 2 分，全店禁菸</li></ul>"},
+{a:"13:30",b:"14:20",t:"🍜 午餐：にし家 本店",bk:"nishiya",g:["180席"],k:"eat",q:"にし家 本店 心斎橋",food:"にし家 本店 心斎橋",x:"<ul><li>心齋橋站步行 2 分，全店禁菸</li></ul>"},
 {a:"14:25",b:"14:45",t:"💊 OS DRUG 心齋橋店",g:["只收現金"],q:"OS DRUG 心斎橋店",x:"<ul><li><b>不退稅只收現金</b>，但未稅標價最低</li><li class='warn'>藥品每種最多 12 瓶，合計 36 瓶</li></ul>"},
 {a:"14:45",b:"14:55",t:"🍮 りくろーおじさん なんば本店",k:"eat",q:"大阪市中央区難波3-2-28",food:"りくろーおじさんの店 なんば本店",x:"<ul><li>現烤起司蛋糕，一顆五人分</li></ul>"},
 {a:"15:00",b:"15:30",t:"🔪 千日前道具屋筋",g:["18:00打烊"],q:"千日前道具屋筋商店街",x:"<ul><li><b>Design Pocket 食品模型磁鐵</b></li><li>買刀 → <b>必託運</b></li></ul>"},
 {a:"15:35",b:"16:35",t:"🧸 でんでんタウン ＋ 一番くじ日本橋店",g:["9:00-23:30"],q:"大阪市浪速区難波中2-1-17",x:"<ul><li>一番くじ公式ショップ コスモビル 1F</li></ul>",w:[["一番くじ倶楽部","https://1kuji.com/"]]},
 {a:"16:40",b:"17:40",t:"🍖 晚餐：ニューベイブ 難波店",g:["通し營業"],k:"eat",q:"大阪市浪速区難波中1-14-12",food:"ニューベイブ 難波 とんかつ",x:"<ul><li>11:00–20:00 <b>無午休</b>・<b>白飯無限續</b></li></ul>"},
-{a:"17:45",b:"18:00",t:"🚶 走回飯店",k:"move",dir:["大阪市浪速区難波中1-14-12",HO,"walking"]},
-{a:"18:00",b:"18:25",t:"🏨 取行李・最終打包",g:["25分"],q:HO,x:"<ul><li><b>託運</b>：液體、刀具｜<b>隨身</b>：行動電源、護照、收據</li></ul>"},
+{a:"17:45",b:"18:00",t:"🚶 走回飯店",k:"move",dir:["大阪市浪速区難波中1-14-12",HOQ,"walking"]},
+{a:"18:00",b:"18:25",t:"🏨 取行李・最終打包",g:["25分"],q:HOQ,x:"<ul><li><b>託運</b>：液體、刀具｜<b>隨身</b>：行動電源、護照、收據</li></ul>"},
 {a:"18:35",b:"18:47",t:"🚇 大國町 → 天王寺",g:["¥190"],k:"move",dir:["大国町駅","天王寺駅","transit"]},
 {a:"18:47",b:"19:02",t:"🚶 天王寺站轉乘",g:["15分"],dead:1,q:"天王寺駅",x:"<ul><li class='warn'>はるか 有異狀 → <b>立刻改南海空港急行</b></li></ul>"},
 {a:"19:05",b:"19:50",t:"🚆 はるか → 關西機場",g:["JR Pass"],k:"move",dir:["天王寺駅","関西空港駅","transit"]},
@@ -293,29 +334,31 @@ split:{label:"分帳",date:"五人"},
 shop:{label:"購物",date:"個人"},
 pack:{label:"行李",date:"打包"},
 info:{label:"資訊",date:"預算・退稅"},
-help:{label:"說明",date:"怎麼用"},
+sos:{label:"緊急",date:"出事時"},
+rain:{label:"備案",date:"雨天・誤點"},
 share:{label:"分享",date:"QR"},
 prep:{label:"準備",date:"行前"}};
 
 var BOOK=[
-["10/13（二）開賣即買","① 線上買 JR 關西廣域周遊券 ×5","11/13 起用的票 10/13 才開賣，買不到更早。購買時「使用開始日」要填 2026/11/13。務必走 JR 西日本官網（WEST-TR），透過旅行社買的無法線上劃位。"],
-["10/13（二）買完立刻","② 劃 Day 1 はるか 指定席 ×5","KIX 07:54 → 京都 09:12。要先完成 Pass 購買、拿到預約編號，才能進 WEST-TR 劃位。"],
-["10/14（三）台灣 09:00","🚨 搶劃 特急 きのさき 1 號 ×5","京都 07:32 → 福知山 08:47。這是去程第一段，可以用 WEST-TR 線上劃位。搭這班比直達的はしだて1號早 66 分鐘到天橋立。"],
-["10/14（三）台灣 09:00","🚨 搶劃 特急 はしだて 8 號 ×5","天橋立 18:09 → 京都 20:21。全車指定席、回程班次比去程更少，搶不到等於當天回不了京都，Day 2 得整天改玩嵐山＋錦市場。這是 Day 2 唯一必須搶到的一班。"],
-["10/14 之後","⚠️ たんごリレー1號 不用劃位","福知山 08:55 → 天橋立 09:33。丹後鐵道路段無法用 Pass 在線上、券売機或綠色窗口劃位。直接搭 2 號車自由席即可，想要指定席就到日本後在丹鐵有人車站窗口買。"],
-["10/16（五）","📞 電話訂 万正（燒肉）","訂 11/15（日）18:00、5 人。電話 090-2592-9687。四人以上才能提前訂位，你們剛好跨過門檻，不用賭當天打電話。"],
-["10/17（六）台灣 09:00","劃 Day 5 はるか 指定席 ×5","天王寺 19:05 → 關西機場 19:50。回國那天的車，遲到就趕不上飛機。"],
-["10/20（二）","📞 電話訂 志津香 大宮店（釜飯）","訂 11/15（日）12:25、5 人。電話 0742-93-8029。訂位時要一併把五個人的餐點都點好，店家才會配合時間備料，坐下就有得吃。"],
-["11/01（日）","💻 網路訂 はり重（壽喜燒）","訂 11/16（一）17:45、5 人，可用一休.com 或樂天ぐるなび。訂的時候順便確認菜單價位 —— 這是目前唯一還沒確認的預算缺口。"],
-["11/01（日）","💻 網路訂 にし家 本店（烏龍麵）","訂 11/17（二）13:30、5 人。約 180 席，訂位主要是保險用。"],
-["11/03（二）","🎫 海遊館 eTicket ×5","11/17 的票，五個人要選同一個入館時段。變動票價，且 2026/6/15 起不能再入館，一次逛完。"],
-["11/06（五）","📱 填寫 Visit Japan Web ×5","入境與海關申告。完成後把 QR Code 截圖存進相簿 —— 機場可能沒有網路。"],
-["11/08（日）","📞 電話：奈良市綜合觀光案內所","問「五個 28–32 吋行李箱收不收」。還要問受理時間、取件截止時間、每件價格。Day 3 一整天都建立在這件事上，寄不進去整天要重排。"],
-["11/08（日）","📞 電話訂 鮨割烹 海宮（伊根午餐）","訂 11/14（六）12:00、5 人。電話 0772-32-1710。順便確認下車站牌是不是「伊根漁協前」（步行 5 分），以及 11/14 確定營業（水曜公休）。"],
-["11/08（日）","📞 電話：向井酒造","問 11/14 是否營業（有不定休），以及「伊根滿開」有沒有庫存、有沒有 300ml 小瓶。台灣入境酒類每人只有 1 公升，買小瓶才不會跟獺祭撞額度。"],
-["11/08（日）","📞 電話：ニューベイブ 難波店","問五個人能不能訂位。資料上沒寫清楚，如果不能訂就 16:40 現場排隊（通し營業，下午人較少）。"],
-["11/10（二）","📱 鳥貴族官方 App 訂位","訂 11/13（五）19:45、5 人。連鎖居酒屋，沒訂到也不會出事，是全部訂位裡最不緊急的一項。"]];
-var TEL=[["万正","燒肉・Day 3","090-2592-9687"],["志津香 大宮店","釜飯・Day 3","0742-93-8029"],["ちいかわもぐもぐ本舗","Day 1","075-643-0050"],["藥師寺","Day 3","0742-33-6001"],["木津市場","Day 5","06-6631-1139"],["MONday Apart 京都駅","Day 1–2 住宿","075-353-1922"],["MONday Apart 大阪難波WEST","Day 3–4 住宿","06-6645-1700"],["福太郎","備案・大阪燒","06-6634-2951"],["日本 警察","緊急","110"],["日本 救護・消防","緊急","119"]];
+["10/13（二）開賣即買","① 線上買 JR 關西廣域周遊券 ×5","11/13 起用的票 10/13 才開賣，買不到更早。購買時「使用開始日」要填 2026/11/13。務必走 JR 西日本官網（WEST-TR），透過旅行社買的無法線上劃位。","pass"],
+["10/13（二）買完立刻","② 劃 Day 1 はるか 指定席 ×5","KIX 07:54 → 京都 09:12。要先完成 Pass 購買、拿到預約編號，才能進 WEST-TR 劃位。","haruka1"],
+["10/14（三）台灣 09:00","🚨 搶劃 特急 きのさき 1 號 ×5","京都 07:32 → 福知山 08:47。這是去程第一段，可以用 WEST-TR 線上劃位。搭這班比直達的はしだて1號早 66 分鐘到天橋立。","kinosaki"],
+["10/14（三）台灣 09:00","🚨 搶劃 特急 はしだて 8 號 ×5","天橋立 18:09 → 京都 20:21。全車指定席、回程班次比去程更少，搶不到等於當天回不了京都，Day 2 得整天改玩嵐山＋錦市場。這是 Day 2 唯一必須搶到的一班。","hashidate8"],
+["10/14 之後","⚠️ たんごリレー1號 不用劃位","福知山 08:55 → 天橋立 09:33。丹後鐵道路段無法用 Pass 在線上、券売機或綠色窗口劃位。直接搭 2 號車自由席即可，想要指定席就到日本後在丹鐵有人車站窗口買。","tangorelay"],
+["10/16（五）","📞 電話訂 万正（燒肉）","訂 11/15（日）18:00、5 人。電話 090-2592-9687。四人以上才能提前訂位，你們剛好跨過門檻，不用賭當天打電話。","manmasa"],
+["10/17（六）台灣 09:00","劃 Day 5 はるか 指定席 ×5","天王寺 19:05 → 關西機場 19:50。回國那天的車，遲到就趕不上飛機。","haruka5"],
+["10/20（二）","📞 電話訂 志津香 大宮店（釜飯）","訂 11/15（日）12:25、5 人。電話 0742-93-8029。訂位時要一併把五個人的餐點都點好，店家才會配合時間備料，坐下就有得吃。","shizuka"],
+["11/01（日）","💻 網路訂 はり重（壽喜燒）","訂 11/16（一）17:45、5 人，可用一休.com 或樂天ぐるなび。訂的時候順便確認菜單價位 —— 這是目前唯一還沒確認的預算缺口。","harijyu"],
+["11/01（日）","💻 網路訂 にし家 本店（烏龍麵）","訂 11/17（二）13:30、5 人。約 180 席，訂位主要是保險用。","nishiya"],
+["11/03（二）","🎫 海遊館 eTicket ×5","11/17 的票，五個人要選同一個入館時段。變動票價，且 2026/6/15 起不能再入館，一次逛完。","kaiyukan"],
+["11/06（五）","📱 填寫 Visit Japan Web ×5","入境與海關申告。完成後把 QR Code 截圖存進相簿 —— 機場可能沒有網路。","vjw"],
+["11/06（五）","📶 買好 eSIM ×5 並先安裝","五個人都要有網路，App 的同步、地圖、路線、翻譯全靠它。日本 5 天建議每人 3～5 GB。<b>在家有 Wi-Fi 時就先安裝好</b>，落地只要開啟數據漫遊即可。","esim"],
+["11/08（日）","📞 電話：奈良市綜合觀光案內所","問「五個 28–32 吋行李箱收不收」。還要問受理時間、取件截止時間、每件價格。Day 3 一整天都建立在這件事上，寄不進去整天要重排。","naraluggage"],
+["11/08（日）","📞 電話訂 鮨割烹 海宮（伊根午餐）","訂 11/14（六）12:00、5 人。電話 0772-32-1710。順便確認下車站牌是不是「伊根漁協前」（步行 5 分），以及 11/14 確定營業（水曜公休）。","wadatsumi"],
+["11/08（日）","📞 電話：向井酒造","問 11/14 是否營業（有不定休），以及「伊根滿開」有沒有庫存、有沒有 300ml 小瓶。台灣入境酒類每人只有 1 公升，買小瓶才不會跟獺祭撞額度。","mukai"],
+["11/08（日）","📞 電話：ニューベイブ 難波店","問五個人能不能訂位。資料上沒寫清楚，如果不能訂就 16:40 現場排隊（通し營業，下午人較少）。","newbabe"],
+["11/10（二）","📱 鳥貴族官方 App 訂位","訂 11/13（五）19:45、5 人。連鎖居酒屋，沒訂到也不會出事，是全部訂位裡最不緊急的一項。","torikizoku"]];
+var TEL=[["万正","燒肉・Day 3","090-2592-9687"],["志津香 大宮店","釜飯・Day 3","0742-93-8029"],["ちいかわもぐもぐ本舗","Day 1","075-643-0050"],["藥師寺","Day 3","0742-33-6001"],["木津市場","Day 5","06-6631-1139"],["曼迪高級公寓酒店 京都車站","Day 1–2 住宿","075-353-1922"],["大阪難波西曼迪高級公寓","Day 3–4 住宿","06-6645-1700"],["福太郎","備案・大阪燒","06-6634-2951"],["日本 警察","緊急","110"],["日本 救護・消防","緊急","119"]];
 var CHECK=[
 ["叡電 11/13 的實際時刻表","紅葉期會加開臨時班次並改點，官方要接近日期才公布。Day 1 下午從出町柳到鞍馬、貴船那整條線都靠它。"],
 ["丹海巴士 11/14 的實際時刻","要確認 10:27（籠神社→伊根漁協前）、14:46（日出→ケーブル下）、16:44 與 17:24（備援）這幾班。假日班表可能微調。"],
@@ -328,10 +371,12 @@ var CHECK=[
 ["ニューベイブ 難波店能不能訂位","不能訂的話就 16:40 現場排隊。順便問食べログ 分數，目前查不到確切數字。"],
 ["大阪城天守閣的開館時間","2025/4/1 起票價漲到 ¥1,200（含豊臣石垣館），開館時間同時也變更了，出發前查官網確認。"],
 ["上 1kuji.com 查 11 月的一番くじ 檔期","一番賞是期間限定，每期主題完全不同。如果那期都沒興趣，Day 1 晚上京都イオンモール那站就直接砍掉。"],
+["eSIM 已安裝且測試過","出發前在家用 Wi-Fi 安裝，並確認 APN 設定正確、能切換。落地後才發現裝不起來就麻煩了。"],
+["台灣門號保留可收簡訊","信用卡海外刷卡的 OTP 驗證碼會發到台灣門號。iPhone 雙卡請保留台灣 SIM 收簡訊、eSIM 走數據。"],
 ["用 Google Maps 實測飯店到各站的步行時間","大阪飯店到大國町、なんば、難波八阪神社、木津市場的時間目前是推估的。差 3 分鐘就會影響 Day 5 早上的神社時段。"]];
 var HOTELS=[
-{n:"MONday Apart Premium 京都駅",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 "+HK,tel:"075-353-1922",q:HK,note:"京都站步行約 11 分・全室附廚房與洗衣機・2021/12 開業",web:"https://hotel-monday.com/apartment/kyoto/"},
-{n:"MONday Apart Premium 大阪難波 WEST",d:"Day 3–4（11/15、11/16）",addr:HO,tel:"06-6645-1700",q:HO,note:"大國町 7–8 分・なんば 8–9 分・難波八阪神社 5–7 分・木津市場 10 分<br>30–50 ㎡・全室洗衣乾衣機＋調理器具・2024/12 開業<br>官網會員首訂 10% 折扣＋14:00 早入住",web:"https://hotel-monday.com/apartment/osakanambawest/"}];
+{n:"曼迪高級公寓酒店 京都車站",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 京都府京都市下京区八百屋町1番地<br><span style='color:var(--dim)'>1 Yaoyacho, Shimogyo Ward, Kyoto</span>",tel:"075-353-1922",q:HKQ,note:"日文名 MONday Apart Premium 京都駅（七条堀川）<br>京都站步行約 11 分・對面是西本願寺<br>全室附廚房與洗衣機・44 間客房・15:00 入住／10:00 退房",web:"https://hotel-monday.com/apartment/kyoto/"},
+{n:"大阪難波西曼迪高級公寓",d:"Day 3–4（11/15、11/16）",addr:"〒556-0016 大阪府大阪市浪速区元町3-1-14",tel:"06-6645-1700",q:HOQ,note:"大國町 7–8 分・なんば 8–9 分・難波八阪神社 5–7 分・木津市場 10 分<br>30–50 ㎡・全室洗衣乾衣機＋調理器具・2024/12 開業<br>官網會員首訂 10% 折扣＋14:00 早入住",web:"https://hotel-monday.com/apartment/osakanambawest/"}];
 var WMO={0:["☀️","晴"],1:["🌤️","大致晴"],2:["⛅","多雲時晴"],3:["☁️","陰"],45:["🌫️","霧"],48:["🌫️","霧凇"],51:["🌦️","毛毛雨"],53:["🌦️","毛毛雨"],55:["🌧️","毛毛雨"],61:["🌦️","小雨"],63:["🌧️","中雨"],65:["🌧️","大雨"],71:["🌨️","小雪"],73:["🌨️","中雪"],75:["❄️","大雪"],80:["🌦️","陣雨"],81:["🌧️","陣雨"],82:["⛈️","強陣雨"],95:["⛈️","雷雨"]};
 
 var PACK=[
@@ -341,6 +386,12 @@ var PACK=[
  ["行動電源 ×1–2","🚨 必須隨身，嚴禁託運。外殼標示要清晰可辨"],
  ["延長線 ×2（五人共用）","飯店插座絕對不夠，這是救命裝備"],
  ["❌ 電源轉接頭 —— 不用帶","日本 100V、兩腳扁插，跟台灣一樣"]]],
+["📶 網路（五個人都要有）",[
+ ["eSIM 已購買並安裝","日本 5 天建議每人 3～5 GB。<b>在家有 Wi-Fi 時就裝好</b>，落地只要開數據漫遊"],
+ ["確認 eSIM 可正常切換","出發前測一次，別等落地才發現裝不起來"],
+ ["台灣門號保留收簡訊","信用卡 OTP 驗證碼會發到台灣號碼。iPhone 雙卡：台灣 SIM 收簡訊、eSIM 走數據"],
+ ["關閉台灣門號的數據漫遊","避免自動連上日本電信被收漫遊費"],
+ ["Google Maps 離線地圖（備援）","先下載京都、大阪、天橋立範圍。訊號差時仍能導航"]]],
 ["👕 衣物（每人）",[
  ["帽 T ×2","中層主力。1 件穿著出發。燒肉那晚穿舊的"],
  ["發熱衣／長袖薄內搭 ×3","早晚 8°C 沒這個會冷"],
@@ -402,7 +453,9 @@ if(!ST.rate)ST.rate={v:0,at:0,manual:false};
 if(ST.me===undefined)ST.me=null;
 if(!ST.shop)ST.shop=[];
 if(!ST.shopAll)ST.shopAll={};
-["d1","d2","d3","d4","d5"].forEach(function(k){if(!ST.adhoc[k])ST.adhoc[k]=[];if(!ST.edit[k])ST.edit[k]={};if(!ST.done[k])ST.done[k]={}});
+if(!ST.sos)ST.sos={};
+if(ST.voice===undefined)ST.voice='';
+["d0","d1","d2","d3","d4","d5"].forEach(function(k){if(!ST.adhoc[k])ST.adhoc[k]=[];if(!ST.edit[k])ST.edit[k]={};if(!ST.done[k])ST.done[k]={}});
 function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
 function mem(i){return ST.members[i]||("成員"+(i+1))}
 
@@ -417,11 +470,12 @@ function todayKey(){var j=jstNow();if(j.getFullYear()!==2026||j.getMonth()!==10)
 function toast(m){toastEl.innerHTML=m;toastEl.classList.add('on');setTimeout(function(){toastEl.classList.remove('on')},2200)}
 Object.keys(D).forEach(function(k){var v=D[k],b=document.createElement('button');b.setAttribute('role','tab');
  b.innerHTML=(k==='prep'||k==='split')?v.label:v.label+'<span class="d">'+v.date.slice(0,5)+'</span>';
- b.onclick=function(){cur=k;editing=null;render()};b.dataset.k=k;nav.appendChild(b)});
+ b.onclick=function(){var q=document.getElementById('q');if(q)q.value='';cur=k;editing=null;render()};b.dataset.k=k;nav.appendChild(b)});
 
 function slotsOf(k){var out=[];
  D[k].s.forEach(function(s,i){var id='b'+i;if(ST.hide[k+':'+id])return;
   var o={};for(var p in s)o[p]=s[p];o.id=id;
+  if(PICS[k]&&PICS[k][s.t])o.pic=PICS[k][s.t];
   var e=ST.edit[k][id];if(e){for(var p2 in e)o[p2]=e[p2];o.edited=true}out.push(o)});
  (ST.adhoc[k]||[]).forEach(function(x,i){var id='a'+i;if(ST.hide[k+':'+id])return;
   var o={};for(var p in x)o[p]=x[p];o.id=id;o.adhoc=true;out.push(o)});
@@ -459,11 +513,11 @@ function updLive(){
  [].forEach.call(nav.children,function(b){b.classList.toggle('today',b.dataset.k===tk)});
  live.style.display='block';
  if(!tk){
-  var start=new Date(2026,10,13),now=new Date(j.getFullYear(),j.getMonth(),j.getDate());
+  var start=new Date(2026,10,12),now=new Date(j.getFullYear(),j.getMonth(),j.getDate());
   var dd=Math.round((start-now)/86400000);
   live.classList.remove('late');
-  live.innerHTML='<div class="l1"><span>出發倒數</span></div><div class="l2">'+(dd>0?'還有 '+dd+' 天':(dd<0?'旅程已結束':'今天出發'))+'</div>'+
-   '<div class="l3">2026/11/13（五）02:30 桃園起飛 ・ 最近死線：10/13 買 Pass、10/14 09:00 搶橋立</div>';
+  live.innerHTML='<div class="l1"><span>出發倒數</span></div><div class="l2">'+(dd>0?'還有 '+dd+' 天':(dd<0?'旅程已結束':'今天就要出發'))+'</div>'+
+   '<div class="l3">11/12（四）22:30 台北車站機捷 ・ 11/13（五）02:30 桃園起飛<br>最近死線：10/13 買 Pass、10/14 台灣 09:00 搶きのさき1號與はしだて8號</div>';
   return}
  var list=slotsOf(tk),nowM=j.getHours()*60+j.getMinutes(),ci=-1,ni=-1;
  for(var i=0;i<list.length;i++){var A=toMin(list[i].a),B=toMin(list[i].b);if(B<A)B+=1440;
@@ -481,8 +535,10 @@ function updLive(){
  var head='<div class="l1"><span>'+(ci>=0?'現在應該在':'空檔中')+' ・ '+v.label+'</span><span>階段 '+stage+' / '+n+'</span></div>';
  var pbar='<div class="pb"><i style="width:'+pct+'%"></i></div>';
  if(ci>=0){var s0=list[ci],B2=toMin(s0.b);if(B2<toMin(s0.a))B2+=1440;var nx=list[ci+1];
-  live.innerHTML=head+'<div class="l2">'+s0.t+'</div>'+pbar+
-   '<div class="l3">剩 <b>'+(B2-nowM)+' 分鐘</b>'+(nx?' ・ 下一站 <b>'+nx.a+'</b> '+nx.t:' ・ 今天最後一站')+'</div>'+lateTxt}
+  live.innerHTML=head+'<div class="l2">'+s0.t+(speakSupported()?' <button id="spknow" style="background:none;border:0;color:var(--cyan);font-size:17px;cursor:pointer;padding:0 4px">🔊</button>':'')+'</div>'+pbar+
+   '<div class="l3">剩 <b>'+(B2-nowM)+' 分鐘</b>'+(nx?' ・ 下一站 <b>'+nx.a+'</b> '+nx.t:' ・ 今天最後一站')+'</div>'+lateTxt;
+  var sn=document.getElementById('spknow');
+  if(sn)sn.onclick=function(){speak(slotSpeech(s0),'live')}}
  else if(ni>=0){var s2=list[ni];
   live.innerHTML=head+'<div class="l2">下一站：'+s2.t+'</div>'+pbar+
    '<div class="l3">還有 <b>'+(toMin(s2.a)-nowM)+' 分鐘</b>（'+s2.a+' 開始） ・ 今日最硬 <b>'+v.crux.t+'</b></div>'+lateTxt}
@@ -497,8 +553,26 @@ function wxAlert(){
             :'箕面健行淋雨不會開心。考慮改成梅田室內一日：Bic Camera 提前、中崎町巷弄、中之島。')+'</div>'});
  return out}
 
+function renderSearch(q){
+ var r=doSearch(q);
+ var h='<div class="note">搜尋「<b>'+q+'</b>」找到 <b>'+r.length+'</b> 筆'+(r.length>=40?'（只顯示前 40 筆）':'')+
+  '<br><span style="color:var(--dim)">點結果跳到該分頁，或點搜尋框右邊的 ✕ 返回。</span></div>';
+ if(!r.length)h+='<div class="note">沒有結果。試試店名、車站、「現金」、「護照」、「充電」之類的關鍵字。</div>';
+ h+=r.map(function(x){
+  return '<div class="card" style="margin-bottom:8px" data-go="'+x.k+'"><div class="hd">'+
+   '<h3 style="font-size:14px">'+x.t+'</h3><span class="tag c">'+x.p+'</span></div>'+
+   (x.d.trim()?'<div style="font-size:12.5px;color:var(--dim);margin-top:4px">'+x.d.replace(/\s+/g,' ').slice(0,90)+'</div>':'')+'</div>'}).join('');
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('[data-go]'),function(c){c.onclick=function(){
+  document.getElementById('q').value='';cur=c.dataset.go;render()}});
+ window.scrollTo(0,0)}
+
 function render(){
- [].forEach.call(nav.children,function(b){b.setAttribute('aria-selected',b.dataset.k===cur)});
+ var qv=(document.getElementById('q')||{}).value||'';
+ if(qv.trim()){[].forEach.call(nav.children,function(b){b.setAttribute('aria-selected',false)});updLive();return renderSearch(qv.trim())}
+ [].forEach.call(nav.children,function(b){
+  var on=b.dataset.k===cur;b.setAttribute('aria-selected',on);
+  if(on&&b.scrollIntoView)try{b.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}catch(e){}});
  updLive();
  if(cur==='help')return renderHelp();
  if(ST.me===null)return renderWho();
@@ -507,6 +581,8 @@ function render(){
  if(cur==='shop')return renderShop();
  if(cur==='pack')return renderPack();
  if(cur==='info')return renderInfo();
+ if(cur==='sos')return renderSOS();
+ if(cur==='rain')return renderRain();
  if(cur==='help')return renderHelp();
  if(cur==='share')return renderShare();
  var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=j.getHours()*60+j.getMinutes(),ni=-1;
@@ -520,7 +596,14 @@ var wa=wxAlert();
  h+='<div class="crux"><div class="lab">今日最硬</div><div class="t mono">'+v.crux.t+'</div><div class="w">'+v.crux.w+'</div><div class="n">'+v.crux.n+'</div></div>';
  if(w)h+='<div class="wx"><span class="ic">'+w.ic+'</span><span class="tx"><b>'+w.txt+' '+w.hi+'° / '+w.lo+'°</b><small>'+v.wxc+' ・ 降雨機率 '+(w.pop==null?'—':w.pop+'%')+'</small></span></div>';
  else h+='<div class="wx"><span class="ic">🌡️</span><span class="tx"><b>'+(WXFAR?('還有 '+WXFAR+' 天，預報尚未開放'):'天氣預報尚未取得')+'</b><small>'+(WXFAR?'免費預報只涵蓋未來約 16 天，接近日期會自動顯示':'需要網路')+'</small></span></div>';
- h+='<div class="bar">'+(isT?'<button id="jump">跳到現在</button>':'')+'<button id="album">📷 共享相簿</button><button id="addon" class="pri">＋ 新增</button><button id="copy">複製這天</button>'+
+ var C=dayCost(cur),rr=rateVal();
+ h+='<div class="cost"><div class="c1">今日現場支出試算</div>'+
+   '<div class="c2"><span>🚃 交通 <b>'+fmtJP(C.move)+'</b></span><span>🎫 門票餐飲等 <b>'+fmtJP(C.other)+'</b></span></div>'+
+   '<div class="c3">合計 <b>'+fmtJP(C.total)+'</b>'+(rr?' <span style="color:var(--dim)">≈ '+fmtNT(C.total*rr)+'</span>':'')+
+   ' <span style="color:var(--dim)">／人（不含 JR Pass 與周遊券已涵蓋的部分）</span></div></div>';
+ h+='<div class="bar">'+(isT?'<button id="jump">跳到現在</button>':'')+'<button id="quickexp" class="pri">💰 記一筆</button>'+
+   '<a class="lk web" style="padding:9px 12px;border-radius:4px;flex:1 1 auto;text-align:center" target="_blank" rel="noopener" href="https://translate.google.com/?sl=ja&tl=zh-TW&op=images">🌐 翻譯</a>'+
+   '<button id="album">📷 相簿</button><button id="addon">＋ 新增</button><button id="copy">複製這天</button>'+
    '<button id="ics1">⏰ 死線加入行事曆</button><button id="ics2">📅 整天加入行事曆</button>'+
    ((changed||Object.keys(dn).length)?'<button id="reset">還原</button>':'')+'</div><div id="formwrap"></div>';
  if(dl)h+='<div class="store '+(dl.min>=5?'off':'on')+'" style="margin-bottom:12px">最後打卡：'+dl.slot.t+' ・ '+
@@ -530,7 +613,7 @@ var wa=wxAlert();
   var okd=dn[s.id]!==undefined;
   var cls=['card',s.dead?'dead':'',s.k==='eat'?'eat':'',s.k==='move'?'move':'',(s.adhoc||s.edited)?'adhoc':'',i===ni?'now':'',okd?'ok':''].filter(Boolean).join(' ');
   var tg=(s.g||[]).map(function(t){return '<span class="tag '+(s.dead?'r':(s.k==='eat'?'g':(s.k==='move'?'v':'a')))+'">'+t+'</span>'}).join('');
-  if(s.bk!==undefined)tg=(ST.chk['b'+s.bk]?'<span class="tag g">✓ 已訂位</span>':'<span class="tag r">⚠️ 待訂位</span>')+tg;
+  if(s.bk!==undefined)tg=(ST.chk['bk_'+s.bk]?'<span class="tag g">✓ 已訂位</span>':'<span class="tag r">⚠️ 待訂位</span>')+tg;
   if(s.adhoc)tg='<span class="tag c">'+(s.by||'臨時')+' 加的</span>'+tg;else if(s.edited)tg='<span class="tag c">'+(s.by||'')+' 改過</span>'+tg;
   var lk='';
   if(s.dir)lk+='<a class="lk dir" target="_blank" rel="noopener" href="'+DIR(s.dir[0],s.dir[1],s.dir[2])+'">🧭 '+(s.dir[2]==='walking'?'步行路線':'交通路線')+'</a>';
@@ -538,12 +621,19 @@ var wa=wxAlert();
   if(s.food)lk+='<a class="lk food" target="_blank" rel="noopener" href="'+TAB(s.food)+'">🍽️ 食記</a>';
   (s.w||[]).forEach(function(x){lk+='<a class="lk web" target="_blank" rel="noopener" href="'+x[1]+'">🔗 '+x[0]+'</a>'});
   lk+='<button class="lk '+(okd?'gone':'go')+'" data-go="'+s.id+'">'+(okd?'✓ '+m2s(dn[s.id]):'✓ 到了')+'</button>';
+  if(speakSupported())lk+='<button class="lk '+(SPK.cur===cur+s.id?'gone':'ed')+'" data-spk="'+s.id+'">'+(SPK.cur===cur+s.id?'⏹ 停止':'🔊 唸給我聽')+'</button>';
   if(s.dead)lk+='<button class="lk web" data-ics="'+s.id+'">⏰ 提醒</button>';
   lk+='<button class="lk ed" data-ed="'+s.id+'">✎</button><button class="lk rm" data-rm="'+s.id+'">✕</button>';
   var eta=(dl&&dl.min>=5&&toMin(s.a)>nowM)?'<div class="eta">→'+m2s(toMin(s.a)+dl.min)+'</div>':'';
   return '<div class="slot'+((isT&&ni>=0&&i<ni)?' past':'')+'" id="s'+i+'"><div class="rail"><div class="tm mono">'+s.a+'</div><div class="te mono">'+s.b+'</div>'+eta+'</div>'+
    '<div class="'+cls+'">'+(i===ni?'<div class="nowtag">現在</div>':'')+'<div class="hd"><h3>'+s.t+'</h3>'+(s.x?'<span class="chev">›</span>':'')+'</div>'+
-   '<div class="tags">'+tg+lk+'</div>'+(s.x?'<div class="body">'+s.x+'</div>':'')+'</div></div>'}).join('');
+   '<div class="tags">'+tg+lk+'</div>'+
+   (s.pic?'<div class="pic">📸 <b>拍照重點</b><br>'+s.pic+'</div>':'')+
+   (s.x?'<div class="body">'+s.x+'</div>':'')+'</div></div>'}).join('');
+ if(TONIGHT[cur]){
+  h+='<div class="tonight"><div class="t1">🌙 今晚還要做</div><ul>'+
+    TONIGHT[cur].t.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'+
+    '<div class="t2">➡️ '+TONIGHT[cur].next+'</div></div>'}
  main.innerHTML=h;
  [].forEach.call(main.querySelectorAll('.card'),function(c){var t=c.querySelector('h3');if(c.querySelector('.body'))t.onclick=function(){c.classList.toggle('open')}});
  [].forEach.call(main.querySelectorAll('[data-go]'),function(b){b.onclick=function(e){e.stopPropagation();
@@ -562,6 +652,9 @@ var wa=wxAlert();
   var bl=new Blob([txt],{type:'text/calendar;charset=utf-8'}),u=URL.createObjectURL(bl),a=document.createElement('a');
   a.href=u;a.download='kansai-'+one.id+'.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);
   setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('已產生提醒 ・ 開啟檔案加入行事曆')}});
+ [].forEach.call(main.querySelectorAll('[data-spk]'),function(b){b.onclick=function(e){e.stopPropagation();
+  var one=null,l3=slotsOf(cur);for(var i=0;i<l3.length;i++)if(l3[i].id===b.dataset.spk)one=l3[i];
+  if(one)speak(slotSpeech(one),cur+one.id)}});
  [].forEach.call(main.querySelectorAll('[data-ed]'),function(b){b.onclick=function(e){e.stopPropagation();openForm(b.dataset.ed)}});
  [].forEach.call(main.querySelectorAll('[data-rm]'),function(b){b.onclick=function(e){e.stopPropagation();
   ST.hide[cur+':'+b.dataset.rm]=true;save();render();toast('已刪除 ・ 可按「還原」復原')}});
@@ -570,6 +663,7 @@ var wa=wxAlert();
  document.getElementById('copy').onclick=function(){copyDay(cur,list)};
  document.getElementById('addon').onclick=function(){openForm(null)};
  document.getElementById('album').onclick=openAlbum;
+ document.getElementById('quickexp').onclick=quickExp;
  document.getElementById('ics1').onclick=function(){dlICS(cur,true)};
  document.getElementById('ics2').onclick=function(){dlICS(cur,false)};
  var rb=document.getElementById('reset');
@@ -580,8 +674,8 @@ var wa=wxAlert();
 
 function openForm(id){
  var w=document.getElementById('formwrap');
- if(editing===id&&w.innerHTML){w.innerHTML='';editing=null;return}
- editing=id;var cu={a:'',b:'',t:'',q:''};
+ if(editing===id&&w.innerHTML&&w.dataset.mode==='ed'){w.innerHTML='';editing=null;return}
+ w.dataset.mode='ed';editing=id;var cu={a:'',b:'',t:'',q:''};
  if(id){var l=slotsOf(cur);for(var i=0;i<l.length;i++)if(l[i].id===id){cu.a=l[i].a;cu.b=l[i].b;cu.t=l[i].t.replace(/^[^\s]*\s/,'');cu.q=l[i].q||''}}
  w.innerHTML='<div class="form"><h4>'+(id?'替換這一項':'新增一站')+'</h4>'+
  '<div class="row"><input class="t mono" id="ia" placeholder="14:00" maxlength="5" value="'+cu.a+'"><input class="t mono" id="ib" placeholder="15:00" maxlength="5" value="'+cu.b+'"></div>'+
@@ -767,7 +861,7 @@ function renderShare(){
 /* ---- 全程死線一次匯入 ---- */
 function allDeadICS(){
  var ev=[];
- ['d1','d2','d3','d4','d5'].forEach(function(k){
+ ['d0','d1','d2','d3','d4','d5'].forEach(function(k){
   var v=D[k];slotsOf(k).forEach(function(s){
    if(!s.dead)return;
    var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
@@ -787,13 +881,233 @@ function allDeadICS(){
 
 function alarmList(){
  var out=[];
- ['d1','d2','d3','d4','d5'].forEach(function(k){var v=D[k];
+ ['d0','d1','d2','d3','d4','d5'].forEach(function(k){var v=D[k];
   slotsOf(k).forEach(function(s){if(s.dead)out.push({d:v.dnum,dl:v.label,t:s.a,n:s.t})})});
  return out}
 
 
 
 
+
+
+
+
+/* ---- 快速記帳（走在路上用，預設自己付、五人均分） ---- */
+function quickExp(){
+ var w=document.getElementById('formwrap');
+ if(w.innerHTML&&w.dataset.mode==='qe'){w.innerHTML='';w.dataset.mode='';return}
+ w.dataset.mode='qe';
+ if(ST.me===null){w.innerHTML='<div class="note">請先在「準備」分頁設定你是誰。</div>';return}
+ var r=rateVal();
+ w.innerHTML='<div class="form"><h4>💰 我剛花了</h4>'+
+  '<div class="who" id="qcur">'+
+   '<label><input type="radio" name="qc" value="JPY" checked><span>¥ 日圓</span></label>'+
+   '<label><input type="radio" name="qc" value="TWD"><span>NT$ 台幣</span></label></div>'+
+  '<div class="row"><input id="qamt" inputmode="numeric" placeholder="金額" autofocus></div>'+
+  '<div class="hint" id="qconv" style="margin:0 0 8px"></div>'+
+  '<div class="row"><input id="qnote" placeholder="買什麼／吃什麼（選填）"></div>'+
+  '<div class="who" id="qwho">'+[0,1,2,3,4].map(function(i){
+    var nm=(ST.members[i]||'').trim();if(!nm&&i!==ST.me)return '';
+    return '<label><input type="checkbox" value="'+i+'" checked><span>'+mem(i)+'</span></label>'}).join('')+'</div>'+
+  '<button class="go" id="qok">記下來（'+meName()+' 付）</button>'+
+  '<div class="hint">預設<b>你付、勾選的人均分</b>。要改付款人或看明細，去「分帳」分頁。</div></div>';
+ var qa=document.getElementById('qamt'),qc=document.getElementById('qconv');
+ function upd(){var v=parseFloat(qa.value)||0,c=(w.querySelector('input[name=qc]:checked')||{value:'JPY'}).value;
+  if(!v||!r){qc.textContent='';return}
+  qc.innerHTML=(c==='JPY')?(fmtJP(v)+' ≈ <b style="color:var(--amber)">'+fmtNT(v*r)+'</b>')
+                          :(fmtNT(v)+' ≈ <b style="color:var(--amber)">'+fmtJP(v/r)+'</b>')}
+ qa.oninput=upd;[].forEach.call(w.querySelectorAll('input[name=qc]'),function(x){x.onchange=upd});
+ qa.onkeydown=function(e){if(e.key==='Enter')document.getElementById('qok').click()};
+ document.getElementById('qok').onclick=function(){
+  var amt=parseInt(qa.value,10);
+  if(!amt||amt<=0)return toast('請填金額');
+  var c=(w.querySelector('input[name=qc]:checked')||{value:'JPY'}).value;
+  var who=[].filter.call(w.querySelectorAll('#qwho input'),function(x){return x.checked}).map(function(x){return +x.value});
+  if(!who.length)who=[0,1,2,3,4];
+  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+   amt:amt,cur:c,rate:rateVal(),by:ST.me,who:who,note:document.getElementById('qnote').value.trim()});
+  save();w.innerHTML='';w.dataset.mode='';
+  toast('已記錄 '+(c==='TWD'?fmtNT(amt):fmtJP(amt))+'<br><span style="font-weight:400">'+meName()+' 付・'+who.length+' 人均分</span>');
+  if(ST.room)roomSync(true)}}
+
+/* ---- 每日費用試算（從標籤解析 ¥ 金額） ---- */
+function yenOf(tags){
+ var sum=0;
+ (tags||[]).forEach(function(t){
+  if(/Pass|周遊券/i.test(t))return;              /* 已含在票券裡，不重複計 */
+  var m=String(t).match(/¥\s?([\d,]+)/);
+  if(m)sum+=parseInt(m[1].replace(/,/g,''),10)||0});
+ return sum}
+function dayCost(k){
+ var move=0,other=0,note=[];
+ slotsOf(k).forEach(function(x){
+  var v=yenOf(x.g);
+  if(!v)return;
+  if(x.k==='move')move+=v; else other+=v;
+  note.push({t:stripTag(x.t),v:v,m:x.k==='move'})});
+ return {move:move,other:other,total:move+other,items:note}}
+
+/* ---- 每天結尾的接續提示 ---- */
+var TONIGHT={
+ d0:{t:['機上盡量睡 —— 睡不好整個 Day 1 都會廢','手機與行動電源在登機前充飽'],next:'Day 1 最硬：16:15 進 ちいかわ 店（17:30 關門）'},
+ d1:{t:['<b>在京都站超商買明早早餐 ×5</b>（Day 2 車上吃）','確認 5 人都已加入分帳房間','<b>今晚早點睡 —— 明天 06:15 起床</b>，是全程最早的一天'],next:'Day 2 最硬：08:55 福知山接上たんごリレー（只有 8 分鐘轉乘）'},
+ d2:{t:['<b>京都站超商買明早早餐 ×5</b>','<b>大行李收 80%</b> —— 明天要退房','清酒收進行李箱，別忘在房間'],next:'Day 3 最硬：15:50 搭上 JR 奈良 → 天王寺（後面接已訂位的万正）'},
+ d3:{t:['<b>LIFE 大國町店買明早早餐 ×5</b>（20:00 後半額）','<b>帽 T 噴消臭噴霧掛起來</b> —— 万正全面可吸菸','分帳今天記完了嗎？按「立即同步」推給大家'],next:'Day 4 最硬：17:45 はり重 入座（已訂位 5 人）'},
+ d4:{t:['🚨 <b>回房後打包八成</b> —— Day 5 只剩 25 分鐘打包','<b>把要退稅的商品和紙本收據集中放</b>，明天機場要用','行動電源移到隨身包，別留在託運箱'],next:'Day 5 最硬：18:47 抵達天王寺轉 JR（回國班機前最後一班順的車）'},
+ d5:{t:['分帳最後結算，產生同步碼貼到群組','App 資料記得下載備份檔'],next:'01:30 抵達桃園 —— 辛苦了'}
+};
+
+
+/* ---- 平台偵測（讓提示對得上實際裝置） ---- */
+function platform(){
+ var ua=navigator.userAgent||'',p=navigator.platform||'';
+ var touch=(navigator.maxTouchPoints||0)>1;
+ if(/iPhone|iPod/i.test(ua))return 'ios';
+ if(/iPad/i.test(ua)||(/Mac/i.test(p)&&touch))return 'ipados';
+ if(/Android/i.test(ua))return 'android';
+ if(/Win/i.test(p)||/Windows/i.test(ua))return 'win';
+ if(/Mac/i.test(p)||/Macintosh/i.test(ua))return 'mac';
+ if(/Linux/i.test(p))return 'linux';
+ return 'other'}
+function platName(){
+ return {ios:'iPhone',ipados:'iPad',android:'Android',win:'Windows',mac:'Mac',linux:'Linux',other:'這台裝置'}[platform()]}
+function voiceHowTo(){
+ var g={
+  ios:'<b>iPhone</b>（iOS 中文介面叫「<b>語音內容</b>」，不是「朗讀內容」）<br>'+
+   '① 設定 → 往下滑找 <b>輔助使用</b>（藍底人形圖示）<br>'+
+   '② 在「視覺」那一區點 <b>語音內容</b>（英文：Spoken Content）<br>'+
+   '③ 點 <b>語音</b>（Voices）<br>'+
+   '④ 語言清單往下滑找 <b>中文</b>（按語言排序，位置很後面）<br>'+
+   '⑤ 選 <b>國語（台灣）</b><br>'+
+   '⑥ 看到 <b>美佳（Mei-Jia）</b> 或 <b>婷婷（Ting-Ting）</b>，右邊有雲朵圖示就點下載<br><br>'+
+   '<span style="color:var(--dim)">中文語音通常已內建，看到的「下載」多半是<b>增強版／優質版</b>（音質更好但檔案大）。裝完記得<b>重新整理本頁</b>，語音清單只在載入時抓一次。</span>',
+  ipados:'<b>iPad</b>（iPadOS 中文介面叫「<b>語音內容</b>」）<br>'+
+   '設定 → <b>輔助使用</b> → <b>語音內容</b>（Spoken Content）→ <b>語音</b> → 中文 → <b>國語（台灣）</b> → 下載 美佳 或 婷婷<br>'+
+   '<span style="color:var(--dim)">裝完記得重新整理本頁。</span>',
+  android:'<b>Android</b>：設定 → 系統 → 語言與輸入法 → <b>文字轉語音輸出</b><br>'+
+   '<span style="color:var(--dim)">路徑因廠牌而異：Samsung 在「一般管理」底下，小米在「其他設定」。</span><br>'+
+   '① 偏好的引擎選 <b>Google 文字轉語音</b>（沒有就去 Play 商店裝）<br>'+
+   '② 點引擎旁的齒輪 ⚙️ → 安裝語音資料 → <b>中文（台灣）</b><br>'+
+   '<b style="color:#F09A90">換了還是唸英文 → 把「偏好的引擎」改成 Google 文字轉語音</b>，廠商自家的 TTS 對網頁支援常常不完整。',
+  win:'<b>Windows</b>：設定 → 時間與語言 → <b>語音</b> → 管理語音 → 新增語音 → <b>中文（台灣）</b><br>'+
+   '<span style="color:var(--dim)">內建通常有 Microsoft Hanhan 或 Yating。用 Chrome 且有網路時，會優先使用 Google 的線上中文語音，通常更自然。</span>',
+  mac:'<b>Mac</b>：系統設定 → <b>輔助使用</b> → <b>語音內容</b>（Spoken Content）→ 系統語音 → 管理語音 → 中文（台灣）→ 下載 <b>Ting-Ting（婷婷）</b> 或 <b>Mei-Jia（美佳）</b>',
+  linux:'<b>Linux</b>：需安裝支援中文的語音引擎（例如 espeak-ng 加中文語音資料），瀏覽器才抓得到。',
+  other:'請到系統設定中安裝中文語音套件，瀏覽器才抓得到。'};
+ return g[platform()]||g.other}
+
+/* ---- 語音導覽（瀏覽器內建，免金鑰、離線可用） ---- */
+var SPK={cur:null},VOICES=[],VREADY=false;
+function speakSupported(){return 'speechSynthesis' in window}
+function stripTag(h){return String(h).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim()}
+/* 去掉 emoji 與符號，避免被逐字唸出來 */
+function stripEmoji(t){
+ return String(t).replace(/[\u2190-\u21FF\u2300-\u27BF\u2B00-\u2BFF\uFE0F\u200D]/g,'')
+   .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'').replace(/\s+/g,' ').trim()}
+
+/* 語音清單是非同步載入的，一定要等它就緒 */
+function loadVoices(cb){
+ var v=speechSynthesis.getVoices()||[];
+ if(v.length){VOICES=v;VREADY=true;return cb&&cb()}
+ var done=false;
+ function fin(){if(done)return;done=true;VOICES=speechSynthesis.getVoices()||[];VREADY=true;cb&&cb()}
+ try{speechSynthesis.onvoiceschanged=fin}catch(e){}
+ setTimeout(fin,600)}
+
+function pickVoice(){
+ if(ST.voice){
+  var pinned=VOICES.filter(function(x){return x.name===ST.voice})[0];
+  if(pinned)return pinned}
+ var pri=[
+  function(x){return /^zh[-_]TW$/i.test(x.lang)},
+  function(x){return /^(cmn|zh)[-_]?(Hant|TW|HK|MO)/i.test(x.lang)},
+  function(x){return /(Ting-?Ting|Mei-?Jia|Sin-?Ji|國語|台灣|臺灣|中文|Chinese \(Taiwan\)|Chinese \(Traditional\))/i.test(x.name)},
+  function(x){return /^zh/i.test(x.lang)},
+  function(x){return /(Chinese|Mandarin|普通话|普通話)/i.test(x.name)}];
+ for(var i=0;i<pri.length;i++){var m=VOICES.filter(pri[i])[0];if(m)return m}
+ return null}
+
+function speak(txt,id){
+ if(!speakSupported())return toast('這個瀏覽器不支援語音朗讀');
+ if(SPK.cur===id&&speechSynthesis.speaking){speechSynthesis.cancel();SPK.cur=null;render();return}
+ speechSynthesis.cancel();
+ loadVoices(function(){
+  var v=pickVoice();
+  if(!v){toast('找不到中文語音<br><span style="font-weight:400">到「準備」分頁看安裝方式</span>');return}
+  var clean=stripEmoji(txt);
+  /* 長句切段，避免部分瀏覽器攔腰截斷 */
+  var chunks=clean.split(/(?<=[。！？；\n])/).filter(function(x){return x.trim()});
+  if(!chunks.length)chunks=[clean];
+  var merged=[],buf='';
+  chunks.forEach(function(c){
+   if((buf+c).length>140){if(buf)merged.push(buf);buf=c} else buf+=c});
+  if(buf)merged.push(buf);
+  SPK.cur=id;
+  merged.forEach(function(c,i){
+   var u=new SpeechSynthesisUtterance(c);
+   u.voice=v;u.lang=v.lang||'zh-TW';u.rate=0.95;u.pitch=1;u.volume=1;
+   if(i===merged.length-1)u.onend=function(){SPK.cur=null;if(cur.charAt(0)==='d')render()};
+   u.onerror=function(){SPK.cur=null};
+   speechSynthesis.speak(u)});
+  if(cur.charAt(0)==='d')render()})}
+
+function slotSpeech(x){
+ var t=stripEmoji(stripTag(x.t));
+ var parts=[x.a+' 到 '+x.b+'，'+t];
+ if(x.g&&x.g.length)parts.push('重點：'+x.g.join('、'));
+ if(x.pic)parts.push('拍照重點：'+stripEmoji(stripTag(x.pic)));
+ if(x.x)parts.push(stripEmoji(stripTag(x.x)));
+ return parts.join('。')}
+
+/* 開頁就先暖機，讓語音清單提早載入 */
+if(speakSupported())loadVoices();
+
+/* ---- 拍照打卡提示 ---- */
+var PICS={
+ 'd1':{
+       '🏨 飯店寄大行李':'🏨 <b>飯店對面就是西本願寺</b> —— 世界遺產、境內免費、有巨大的銀杏樹。<br>寄完行李如果還有 5 分鐘，走過去拍一張再出發。',
+       '🍢 晚餐：鳥貴族 京都站前店':'🍢 <b>串燒上桌那盤</b>，還有五個人第一天落地的合照 —— <b>這是全程第一張團體照</b>，累歸累還是要拍。<br>店內是連鎖裝潢，重點在人不在店。',
+       '🎰 一番くじ 京都イオンモール店':'🎰 <b>A 賞的實物展示</b>通常擺在最顯眼處，先拍再決定抽不抽。<br>抽到的那一刻、撕開券的瞬間 —— <b>五個人一起抽的表情比獎品好看</b>。',
+       '🧸 ちいかわもぐもぐ本舗':'🧸 <b>稻荷達摩玩偶全 8 種一字排開</b>的陳列架是這裡的招牌畫面。<br>店面外觀有 ちいかわ 立牌，<b>參道背景帶到朱紅鳥居</b>最有京都感。<br><span style="color:#F09A90">部分店家禁止拍攝商品陳列，先看有沒有標示。</span>',
+       '🛬 KIX 入境・領行李':'✈️ <b>入境章</b>蓋好後拍一張存證 —— 退稅查驗時如果護照被翻到別頁，有照片可以指給對方看。','🚋 叡電 出町柳 → 鞍馬':'🌰 <b>沿途的「もみじ隧道」</b>（二ノ瀬～市原）車內會關燈慢行，<b>坐右側</b>，用夜景模式或錄影。',
+ '🍱 午餐：鞍馬駅前':'👺 <b>鞍馬駅前的大天狗 —— 下車第一個要拍的</b><br>紅臉、長鼻、羽衣、手持團扇，是鞍馬山守護神鞍馬天狗的象徵，就立在參道入口。<br><b>高約 4 公尺（含台座）、寬 2.6 公尺、鼻長 1.3 公尺。</b><br><br>現在這尊是<b>二代目</b>，2019 年 10 月為鞍馬線開通 90 週年換上，材質是強化塑膠。<br>初代 1994 年為平安建都 1200 年而做，保麗龍材質、鼻長 2.3 公尺，<b>2017 年被大雪壓斷鼻子</b>才退役。<br><br>📷 <b>站在天狗正下方仰角拍</b>，人小、天狗大，最有壓迫感。五個人排一排也好看。',
+ '⛩️ 鞍馬寺':'本殿金堂前的<b>金剛床</b>（地上的六芒星石紋）站中央拍，背後是比叡山連峰。仁王門的紅色山門也要拍。<br><br>👺 <b>本殿金堂左手邊的「光明心殿」</b>供奉護法魔王尊 —— <b>就是天狗般的樣貌</b>（不過鼻子不高）。鞍馬天狗傳說的源頭在這裡，別只拍金剛床就走。',
+       '⛩️ 貴船神社':'<b>石段兩側的春日燈籠</b>是招牌畫面 —— 從下往上拍，紅燈籠夾道。水占みくじ 浮字的瞬間也要拍。',
+       '⛩️ 伏見稻荷 千本鳥居':'<b>奧社前那段密度最高</b>。天黑後打燈，用夜景模式、手機靠著柱子穩住。<br>回頭拍會看到鳥居背面的黑色捐獻者名字，跟正面的朱紅完全不同。'},
+ 'd2':{
+       '⛩️ 站前散策 ＋ 買便當 ×5':'⛩️ <b>智恩寺</b>的扇子造型御神籤綁成一片，很上鏡。<br>🌉 <b>迴旋橋</b>、📜 <b>日本三景碑</b> —— 三景碑那張是「到此一遊」的正式版。',
+       '⛴️ 觀光船 一の宮 → 天橋立':'🌅 <b>16:15 這班剛好是夕陽時段</b>，甲板上拍沙洲逆光剪影。<br>靠岸前留意<b>迴旋橋</b>，運氣好會看到它 90 度旋轉讓船通過。',
+       '🚡 纜車下山':'🚞 纜車前窗視角，沙洲隨高度變化。只有 4 分鐘，<b>先站好位置</b>。',
+       '🚡 吊椅上山':'🚡 <b>單人吊椅要回頭拍</b> —— 後面四個人一字排開懸在半空，這張只有這裡拍得到。<br>腳下是逐漸展開的沙洲，<b>手機握緊，掉下去撿不回來</b>。',
+       '🍢 日出売店 ＋ 等巴士':'🍢 <b>現烤的焼きちくわ</b>，拿在手上、背景是伊根灣。<br>只有 21 分鐘，<b>拍完就吃、吃完上車</b>。',
+       '🍣 午餐：鮨割烹 海宮':'🐟 <b>鰤魚丼上桌那一刻先拍</b>，油脂反光最漂亮。<br>🪟 <b>窗外就是伊根灣</b> —— 把丼飯放窗邊，海景當背景，這是舟屋日和的特權。','⛴️ 觀光船 天橋立 → 一の宮':'甲板上拍<b>沙洲全景</b>，靠岸前留意<b>90 度旋轉的迴旋橋</b>。',
+       '🚶 舟屋散策 ＋ 向井酒造':'從陸側拍<b>一整排舟屋倒映在海面</b>。低角度貼近水面最好看。',
+       '🛥️ 伊根灣遊覽船':'<b>海鷗會貼著船飛</b> —— 先開連拍，蝦味先舉高一點，鳥會入鏡。從海上拍舟屋是陸地拍不到的角度。',
+       '🌲 傘松公園 昇龍觀':'<b>股のぞき</b>：背對沙洲、彎腰從胯下看，沙洲會像龍升天。<br>請人幫你拍<b>彎腰的姿勢＋背後的沙洲</b>，兩張都要。',
+       '🚠 天橋立ビューランド 飛龍觀':'從這邊看沙洲像<b>飛龍在天</b>，跟傘松的昇龍觀是完全相反的角度 —— <b>兩張擺一起才是完整的</b>。'},
+ 'd3':{
+       '🥟 551蓬莱 本店（宵夜）':'🥟 <b>疊高的蒸籠冒白煙</b>，在夜裡的難波街頭很有氣氛。<br>店門口通常有排隊人潮，<b>那也是畫面的一部分</b>。<br><span style="color:#F09A90">豬肉包絕對不可帶回台灣。</span>',
+       '🐙 たこ焼道楽わなか 千日前本店':'🐙 <b>銅板上翻轉章魚燒</b>的手法，錄影比拍照好看。<br>八個一盒撒柴魚片，<b>柴魚遇熱會飄動</b> —— 那個瞬間要錄影。',
+       '🔥 晚餐：万正 燒肉':'🥩 <b>鹽牛舌上鋪滿生蒜</b>那盤是招牌畫面。<br>🔥 七輪炭火上肉在冒煙的瞬間 —— <b>關閃光燈</b>，炭火的橘光才會出來。',
+       '🍚 午餐：志津香 大宮店':'🍲 <b>釜飯掀蓋那一刻</b>，蒸氣衝出來最好看。<br>最後刮<b>釜底的鍋巴（おこげ）</b>時也拍一張 —— 那是志津香的靈魂。',
+       '🍡 中谷堂':'🎯 <b>高速搗麻糬</b>是奈良最有名的畫面之一 —— 兩人一組、木槌快到看不清。<br><b>不定時開搗，看到人群聚集就是要開始了</b>。<br>📹 <b>用錄影或連拍，事後再截圖</b>，單張很難抓到槌子落下的瞬間。','🦌 奈良公園餵鹿':'<b>鹿鞠躬</b>的瞬間：舉高仙貝、等牠低頭，連拍。<br>小心紙袋和地圖，鹿真的會吃。',
+       '🏯 東大寺大佛殿':'南大門的<b>金剛力士像</b>（隔著格柵，用長焦）、大佛殿全景要退到中門外才裝得下。',
+       '⛩️ 藥師寺':'<b>東塔與西塔並排</b>那張是這裡的定番 —— 一座千年國寶、一座昭和再建，站遠一點同框。<br><br>🎯 <b>大講堂的佛足石</b>：753 年、日本現存最古、國寶。<br><span style="color:#F09A90">2026 年 4 月遭潑灑甘油汙損，寺方已表示要強化警備 —— <b>拍照前先看現場有沒有禁止標示</b>。</span>',
+       '🏯 大阪城':'天守閣＋<b>極樂橋</b>（柯南 TV SP 第 263 話「浪花劍士與太閤之城」的場景）。<br>西之丸庭園方向可拍到天守閣全身＋護城河倒影。'},
+ 'd4':{
+       '🍲 晚餐：はり重 道頓堀本店':'🥩 <b>黑毛和牛的霜降紋路</b>，上桌先拍生肉盤。<br>🍳 壽喜燒鍋冒煙、沾生蛋液的瞬間。<b>百年老店的店內裝潢也值得拍</b>。',
+       '🍜 午餐：うどん屋 きすけ':'🍜 <b>鯛竹輪天</b>比碗還大，拿起來對比拍。<br>溫泉蛋戳破流下來那一刻 —— <b>先拍再攪</b>。','🍁 箕面瀑布健行':'落差 33 公尺的<b>大瀑布</b>，慢速快門可拍出絲綢感。沿途楓葉隧道也要拍。',
+       '🏯 大阪城':'🕵️ <b>服部平次那張</b>：站在<b>城外能看到天守閣全身</b>的位置（本丸廣場或極樂橋一帶，前景帶一點樹），<b>大拇指指自己、微側身、下巴微抬</b> —— 就是「俺は浪速の高校生探偵服部平次や」那個鏡頭。<br>要拍得像，<b>天守閣要在畫面右後方</b>，人佔左側三分之二。<br><br>🏯 <b>極樂橋</b>：TV SP 第 263 話「浪花劍士與太閤之城」中コナン 與平次追查豐臣秀吉寶藏的場景，就在你們的路線上。<br>🔍 <b>加碼</b>：讀賣電視台本社前有<b>少年偵探團銅像與怪盜基德像</b>（大阪城公園站步行約 10 分，常設）。<br>MIRAIZA大阪城 的コナン 期間限定店有服部平次戰國造型立牌，但那配合春季劇場版檔期，<b>11 月大概沒有</b>。<br><br>📷 一般構圖：西之丸庭園方向可拍到天守閣全身＋護城河倒影。',
+       '🗼 通天閣 夕陽':'<b>16:50 日落</b>，先拍夕陽再等藍調時刻拍夜景。<br>下塔後拍<b>新世界的復古霓虹招牌</b>，那才是通天閣的精髓。'},
+ 'd5':{
+       '🍖 晚餐：ニューベイブ 難波店':'🍖 <b>豬排剖面</b> —— 切開後粉紅色的斷面要趁熱拍。<br>里肌與腰內肉各半那盤，<b>兩種紋理並排</b>最好看。',
+       '🔪 千日前道具屋筋':'🍣 <b>食品模型店</b>的櫥窗 —— 假壽司、假拉麵、假聖代排成一整面牆。<br>🔪 職人刀具的排列、巨大章魚燒模型招牌。<b>整條商店街有頂棚，下雨也好拍</b>。',
+       '🍮 りくろーおじさん なんば本店':'🧀 <b>出爐時蓋上老爺爺烙印</b>那一刻是招牌畫面。<br>剛出爐的起司蛋糕<b>會晃</b> —— 用錄影拍晃動最有名。<br>店員會喊，<b>聽到就準備好手機</b>。',
+       '🍜 午餐：にし家 本店':'🍲 <b>うどんちり</b>的鍋物特寫 —— 這是大阪獨有的烏龍麵吃法，台灣少見。','🐟 木津市場':'<b>魚販切鮪魚</b>的動作、堆疊的漁獲、立食海鮮丼。<b>拍攤位前先問一聲</b>。',
+       '🦁 難波八阪神社':'<b>12 公尺高的獅子頭殿</b> —— 站正前方拍，人要站遠才裝得下整顆獅子頭。',
+       '🐋 海遊館':'<b>巨大鯨鯊</b>從主水槽游過的瞬間，關閃光燈、貼近玻璃拍。環斑海豹在上層。',
+       '🧸 でんでんタウン ＋ 一番くじ日本橋店':'扭蛋機牆、動漫看板、一番くじ 抽獎的瞬間。'}
+};
 
 /* ---- Google Custom Search 圖片（精確商品圖） ----
    申請兩個值後填在下面，沒填就只能手動上傳照片：
@@ -833,31 +1147,80 @@ function avatarHTML(i,size){
 /* ---- 身分識別 ---- */
 function meName(){return ST.me===null?'（未設定）':mem(ST.me)}
 function renderWho(){
- var h='<div style="padding:30px 0 10px;text-align:center">'+
+ var h='<div style="padding:26px 0 6px;text-align:center">'+
   '<div style="font-size:34px;margin-bottom:6px">⛩️</div>'+
-  '<div style="font-size:20px;font-weight:700">你是哪一位？</div>'+
+  '<div style="font-size:21px;font-weight:700">關西五日</div>'+
   '<div style="font-size:13.5px;color:var(--dim);margin-top:8px;line-height:1.7">'+
-  '選好之後，你對行程的調整、你的購物清單，都會記在你名下，<br>不會影響其他四個人。分帳也會知道是誰付的。<br>'+
-  '<span style="color:var(--cyan);font-size:12.5px">不確定怎麼用？先看上面的「說明」分頁。</span></div></div>';
- h+='<div class="form" style="border-style:solid;margin-top:18px">';
- for(var i=0;i<5;i++){
-  h+='<div class="mem"><span class="avwrap">'+avatarHTML(i,40)+'<input type="file" accept="image/*" data-wa="'+i+'"></span>'+
-     '<input data-wn="'+i+'" value="'+(ST.members[i]||'').replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+' 的名字">'+
-     '<button class="lk go" data-wp="'+i+'" style="flex:0 0 auto;padding:9px 14px">這是我</button></div>'}
- h+='<div class="hint">名字打好就會自動產生大頭貼（用名字最後一個字）。<b>點頭像可以換成自己的照片</b>，之後在「準備」和「分帳」頁也能改。</div></div>';
+  '打上你的名字就好，系統會自動幫你安排位置。<br>之後你的行程調整、購物清單、分帳都記在這個名字下。</div></div>';
+ h+='<div class="form" style="border-style:solid;margin-top:16px">';
+ h+='<div style="text-align:center;margin-bottom:14px"><span class="avwrap" id="pv">'+avatarPreview()+'<input type="file" accept="image/*" id="wa"></span>'+
+    '<div class="hint" style="text-align:center;margin-top:8px"><b>點上面的圓圈可以上傳照片</b><br>不傳就用名字自動生成頭像</div></div>';
+ h+='<h4>你的名字</h4><div class="row"><input id="wname" placeholder="例如：小明" value="'+((ST.me!==null&&ST.members[ST.me])||'').replace(/"/g,'&quot;')+'"></div>';
+ h+='<h4 style="margin-top:12px">房號（第一個人留空）</h4><div class="row"><input id="wroom" placeholder="其他人請貼上房號" value="'+(ST.room||'').replace(/"/g,'&quot;')+'"></div>';
+ h+='<div class="hint" style="margin:0 0 10px">'+
+    '<b>第一個開始用的人</b>：房號留空，直接進去，之後到「分帳」頁按「建立房間」，再把房號分享到群組。<br>'+
+    '<b>其他四個人</b>：把群組裡的房號貼進來，名字和分帳就會自動同步，<b>不會有人撞號</b>。</div>';
+ h+='<button class="go" id="wgo">開始使用</button>';
+ h+='<div class="hint" style="margin-top:10px">不確定怎麼用？先看上面的「<b>使用說明</b>」分頁。</div></div>';
  main.innerHTML=h;
- [].forEach.call(main.querySelectorAll('[data-wn]'),function(x){x.oninput=function(){ST.members[+x.dataset.wn]=x.value.trim();save();
-   var w=x.parentNode.querySelector('.avwrap');if(w)w.innerHTML=avatarHTML(+x.dataset.wn,40)+w.querySelector('input').outerHTML;
-   [].forEach.call(main.querySelectorAll('[data-wa]'),function(y){y.onchange=function(){pickAvatar(+y.dataset.wa,y.files[0])}})}});
- [].forEach.call(main.querySelectorAll('[data-wa]'),function(x){x.onchange=function(){pickAvatar(+x.dataset.wa,x.files[0])}});
- [].forEach.call(main.querySelectorAll('[data-wp]'),function(b){b.onclick=function(){
-  var i=+b.dataset.wp;
-  var nm=main.querySelector('[data-wn="'+i+'"]').value.trim();
-  if(nm)ST.members[i]=nm;
-  ST.me=i;save();
-  if(ST.room)roomSync(true);
-  render();toast('已設定為 '+mem(i))}});
+ bindAvatarPick();
+ var wn=document.getElementById('wname');
+ if(wn)wn.oninput=function(){refreshPreview()};
+ document.getElementById('wgo').onclick=doLogin;
+ var wr=document.getElementById('wroom');
+ if(wr)wr.onkeydown=function(e){if(e.key==='Enter')doLogin()};
+ if(wn)wn.onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();doLogin()}};
  window.scrollTo(0,0)}
+
+var TEMPAV='';
+function bindAvatarPick(){
+ var el=document.getElementById('wa');
+ if(el)el.onchange=function(){pickAvatarTemp(this.files[0])}}
+function refreshPreview(){
+ var pv=document.getElementById('pv');if(!pv)return;
+ pv.innerHTML=avatarPreview()+'<input type="file" accept="image/*" id="wa">';
+ bindAvatarPick()}
+function avatarPreview(){
+ var nm=(document.getElementById&&document.getElementById('wname')?document.getElementById('wname').value:'')||'';
+ if(TEMPAV)return '<img class="av" style="width:64px;height:64px" src="'+TEMPAV+'">';
+ var c=nm.trim()?(/^[A-Za-z]/.test(nm)?nm.slice(0,2).toUpperCase():nm.slice(-1)):'？';
+ return '<div class="av" style="width:64px;height:64px;background:'+AVC[0]+';color:#131A22;font-weight:700;font-size:26px;border:0">'+c+'</div>'}
+function pickAvatarTemp(file){
+ if(!file)return;var fr=new FileReader();
+ fr.onload=function(){var im=new Image();im.onload=function(){
+  var c=document.createElement('canvas'),n=96;c.width=n;c.height=n;var g=c.getContext('2d');
+  var side=Math.min(im.width,im.height);
+  g.drawImage(im,(im.width-side)/2,(im.height-side)/2,side,side,0,0,n,n);
+  TEMPAV=c.toDataURL('image/jpeg',0.7);
+  refreshPreview();
+  toast('照片已選好，按「開始使用」就會存起來')};im.src=fr.result};
+ fr.onerror=function(){toast('照片讀取失敗，換一張試試')};
+ fr.readAsDataURL(file)}
+
+function assignSlot(nm){
+ /* 已經有這個名字就沿用，否則佔用第一個空位 */
+ for(var i=0;i<5;i++){if((ST.members[i]||'').trim()===nm)return i}
+ for(var j=0;j<5;j++){if(!(ST.members[j]||'').trim())return j}
+ return -1}
+
+function doLogin(){
+ var nm=(document.getElementById('wname').value||'').trim();
+ var rm=(document.getElementById('wroom').value||'').trim();
+ if(!nm)return toast('請先打上你的名字');
+ function finish(){
+  var i=assignSlot(nm);
+  if(i<0)return toast('五個名額都滿了 —— 請確認名字有沒有打錯，或到「準備」頁清掉不用的');
+  ST.members[i]=nm;ST.me=i;
+  if(TEMPAV){ST.avatars[i]=TEMPAV;TEMPAV=''}
+  save();
+  if(ST.room)roomSync(true);
+  cur='d1';render();toast('歡迎，'+nm)}
+ if(rm){
+  ST.room=rm.split('/').pop();save();toast('連線中…');
+  roomPull(function(e){
+   if(e){ST.room='';save();return toast('房號無效或沒網路 —— 可以先留空進去，之後再加入')}
+   finish()})}
+ else finish()}
 
 /* ---- 推薦購物清單（guide，可個人加減） ---- */
 var GUIDE_SHOP=[
@@ -1008,12 +1371,24 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v19</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v37</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
    '<br><br><b>② 加到主畫面</b><br>iPhone：Safari 下方分享鈕 → 加入主畫面。<br>Android：Chrome 右上三點 → 加到主畫面。<br>加完桌面會出現鳥居圖示，點開是全螢幕、沒有網址列。'+
    '<br><br><b>③ 加入同步房間</b><br>到「分帳」分頁，一個人按「建立房間」，把房號分享到群組，其他四個人按「加入房間」貼上。之後分帳和購物清單就會自動互通。');
+
+ h+=sec('出發前一定要弄好網路');
+ h+=w('<b>五個人都要有網路。</b>這個 App 的分帳同步、購物清單同步、地圖、路線、天氣、匯率、自動找圖，全部需要連線。<br><br>'+
+   '<b>eSIM 在家有 Wi-Fi 時就先安裝</b>，落地只要開啟數據漫遊。日本 5 天建議每人 3～5 GB。<br>'+
+   '<b style="color:#F09A90">台灣門號要保留能收簡訊</b> —— 信用卡海外刷卡的 OTP 驗證碼會發到台灣號碼。<br>'+
+   'iPhone 雙卡設定：台灣 SIM 收簡訊、eSIM 走數據，並<b>關閉台灣門號的數據漫遊</b>避免被收費。<br><br>'+
+   '<span style="color:var(--dim)">App 本身有離線快取，沒網路也開得起來，但同步與地圖會停擺。建議也先下載 Google Maps 的京都、大阪、天橋立離線地圖當備援。</span>');
+
+ h+=sec('Day 0 —— 出發前夜');
+ h+=n('<b>11/12（四）晚上也排進去了。</b>最終打包檢查、群組對表、機捷、報到、過安檢。<br>'+
+   '<b style="color:#F09A90">機捷往機場的直達車末班是 23:00</b>，我排 22:30 那班 —— 五個人只要一個遲到就沒有備援班次。<br>'+
+   '<span style="color:var(--dim)">Day 1 的早餐在關西機場買（Lawson、FamilyMart 或販賣機都可以），帶上 HARUKA 吃。</span>');
 
  h+=sec('每天最常看的：日期分頁');
  h+=n('<b>頂部橫幅「現在應該在」</b><br>旅行當天會自動出現，顯示你這個時間點應該在哪一站、還剩幾分鐘、下一站是什麼、今天走到第幾階段（有進度條）。<b>每 30 秒更新一次。</b>'+
@@ -1035,6 +1410,56 @@ function renderHelp(){
    '<b>✎</b>　修改這一格的時間或內容。<br><br>'+
    '<b>✕</b>　刪掉這一格。<br><br>'+
    '<span style="color:var(--dim)">點標題文字可以展開／收合詳細說明。</span>');
+
+ h+=sec('💴 每日費用試算');
+ h+=n('每天頂部會自動加總<b>當天的現場支出</b>（交通、門票、餐飲），並排除 JR Pass 與周遊券已涵蓋的部分。<br>'+
+   '有匯率時會同步顯示台幣。<b>出門前看一眼就知道西瓜卡和現金夠不夠。</b><br>'+
+   '<span style="color:var(--dim)">Day 2 的交通是 0，因為全包在 ¥3,500 的周遊券裡。Day 3 最貴，藥師寺、東大寺、寄物、万正都在那天。</span>');
+
+ h+=sec('💰 記一筆');
+ h+=n('每天按鈕列的第一顆，<b>預設你付、五人均分</b>，只要打金額就能送出，按 Enter 直接記。<br>'+
+   '可選日圓或台幣，打字時即時換算。<b>走在路上花完錢立刻記，不會忘。</b><br>'+
+   '<span style="color:var(--dim)">要改付款人或看明細，去「分帳」分頁。</span>');
+
+ h+=sec('🌙 今晚還要做');
+ h+=n('每天最下面的紫色區塊，把睡前該做的事集中起來 —— 買明早早餐、收行李、打包八成、噴消臭噴霧。<br>'+
+   '最後一行會告訴你<b>明天最硬的是幾點</b>，睡前掃一眼就好。');
+
+ h+=sec('🌐 看不懂日文');
+ h+=n('每天按鈕列有 <b>🌐 翻譯</b>，開啟 Google 翻譯的拍照模式。<br>'+
+   '「緊急」分頁還有打字翻譯與 Google Lens 的捷徑，以及八句日文急救句。<br>'+
+   '<b>出發前先在 Google 翻譯 App 下載日文離線語言包</b> —— 相機即時翻譯離線也能跑，菜單招牌對著就出中文。');
+
+ h+=sec('🔊 語音導覽');
+ h+=n('每一格右邊有 <b>🔊 唸給我聽</b>，按下去會唸出這一站的時間、重點、拍照提示和注意事項。<br>'+
+   '頂部「現在應該在」那一行的 🔊 則是唸目前這一站。<br><br>'+
+   '<b>走路時不用看螢幕</b>，戴耳機邊走邊聽。再按一次會停止。<br>'+
+   '<span style="color:var(--dim)">用的是手機內建語音，免網路也能唸。日文店名可能唸得怪，那是正常的。</span>');
+ h+=w('<b>唸成英文腔怎麼辦</b><br>'+
+   '代表這台裝置沒裝中文語音，或系統挑錯了。<b>先到「準備」分頁的「語音朗讀」區塊</b> —— 那裡會<b>自動判斷你用什麼裝置</b>，顯示對應的安裝方式，並讓你手動換語音、試聽。<br>'+
+   '<span style="color:#F09A90">同一台裝置常常有好幾種中文語音，品質差很多，唸得怪就換一個試試。</span>');
+
+ h+=g('<b>先做這個判斷，不要急著去裝</b><br>'+
+   '打開「準備」分頁的<b>語音朗讀</b>區塊：<br><br>'+
+   '顯示「<b>目前使用：某某（zh-TW）</b>」→ <b>你已經有中文語音了</b>，不用去系統設定裡找。唸成英文是別的問題，換一個語音試試。<br><br>'+
+   '顯示「<b>沒有偵測到中文語音</b>」→ 才需要照下面的步驟安裝。');
+ h+=n('<b>你現在用的是 '+platName()+'</b><br><br>'+voiceHowTo());
+
+ h+=n('<b>其他裝置的安裝方式</b><br><br>'+
+   '<b>🍎 iPhone／iPad</b>：設定 → 輔助使用 → <b>語音內容</b>（不是「朗讀內容」）→ 語音 → 中文 → 國語（台灣）<br><br>'+
+   '<b>🤖 Android</b>：設定 → 系統 → 語言與輸入法 → 文字轉語音輸出 → 偏好的引擎選 <b>Google 文字轉語音</b> → 齒輪 ⚙️ → 安裝語音資料 → 中文（台灣）<br><br>'+
+   '<b>🪟 Windows</b>：設定 → 時間與語言 → 語音 → 新增語音 → 中文（台灣）<br><br>'+
+   '<b>🍏 Mac</b>：系統設定 → 輔助使用 → <b>語音內容</b> → 系統語音 → 管理語音 → 下載 Ting-Ting 或 Mei-Jia');
+
+ h+=n('<b>💻 電腦也能用</b><br>'+
+   '網址直接在電腦瀏覽器開就行，功能完全一樣。<br>'+
+   '<b>Chrome 有網路時會用 Google 的線上中文語音</b>，通常比系統內建自然。<br><br>'+
+   '<span style="color:#F09A90">但電腦測不準 —— 電腦有中文語音不代表手機有，反之亦然。<b>兩邊各測一次。</b></span>');
+
+ h+=sec('📸 拍照重點');
+ h+=n('主要景點的卡片上會有琥珀色的<b>拍照重點</b>區塊，告訴你這裡該拍什麼、怎麼拍。<br><br>'+
+   '有些是<b>有時效的</b>：傘松的股のぞき 要人幫忙拍、通天閣 16:50 的日落、伏見稻荷天黑後的千本鳥居、伊根遊覽船上貼著船飛的海鷗。<br>'+
+   '<span style="color:var(--dim)">Day 2 的昇龍觀與飛龍觀是一組 —— 兩張擺在一起才完整。</span>');
 
  h+=sec('落後偵測怎麼運作');
  h+=w('<b>按「✓ 到了」是啟動這個功能的唯一方法。</b><br><br>'+
@@ -1081,11 +1506,32 @@ function renderHelp(){
    '標記已買　買到了就按<br><br>'+
    '<b>加入房間後可以互看</b><br>「其他人想買什麼」會列出另外四個人的清單 —— 可以互相代購、避免五個人都買同一樣。');
 
+ h+=sec('出事的時候');
+ h+=w('<b>緊急分頁</b>　護照掉了怎麼辦、身體不舒服、東西掉了、日文急救句，還有可以直接撥號的電話。<br>'+
+   '<b style="color:#F09A90">出發前一定要把保單號碼、信用卡掛失電話、駐大阪辦事處電話填進去</b> —— 那幾欄我沒有預先填，因為號碼記錯比沒有更危險。<br><br>'+
+   '<b>備案分頁</b>　五天各自的抗雨能力、Day 2 與 Day 4 的完整雨天替代行程、去程班機延誤怎麼辦、電車停駛怎麼辦、訂位落空的替補店。<br>'+
+   '<span style="color:var(--dim)">出發前一週只要盯 Day 2 和 Day 4 的天氣。</span>');
+
+ h+=sec('搜尋');
+ h+=n('最上方的搜尋框可以找<b>行程、店家、電話、行李、訂位、待確認事項</b>，打「現金」「護照」「充電」「藥」都找得到。<br>'+
+   '點搜尋結果會跳到對應分頁，<b>點搜尋框右邊的 ✕ 或直接點任一分頁</b>都能返回。');
+
+ h+=sec('備份 —— 這個很重要');
+ h+=w('<b>所有資料只存在你這支手機裡。</b><br>清除瀏覽器資料、換手機、iOS 回收 PWA 空間，行程調整、購物清單、行李勾選、大頭貼都會消失。<br><br>'+
+   '「準備」分頁 → <b>⬇️ 下載備份檔</b>（建議用這個，含大頭貼也不會失敗）→ 存到雲端硬碟或傳給自己。<br>'+
+   '要還原時按 <b>⬆️ 從檔案還原</b>。<br><br>'+
+   '也可以按「產生短代碼」複製一段文字貼到備忘錄，<b>但短代碼不含大頭貼</b>。<br>'+
+   '<b>出發前和旅途中各備份一次。</b>');
+
+ h+=sec('分頁很多，怎麼快速找到');
+ h+=n('上方一共 <b>15 個分頁</b>，可以左右滑動。<b>目前所在的分頁會自動捲到畫面中央</b>，不用自己找。<br>'+
+   '找不到某個功能時，<b>直接用最上方的搜尋框</b>最快。');
+
  h+=sec('其他分頁');
  h+=n('<b>行李</b>　七組打包清單，電力放第一組（充電線、行動電源最容易忘）。可勾選，上方顯示進度。<br><br>'+
    '<b>資訊</b>　每人預算彙總（含台幣換算）、2026 退稅新制、隨身 vs 託運、台灣海關規定。<br><br>'+
    '<b>分享</b>　QR Code 給其他人掃、共享相簿連結、離線快取狀態。<br><br>'+
-   '<b>準備</b>　你的身分、住宿資料、訂位與劃位清單、電話簿（可直接撥號）、現金配置、團隊規則、出發前還要查的事。');
+   '<b>準備</b>　你的身分、<b>航班資訊</b>、<b>備份與還原</b>、住宿資料、訂位與劃位清單、電話簿、現金配置、死線提醒設定、團隊規則、出發前還要查的事。');
 
  h+=sec('離線與更新');
  h+=g('<b>離線可用</b><br>App 會把自己整份存進手機，<b>飛航模式、地下鐵、訊號差的地方都能開</b>。天氣和匯率會顯示上次抓到的資料。<br>'+
@@ -1098,6 +1544,207 @@ function renderHelp(){
    '<br><br><b>2. 分配五個角色</b><br>總決策者、財務、訂位窗口、行李長、計時員。出發前寫在群組置頂。'+
    '<br><br><b>3. 20 分鐘法則</b><br>任何排隊超過 20 分鐘就換一家或不吃。五個人的時間要乘以五。');
 
+ main.innerHTML=h;window.scrollTo(0,0)}
+
+
+
+/* ---- 全部資料備份／還原 ---- */
+function backupDownload(){
+ var txt=backupCode();
+ var bl=new Blob([txt],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(bl),a=document.createElement('a');
+ var d=new Date(),nm='kansai5-backup-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'-'+pad(d.getHours())+pad(d.getMinutes())+'.txt';
+ a.href=u;a.download=nm;document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(u)},4000);
+ toast('已下載備份檔<br><span style="font-weight:400">'+nm+'</span>')}
+function backupFromFile(file){
+ if(!file)return;var fr=new FileReader();
+ fr.onload=function(){var r=backupRestore(fr.result);toast(r.msg);if(r.ok){cur='help';render()}};
+ fr.readAsText(file)}
+function backupCode(){
+ var o={v:21,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,
+  chk:ST.chk,done:ST.done,edit:ST.edit,hide:ST.hide,adhoc:ST.adhoc,room:ST.room,
+  album:ST.album,rate:ST.rate,sos:ST.sos};
+ return 'K5BK'+b64e(JSON.stringify(o))}
+function backupRestore(code){
+ code=(code||'').trim();
+ if(code.indexOf('K5BK')!==0)return {ok:false,msg:'這不是備份代碼'};
+ var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
+ try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
+ ['me','members','avatars','shop','exp','chk','done','edit','hide','adhoc','room','album','rate','sos'].forEach(function(k){
+  if(o[k]!==undefined)ST[k]=o[k]});
+ save();return {ok:true,msg:'已還原'}}
+
+/* ---- 航班 ---- */
+var FLIGHTS=[
+{d:"去程",no:"GK050",dep:"11/13（五）02:30",from:"桃園 T1",arr:"06:00",to:"關西 T1",
+ note:"紅眼班機。<b>建議 11/12 晚上就到機場</b>，捷星國際線報到通常在起飛前 2～3 小時開始、起飛前 45–60 分鐘關閉。"},
+{d:"回程",no:"GK057",dep:"11/17（二）23:10",from:"關西 T1",arr:"01:30（+1）",to:"桃園 T1",
+ note:"<b>櫃檯約起飛前 3 小時（20:10）才開</b>。要先做退稅 KIOSK 再託運。<b>廉航不供餐，過安檢前買便當。</b>"}];
+function renderFlight(){
+ return '<h2 class="sec">航班</h2>'+FLIGHTS.map(function(f){
+  return '<div class="card" style="margin-bottom:10px"><div class="hd"><h3 style="cursor:default">'+f.d+'　'+f.no+'</h3></div>'+
+   '<div style="display:flex;gap:14px;align-items:center;margin:9px 0 4px">'+
+   '<div><div class="mono" style="font-size:20px;font-weight:700;color:var(--amber)">'+f.dep.split('）').pop()+'</div><div style="font-size:12px;color:var(--dim)">'+f.from+'</div></div>'+
+   '<div style="color:var(--dim)">→</div>'+
+   '<div><div class="mono" style="font-size:20px;font-weight:700">'+f.arr+'</div><div style="font-size:12px;color:var(--dim)">'+f.to+'</div></div>'+
+   '<div style="flex:1;text-align:right;font-size:12px;color:var(--dim)">'+f.dep.split('）')[0]+'）</div></div>'+
+   '<div style="font-size:13px;color:#C9D2DC;margin-top:6px">'+f.note+'</div>'+
+   '<div class="tags"><a class="lk web" target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent('Jetstar '+f.no+' status')+'">🔗 查航班狀態</a>'+
+   '<a class="lk map" target="_blank" rel="noopener" href="'+MAP(f.d==='去程'?'桃園國際機場 第一航廈':'関西国際空港 第1ターミナル')+'">🗺️ 航廈地圖</a></div></div>'}).join('')+
+  '<div class="note"><b>捷星客服電話請出發前查官網填進「緊急」頁。</b>誤點或取消時，第一時間打客服比在櫃檯排隊快。</div>';
+}
+
+/* ---- 搜尋 ---- */
+function buildIndex(){
+ var idx=[];
+ ['d0','d1','d2','d3','d4','d5'].forEach(function(k){
+  slotsOf(k).forEach(function(x){
+   idx.push({p:D[k].label,t:x.a+' '+x.t,d:(x.x||'').replace(/<[^>]+>/g,' ')+' '+(x.q||'')+' '+((x.g||[]).join(' ')),k:k})})});
+ GUIDE_SHOP.forEach(function(x){idx.push({p:'購物',t:x.n,d:(x.s||'')+' '+(x.note||''),k:'shop'})});
+ BOOK.forEach(function(x){idx.push({p:'準備',t:x[1],d:x[0]+' '+x[2],k:'prep'})});
+ TEL.forEach(function(x){idx.push({p:'準備',t:x[0]+' '+x[2],d:x[1],k:'prep'})});
+ CHECK.forEach(function(x){idx.push({p:'準備',t:x[0],d:x[1],k:'prep'})});
+ PACK.forEach(function(sec){sec[1].forEach(function(it){idx.push({p:'行李',t:it[0],d:it[1]||'',k:'pack'})})});
+ return idx}
+function doSearch(q){
+ q=(q||'').trim().toLowerCase();if(q.length<1)return [];
+ return buildIndex().filter(function(x){
+  return (x.t+' '+x.d).toLowerCase().indexOf(q)>=0}).slice(0,40)}
+
+/* ---- 緊急狀況 ---- */
+function renderSOS(){
+ var h='<div class="note" style="border-left-color:var(--red)"><b>出事的時候翻這一頁。</b><br>'+
+  '電話號碼都可以直接點擊撥號。<span style="color:var(--dim)">建議也印一份紙本 —— 手機沒電或不見時最需要的就是這些。</span></div>';
+
+ h+='<h2 class="sec">立刻要打的電話</h2>';
+ var E=[["🚨 警察","犯罪、失竊、交通事故、遺失物報案","110"],
+        ["🚑 救護車・消防","叫救護車不用錢，後續醫療費自付","119"],
+        ["🏨 曼迪高級公寓酒店 京都車站","Day 1–2 住宿","075-353-1922"],
+        ["🏨 大阪難波西曼迪高級公寓","Day 3–4 住宿","06-6645-1700"]];
+ h+=E.map(function(t){return '<a class="tel" href="tel:'+t[2].replace(/-/g,'')+'"><span class="n">'+t[0]+'<small>'+t[1]+'</small></span><span class="num mono">'+t[2]+'</span></a>'}).join('');
+
+ h+='<h2 class="sec">你要自己填的（出發前務必補上）</h2>';
+ var F=[["ins","保險公司與保單號碼"],["insTel","保險海外理賠專線"],
+        ["card1","信用卡① 掛失電話"],["card2","信用卡② 掛失電話"],
+        ["twOffice","台北駐大阪經濟文化辦事處 電話"],["twSOS","外交部旅外國人急難救助專線"],
+        ["emg","台灣緊急聯絡人"]];
+ h+='<div class="form" style="border-style:solid;border-color:var(--line)">'+
+  F.map(function(f){return '<div class="row"><input data-sos="'+f[0]+'" placeholder="'+f[1]+'" value="'+((ST.sos&&ST.sos[f[0]])||'').replace(/"/g,'&quot;')+'"></div>'}).join('')+
+  '<div class="hint">打完自動存。<b>駐處電話請上外交部領事事務局官網查最新的</b> —— 號碼記錯比沒有更危險，所以我沒有預先填。</div></div>';
+
+ h+='<h2 class="sec">護照掉了怎麼辦</h2>';
+ h+='<div class="note" style="border-left-color:var(--red)"><b>順序不能錯：</b><br>'+
+  '<b>1.</b> 先到最近的警察局<b>報案</b>，拿到「遺失届出証明書」<br>'+
+  '<b>2.</b> 帶著證明書、照片、身分證明去<b>台北駐大阪經濟文化辦事處</b>，申請入國證明書或臨時護照<br>'+
+  '<b>3.</b> 這會<b>吃掉至少一整天</b>，可能要改機票 —— 其他四個人先照行程走，留一個人陪同<br><br>'+
+  '<span style="color:#F09A90"><b>預防最重要：</b>護照影本一份＋手機翻拍，分開存放。護照不要放外套口袋，放隨身包內袋。<br>'+
+  'Day 5 退稅要用護照正本，<b>用完立刻收回原位</b>。</span></div>';
+
+ h+='<h2 class="sec">身體不舒服</h2>';
+ h+='<div class="note"><b>小病小痛</b><br>ドラッグストア（藥妝店）就有成藥，大阪心齋橋、難波一帶到處都是。<br><br>'+
+  '<b>需要看醫生</b><br><b>飯店櫃檯是最快的求助點</b>，請他們幫忙找附近診所並協助溝通。<br><br>'+
+  '<b>緊急</b><br>直接打 119。<b>叫救護車不用錢，但後續醫療費要自付</b> —— 這就是旅平險加醫療險一定要保的原因。</div>';
+ h+='<div class="note"><b>這趟最可能出事的是腳</b><br>'+
+  'Day 2 舟屋散策 2.1 km、Day 4 箕面來回 5.4 km、Day 5 心齋橋一路走到日本橋。<br>'+
+  '<b>穿已經穿習慣的鞋，水泡貼布出發前就買好</b>，隨身包放一組替換襪子。</div>';
+
+ h+='<h2 class="sec">東西掉了</h2>';
+ h+='<div class="note"><b>手機</b><br>出發前開啟「尋找裝置」。<b>重要資訊不要只存在手機</b> —— 飯店地址、航班、緊急聯絡人印一張紙放行李。<br><br>'+
+  '<b>信用卡</b><br>立刻打上面填的掛失電話。<b>帶兩張不同銀行的卡，分開放</b>。<br><br>'+
+  '<b>託運行李沒到</b><br>在 KIX 行李櫃檯填單，<b>留飯店地址請他們送到飯店</b>，不要在機場等。<br><br>'+
+  '<b>車站遺失物</b><br>JR 與各私鐵都有遺失物中心，記得車次與時間會快很多。木津市場警備室 06-6631-1135。</div>';
+
+ h+='<h2 class="sec">看不懂日文的時候</h2>';
+ h+='<div class="note"><b>菜單、招牌、告示牌 —— 用 Google 翻譯的相機模式最快。</b><br>'+
+   '鏡頭對著文字就即時疊上中文，<b>不用拍照、離線也能跑</b>。<br>'+
+   '<span style="color:var(--dim)">出發前先在 Google 翻譯 App 裡下載「日文」離線語言包。</span>'+
+   '<div class="tags" style="margin-top:9px">'+
+   '<a class="lk map" target="_blank" rel="noopener" href="https://translate.google.com/?sl=ja&tl=zh-TW&op=images">📷 拍照翻譯</a>'+
+   '<a class="lk web" target="_blank" rel="noopener" href="https://translate.google.com/?sl=ja&tl=zh-TW">⌨️ 打字翻譯</a>'+
+   '<a class="lk food" target="_blank" rel="noopener" href="https://lens.google.com/">🔍 Google Lens</a></div></div>';
+ h+='<h2 class="sec">日文急救句</h2>';
+ var J=[["助けてください","tasukete kudasai","救命"],
+        ["救急車を呼んでください","kyuukyuusha o yonde kudasai","請叫救護車"],
+        ["具合が悪いです","guai ga warui desu","我不舒服"],
+        ["パスポートをなくしました","pasupooto o nakushimashita","我護照掉了"],
+        ["近くに病院はありますか","chikaku ni byouin wa arimasu ka","附近有醫院嗎"],
+        ["日本語がわかりません","nihongo ga wakarimasen","我不會日語"],
+        ["英語が話せる人はいますか","eigo ga hanaseru hito wa imasu ka","有人會說英文嗎"],
+        ["すみません","sumimasen","不好意思／謝謝／打擾了"]];
+ h+=J.map(function(x){return '<div class="exp"><span class="l">'+x[0]+'<small>'+x[1]+'</small></span><span class="r" style="font-size:13px;color:var(--dim)">'+x[2]+'</span></div>'}).join('');
+ h+='<div class="hint" style="margin-top:8px">最實用的其實是「<b>すみません</b>」—— 什麼場合都能拿來開場。</div>';
+
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('[data-sos]'),function(x){x.oninput=function(){
+  if(!ST.sos)ST.sos={};
+if(ST.voice===undefined)ST.voice='';ST.sos[x.dataset.sos]=x.value;save()}});
+ window.scrollTo(0,0)}
+
+/* ---- 雨天與誤點備案 ---- */
+function renderRain(){
+ var h='<div class="note"><b>這一頁不是拿來讀的，是出事當下拿來翻的。</b><br>'+
+  '找到對應情境、照做、繼續玩。<span style="color:var(--dim)">判準是「這樣還開心嗎」，不是「有沒有照表操課」。</span></div>';
+
+ h+='<h2 class="sec">五天抗雨能力</h2>';
+ var R=[["Day 1 鞍馬・貴船","🟡 中","山區步道濕滑，但鞍馬寺與貴船神社雨中反而有氣氛"],
+        ["Day 2 天橋立","🔴 最怕","傘松視野歸零，<b>強風會讓船與纜車全部停駛</b>"],
+        ["Day 3 奈良・大阪","🟡 中","東大寺室內、道具屋筋有頂棚，餵鹿會狼狽"],
+        ["Day 4 箕面","🔴 最怕","健行是整天核心，下雨基本廢掉"],
+        ["Day 5 大阪市區","🟢 幾乎免疫","海遊館室內、心齋橋與商店街有頂棚"]];
+ h+=R.map(function(x){return '<div class="exp"><span class="l">'+x[0]+'<small>'+x[2]+'</small></span><span class="r" style="font-size:13px">'+x[1]+'</span></div>'}).join('');
+ h+='<div class="hint" style="margin-top:8px"><b>出發前一週只要盯 Day 2 和 Day 4 的天氣</b>，其他天照走。</div>';
+
+ h+='<h2 class="sec">☔ Day 2 雨天／強風替代方案</h2>';
+ h+='<div class="note" style="border-left-color:var(--red)"><b>強風比下雨更致命</b><br>'+
+  '伊根灣遊覽船、天橋立觀光船、傘松纜車與吊椅<b>遇強風會全部停駛</b>。這不是體驗變差，是根本搭不到。</div>';
+ h+='<div class="note"><b>小雨</b> → 砍傘松上山（雲霧中什麼都看不到），保留伊根與遊覽船，提早回天橋立慢慢逛智恩寺與迴旋橋。</div>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>大雨或強風 → 整天改玩京都</b><br>'+
+  '<b>09:00</b> 京都站 → 嵯峨嵐山（JR 嵯峨野線，Pass 涵蓋，約 17 分）<br>'+
+  '<b>09:30–12:00</b> 嵐山：竹林小徑、天龍寺、渡月橋 —— <b>雨中的竹林反而更有氣氛</b><br>'+
+  '<b>12:00–13:00</b> 嵐山午餐<br>'+
+  '<b>13:30</b> 回京都站轉往<b>錦市場</b>（有頂棚，完全不怕雨）<br>'+
+  '<b>15:00–17:00</b> 錦市場 → 新京極／寺町商店街（都有頂棚）<br>'+
+  '<b>17:30</b> 京都站商場、伊勢丹地下美食街<br><br>'+
+  '<b>好處</b>：全程 JR Pass 或步行、商店街有頂棚、不需要任何預約、隨時可縮可放。<br>'+
+  '<b>損失</b>：伊根滿開清酒買不到（Day 5 機場的獺祭仍在）。<br>'+
+  '<span style="color:#F09A90">記得打電話取消海宮的訂位。</span></div>';
+
+ h+='<h2 class="sec">☔ Day 4 雨天替代方案</h2>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>箕面下雨就是放棄</b> —— 溪谷步道濕滑、瀑布看不清、來回 5.4 公里淋雨，沒有任何開心的成分。<br><br>'+
+  '<b>改成梅田／中之島室內一日</b><br>'+
+  '<b>09:30–11:30</b> Bic Camera 或 Yodobashi 梅田（把 3C 提前，慢慢挑）<br>'+
+  '<b>11:30–12:20</b> 梅田周邊：阪急百貨、HEP FIVE、大丸<br>'+
+  '<b>12:20–13:10</b> うどん屋 きすけ（照常，只收現金）<br>'+
+  '<b>13:20–15:30</b> 中崎町昭和散策 —— <b>窄巷加雨聲很對味，老屋咖啡廳一間接一間泡</b><br>'+
+  '<b>15:30–17:00</b> 中之島美術館／科學館，或回梅田逛地下街（極大，完全不用出地面）<br>'+
+  '<b>17:45</b> はり重（照常，已訂位）</div>';
+
+ h+='<h2 class="sec">✈️ GK050 去程延誤（Day 1）</h2>';
+ var D1=[["延誤 1 小時","07:00 抵達","Pass 換領壓縮，砍伏見稻荷購物，其餘照走"],
+         ["延誤 2 小時","08:00 抵達","砍鞍馬纜車改走參道，或砍貴船"],
+         ["延誤 3 小時以上","09:00+ 抵達","<b>放棄鞍馬與貴船</b>，只保伏見稻荷與 ちいかわ"],
+         ["取消／改隔天","—","🚨 <b>若還沒換票，把 Pass 起用日改成 11/14</b>，這樣仍涵蓋 Day 2–5 含最後那班はるか"]];
+ h+=D1.map(function(x){return '<div class="exp"><span class="l">'+x[0]+'<small>'+x[2]+'</small></span><span class="r" style="font-size:12.5px;color:var(--dim)">'+x[1]+'</span></div>'}).join('');
+
+ h+='<h2 class="sec">🚆 Day 2 きのさき1號 出狀況</h2>';
+ h+='<div class="note"><b>誤點沒接上たんごリレー</b> → 福知山等 <b>09:59 的はしだて1號</b>（10:40 到天橋立）。等於回到原案，砍掉早上的觀光船與傍晚的飛龍觀，其餘照走。<br><br>'+
+  '<b>誤點 1 小時以上</b> → <b>放棄伊根，只玩天橋立</b>（傘松＋觀光船＋沙洲）。伊根的價值在遊覽船和舟屋，壓縮成一小時只會變成拉車。<br><br>'+
+  '<b>全線停駛</b> → 改執行上面的<b>京都替代方案</b>。</div>';
+
+ h+='<h2 class="sec">🚇 一般電車延誤</h2>';
+ h+='<div class="note"><b>Osaka Metro 延誤</b> → 大阪市區路網密，換一條線或走路通常 15 分鐘內可解。<br><br>'+
+  '<b>Day 3 JR 奈良線延誤</b> → 近鐵京都線也到奈良（<b>不在 Pass 內，自費約 ¥760</b>）。若寄物死線在即，直接花錢。<br><br>'+
+  '<b style="color:#F09A90">Day 5 はるか 停駛 → 天王寺 → 難波 → 南海電鐵空港急行</b>（自費約 ¥970、約 45 分鐘）。<b>這是回國那天唯一的備援，立刻改，不要等。</b></div>';
+
+ h+='<h2 class="sec">🍽️ 訂位落空</h2>';
+ var F=[["鮨割烹 海宮","改買便當在海邊吃，<b>遊覽船優先</b>"],
+        ["志津香 大宮店","改公園店現場排隊，或近鐵奈良小西通商店街"],
+        ["万正","17:30 開門前去卡位，或鶴橋站西口一帶燒肉店密集，隨便挑不會太差"],
+        ["はり重","北むら（心齋橋）、本 せきぐち（難波），或道頓堀粉物"],
+        ["きすけ","Yodobashi 梅田樓上餐廳樓層、阪急三番街地下麵食區"],
+        ["にし家","心齋橋一帶選擇極多，隨便找"]];
+ h+=F.map(function(x){return '<div class="exp"><span class="l">'+x[0]+'<small>'+x[1]+'</small></span></div>'}).join('');
+ h+='<div class="hint" style="margin-top:8px"><b>通則：任何一餐排隊超過 20 分鐘就換。</b>這趟已經有好幾家高分店，少一家不會怎樣，但遲到會連鎖崩盤。</div>';
  main.innerHTML=h;window.scrollTo(0,0)}
 
 /* ---- 資訊頁：預算・退稅・海關 ---- */
@@ -1278,8 +1925,12 @@ function renderSplit(){
   var n=e.who.length||5;e.who.forEach(function(i){bal[i]-=j/n})});
  var h='<h2 class="sec">成員</h2><div class="form" style="border-style:solid;border-color:var(--line)">'+
   [0,1,2,3,4].map(function(i){
-   return '<div class="mem"><span class="avwrap">'+avatarHTML(i,38)+'<input type="file" accept="image/*" data-av="'+i+'"></span><input data-m="'+i+'" value="'+(ST.members[i]||'').replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+' 的名字"></div>'}).join('')+
-  '<div class="hint">大頭貼預設用名字自動生成，<b>點頭像可以換成自己的照片</b>。填好名字，記帳時就能直接選人。</div></div>';
+   var isMe=(i===ST.me), nm=(ST.members[i]||'').trim();
+   if(!nm&&!isMe)return '';
+   return '<div class="mem"><span class="avwrap">'+avatarHTML(i,38)+(isMe?'<input type="file" accept="image/*" data-av="'+i+'">':'')+'</span>'+
+    '<input data-m="'+i+'" value="'+nm.replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+'"'+(isMe?'':' disabled style="opacity:.6"')+'>'+
+    (isMe?'<span style="flex:0 0 auto;font-size:11.5px;color:var(--cyan);font-weight:700">你</span>':'')+'</div>'}).join('')+
+  '<div class="hint">只能改自己的名字和頭像。<b>其他人的資料會透過房間自動同步過來</b>，加入房間後就會出現。</div></div>';
  h+='<h2 class="sec">匯率</h2>';
  h+='<div class="note">'+(r?('<b>¥1 = '+r.toFixed(4)+' 台幣</b> ・ ¥1,000 ≈ '+fmtNT(1000*r)+'<br><span style="color:var(--dim)">'+
     (ST.rate.manual?'手動設定':'自動取得 ・ '+rateAge())+'</span>')
@@ -1408,8 +2059,18 @@ function renderPrep(){
  var st=CAN?'<div class="store on">✅ 儲存已啟用</div>':'<div class="store off">⚠️ 目前無法儲存 —— 請下載到手機用瀏覽器開啟</div>';
  var who='<h2 class="sec">你是誰</h2><div class="note"><b>目前身分：'+meName()+'</b><br>'+
   '你對行程的調整、購物清單都記在這個名字底下。分帳也用這個身分。'+
-  '<div class="tags" style="margin-top:9px"><button class="lk map" id="chgme">更換身分</button></div></div>';
- var hot=who+'<h2 class="sec">住宿</h2>'+HOTELS.map(function(h){
+  '<div class="tags" style="margin-top:9px"><button class="lk map" id="renme">改名字</button><button class="lk rm" id="chgme">重新登入</button></div></div>';
+ var vox='<h2 class="sec">語音朗讀</h2><div class="note" id="voxbox">載入中…</div>';
+ var bak=vox+'<h2 class="sec">備份與還原</h2>'+
+  '<div class="note" style="border-left-color:var(--red)"><b>所有資料只存在這支手機裡。</b><br>'+
+  '清除瀏覽器資料、換手機、iOS 回收 PWA 空間，都會讓行程調整、購物清單、行李勾選、大頭貼全部消失。<br>'+
+  '<b>出發前和旅途中各備份一次。</b>'+
+  '<div class="tags" style="margin-top:9px">'+
+  '<button class="lk go" id="bkdl">⬇️ 下載備份檔</button>'+
+  '<label class="lk map">⬆️ 從檔案還原<input type="file" accept=".txt,text/plain" id="bkup" style="display:none"></label>'+
+  '<button class="lk web" id="bkmk">產生短代碼</button></div>'+
+  '<div class="hint">建議用<b>下載備份檔</b> —— 含大頭貼時代碼會很長，貼上容易失敗。檔案存到雲端硬碟或傳給自己最保險。</div></div><div id="bkbox"></div>';
+ var hot=who+renderFlight()+bak+'<h2 class="sec">住宿</h2>'+HOTELS.map(function(h){
   return '<div class="hotel"><h4>'+h.n+'</h4><div class="sub">'+h.d+'<br>'+h.addr+'</div>'+
   '<div class="tags"><a class="lk map" target="_blank" rel="noopener" href="'+MAP(h.q)+'">🗺️ 地圖</a>'+
   '<a class="lk web" target="_blank" rel="noopener" href="'+h.web+'">🔗 官網</a>'+
@@ -1438,7 +2099,7 @@ function renderPrep(){
  '<b>計時員</b>：每個紅線提前 10 分鐘喊一次</div>'+
  '<div class="note"><b>20 分鐘法則</b><br>任何排隊超過 20 分鐘就換一家，或乾脆不吃。這趟已經有四家高分店，少一家不會怎樣，但一次遲到會連鎖崩掉整個下午 —— 五個人的時間要乘以五。</div>';
  main.innerHTML=st+hot+'<h2 class="sec">訂位與劃位</h2>'+
-  BOOK.map(function(x,i){var id='b'+i,on=ST.chk[id];
+  BOOK.map(function(x,i){var id='bk_'+(x[3]||('n'+i)),on=ST.chk[id];
    return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[1]+'<small>'+x[0]+(x[2]?' ・ '+x[2]:'')+'</small></span></label>'}).join('')+
   '<h2 class="sec">電話簿</h2>'+
   TEL.map(function(t){return '<a class="tel" href="tel:'+t[2].replace(/-/g,'')+'"><span class="n">'+t[0]+'<small>'+t[1]+'</small></span><span class="num mono">'+t[2]+'</span></a>'}).join('')+
@@ -1464,8 +2125,50 @@ function renderPrep(){
    return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span></label>'}).join('');
  [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
   cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save()}});
+ var vb=document.getElementById('voxbox');
+ if(vb){
+  if(!speakSupported())vb.innerHTML='<b style="color:#F09A90">這個瀏覽器不支援語音朗讀</b>';
+  else loadVoices(function(){
+   var cur2=pickVoice();
+   var zh=VOICES.filter(function(x){return /^(zh|cmn)/i.test(x.lang)||/(Chinese|Mandarin|中文|國語)/i.test(x.name)});
+   if(!zh.length){
+    vb.innerHTML='<b style="color:#F09A90">'+platName()+'上沒有偵測到中文語音</b><br>'+
+     '朗讀會變成英文腔。安裝方式：<br><br>'+voiceHowTo();return}
+   vb.innerHTML='<b>目前使用：'+(cur2?cur2.name+'（'+cur2.lang+'）':'未選定')+'</b><br>'+
+    '<span style="color:var(--dim)">偵測到你在 '+platName()+' 上，有 '+zh.length+' 種中文語音可用。唸得怪就換一個試試。</span>'+
+    '<div class="row" style="margin-top:9px"><select id="voxsel">'+
+    '<option value="">自動選擇</option>'+
+    zh.map(function(x){return '<option value="'+x.name.replace(/"/g,'')+'"'+(ST.voice===x.name?' selected':'')+'>'+x.name+'（'+x.lang+'）</option>'}).join('')+
+    '</select></div>'+
+    '<div class="tags"><button class="lk go" id="voxtest">🔊 試聽</button></div>';
+   var sel=document.getElementById('voxsel');
+   if(sel)sel.onchange=function(){ST.voice=sel.value;save();renderPrep();toast('已切換語音')};
+   var vt=document.getElementById('voxtest');
+   if(vt)vt.onclick=function(){speak('現在應該在，鞍馬寺。纜車只到多寶塔，到本殿還要再走十分鐘上坡。','test')}})}
+ var bd=document.getElementById('bkdl');
+ if(bd)bd.onclick=backupDownload;
+ var bu=document.getElementById('bkup');
+ if(bu)bu.onchange=function(){if(confirm('從檔案還原會覆蓋這支手機目前的資料，確定嗎？'))backupFromFile(this.files[0])};
+ var bm=document.getElementById('bkmk');
+ if(bm)bm.onclick=function(){
+  var full=ST.avatars;ST.avatars=["","","","",""];
+  var code=backupCode();ST.avatars=full;
+  var box=document.getElementById('bkbox');
+  box.innerHTML='<div class="form" style="border-style:solid"><div style="word-break:break-all;font-size:11px;color:var(--dim);background:var(--ground);padding:9px;border-radius:3px;max-height:120px;overflow:auto">'+code+'</div>'+
+   '<div class="tags" style="margin-top:9px"><button class="lk map" id="bkcp">複製代碼</button></div>'+
+   '<div class="hint"><b>短代碼不含大頭貼</b>（約 '+Math.max(1,Math.round(code.length/1024))+' KB），適合貼到備忘錄。要完整備份請用「下載備份檔」。</div></div>';
+  document.getElementById('bkcp').onclick=function(){
+   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(function(){toast('已複製備份代碼')});
+   else toast('請長按上面的代碼手動複製')}};
+ var br=document.getElementById('bkrs');
+ if(br)br.onclick=function(){var c=prompt('貼上備份代碼');if(!c)return;
+  if(!confirm('還原會覆蓋這支手機目前的資料，確定嗎？'))return;
+  var r=backupRestore(c);toast(r.msg);if(r.ok)render()};
+ var rn2=document.getElementById('renme');
+ if(rn2)rn2.onclick=function(){var v=prompt('改成什麼名字？',meName());
+  if(v&&v.trim()){ST.members[ST.me]=v.trim();save();renderPrep();toast('已改名');if(ST.room)roomSync(true)}};
  var cm=document.getElementById('chgme');
- if(cm)cm.onclick=function(){ST.me=null;save();render()};
+ if(cm)cm.onclick=function(){if(confirm('重新登入？本機的行程調整與購物清單會保留。')){ST.me=null;save();cur='help';render()}};
  var an=document.getElementById('asknoti');
  if(an)an.onclick=askNotify;
  var ai=document.getElementById('allics');
@@ -1491,6 +2194,12 @@ function renderPrep(){
  window.scrollTo(0,0)}
 
 document.getElementById('fstore').textContent=CAN?'儲存已啟用':'下載後用瀏覽器開啟才能保存';
+var qEl=document.getElementById('q');
+var qxEl=document.getElementById('qx');
+if(qEl){var qT=null;qEl.oninput=function(){
+  if(qxEl)qxEl.style.display=qEl.value?'block':'none';
+  clearTimeout(qT);qT=setTimeout(render,250)}}
+if(qxEl)qxEl.onclick=function(){qEl.value='';qxEl.style.display='none';render()};
 setInterval(updLive,30000);
 var t0=todayKey();if(t0)cur=t0;
 render();fetchWX();fetchRate();
