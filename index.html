@@ -51,6 +51,8 @@ nav button .dot{position:absolute;top:3px;right:6px;width:5px;height:5px;border-
 nav button.today{border-color:var(--cyan);color:var(--cyan)}
 #live{padding:11px 16px;border-bottom:1px solid rgba(91,168,196,.4);background:linear-gradient(180deg,rgba(91,168,196,.18),rgba(91,168,196,.06))}
 #live.late{border-bottom-color:rgba(228,87,74,.5);background:linear-gradient(180deg,rgba(228,87,74,.2),rgba(228,87,74,.06))}
+#live.early{border-bottom-color:rgba(99,164,108,.5);background:linear-gradient(180deg,rgba(99,164,108,.18),rgba(99,164,108,.05))}
+#live.early .l1{color:#8FCB97}
 #live .l1{font-size:11.5px;color:var(--cyan);font-weight:700;letter-spacing:.06em;display:flex;justify-content:space-between}
 #live.late .l1{color:var(--red)}
 #live .l2{font-size:21px;font-weight:700;margin:3px 0 3px;line-height:1.3}
@@ -118,6 +120,7 @@ main.anim{animation:fadein .22s ease-out}
 .slot.dl .tm{color:var(--red)}
 .slot .te{font-size:11px;color:var(--dim);letter-spacing:-.02em}
 .slot .eta{font-size:11px;color:var(--red);font-weight:700;margin-top:3px;letter-spacing:-.02em}
+.slot .eta.early{color:var(--moss)}
 .slot.past{opacity:.38}
 .slot.past .tm{text-decoration:line-through;text-decoration-thickness:1px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:11px 13px;margin-bottom:9px;
@@ -148,6 +151,7 @@ main.anim{animation:fadein .22s ease-out}
 .lk{font-size:11.5px;padding:3px 9px;border-radius:3px;text-decoration:none;border:1px solid;display:inline-block;font-family:inherit;cursor:pointer}
 .lk.map{background:rgba(91,168,196,.16);color:var(--cyan);border-color:rgba(91,168,196,.35)}
 .lk.nav{background:var(--moss);color:#0E1712;border-color:var(--moss);font-weight:750}
+.lk.spk{background:rgba(91,168,196,.14);color:var(--cyan);border-color:rgba(91,168,196,.35);padding:3px 10px;font-size:13px}
 .lk.mo{background:transparent;border-color:var(--line);color:var(--dim);font-weight:700;letter-spacing:.1em;padding:3px 11px}
 .tags.more2{display:none;margin-top:6px;padding-top:7px;border-top:1px dashed var(--line)}
 .tags.more2.on{display:flex}
@@ -288,7 +292,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v62</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v72</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -302,7 +306,7 @@ var HKQ="〒600-8262 京都府京都市下京区八百屋町1",
 
 var D={
 help:{label:"使用說明",date:"先看這個"},
-d0:{label:"Day 0",date:"11/12 四",dnum:12,title:"出發前夜・桃園 T1",lat:25.0777,lon:121.2328,wxc:"桃園",
+d0:{label:"Day 0",date:"11/12 四",dnum:12,tz:-60,tzn:"台灣時間",title:"出發前夜・桃園 T1",lat:25.0777,lon:121.2328,wxc:"桃園",
 crux:{t:"22:30",w:"搭上台北車站直達車",n:"機捷往機場的直達車末班是 23:00，之後只剩普通車、23:30 前後全線收班。五個人只要一個遲到就沒有備援班次，只剩客運或計程車"},
 s:[
 {a:"20:00",b:"21:00",t:"🧳 最終打包 ＋ 全員檢查",g:["五人各自確認"],dead:1,x:"<ul><li><b>護照正本</b>（效期 6 個月以上）＋ 影本 ＋ 手機翻拍</li><li><b>JR Pass 兌換券</b>（10/13 線上買的那張）</li><li><b>VJW QR Code 已截圖存相簿</b> —— 機場可能沒網路</li><li><b>現金 ¥60,000 以上，其中 ¥10,000 是千圓鈔與硬幣</b></li><li>信用卡 ×2（已向銀行報備海外刷卡、OTP 可收）</li><li class='warn'><b>eSIM 已安裝並測試過</b>｜台灣門號保留收簡訊、關閉數據漫遊</li><li class='warn'><b>行動電源放隨身包，嚴禁託運</b></li><li class='warn'>&gt;100ml 液體、指甲剪全部進託運箱</li><li><b>託運箱只裝五到六成</b> —— 回程要帶 3C、藥妝、清酒、伴手禮</li></ul>"},
@@ -313,8 +317,8 @@ s:[
 {a:"23:30",b:"00:30",t:"✈️ 捷星報到託運",g:["01:30 截止"],dead:1,x:"<ul><li class='warn'><b>櫃檯起飛前 60 分鐘（01:30）關閉</b></li><li>五個人一起排，行李長負責清點五件</li><li class='warn'>再確認一次：<b>行動電源在隨身包、不在託運箱</b></li></ul>"},
 {a:"00:30",b:"01:30",t:"🛂 過安檢 ＋ 出境",x:"<ul><li>深夜櫃檯少，<b>安檢可能比白天慢</b></li><li>出境後可逛免稅店，但<b>回程才是採購重點</b>，去程別買重的</li></ul>"},
 {a:"01:30",b:"02:20",t:"😴 登機門候機",g:["補眠"],x:"<ul><li class='warn'><b>紅眼班機睡不好，整個 Day 1 都會廢</b> —— 頸枕、眼罩、耳塞現在拿出來</li><li>手機與行動電源充飽</li></ul>"},
-{a:"02:30",b:"06:00",t:"🛫 GK050 桃園 → 關西",g:["3小時30分"],x:"<ul><li>機上盡量睡</li><li class='warn'>降落後直接領行李、<b>自動通關者務必請官員補蓋入境章</b></li></ul>"}]},
-d1:{label:"Day 1",date:"11/13 五",dnum:13,title:"鞍馬・貴船・伏見稻荷",lat:35.0116,lon:135.7681,wxc:"京都",
+{a:"02:30",b:"05:00",t:"🛫 GK050 桃園 → 關西",g:["3小時30分","日本時間 06:00 抵達"],x:"<ul><li>機上盡量睡</li><li class='warn'><b>台灣 05:00 落地 ＝ 日本 06:00</b> —— 手錶記得調快一小時，App 會自動切換</li><li class='warn'>降落後直接領行李、<b>自動通關者務必請官員補蓋入境章</b></li></ul>"}]},
+d1:{label:"Day 1",date:"11/13 五",dnum:13,tzn:"日本時間",title:"鞍馬・貴船・伏見稻荷",lat:35.0116,lon:135.7681,wxc:"京都",
 crux:{t:"16:15",w:"進 ちいかわもぐもぐ本舗",n:"店 17:30 關門，晚到就買不到稻荷達摩玩偶。人多時可能還有入店整理券。"},
 s:[
 {a:"06:00",b:"07:00",t:"🛬 KIX 入境・領行李",g:["5人5大箱"],q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>自動通關者務必請官員補蓋入境章</b>，沒章無法退稅</li><li class='warn'><b>落地先開 eSIM 數據漫遊</b>，五個人互相確認都連上了</li><li><b>早餐在 KIX 買</b>：Lawson、FamilyMart 或自動販賣機都可以，帶上 HARUKA 吃</li><li>順便買熱飲 —— 11 月京都早上很冷</li><li>領完行李在轉盤旁集合，不要各自往前走</li></ul>"},
@@ -343,7 +347,7 @@ s:[
 {a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都站前店",bk:"torikizoku",dead:1,k:"eat",q:"鳥貴族 京都駅前店",food:"鳥貴族 京都駅前店",x:"<ul><li><b>回飯店前買明早早餐 ×5</b></li></ul>"},
 {a:"21:05",b:"21:25",t:"🏨 回飯店 Check-in",q:HK}]},
 
-d2:{label:"Day 2",date:"11/14 六",dnum:14,title:"伊根・昇龍觀・飛龍觀",lat:35.5686,lon:135.1938,wxc:"天橋立",
+d2:{label:"Day 2",date:"11/14 六",dnum:14,tzn:"日本時間",title:"伊根・昇龍觀・飛龍觀",lat:35.5686,lon:135.1938,wxc:"天橋立",
 crux:{t:"08:55",w:"福知山接上たんごリレー1號",n:"只有 8 分鐘轉乘。接不上就得等 09:59 的はしだて1號，早班的好處全沒了 —— 早上的觀光船和傍晚的飛龍觀都要砍掉"},
 s:[
 {a:"06:15",b:"06:50",t:"⏰ 起床整理",g:["今天最早"],x:"<ul><li class='warn'><b>比其他天早一小時</b> —— Day 1 回到飯店已是 21:25，前一晚早點睡</li></ul>"},
@@ -372,7 +376,7 @@ s:[
 {a:"18:09",b:"20:21",t:"🚆 特急 はしだて8號 → 京都",g:["全車指定席","已劃位"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li>直達不換車，車上吃便當</li></ul>"},
 {a:"20:30",b:"21:00",t:"🏨 回飯店",q:HKQ,x:"<ul><li>京都站超商<b>買明早早餐 ×5</b></li><li>今晚把大行李收 80%</li></ul>"}]},
 
-d3:{label:"Day 3",date:"11/15 日",dnum:15,title:"東大寺・志津香・藥師寺・鶴橋",lat:34.6851,lon:135.8048,wxc:"奈良",
+d3:{label:"Day 3",date:"11/15 日",dnum:15,tzn:"日本時間",title:"東大寺・志津香・藥師寺・鶴橋",lat:34.6851,lon:135.8048,wxc:"奈良",
 crux:{t:"15:50",w:"搭上 JR 奈良 → 天王寺",n:"後面接的是已訂位的万正燒肉（18:00）。錯過這班就搭下一班，同時打電話 090-2592-9687 跟店家說會晚到。"},
 s:[
 {a:"08:00",b:"08:20",t:"🏨 退房 → JR 京都站",g:["買早餐"],k:"move",dir:[HKQ,"京都駅","walking"]},
@@ -401,7 +405,7 @@ s:[
 {a:"20:30",b:"20:45",t:"🥟 551蓬莱 本店（宵夜）",k:"eat",q:"大阪市中央区難波3-6-3",food:"551蓬莱 本店",x:"<ul><li>なんば站 11 號出口步行 1 分</li><li class='warn'>豬肉包<b>絕對不可帶回台灣</b></li></ul>"},
 {a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",q:"LIFE 大国町店",x:"<ul><li>20:00 後<b>半額戰場</b>・買 Day 4 早餐 ×5</li></ul>"}]},
 
-d4:{label:"Day 4",date:"11/16 一",dnum:16,title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
+d4:{label:"Day 4",date:"11/16 一",dnum:16,tzn:"日本時間",title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"17:45",w:"はり重 訂位入座",n:"已訂位 5 人・遲到會被取消。大阪城 15:50 就要離場"},
 s:[
 {a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HOQ,"大国町駅","walking"]},
@@ -419,7 +423,7 @@ s:[
 {a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關"],q:"大阪市中央区千日前2-10-1",x:"<ul><li><b>定位是看看就好，沒有一定要買。</b>吹風機、美容儀、耳機、相機都有，21:00 硬關門</li></ul>"},
 {a:"21:05",b:"21:20",t:"🚶 走回飯店",dead:1,k:"move",dir:["なんば駅",HOQ,"walking"],x:"<ul><li class='warn'><b>回房後打包八成</b></li></ul>"}]},
 
-d5:{label:"Day 5",date:"11/17 二",dnum:17,title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
+d5:{label:"Day 5",date:"11/17 二",dnum:17,tzn:"日本時間",title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"18:47",w:"抵達天王寺轉 JR",n:"五個人拖五個大行李箱出 Metro 閘門走到 JR 月台，要 15 分鐘。19:05 的はるか 是回國班機前最後一班順的車，はるか 有異狀就立刻改南海空港急行。"},
 s:[
 {a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HOQ,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
@@ -649,10 +653,50 @@ function topIfTabChanged(){
   if(main&&main.classList){main.classList.remove('anim');void main.offsetWidth;main.classList.add('anim')}}}
 function jstNow(){var n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+9*3600000)}
 function toMin(t){var p=t.split(':');return (+p[0])*60+(+p[1])}
+/* 跨午夜正規化：Day 0 從 20:00 開始，00:30 其實是隔天凌晨。
+   以「當天第一格的時刻」為基準，比它早的一律 +1440。 */
+var DAYBASE={};
+function dayBase(k){
+ if(DAYBASE[k]!==undefined)return DAYBASE[k];
+ var b=(D[k]&&D[k].s&&D[k].s.length)?toMin(D[k].s[0].a):0;
+ DAYBASE[k]=b;return b}
+function dnorm(k,m){var b=dayBase(k);return m<b?m+1440:m}
+/* 打卡時刻的正規化：只有落在該天午夜之後的區段才 +1440。
+   行程還沒開始（例如下午 14:00 按 Day 0 的 20:00）不該被當成隔天凌晨。 */
+function pnorm(k,m){
+ var post=dayEnd(k)-1440;           /* 該天跨過午夜的尾巴，例如 Day 0 到 06:00 */
+ if(post>0&&m<=post)return m+1440;
+ return m}
+/* 該天的結束時刻（正規化後），用來判斷跨午夜的歸屬 */
+var DAYEND={};
+function dayEnd(k){
+ if(DAYEND[k]!==undefined)return DAYEND[k];
+ var ss=(D[k]&&D[k].s)||[],e=0;
+ ss.forEach(function(x){var v=dnorm(k,toMin(x.b));if(v>e)e=v});
+ DAYEND[k]=e;return e}
+/* Day 0 的行程在台灣（JST -60 分）；其餘在日本 */
+function tzOff(k){return (D[k]&&D[k].tz)||0}
+function tzName(k){return (D[k]&&D[k].tzn)||"日本時間"}
+/* 該天當地的「現在幾分」 */
+function nowMinFor(k){var j=jstNow();return ((j.getHours()*60+j.getMinutes())+tzOff(k)+1440)%1440}
+function tnorm(k,t){return dnorm(k,toMin(t))}
 function m2s(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
 function pad(n){return String(n).padStart(2,'0')}
-function todayKey(){var j=jstNow();if(j.getFullYear()!==2026||j.getMonth()!==10)return null;
- for(var k in D){if(D[k].dnum===j.getDate())return k}return null}
+function todayKey(){
+ var j=jstNow();
+ for(var k in D){
+  if(!D[k].dnum)continue;
+  /* 換算成該天所在時區的日期 */
+  var lo=new Date(j.getTime()+tzOff(k)*60000);
+  if(lo.getFullYear()!==2026||lo.getMonth()!==10)continue;
+  var day=lo.getDate();
+  /* 跨午夜的日子（Day 0 到凌晨 02:30）算前一天 */
+  var m=lo.getHours()*60+lo.getMinutes();
+  if(m<dayBase(k)){
+   /* 只有還在該天行程範圍內才算前一天（Day 0 到凌晨 06:00 落地為止） */
+   if(m+1440<=dayEnd(k))day-=1; else continue}
+  if(D[k].dnum===day)return k}
+ return null}
 function toast(m){toastEl.innerHTML=m;toastEl.classList.add('on');setTimeout(function(){toastEl.classList.remove('on')},2200)}
 Object.keys(D).forEach(function(k){var v=D[k],b=document.createElement('button');b.setAttribute('role','tab');
  b.innerHTML=(DAYTHEME[k]?dayIcon(k,13)+' ':'')+((k==='prep'||k==='split')?v.label:v.label+'<span class="d">'+v.date.slice(0,5)+'</span>');
@@ -676,9 +720,9 @@ function navDots(){
 function conflictIds(list){
  var bad={};
  for(var i=0;i<list.length;i++){
-  var a1=toMin(list[i].a),b1=toMin(list[i].b);if(b1<a1)b1+=1440;
+  var a1=tnorm(cur,list[i].a),b1=tnorm(cur,list[i].b);if(b1<a1)b1+=1440;
   for(var j=i+1;j<list.length;j++){
-   var a2=toMin(list[j].a),b2=toMin(list[j].b);if(b2<a2)b2+=1440;
+   var a2=tnorm(cur,list[j].a),b2=tnorm(cur,list[j].b);if(b2<a2)b2+=1440;
    if(a1<b2&&a2<b1){bad[list[i].id]=1;bad[list[j].id]=1}}}
  return bad}
 function slotsOf(k){var out=[];
@@ -690,13 +734,38 @@ function slotsOf(k){var out=[];
   var e=EDIT[id];if(e){for(var p2 in e)o[p2]=e[p2];o.edited=true}out.push(o)});
  (ST.adhoc[k]||[]).forEach(function(x,i){var id='a'+i;if(HIDE[k+':'+id])return;
   var o={};for(var p in x)o[p]=x[p];o.id=id;o.adhoc=true;out.push(o)});
- return out.sort(function(p,q){return toMin(p.a)-toMin(q.a)})}
+ return out.sort(function(p,q){return tnorm(k,p.a)-tnorm(k,q.a)})}
 
 /* 落後計算：取最後一個打卡的項目，比較實際 vs 表定 */
-function delayOf(k){var dn=ST.done[k]||{},list=slotsOf(k),last=null;
+/* 距離該天還有幾天（負數代表已經過去） */
+function daysTo(k){
+ var d=D[k]&&D[k].dnum;if(!d)return null;
+ var j=jstNow(),lo=new Date(j.getTime()+tzOff(k)*60000);
+ var today=new Date(lo.getFullYear(),lo.getMonth(),lo.getDate());
+ var target=new Date(2026,10,d);
+ return Math.round((target-today)/86400000)}
+/* 只比時刻、不管日期 —— 給非當天的試算用 */
+function previewDelay(k){
+ var dn=ST.done[k]||{},list=slotsOf(k),last=null;
  list.forEach(function(s){if(dn[s.id]!==undefined)last={s:s,at:dn[s.id]}});
  if(!last)return null;
  var d=last.at-toMin(last.s.a);
+ /* 取最接近的一圈：例如 -1400 其實是 +40 */
+ while(d>720)d-=1440;
+ while(d<-720)d+=1440;
+ return {min:d,slot:last.s}}
+/* 分鐘轉成「X 小時 Y 分」 */
+function hm(m){
+ m=Math.abs(m);
+ var h=Math.floor(m/60),mm=m%60;
+ return h?(h+' 小時'+(mm?' '+mm+' 分':'')):(mm+' 分鐘')}
+function delayOf(k){
+ /* 只有「今天就是這一天」時，落後才有意義 */
+ if(todayKey()!==k)return null;
+ var dn=ST.done[k]||{},list=slotsOf(k),last=null;
+ list.forEach(function(s){if(dn[s.id]!==undefined)last={s:s,at:dn[s.id]}});
+ if(!last)return null;
+ var d=pnorm(k,last.at)-tnorm(k,last.s.a);
  return {min:d,slot:last.s}}
 
 function fetchWX(){
@@ -719,7 +788,12 @@ function wxFor(k){var v=D[k];if(!v.lat)return null;var w=WX[v.lat+','+v.lon];if(
  return {ic:c[0],txt:c[1],hi:Math.round(w.temperature_2m_max[i]),lo:Math.round(w.temperature_2m_min[i]),pop:w.precipitation_probability_max[i]}}
 
 function updLive(){
- var j=jstNow();document.getElementById('jst').textContent=pad(j.getHours())+':'+pad(j.getMinutes());
+ var j=jstNow();
+ var tk0=todayKey(),off=tzOff(tk0||'d1');
+ var lo=new Date(j.getTime()+off*60000);
+ document.getElementById('jst').textContent=pad(lo.getHours())+':'+pad(lo.getMinutes());
+ var zn=document.querySelector('.clock .zn');
+ if(zn)zn.innerHTML=off?'台灣<br>時間':'日本<br>時間';
  var tk=todayKey();
  [].forEach.call(nav.children,function(b){b.classList.toggle('today',b.dataset.k===tk)});
  live.style.display='block';
@@ -730,32 +804,42 @@ function updLive(){
   live.innerHTML='<div class="l1"><span>出發倒數</span></div><div class="l2">'+(dd>0?'還有 '+dd+' 天':(dd<0?'旅程已結束':'今天就要出發'))+'</div>'+
    '<div class="l3">11/12（四）22:30 台北車站機捷 ・ 11/13（五）02:30 桃園起飛<br>最近死線：10/13 買 Pass、10/14 台灣 09:00 搶きのさき1號與はしだて8號</div>';
   return}
- var list=slotsOf(tk),nowM=j.getHours()*60+j.getMinutes(),ci=-1,ni=-1;
- for(var i=0;i<list.length;i++){var A=toMin(list[i].a),B=toMin(list[i].b);if(B<A)B+=1440;
+ var list=slotsOf(tk),nowM=dnorm(tk,nowMinFor(tk)),ci=-1,ni=-1;
+ for(var i=0;i<list.length;i++){var A=tnorm(tk,list[i].a),B=tnorm(tk,list[i].b);if(B<A)B+=1440;
   if(nowM>=A&&nowM<B){ci=i;break}if(nowM<A){ni=i;break}}
  var v=D[tk],dl=delayOf(tk),n=list.length;
  var idx=ci>=0?ci:(ni>=0?ni:n-1),stage=idx+1;
  var pct=n>0?Math.round(stage/n*100):0;
  var lateTxt='';
+ /* 每次都先清掉，避免狀態切換時殘留 */
+ live.classList.remove('late');live.classList.remove('early');
  if(dl&&dl.min>=5){live.classList.add('late');
-  var nd=null;list.forEach(function(s){if(!nd&&s.dead&&toMin(s.a)>nowM)nd=s});
-  var nxt=null;list.forEach(function(x){if(!nxt&&toMin(x.a)>nowM)nxt=x});
+  var nd=null;list.forEach(function(s){if(!nd&&s.dead&&tnorm(tk,s.a)>nowM)nd=s});
+  var nxt=null;list.forEach(function(x){if(!nxt&&tnorm(tk,x.a)>nowM)nxt=x});
   var ndest=nxt?(nxt.q||(nxt.dir?nxt.dir[1]:'')):'';
   lateTxt='<div class="l3" style="color:#F09A90;margin-top:4px">⚠️ <b style="color:#F09A90">落後 '+dl.min+' 分鐘</b>'+
-   (nd?' ・ '+nd.t+' 預估 <b style="color:#F09A90">'+m2s(toMin(nd.a)+dl.min)+'</b>（表定 '+nd.a+'）':'')+'</div>'+
+   (nd?' ・ '+nd.t+' 預估 <b style="color:#F09A90">'+m2s(tnorm(tk,nd.a)+dl.min)+'</b>（表定 '+nd.a+'）':'')+'</div>'+
    (ndest?'<a class="lk nav" style="display:inline-block;margin-top:8px;padding:7px 13px" target="_blank" rel="noopener" href="'+NAV(ndest,(nxt.dir&&nxt.dir[2])||'transit')+'">📍 從現在位置導航到 '+stripEmoji(stripTag(nxt.t)).slice(0,14)+'</a>':'')}
- else if(dl&&dl.min<=-5){live.classList.remove('late');lateTxt='<div class="l3" style="color:#8FCB97;margin-top:4px">✅ 比表定快 '+(-dl.min)+' 分鐘</div>'}
- else live.classList.remove('late');
+ else if(dl&&dl.min<=-5){
+  live.classList.remove('late');live.classList.add('early');
+  var ahead=-dl.min;
+  var nd2=null;list.forEach(function(x){if(!nd2&&x.dead&&tnorm(tk,x.a)>nowM)nd2=x});
+  var cur2=(ci>=0)?list[ci]:null;
+  lateTxt='<div class="l3" style="color:#8FCB97;margin-top:4px">✅ <b style="color:#8FCB97">比表定快 '+ahead+' 分鐘</b>'+
+   (cur2?' ・ 這裡可以多待 <b style="color:#8FCB97">'+ahead+' 分鐘</b>':'')+
+   (nd2?'<br>下一個死線 '+stripEmoji(stripTag(nd2.t)).slice(0,16)+' 預估 <b style="color:#8FCB97">'+m2s(tnorm(tk,nd2.a)-ahead)+'</b>（表定 '+nd2.a+'）':'')+'</div>'+
+   (ahead>=20?'<div class="l3" style="color:#8FCB97;opacity:.85;margin-top:3px">餘裕不少 —— 慢慢走、多拍幾張，或把後面想逛的提前。</div>':'')}
+ 
  var head='<div class="l1"><span>'+(ci>=0?'現在應該在':'空檔中')+' ・ '+v.label+'</span><span>階段 '+stage+' / '+n+'</span></div>';
  var pbar='<div class="pb"><i style="width:'+pct+'%"></i></div>';
- if(ci>=0){var s0=list[ci],B2=toMin(s0.b);if(B2<toMin(s0.a))B2+=1440;var nx=list[ci+1];
+ if(ci>=0){var s0=list[ci],B2=tnorm(tk,s0.b);if(B2<tnorm(tk,s0.a))B2+=1440;var nx=list[ci+1];
   live.innerHTML=head+'<div class="l2">'+s0.t+(speakSupported()?' <button id="spknow" style="background:none;border:0;color:var(--cyan);font-size:17px;cursor:pointer;padding:0 4px">🔊</button>':'')+'</div>'+pbar+
    '<div class="l3">剩 <b>'+(B2-nowM)+' 分鐘</b>'+(nx?' ・ 下一站 <b>'+nx.a+'</b> '+nx.t:' ・ 今天最後一站')+'</div>'+lateTxt;
   var sn=document.getElementById('spknow');
   if(sn)sn.onclick=function(){speak(slotSpeech(s0),'live')}}
  else if(ni>=0){var s2=list[ni];
   live.innerHTML=head+'<div class="l2">下一站：'+s2.t+'</div>'+pbar+
-   '<div class="l3">還有 <b>'+(toMin(s2.a)-nowM)+' 分鐘</b>（'+s2.a+' 開始） ・ 今日最硬 <b>'+v.crux.t+'</b></div>'+lateTxt}
+   '<div class="l3">還有 <b>'+(tnorm(tk,s2.a)-nowM)+' 分鐘</b>（'+s2.a+' 開始） ・ 今日最硬 <b>'+v.crux.t+'</b></div>'+lateTxt}
  else live.innerHTML=head+'<div class="l2">今天的行程已結束</div>'+pbar+lateTxt}
 
 function wxAlert(){
@@ -801,8 +885,8 @@ function render(){
  if(!DAYTHEME[cur]&&document.body.style)document.body.style.setProperty('--dayc','var(--line)');
  if(cur==='help')return renderHelp();
  if(cur==='share')return renderShare();
- var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=j.getHours()*60+j.getMinutes(),ni=-1;
- if(isT)list.forEach(function(s,i){var A=toMin(s.a),B=toMin(s.b);if(B<A)B+=1440;if(nowM>=A&&nowM<B)ni=i});
+ var v=D[cur],list=slotsOf(cur),j=jstNow(),isT=(todayKey()===cur),nowM=dnorm(cur,nowMinFor(cur)),ni=-1;
+ if(isT)list.forEach(function(s,i){var A=tnorm(cur,s.a),B=tnorm(cur,s.b);if(B<A)B+=1440;if(nowM>=A&&nowM<B)ni=i});
  var dn=ST.done[cur]||{},dl=delayOf(cur),CONF=conflictIds(list);
  var fullList=list;
  if(ST.compact)list=list.filter(function(x){return x.k!=='move'||x.dead});
@@ -817,7 +901,7 @@ function render(){
  var TH=DAYTHEME[cur]||{c:'var(--amber)'};
  h+='<div class="hero" id="hero" style="--dayc:'+TH.c+'">'+
    '<div class="dayband"><span class="di">'+dayIcon(cur,20)+'</span>'+
-    '<span class="dt">'+v.label+'</span><span class="dd">'+v.date+'</span>'+
+    '<span class="dt">'+v.label+'</span><span class="dd">'+v.date+(v.tzn?' ・ '+v.tzn:'')+'</span>'+
     '<span class="dn">'+v.title+'</span></div>'+
    '<div class="top"><span class="lab">今日最硬</span><span class="t mono">'+v.crux.t+'</span>'+
     '<span class="w">'+v.crux.w+'</span><button class="exp" id="heroexp">▾</button></div>'+
@@ -850,8 +934,26 @@ function render(){
    ((changed||!list.length)?'<button id="reset">↩️ 還原行程</button>':'')+
    (Object.keys(dn).length?'<button id="resetdone">🧹 清除打卡</button>':'')+
    '</div><div id="formwrap"></div>';
- if(dl)h+='<div class="store '+(dl.min>=5?'off':'on')+'" style="margin-bottom:12px">最後打卡：'+dl.slot.t+' ・ '+
-   (dl.min>0?'落後 '+dl.min+' 分鐘':(dl.min<0?'超前 '+(-dl.min)+' 分鐘':'準時'))+'</div>';
+ var nDone=Object.keys(dn).length;
+ if(dl)h+='<div class="store '+(dl.min>=5?'off':'on')+'" style="margin-bottom:12px">最後打卡：'+stripEmoji(stripTag(dl.slot.t))+' ・ '+
+   (dl.min>0?'落後 '+dl.min+' 分鐘':(dl.min<0?'超前 '+(-dl.min)+' 分鐘 ・ 後面每一站都會提早 '+(-dl.min)+' 分鐘到':'準時'))+'</div>';
+ else if(nDone){
+  var pv=previewDelay(cur),dd=daysTo(cur);
+  var body='';
+  if(dd===null)body='';
+  else if(dd>0){
+   var tot=dd*1440-(pv?pv.min:0);
+   var td=Math.floor(tot/1440),tm=tot%1440;
+   body='距離 '+v.date+' 還有 <b style="color:#8FCB97">'+dd+' 天</b>'+
+     (pv?'，時刻上'+(pv.min>0?'晚了 '+hm(pv.min):(pv.min<0?'早了 '+hm(pv.min):'剛好準時')):'')+
+     '<br><b style="color:#8FCB97">總共提早 '+td+' 天 '+hm(tm)+'</b> 🎉';
+  }
+  else if(dd===0)body='<b>就是今天</b>';
+  else body='已經過去 '+Math.abs(dd)+' 天';
+  h+='<div class="store on" style="margin-bottom:12px">已打卡 '+nDone+' 項'+
+   (pv?' ・ 最後打卡 '+stripEmoji(stripTag(pv.slot.t)):'')+
+   '<br><span style="font-weight:400">'+body+
+   '<br><span style="color:var(--dim)">試算 —— 正式的落後／提早偵測在 '+v.date+' 當天啟動</span></span></div>'}
  if(changed)h+='<div class="store on" style="margin-bottom:12px">這天有 '+changed+' 項改動 ・ 按「複製這天」貼給我更新手冊</div>';
  if(!list.length)h+='<div class="note" style="border-left-color:var(--red)"><b>這一天沒有任何項目</b><br>你把所有項目都刪掉了。按上方的<b>「還原行程」</b>可以回到原始版本。</div>';
  h+=list.map(function(s,i){
@@ -866,16 +968,20 @@ function render(){
   /* 主要：旅途中最常按的兩顆 */
   if(dest)lk+='<a class="lk nav" target="_blank" rel="noopener" href="'+NAV(dest,mode)+'">📍 帶我去</a>';
   lk+='<button class="lk '+(okd?'gone':'go')+'" data-go="'+s.id+'">'+(okd?'✓ '+m2s(dn[s.id]):'✓ 到了')+'</button>';
+  if(speakSupported())lk+='<button class="lk spk'+(SPK.cur===cur+s.id?' gone':'')+'" data-spk="'+s.id+'" title="唸給我聽">'+(SPK.cur===cur+s.id?'⏹':'🔊')+'</button>';
   /* 其餘收進 ⋯ */
   if(s.dir)lk2+='<a class="lk dir" target="_blank" rel="noopener" href="'+DIR(s.dir[0],s.dir[1],s.dir[2])+'">🧭 '+(s.dir[2]==='walking'?'原定步行':'原定路線')+'</a>';
   if(s.q)lk2+='<a class="lk map" target="_blank" rel="noopener" href="'+MAP(s.q)+'">🗺️ 地圖</a>';
   if(s.food)lk2+='<a class="lk food" target="_blank" rel="noopener" href="'+TAB(s.food)+'">🍽️ 食記</a>';
   (s.w||[]).forEach(function(x){lk2+='<a class="lk web" target="_blank" rel="noopener" href="'+x[1]+'">🔗 '+x[0]+'</a>'});
-  if(speakSupported())lk2+='<button class="lk '+(SPK.cur===cur+s.id?'gone':'ed')+'" data-spk="'+s.id+'">'+(SPK.cur===cur+s.id?'⏹ 停止':'🔊 唸給我聽')+'</button>';
+
   if(s.dead)lk2+='<button class="lk web" data-ics="'+s.id+'">⏰ 提醒</button>';
   lk2+='<button class="lk ed" data-ed="'+s.id+'">✎ 改</button><button class="lk rm" data-rm="'+s.id+'">✕ 刪</button>';
   if(lk2)lk+='<button class="lk mo" data-mo="'+s.id+'">⋯</button>';
-  var eta=(dl&&dl.min>=5&&toMin(s.a)>nowM)?'<div class="eta">→'+m2s(toMin(s.a)+dl.min)+'</div>':'';
+  var eta='';
+  if(dl&&tnorm(cur,s.a)>nowM){
+   if(dl.min>=5)eta='<div class="eta">→'+m2s(tnorm(cur,s.a)+dl.min)+'</div>';
+   else if(dl.min<=-5)eta='<div class="eta early">→'+m2s(tnorm(cur,s.a)+dl.min)+'</div>'}
   var scls=['slot',(isT&&ni>=0&&i<ni)?'past':'',okd?'done':'',s.dead?'dl':'',i===ni?'now':'',CONF[s.id]?'conf':''].filter(Boolean).join(' ');
   return '<div class="'+scls+'" id="s'+i+'"><div class="rail"><div class="tm mono">'+s.a+'</div><div class="te mono">'+s.b+'</div>'+eta+'</div>'+
    '<div class="'+cls+'">'+(s.dead?'<div class="dltag">死線</div>':'')+(i===ni?'<div class="nowtag">現在</div>':'')+'<div class="hd"><h3>'+s.t+'</h3>'+(s.x?'<span class="chev">›</span>':'')+'</div>'+
@@ -906,7 +1012,7 @@ function render(){
   e.stopPropagation();var box=hh.parentNode;if(box&&box.classList)box.classList.toggle('open')}});
  [].forEach.call(main.querySelectorAll('[data-go]'),function(b){b.onclick=function(e){e.stopPropagation();
   var id=b.dataset.go;if(dn[id]!==undefined)delete ST.done[cur][id];
-  else{var n=jstNow();ST.done[cur][id]=n.getHours()*60+n.getMinutes()}save();keepScroll(render)}});
+  else{ST.done[cur][id]=nowMinFor(cur)}save();keepScroll(render)}});
  [].forEach.call(main.querySelectorAll('[data-du]'),function(b){b.onclick=function(e){e.preventDefault();e.stopPropagation();
   delete ST.hide[b.dataset.du];save();keepScroll(render);toast('已還原這一項')}});
  [].forEach.call(main.querySelectorAll('[data-ics]'),function(b){b.onclick=function(e){e.stopPropagation();
@@ -1025,8 +1131,10 @@ function pickAvatar(i,file){
 function icsEsc(t){return String(t).replace(/[\\;,]/g,function(m){return '\\'+m}).replace(/\n/g,'\\n')}
 function pad2(n){return String(n).padStart(2,'0')}
 /* JST 轉 UTC 字串 */
-function jstStamp(dnum,hhmm,offMin){
+function jstStamp(dnum,hhmm,offMin,k){
  var p=hhmm.split(':'),mm=(+p[0])*60+(+p[1])-(offMin||0);
+ if(k&&tnorm(k,hhmm)>=1440)mm+=1440;
+ if(k)mm-=tzOff(k);
  var d=new Date(Date.UTC(2026,10,dnum,0,0,0));
  d=new Date(d.getTime()+(mm-540)*60000);
  return d.getUTCFullYear()+pad2(d.getUTCMonth()+1)+pad2(d.getUTCDate())+'T'+pad2(d.getUTCHours())+pad2(d.getUTCMinutes())+'00Z'}
@@ -1035,9 +1143,9 @@ function makeICS(k,only){
  var v=D[k],list=slotsOf(k),ev=[];
  list.forEach(function(s,i){
   if(only&&!s.dead)return;
-  var st=jstStamp(v.dnum,s.a,0),en=jstStamp(v.dnum,s.b,0);
+  var st=jstStamp(v.dnum,s.a,0,k),en=jstStamp(v.dnum,s.b,0,k);
   var al=s.dead?[30,10]:[10];
-  var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
+  var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0,k),
    'DTSTART:'+st,'DTEND:'+en,
    'SUMMARY:'+icsEsc((s.dead?'🚨 ':'')+s.t),
    'LOCATION:'+icsEsc(s.q||(s.dir?s.dir[1]:'')),
@@ -1164,8 +1272,8 @@ function allDeadICS(){
  ['d0','d1','d2','d3','d4','d5'].forEach(function(k){
   var v=D[k];slotsOf(k).forEach(function(s){
    if(!s.dead)return;
-   var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0),
-    'DTSTART:'+jstStamp(v.dnum,s.a,0),'DTEND:'+jstStamp(v.dnum,s.b,0),
+   var body=['BEGIN:VEVENT','UID:kansai-'+k+'-'+s.id+'@trip','DTSTAMP:'+jstStamp(v.dnum,s.a,0,k),
+    'DTSTART:'+jstStamp(v.dnum,s.a,0,k),'DTEND:'+jstStamp(v.dnum,s.b,0,k),
     'SUMMARY:'+icsEsc('🚨 '+v.label+' '+s.t),
     'LOCATION:'+icsEsc(s.q||(s.dir?s.dir[1]:'')),
     'DESCRIPTION:'+icsEsc('這是死線，不能遲到')];
@@ -1369,8 +1477,17 @@ function voiceHowTo(){
    '① 偏好的引擎選 <b>Google 文字轉語音</b>（沒有就去 Play 商店裝）<br>'+
    '② 點引擎旁的齒輪 ⚙️ → 安裝語音資料 → <b>中文（台灣）</b><br>'+
    '<b style="color:#F09A90">換了還是唸英文 → 把「偏好的引擎」改成 Google 文字轉語音</b>，廠商自家的 TTS 對網頁支援常常不完整。',
-  win:'<b>Windows</b>：設定 → 時間與語言 → <b>語音</b> → 管理語音 → 新增語音 → <b>中文（台灣）</b><br>'+
-   '<span style="color:var(--dim)">內建通常有 Microsoft Hanhan 或 Yating。用 Chrome 且有網路時，會優先使用 Google 的線上中文語音，通常更自然。</span>',
+  win:'<b style="color:#8FCB97">最快的方法：用 Chrome 開，而且要有網路</b><br>'+
+   'Chrome 連線時會多出「<b>Google 國語（臺灣）</b>」，音質比系統內建好，不用安裝任何東西。<br>'+
+   '<span style="color:#F5A79E">⚠️ 這個 App 有離線快取，可能是離線載入的 —— 確認網路通了再按下面的「重新偵測」。Edge 沒有這個線上語音。</span><br><br>'+
+   '<b>安裝到系統裡（永久，離線也能用）</b><br>'+
+   '<span style="color:#F5A79E">這裡有個坑：光裝「語音」不夠，要裝整個語言套件。</span><br>'+
+   '① 設定 → <b>時間與語言</b> → <b>語言與地區</b><br>'+
+   '② 新增語言 → <b>中文（繁體，台灣）</b><br>'+
+   '③ 安裝選項裡<b>務必勾選「文字轉語音」</b><br>'+
+   '④ 裝完<b>整個瀏覽器關掉重開</b>（不是重新整理）<br>'+
+   '⑤ 回來按「🔄 重新偵測」，應該會出現 <b>Microsoft Hanhan</b> 或 <b>Yating</b><br><br>'+
+   '<span style="color:var(--dim)">只看到 Microsoft David／Mark／Zira 就是還沒裝中文 —— 那是 Windows 的預設英文組合。</span>',
   mac:'<b>Mac</b>：系統設定 → <b>輔助使用</b> → <b>語音內容</b>（Spoken Content）→ 系統語音 → 管理語音 → 中文（台灣）→ 下載 <b>Ting-Ting（婷婷）</b> 或 <b>Mei-Jia（美佳）</b>',
   linux:'<b>Linux</b>：需安裝支援中文的語音引擎（例如 espeak-ng 加中文語音資料），瀏覽器才抓得到。',
   other:'請到系統設定中安裝中文語音套件，瀏覽器才抓得到。'};
@@ -1388,14 +1505,16 @@ function stripEmoji(t){
    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'').replace(/\s+/g,' ').trim()}
 
 /* 語音清單是非同步載入的，一定要等它就緒 */
-function loadVoices(cb){
- var v=speechSynthesis.getVoices()||[];
+function loadVoices(cb,tries){
+ tries=tries||0;
+ var v=[];
+ try{v=speechSynthesis.getVoices()||[]}catch(e){}
  if(v.length){VOICES=v;VREADY=true;return cb&&cb()}
- var done=false;
- function fin(){if(done)return;done=true;VOICES=speechSynthesis.getVoices()||[];VREADY=true;cb&&cb()}
- try{speechSynthesis.onvoiceschanged=fin}catch(e){}
- setTimeout(fin,600)}
-
+ if(tries>=6){VOICES=[];VREADY=true;return cb&&cb()}   /* 最多等約 1.8 秒 */
+ try{speechSynthesis.onvoiceschanged=function(){
+  var v2=speechSynthesis.getVoices()||[];
+  if(v2.length){VOICES=v2;VREADY=true;speechSynthesis.onvoiceschanged=null;cb&&cb()}}}catch(e){}
+ setTimeout(function(){loadVoices(cb,tries+1)},300)}
 function pickVoice(){
  if(ST.voice){
   var pinned=VOICES.filter(function(x){return x.name===ST.voice})[0];
@@ -1411,11 +1530,14 @@ function pickVoice(){
 
 function speak(txt,id){
  if(!speakSupported())return toast('這個瀏覽器不支援語音朗讀');
- if(SPK.cur===id&&speechSynthesis.speaking){speechSynthesis.cancel();SPK.cur=null;keepScroll(render);return}
+ if(SPK.cur===id&&speechSynthesis.speaking){speechSynthesis.cancel();SPK.cur=null;syncSpkBtns();return}
  speechSynthesis.cancel();
  loadVoices(function(){
   var v=pickVoice();
-  if(!v){toast('找不到中文語音<br><span style="font-weight:400">到「準備」分頁看安裝方式</span>');return}
+  if(!v){
+   /* 挑不到中文也照唸 —— 指定 lang 讓系統自己選，總比完全不出聲好 */
+   var names=VOICES.slice(0,3).map(function(x){return x.name+'('+x.lang+')'}).join('、');
+   toast('沒有偵測到中文語音，改用系統預設<br><span style="font-weight:400">偵測到 '+VOICES.length+' 種：'+(names||'無')+'<br>到「準備」分頁可手動指定</span>');}
   var clean=stripEmoji(txt);
   /* 長句切段，避免部分瀏覽器攔腰截斷 */
   var chunks=clean.split(/(?<=[。！？；\n])/).filter(function(x){return x.trim()});
@@ -1427,12 +1549,20 @@ function speak(txt,id){
   SPK.cur=id;
   merged.forEach(function(c,i){
    var u=new SpeechSynthesisUtterance(c);
-   u.voice=v;u.lang=v.lang||'zh-TW';u.rate=0.95;u.pitch=1;u.volume=1;
-   if(i===merged.length-1)u.onend=function(){SPK.cur=null;if(cur.charAt(0)==='d')keepScroll(render)};
+   if(v)u.voice=v;
+   u.lang=(v&&v.lang)||'zh-TW';u.rate=0.95;u.pitch=1;u.volume=1;
+   if(i===merged.length-1)u.onend=function(){SPK.cur=null;syncSpkBtns()};
    u.onerror=function(){SPK.cur=null};
    speechSynthesis.speak(u)});
-  if(cur.charAt(0)==='d')keepScroll(render)})}
+  syncSpkBtns()})}
 
+/* 只更新朗讀按鈕的外觀，不重繪整頁（重繪會把 ⋯ 選單關掉、捲動也會受影響） */
+function syncSpkBtns(){
+ if(!main||!main.querySelectorAll)return;
+ [].forEach.call(main.querySelectorAll('[data-spk]'),function(b){
+  var on=(SPK.cur===cur+b.dataset.spk);
+  b.textContent=on?'⏹':'🔊';
+  if(b.classList){if(on)b.classList.add('gone');else b.classList.remove('gone')}})}
 function slotSpeech(x){
  var t=stripEmoji(stripTag(x.t));
  var parts=[x.a+' 到 '+x.b+'，'+t];
@@ -1770,7 +1900,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v62</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v72</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -1783,6 +1913,17 @@ function renderHelp(){
    '<b style="color:#F09A90">台灣門號要保留能收簡訊</b> —— 信用卡海外刷卡的 OTP 驗證碼會發到台灣號碼。<br>'+
    'iPhone 雙卡設定：台灣 SIM 收簡訊、eSIM 走數據，並<b>關閉台灣門號的數據漫遊</b>避免被收費。<br><br>'+
    '<span style="color:var(--dim)">App 本身有離線快取，沒網路也開得起來，但同步與地圖會停擺。建議也先下載 Google Maps 的京都、大阪、天橋立離線地圖當備援。</span>');
+
+ h+=sec('⏰ 時區怎麼處理');
+ h+=n('<b>Day 0 用台灣時間，Day 1–5 用日本時間。</b>台灣比日本慢一小時。<br>'+
+   '頂部的時鐘會<b>自動切換</b> —— 在 Day 0 顯示「台灣時間」，進入 Day 1 之後顯示「日本時間」。<br><br>'+
+   '<b>打卡也是按當地時間算的。</b>你在台北車站 22:40 按「到了」，就是落後 10 分鐘，不會被日本時區搞混。<br>'+
+   '<span style="color:var(--dim)">行事曆匯出也已換算好，Day 0 的提醒會在台灣時間響。</span><br><br>'+
+   '<b>落後偵測只在那一天當天啟動。</b><br>'+
+   '不過你現在按「✓ 到了」測試，還是會告訴你差多少 —— 只是標明「<b>試算</b>」，而且<b>只比時刻不比日期</b>。<br>'+
+   '例如今天下午 14:30 按 Day 0 的 20:00，會顯示：<br>'+
+   '<b style="color:#8FCB97">距離 11/12 還有 70 天，時刻上早了 5 小時 30 分 → 總共提早 70 天 5 小時 30 分 🎉</b><br>'+
+   '<span style="color:var(--dim)">到了 11/12 當天，同一顆按鈕就會變成正式的落後／提早偵測，並開始推算後面每一站。</span>');
 
  h+=sec('Day 0 —— 出發前夜');
  h+=n('<b>11/12（四）晚上也排進去了。</b>最終打包檢查、群組對表、機捷、報到、過安檢。<br>'+
@@ -1802,13 +1943,14 @@ function renderHelp(){
  h+=sec('每一格上面的按鈕');
  h+=g('<b>主列只留兩顆常用的：</b><br><br>'+
    '<b>📍 帶我去</b>　<b>趕行程時最重要的一顆。</b>從<b>你現在的所在位置</b>導航過去 —— 不管走丟到哪、落後多久，路線都是對的。交通方式已設好：電車段大眾運輸、走路段步行。<br><br>'+
+   '<b>🔊</b>　唸出這一站的時間、重點、拍照提示與注意事項。<b>戴耳機邊走邊聽，不用看螢幕。</b>播放中會變成 ⏹，再按一次停止。<br><br>'+
    '<b>✓ 到了</b>　抵達時按一下，記錄實際時間，落後偵測靠它啟動。再按一次取消。');
  h+=n('<b>其餘收在 ⋯ 裡</b>（按了才展開，不會佔版面）：<br><br>'+
    '<b>🧭 原定路線</b>　照行程表的起點到終點，用來事先了解該搭哪條線<br>'+
    '<b>🗺️ 地圖</b>　只顯示位置，不導航<br>'+
    '<b>🍽️ 食記</b>　Google 搜尋那家店的食べログ 評價<br>'+
    '<b>🔗 官網</b>　景點或交通公司的官方網站<br>'+
-   '<b>🔊 唸給我聽</b>　語音朗讀這一站<br>'+
+   
    '<b>⏰ 提醒</b>　只有死線有，產生單項行事曆檔<br>'+
    '<b>✎ 改</b>　修改時間或內容　<b>✕ 刪</b>　刪掉這一格<br><br>'+
    '<span style="color:var(--dim)">點標題文字可以展開／收合詳細說明。</span>');
@@ -1818,7 +1960,12 @@ function renderHelp(){
    '按下去之後，App 拿實際時間跟表定時間相減，得出你落後或超前幾分鐘。然後：<br><br>'+
    '・頂部橫幅<b>變紅色</b>，顯示「⚠️ 落後 14 分鐘」<br>'+
    '・<b>下一個死線的預估抵達時間</b>會算給你看（表定 14:31 → 預估 14:45）<br>'+
-   '・橫幅底下會直接出現一顆 <b>📍 從現在位置導航到下一站</b>，按了就走<br>'+
+   '・橫幅底下會直接出現一顆 <b>📍 從現在位置導航到下一站</b>，按了就走<br><br>'+
+   '<b style="color:#8FCB97">提早也會告訴你。</b>快 5 分鐘以上，橫幅會轉綠色：<br>'+
+   '・「比表定快 12 分鐘 ・ 這裡可以多待 12 分鐘」<br>'+
+   '・下一個死線的<b>提早抵達時間</b>也會算給你<br>'+
+   '・時間軸的推算時間變成<b>綠色</b><br>'+
+   '・快 20 分鐘以上會加一句：餘裕不少，慢慢走、多拍幾張，或把後面想逛的提前<br>'+
    '・時間軸左邊每個還沒到的項目，都會出現紅色的推算時間<br><br>'+
    '<b>不用心算，直接看到哪個死線要爆。</b>再按一次「✓ 到了」可以取消記錄。');
 
@@ -2301,9 +2448,9 @@ function askNotify(){
 function checkNotify(){
  if(!notifyOK())return;
  var tk=todayKey();if(!tk)return;
- var j=jstNow(),nowM=j.getHours()*60+j.getMinutes(),list=slotsOf(tk);
+ var nowM=dnorm(tk,nowMinFor(tk)),list=slotsOf(tk);
  list.forEach(function(s){
-  if(!s.dead)return;var key=tk+':'+s.id,d=toMin(s.a)-nowM;
+  if(!s.dead)return;var key=tk+':'+s.id,d=tnorm(tk,s.a)-nowM;
   if(d<=15&&d>0&&!NOTIFIED[key]){NOTIFIED[key]=1;
    try{var n=new Notification('🚨 '+d+' 分鐘後：'+s.t,{body:D[tk].label+' ・ '+s.a+' 開始 ・ 這是死線',tag:key,requireInteraction:false});
     if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}}})}
@@ -2676,18 +2823,32 @@ function renderPrep(){
    var zh=VOICES.filter(function(x){return /^(zh|cmn)/i.test(x.lang)||/(Chinese|Mandarin|中文|國語)/i.test(x.name)});
    if(!zh.length){
     vb.innerHTML='<b style="color:#F09A90">'+platName()+'上沒有偵測到中文語音</b><br>'+
-     '朗讀會變成英文腔。安裝方式：<br><br>'+voiceHowTo();return}
+     '朗讀會用系統預設（可能是英文腔）。<br><br>'+
+     ((VOICES.length&&VOICES.every(function(x){return /^en/i.test(x.lang)}))?
+      '<span style="color:#F5A79E">偵測到的全部是英文語音 —— 這台裝置<b>確定沒有安裝中文語音</b>。</span><br><br>':'')+
+     '<b>這台裝置偵測到 '+VOICES.length+' 種語音：</b><br>'+
+     '<span style="color:var(--dim);font-size:12px;word-break:break-all">'+
+     (VOICES.length?VOICES.map(function(x){return x.name+' ('+x.lang+')'}).join('、'):'完全沒有偵測到任何語音 —— 可能是瀏覽器限制')+
+     '</span><br><br>'+voiceHowTo()+
+     '<div class="tags" style="margin-top:10px"><button class="lk map" id="voxreload">🔄 重新偵測</button></div>';
+    var vr=document.getElementById('voxreload');
+    if(vr)vr.onclick=function(){VOICES=[];VREADY=false;loadVoices(function(){keepScroll(renderPrep);toast('偵測到 '+VOICES.length+' 種語音')})};
+    return}
    vb.innerHTML='<b>目前使用：'+(cur2?cur2.name+'（'+cur2.lang+'）':'未選定')+'</b><br>'+
     '<span style="color:var(--dim)">偵測到你在 '+platName()+' 上，有 '+zh.length+' 種中文語音可用。唸得怪就換一個試試。</span>'+
     '<div class="row" style="margin-top:9px"><select id="voxsel">'+
     '<option value="">自動選擇</option>'+
     zh.map(function(x){return '<option value="'+x.name.replace(/"/g,'')+'"'+(ST.voice===x.name?' selected':'')+'>'+x.name+'（'+x.lang+'）</option>'}).join('')+
     '</select></div>'+
-    '<div class="tags"><button class="lk go" id="voxtest">🔊 試聽</button></div>';
+    '<div class="tags"><button class="lk go" id="voxtest">🔊 試聽</button>'+
+    '<button class="lk map" id="voxreload">🔄 重新偵測</button></div>'+
+    '<div class="hint">這台裝置共偵測到 '+VOICES.length+' 種語音，其中 '+zh.length+' 種是中文。</div>';
    var sel=document.getElementById('voxsel');
    if(sel)sel.onchange=function(){ST.voice=sel.value;save();renderPrep();toast('已切換語音')};
    var vt=document.getElementById('voxtest');
-   if(vt)vt.onclick=function(){speak('現在應該在，鞍馬寺。纜車只到多寶塔，到本殿還要再走十分鐘上坡。','test')}})}
+   if(vt)vt.onclick=function(){speak('現在應該在，鞍馬寺。纜車只到多寶塔，到本殿還要再走十分鐘上坡。','test')};
+   var vr2=document.getElementById('voxreload');
+   if(vr2)vr2.onclick=function(){VOICES=[];VREADY=false;loadVoices(function(){keepScroll(renderPrep);toast('偵測到 '+VOICES.length+' 種語音')})}})}
  var bd=document.getElementById('bkdl');
  if(bd)bd.onclick=backupDownload;
  var bu=document.getElementById('bkup');
