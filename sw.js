@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v4 */
-var CACHE='kansai5-v37';
+var CACHE='kansai5-v62';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
