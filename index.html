@@ -193,11 +193,13 @@ main.anim{animation:fadein .22s ease-out}
 .form h4{margin:0 0 9px;font-size:13.5px;color:var(--cyan);font-weight:650}
 .form .row{display:flex;gap:7px;margin-bottom:7px}
 .form select{appearance:none;-webkit-appearance:none;background-image:none}
-.form input[type=time]{-webkit-appearance:none;appearance:none;min-width:0}
-.form input[type=time]::-webkit-calendar-picker-indicator{filter:invert(.72);cursor:pointer}
-.form .t{flex:1 1 0;text-align:center;min-width:0}
 .form input,.form select{background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit;width:100%}
-.form input.t{flex:1 1 0;text-align:center;min-width:0}
+.trow{display:flex;align-items:center;gap:4px;margin-bottom:9px}
+.form input.t{flex:1 1 0;text-align:center;min-width:0;font-size:16px;letter-spacing:.02em}
+.tadj{flex:0 0 34px;background:var(--surface2);border:1px solid var(--line);color:var(--cyan);
+  border-radius:4px;padding:9px 0;font-size:12px;font-family:inherit;cursor:pointer;min-height:40px}
+.tadj:active{background:var(--cyan);color:var(--ground)}
+.tdash{flex:0 0 auto;color:var(--dim);font-size:13px;padding:0 2px}
 .form input::placeholder{color:#5C6B7C}
 .form .btns{display:flex;gap:7px}
 .form .go{flex:1;background:var(--cyan);border:0;color:var(--ground);font-weight:650;border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
@@ -295,7 +297,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v75</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v77</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -1110,7 +1112,14 @@ function openForm(id){
  var rich=!!(orig&&orig.x&&!/^<ul><li>[^<]*<\/li><\/ul>$/.test(orig.x));
  w.innerHTML='<div class="form"><h4>'+(id?'修改這一項':'新增一站')+'</h4>'+
  '<h4 style="margin-top:2px">時間</h4>'+
- '<div class="row"><input type="time" class="t mono" id="ia" value="'+cu.a+'"><input type="time" class="t mono" id="ib" value="'+cu.b+'"></div>'+
+ '<div class="trow"><button class="tadj" data-adj="ia:-5">−5</button>'+
+   '<input class="t mono" id="ia" inputmode="numeric" placeholder="14:00" maxlength="5" value="'+cu.a+'">'+
+   '<button class="tadj" data-adj="ia:5">+5</button>'+
+   '<span class="tdash">→</span>'+
+   '<button class="tadj" data-adj="ib:-5">−5</button>'+
+   '<input class="t mono" id="ib" inputmode="numeric" placeholder="15:00" maxlength="5" value="'+cu.b+'">'+
+   '<button class="tadj" data-adj="ib:5">+5</button></div>'+
+ '<div class="hint" style="margin:0 0 10px">直接打 <b>1400</b> 會自動變成 14:00。<b>±5</b> 可微調，長度會一起跟著移動。</div>'+
  '<div class="row"><input id="it" placeholder="要去哪／做什麼" value="'+cu.t.replace(/"/g,'&quot;')+'"></div>'+
  '<div class="row"><input id="iq" placeholder="地址或地圖關鍵字（選填）" value="'+cu.q.replace(/"/g,'&quot;')+'"></div>'+
  '<div class="row"><input id="inote" placeholder="備註（選填）" value="'+cu.n.replace(/"/g,'&quot;')+'"></div>'+
@@ -1120,6 +1129,28 @@ function openForm(id){
  '<b style="color:#F5A79E">改時間後，後面的項目不會自動順延</b> —— 電車班次與訂位都是固定時刻，硬推會變成不存在的車。有重疊會標紅提醒你。<br>'+
  '改過的項目可以用 <b>⋯ → ↩️ 還原原始</b> 單獨還原；刪掉的在那天最下面的「🗑️ 這天被你刪掉的」還原。</div></div>';
  focusForm('formwrap');
+ function fixTime(el){
+  var v=String(el.value||'').replace(/[^\d:]/g,'');
+  if(/^\d{3,4}$/.test(v))v=v.slice(0,v.length-2)+':'+v.slice(-2);
+  el.value=v}
+ ['ia','ib'].forEach(function(x){
+  var el=document.getElementById(x);
+  if(!el)return;
+  el.oninput=function(){var v=String(el.value||'').replace(/[^\d:]/g,'');
+   if(v.length===4&&v.indexOf(':')<0)v=v.slice(0,2)+':'+v.slice(2);
+   el.value=v};
+  el.onblur=function(){fixTime(el)}});
+ [].forEach.call(w.querySelectorAll('[data-adj]'),function(b){b.onclick=function(e){
+  e.preventDefault();
+  var p=b.dataset.adj.split(':'),which=p[0],step=+p[1];
+  var ea=document.getElementById('ia'),eb=document.getElementById('ib');
+  fixTime(ea);fixTime(eb);
+  var ma=/^\d{1,2}:\d{2}$/.test(ea.value)?toMin(ea.value):null;
+  var mb=/^\d{1,2}:\d{2}$/.test(eb.value)?toMin(eb.value):null;
+  if(ma===null||mb===null)return toast('先填好兩個時間');
+  if(which==='ia'){var dur=mb-ma;ma=(ma+step+1440)%1440;mb=(ma+dur+1440)%1440}
+  else{mb=(mb+step+1440)%1440;if(mb<=ma)return toast('結束時間不能早於開始')}
+  ea.value=m2s(ma);eb.value=m2s(mb)}});
  document.getElementById('ix').onclick=function(){w.innerHTML='';editing=null};
  document.getElementById('iok').onclick=function(){
   var g=function(x){var el=document.getElementById(x);return el?String(el.value||'').trim():''};
@@ -1671,7 +1702,7 @@ var PICS={
    2) GCSE_CX ：programmablesearchengine.google.com → 建立搜尋引擎 → 開啟「搜尋整個網路」→ 複製搜尋引擎 ID
    免費額度每天 100 次查詢。 */
 var GCSE_KEY="AIzaSyDMaLUmKs2yRe65NyWbOcqj2RhRHgBUfAs";
-var GCSE_CX="d1651a4d00018426a";
+var GCSE_CX="6216bcf6ae08e4807";
 var IMGCACHE={};
 function gcseReady(){return !!GCSE_KEY && !!GCSE_CX}
 function fetchImgs(q,cb){
@@ -1680,7 +1711,11 @@ function fetchImgs(q,cb){
  var u="https://www.googleapis.com/customsearch/v1?key="+encodeURIComponent(GCSE_KEY)+
    "&cx="+encodeURIComponent(GCSE_CX)+"&searchType=image&num=4&safe=active&q="+encodeURIComponent(q);
  fetch(u).then(function(r){return r.json()}).then(function(o){
-  if(o.error)return cb(o.error.message||'api-error');
+  if(o.error){
+   var em=o.error.message||'api-error';
+   if(/does not have the access/i.test(em))em='搜尋引擎與金鑰不在同一個 Google 帳號';
+   else if(/quota|rateLimit/i.test(em))em='今天的免費額度用完了（每天 100 次），明天再試或改用上傳照片';
+   return cb(em)}
   var arr=(o.items||[]).map(function(x){return {u:x.link,t:x.title||'',th:(x.image&&x.image.thumbnailLink)||x.link}});
   if(!arr.length)return cb('no-result');
   IMGCACHE[q]=arr;cb(null,arr)}).catch(function(){cb('offline')})}
@@ -1947,7 +1982,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v75</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v77</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
