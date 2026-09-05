@@ -48,7 +48,7 @@ nav::-webkit-scrollbar{display:none}
 nav::-webkit-scrollbar{display:none}
 nav button{flex:0 0 auto;background:rgba(28,35,43,.7);
   border:1px solid var(--line);color:var(--dim);border-radius:999px;
-  padding:6px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;white-space:nowrap;line-height:1.35;
+  padding:11px 13px;font-size:12.5px;font-family:inherit;cursor:pointer;white-space:nowrap;line-height:1.35;
   transition:background .16s,border-color .16s,color .16s,transform .1s}
 nav button:active{transform:scale(.95)}
 nav button .d{font-size:10px;display:inline;opacity:.6;margin-left:5px;letter-spacing:-.02em}
@@ -77,7 +77,7 @@ nav button.today{border-color:var(--cyan);color:var(--cyan)}
 #live .l2{font-size:21px;font-weight:700;margin:3px 0 3px;line-height:1.3}
 #live .l3{font-size:12.5px;color:#B5C2CE}
 #live .l3 b{color:var(--amber)}
-.pb-unused{height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:7px 0 5px;overflow:hidden}
+
 #live .pb i{display:block;height:100%;background:var(--cyan);border-radius:2px}
 #live.late .pb i{background:var(--red)}
 .av{width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);object-fit:cover;flex:0 0 auto;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--dim)}
@@ -100,6 +100,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .hero{position:relative}
 .hero .wm{position:absolute;right:-14px;top:-10px;opacity:.07;pointer-events:none;transform:rotate(-8deg)}
 .hero .dayband{position:relative;display:flex;align-items:center;gap:8px;padding:10px 13px;
+  background:rgba(91,168,196,.14);
   background:linear-gradient(100deg,color-mix(in srgb,var(--dayc) 22%,transparent),color-mix(in srgb,var(--dayc) 4%,transparent) 62%,transparent);
   border-bottom:1px solid color-mix(in srgb,var(--dayc) 22%,var(--line))}
 .hero .dayband .di{display:flex;align-items:center}
@@ -112,6 +113,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
   background:linear-gradient(100deg,rgba(228,87,74,.16),rgba(228,87,74,.05) 70%,transparent);
   border-bottom:1px solid rgba(228,87,74,.24)}
 .hero .top::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--red);
   background:linear-gradient(180deg,var(--red),color-mix(in srgb,var(--red) 45%,transparent))}
 .hero .top .lab{color:var(--red);font-size:9.5px;font-weight:800;letter-spacing:.12em;flex:0 0 auto}
 .hero .top .t{font-size:19px;font-weight:780;color:#FF8478;flex:0 0 auto;letter-spacing:-.035em;
@@ -127,10 +129,10 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .hero .bot b{color:var(--paper);font-weight:650}
 .hero .bot .tot{margin-left:auto}
 .hero .bot .tot b{color:var(--amber);font-size:14.5px;font-variant-numeric:tabular-nums}
-.bar{display:flex;gap:6px;margin:0 0 11px;align-items:stretch}
+.bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 11px;align-items:stretch}
 .bar button,.bar a{flex:1 1 auto;background:var(--surface2);background:linear-gradient(180deg,#242D37,#1C232B);
   border:1px solid var(--line);color:var(--paper);border-radius:8px;
-  padding:10px 8px;font-size:12.5px;font-family:inherit;cursor:pointer;text-align:center;text-decoration:none;
+  padding:13px 8px;font-size:12.5px;font-family:inherit;cursor:pointer;text-align:center;text-decoration:none;
   box-shadow:var(--inset);transition:filter .14s,transform .1s}
 .bar button:active,.bar a:active{transform:translateY(1px) scale(.985);filter:brightness(1.14)}
 .bar button.pri{background:var(--cyan);background:linear-gradient(180deg,#6FB8D2,#5BA8C4);
@@ -162,7 +164,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
   50%{box-shadow:0 0 0 7px rgba(91,168,196,.08),0 0 18px rgba(91,168,196,.22)}}
 @media (prefers-reduced-motion:reduce){.slot.now .rail::after{animation:none;box-shadow:0 0 0 4px rgba(91,168,196,.22)}}
 .slot .tm{font-size:16px;font-weight:700;color:var(--dayc,var(--amber));letter-spacing:-.035em;
-  font-variant-numeric:tabular-nums;line-height:1.15}
+  font-variant-numeric:tabular-nums;line-height:1.4;margin-bottom:-2px}
 .slot.dl .tm{color:var(--red)}
 .slot .te{font-size:11px;color:var(--faint);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:1px}
 .slot .eta{font-size:11px;color:var(--red);font-weight:700;margin-top:3px;letter-spacing:-.02em}
@@ -179,6 +181,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
   background:linear-gradient(100deg,rgba(228,87,74,.13),rgba(228,87,74,.02) 58%,transparent),
              linear-gradient(180deg,#242D37,#1C232B)}
 .card.dead::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2.5px;border-radius:0 3px 3px 0;
+  background:var(--red);
   background:linear-gradient(180deg,var(--red),color-mix(in srgb,var(--red) 30%,transparent))}
 .card.eat::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:2.5px;border-radius:0 3px 3px 0;
   background:linear-gradient(180deg,var(--moss),color-mix(in srgb,var(--moss) 25%,transparent))}
@@ -196,7 +199,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
   box-shadow:0 0 6px currentColor}
 .nowtag{display:inline-block;font-size:10.5px;font-weight:700;color:var(--ground);background:var(--cyan);border-radius:3px;padding:1px 6px;margin-bottom:5px}
 .hd{display:flex;align-items:flex-start;gap:8px}
-.hd h3{margin:0;font-size:15.5px;font-weight:620;flex:1;line-height:1.45;cursor:pointer;letter-spacing:.004em;color:var(--paper)}
+.hd h3{margin:0;font-size:15.5px;font-weight:620;flex:1;line-height:1.5;cursor:pointer;letter-spacing:.004em;color:var(--paper)}
 .chev{color:var(--dim);font-size:12px;margin-top:3px}
 .card.open .chev{transform:rotate(90deg)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;align-items:center}
@@ -208,7 +211,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .tag.g{background:rgba(99,164,108,.18);color:#8FCB97}
 .tag.v{background:rgba(155,139,196,.2);color:#C4B8E0}
 .tag.c{background:rgba(91,168,196,.2);color:var(--cyan)}
-.lk{font-size:11.5px;padding:4px 11px;border-radius:999px;text-decoration:none;border:1px solid;
+.lk{font-size:11.5px;padding:7px 12px;border-radius:999px;text-decoration:none;border:1px solid;
   display:inline-block;font-family:inherit;cursor:pointer;letter-spacing:.02em;
   transition:transform .1s,filter .12s}
 .lk:active{transform:scale(.96);filter:brightness(1.12)}
@@ -278,7 +281,7 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .sug.mine{background:rgba(91,168,196,.14);border-color:rgba(91,168,196,.4);color:#A8D4E2}
 .sug.mine small{color:var(--cyan)}
 .sug.sugmap{background:rgba(99,164,108,.16);border-color:rgba(99,164,108,.45);color:#8FCB97;width:100%}
-.form .btns{display:flex;gap:7px}
+.form .btns{display:flex;flex-wrap:wrap;gap:7px}
 .form .go{flex:1;background:var(--cyan);border:0;color:var(--ground);font-weight:650;border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
 .form .cx{flex:0 0 84px;background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:3px;padding:10px;font-size:14px;font-family:inherit;cursor:pointer}
 .hint{font-size:12px;color:var(--dim);margin-top:8px;line-height:1.5}
@@ -386,7 +389,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v105</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v136</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -421,25 +424,25 @@ s:[
 {a:"09:15",b:"10:30",t:"🏨 飯店寄大行李",g:["來回 75 分"],dead:1,q:HKQ,x:"<ul><li class='warn'>🚨 <b>這一段比想像中久很多，時間排實在了</b><br>出 HARUKA 月台（30 號，最西南端）約 <b>10 分</b><br>走到飯店 <b>18 分</b>（實測 1.2 km，NAVITIME 標準速度 14 分，<b>拖大行李要抓 18</b>）<br>五個人寄放、可能填單 <b>15 分</b><br>走回車站 <b>18 分</b>｜進站走到奈良線月台（8–10 號，最東端）<b>8 分</b><br>緩衝 6 分</li><li>只放行李，<b>不辦 Check-in</b>（15:00 才能入住）</li><li>💴 現金不夠的話飯店附近有 7-11</li><li class='warn'>拖不動就分工：兩個人押行李，其他人先去買咖啡</li></ul>"},
 {a:"10:32",b:"10:42",t:"🚆 JR 京都 → 東福寺",g:["JR Pass","1站"],k:"move",dir:["京都駅","JR東福寺駅","transit"],x:"<ul><li>JR 奈良線一站就到，<b>普通車不用劃位</b></li><li>下車後走到<b>京阪東福寺站</b>只要 2～3 分鐘，兩站相鄰</li></ul>"},
 {a:"10:45",b:"11:05",t:"🚆 京阪 東福寺 → 出町柳",g:["¥280"],k:"move",dir:["京阪 東福寺駅","出町柳駅","transit"],x:"<ul><li class='warn'><b>京阪不在 JR Pass 內，刷西瓜卡</b></li><li>坐到終點出町柳，直接轉叡電</li></ul>"},
-{a:"11:10",b:"11:45",t:"🚋 叡電 出町柳 → 鞍馬",g:["¥500"],k:"move",dir:["出町柳駅","鞍馬駅","transit"],x:"<ul><li>途中經過<b>もみじ隧道</b>，車內關燈慢行</li><li class='warn'>紅葉期特別班表</li></ul>",w:[["叡電官網","https://eizandensha.co.jp/"]]},
-{a:"11:55",b:"12:50",t:"⛩️ 鞍馬寺",g:["愛山費¥200~300","纜車¥200"],q:"鞍馬寺",x:"<ul><li>纜車山門→多宝塔，<b>每 20 分一班</b>，車程約 3 分鐘</li><li class='warn'>纜車只到多宝塔，<b>到本殿還要走 10 分鐘上坡</b></li><li>🥢 <b>普明殿（纜車站那棟）有免費出借登山杖</b> —— 上坡用不太到，但<b>下坡對膝蓋很有用</b>，11 月落葉濕滑時更該借</li><li>⛩️ 本殿金堂前的<b>金剛床</b>（地上六芒星石紋）必看，站中央可一望比叡山</li><li>👺 本殿左手邊的<b>光明心殿</b>供奉護法魔王尊，天狗傳說的源頭</li><li class='warn'>❌ <b>本殿再往奧之院、貴船那段沒有照明，手機訊號也很差</b> —— 今天不走那段，臨時起意想走務必帶手電筒</li></ul>"},
+{a:"11:10",b:"11:45",t:"🚋 叡電 出町柳 → 鞍馬",g:["¥500"],k:"move",dir:["出町柳駅","鞍馬駅","transit"],x:"<ul><li class='warn'>🍁 <b>もみじのトンネル 點燈期間 11/7–11/24，你們 11/13 在期間內</b><br>市原～二ノ瀬間，<b>車廂會減速並關燈</b>｜坐<b>右側</b>視野好</li><li class='warn'>🚨 <b>紅葉見頃是 11/20 前後</b> —— 11/13 可能還沒完全紅，別期待滿山火紅<br><span style='color:var(--dim)'>2024 年因為秋天偏暖，見頃延到 11 月底</span></li><li>出町柳可買<b>叡電一日券</b>，紅葉期人多<b>建議一到就買</b></li><li class='warn'>🚨 <b>11 月有紅葉特別班表</b>，出發前一週查 eizandensha.co.jp</li></ul>",w:[["叡電官網","https://eizandensha.co.jp/"]]},
+{a:"11:55",b:"12:50",t:"⛩️ 鞍馬寺",g:["愛山費¥200~300","纜車¥200"],q:"鞍馬寺",x:"<ul><li class='warn'>🚡 <b>搭纜車會跳過由岐神社</b> —— 那是山門到本殿之間的神社，介意的話就走參道（約 30 分上坡）</li><li>纜車 ¥200，只到<b>多宝塔</b>，到本殿還要再走 10 分鐘上坡</li><li class='warn'>🥢 <b>普明殿（纜車站那棟）免費借登山杖</b> —— 11 月落葉濕滑，下坡特別有用</li><li>本殿金堂前的<b>金剛床</b>（六芒星石紋）站中央可一望比叡山<br><b>鞍馬寺的紅葉點就在本殿金堂前</b></li><li>本殿左手邊的<b>光明心殿</b>供奉護法魔王尊，天狗傳說的源頭</li><li class='warn'>❌ 本殿再往奧之院、貴船那段<b>沒有照明、訊號很差</b>，今天不走那段</li></ul>"},
 {a:"12:55",b:"13:20",t:"🍱 午餐：鞍馬駅前",g:["現金"],k:"eat",q:"鞍馬駅",x:"<ul><li><b>有座位的只有這裡，貴船沒有</b></li></ul>"},
-{a:"13:25",b:"13:30",t:"🚋 叡電 鞍馬 → 貴船口",g:["¥210"],k:"move",dir:["鞍馬駅","貴船口駅","transit"]},
-{a:"13:35",b:"13:55",t:"🚌🚶 貴船口 → 貴船神社",g:["巴士¥160 或走20分"],k:"move",dir:["貴船口駅","貴船神社","walking"],x:"<ul><li class='warn'>巴士排隊超過 10 分鐘就直接走</li></ul>"},
-{a:"13:55",b:"14:40",t:"⛩️ 貴船神社",g:["水占¥200"],q:"貴船神社",x:"<ul><li><b>水占みくじ</b>：紙浮在御神水上字才浮現</li></ul>",w:[["官網","https://kifunejinja.jp/"]]},
-{a:"14:40",b:"15:00",t:"🚌🚶 貴船神社 → 貴船口",g:["巴士5分 或走20分"],k:"move",dir:["貴船神社","貴船口駅","walking"],x:"<ul><li>京都巴士 33 系統約 5 分鐘（📱¥160），或沿貴船川走 20 分鐘</li><li class='warn'>紅葉期巴士會排隊，<b>排超過 10 分鐘就直接走</b></li></ul>"},
+{a:"13:23",b:"13:28",t:"🚋 叡電 鞍馬 → 貴船口",g:["¥210"],k:"move",dir:["鞍馬駅","貴船口駅","transit"],x:"<ul><li class='warn'>🚨 <b>時刻待查</b> —— 11 月紅葉期會改點並加開臨時班次，官方接近日期才公布<br>平時鞍馬線約 <b>15–20 分一班</b>，出發前一週查 eizandensha.co.jp</li></ul>"},
+{a:"13:30",b:"13:55",t:"🚌🚶 貴船口 → 貴船神社",g:["2.0km","巴士¥160 或走25分"],k:"move",dir:["貴船口駅","貴船神社","walking"],x:"<ul><li class='warn'>🚶 <b>實際是 2.0 公里、走 25 分鐘</b>（沿貴船川，紅葉時邊走邊拍會更久）</li><li class='warn'>🚌 <b>紅葉季有收費接駁巴士</b>（貴船口駅 ↔ 貴船神社駐車場），約 5 分<br>京都巴士 33 系統也到｜<b>排超過 10 分鐘就直接走</b></li><li>走路沿途都是紅葉溪谷，不會無聊</li><li class='warn'>🚨 <b>巴士時刻待查</b> —— 京都巴士 33 系統，紅葉期另有接駁車<br><b>排隊超過 10 分鐘就直接走</b>（2 公里、25 分）</li></ul>"},
+{a:"13:55",b:"14:38",t:"⛩️ 貴船神社",g:["水占¥200"],q:"貴船神社",x:"<ul><li><b>水占みくじ</b> ¥200 —— 浸到御神水裡文字才會浮現，那個瞬間很值得錄影</li><li class='warn'>📷 <b>朱紅燈籠石階</b>是主角 —— 人很多，<b>等空檔或拍局部</b></li><li>往上走 5–15 分還有<b>結社（中宮）與奧宮</b>，<b>那邊人少很多</b>，時間夠就走一段</li><li>ふじや 前有<b>抹茶白玉紅豆湯</b>，買了可以下到河邊坐</li><li class='warn'>🧥 山谷裡比市區冷好幾度，<b>外套帶著</b></li></ul>",w:[["官網","https://kifunejinja.jp/"]]},
+{a:"14:38",b:"15:03",t:"🚌🚶 貴船神社 → 貴船口",g:["2.0km","巴士5分 或走25分"],k:"move",dir:["貴船神社","貴船口駅","walking"],x:"<ul><li>京都巴士 33 系統約 5 分鐘（📱¥160），或沿貴船川走 20 分鐘</li><li class='warn'>紅葉期巴士會排隊，<b>排超過 10 分鐘就直接走</b></li><li class='warn'>🚨 <b>巴士時刻待查</b>，同去程<br>⏰ <b>15:05 的叡電是硬性條件</b>，趕不上就搭下一班，ちいかわ 那段要壓縮</li></ul>"},
 {a:"15:05",b:"15:35",t:"🚋 叡電 貴船口 → 出町柳",g:["¥470","約27分"],k:"move",dir:["貴船口駅","出町柳駅","transit"],x:"<ul><li class='warn'>叡電不在 JR Pass 內，刷西瓜卡</li><li>回程一樣會經過<b>もみじ隧道</b>，坐右側</li></ul>"},
-{a:"15:45",b:"16:00",t:"🚆 京阪 出町柳 → 伏見稻荷",g:["直達14分 ¥300"],k:"move",dir:["出町柳駅","京阪 伏見稲荷駅","transit"],x:"<ul><li><b>出町柳有始發的普通車直達，不用換車</b></li><li class='warn'>特急不停伏見稻荷，<b>要搭普通車</b></li></ul>"},
+{a:"15:45",b:"16:00",t:"🚆 京阪 出町柳 → 伏見稻荷",g:["直達14分 ¥300"],k:"move",dir:["出町柳駅","京阪 伏見稲荷駅","transit"],x:"<ul><li><b>出町柳有始發的普通車直達，不用換車</b></li><li class='warn'>特急不停伏見稻荷，<b>要搭普通車</b></li><li><b>班距</b>：京阪本線，普通車約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"16:00",b:"16:12",t:"🚶 京阪伏見稻荷站 → 參道",g:["約10分"],k:"move",dir:["京阪 伏見稲荷駅","ちいかわもぐもぐ本舗 伏見稲荷","walking"],x:"<ul><li>京阪站走過去約 10 分鐘；<b>JR 稻荷站只要 5 分鐘</b>，但今天從出町柳來搭京阪比較順</li></ul>"},
-{a:"16:15",b:"17:15",t:"🧸 ちいかわもぐもぐ本舗",g:["9:30-17:30"],dead:1,q:"ちいかわもぐもぐ本舗 伏見稲荷",x:"<ul><li class='warn'>🚨 <b>人多的日子是整理券／事前抽選制，不是排隊就能進</b><br>官方說法：熱門時段「ふらっと行っても入店できない」<br><b>出發前一天務必看官方 X @chiikawamgmg 或官網新着情報</b>，確認 11/13 有沒有發整理券<br>有的話多半是<b>開店時段就要去領</b>，那會打亂整個下午</li><li>11/13 是<b>週五</b>，平日通常比較好進 —— 但 11 月是紅葉旺季，別大意</li><li><b>9:30–17:30</b>｜☎ 075-643-0050｜深草稲荷中之町 46-1</li><li>兩層樓，京都伏見限定商品：<b>八ツ橋巧克力、金光護身符、狐狸金平糖</b></li><li class='warn'>💡 走 <b>JR 稲荷站只要 5 分</b>（京阪伏見稲荷站要 10 分）—— 逛完直接走 JR 回京都站</li><li>裏參道（神幸道）鳥居正前方，牆上有ちいかわ 插畫，很好認</li></ul>",w:[["官網","https://www.chiikawamogumogu.jp/stores/fushimi/"]]},
-{a:"17:15",b:"18:45",t:"⛩️ 伏見稻荷 千本鳥居",g:["24h開放"],q:"伏見稲荷大社",x:"<ul><li><b>夜間打燈，人比白天少很多</b></li><li>奧社折返不攻頂</li></ul>",w:[["官網","http://inari.jp/"]]},
+{a:"16:15",b:"17:15",t:"🧸 ちいかわもぐもぐ本舗",g:["9:30-17:30"],dead:1,q:"ちいかわもぐもぐ本舗 伏見稲荷",x:"<ul><li class='warn'>🚨 <b>真正的風險不是進不去，是東西被買光</b><br>店家早上進貨，<b>上午庫存最多</b>。你們 16:15 到接近打烊，<b>熱門商品可能已售完</b><br>完售資訊發在官方 X <b>@chiikawamgmg</b> —— 有想要的前一天先看</li><li><b>平日基本自由入場</b>（實際遊記：2026/3 平日 15 點去完全沒等）<br>整理券只在<b>土日祝人多時</b>才發，11/13 是週五風險低<br><span style='color:var(--dim)'>還是掃一眼 X，萬一有新商品發售就會爆滿</span></li><li class='warn'>🍡 <b>店內禁止飲食</b> —— 參道買的小吃要在進店前吃完</li><li><b>走道很窄</b>，五個大男生分批進去比較好逛｜<b>有兩層樓，別漏了二樓</b></li><li>9:30–17:30｜☎ 075-643-0050</li><li>京都伏見限定：<b>八ツ橋巧克力、金光護身符、狐狸金平糖、稻荷達摩</b></li><li class='warn'>💡 逛完走 <b>JR 稲荷站只要 5 分</b>（京阪伏見稲荷站要 10 分）</li></ul>",w:[["官網","https://www.chiikawamogumogu.jp/stores/fushimi/"]]},
+{a:"17:15",b:"18:45",t:"⛩️ 伏見稻荷 千本鳥居",g:["24h開放"],q:"伏見稲荷大社",x:"<ul><li><b>24 小時開放、免費</b> —— 唯一能在天黑後走的大景點</li><li class='warn'>⏱️ <b>時間怎麼抓</b><br>千本鳥居到<b>奧社奉拝所</b>：往返約 <b>30 分</b>（你們的目標）<br>走到<b>四ツ辻</b>：往返 90 分～2 小時<br>登<b>山頂一ノ峰</b>：往返 2–3 小時 —— <b>今天不要</b></li><li class='warn'>🐒 <b>山上有猴子和野豬出沒</b>，天黑後往上照明變少 —— <b>別走過奧社奉拝所</b></li><li><b>おもかる石</b>在奧社奉拝所 —— 許願後舉石頭，比想像中輕就會實現</li><li class='warn'>📷 白天千本鳥居<b>人擠到走不動</b>，傍晚後人少很多 —— 這是排這個時段的原因</li><li>鳥居上刻著奉納者名字與日期。實際有<b>一萬多座</b>，「千本」是「很多」的意思</li></ul>",w:[["官網","https://inari.jp/"]]},
 {a:"18:45",b:"18:55",t:"🚶 參道 → JR 稻荷站",k:"move",x:"<ul><li>JR 稻荷站就在大鳥居正對面，步行 3～5 分</li></ul>"},
 {a:"18:55",b:"19:05",t:"🚆 JR 稻荷 → 京都",g:["JR Pass"],k:"move",dir:["JR稲荷駅","京都駅","transit"]},
 {a:"19:07",b:"19:15",t:"🚶 京都站 → イオンモールKYOTO",g:["8分"],k:"move",dir:["京都駅","イオンモールKYOTO","walking"],x:"<ul><li>從<b>八条口／南側</b>出站往南走</li></ul>"},
 {a:"19:15",b:"19:25",t:"🎰 一番くじ 京都イオンモール店",g:["10分快閃","Sakura館 4F","🕐 10:00–21:00"],q:"一番くじ公式ショップ 京都イオンモールKYOTO店",x:"<ul><li class='warn'>🚨 <b>店在「バンダイナムコ Cross Store」裡面</b>，不是獨立店面 —— 找不到招牌就找 Cross Store</li><li><b>Sakura 館 4F・櫃位 441-2</b>｜イオンモールKYOTO 分 Sakura 與 Kaede 兩棟，<b>認明 Sakura</b></li><li>10:00–21:00｜☎ 0570-076-565｜約 10 坪，很小</li><li>京都駅<b>八条口</b>步行 5 分，新都飯店隔壁</li><li class='warn'>21:00 關門，你們 19:15 到，只有 10 分鐘快閃</li></ul>",
 w:[["🎯 精準座標","https://www.google.com/maps/search/?api=1&query=34.982792,135.754569"],["店鋪頁","https://bandainamco-am.co.jp/chara_shop/ichibankuji-official-shop/shop/kyoto-nishikujyo/"],["一番くじ倶楽部","https://1kuji.com/"]]},
 {a:"19:27",b:"19:35",t:"🚶 走回京都站前",k:"move"},
-{a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都站前店",bk:"torikizoku",dead:1,k:"eat",q:"鳥貴族 京都駅前店",food:"鳥貴族 京都駅前店",x:"<ul><li><b>回飯店前買明早早餐 ×5</b></li></ul>"},
+{a:"19:45",b:"21:00",t:"🍢 晚餐：鳥貴族 京都七条店",bk:"torikizoku",dead:1,k:"eat",q:"鳥貴族 京都七条店",food:"鳥貴族 京都七条店",x:"<ul><li class='warn'>🚨 <b>正式名稱是「京都七条店」，不是「京都站前店」</b> —— 找地圖用這個<br>七条通烏丸西入東境町 191　<b>グラヴィビル 6 樓</b>（在樓上，不是路面店）</li><li><b>全品 ¥390 均一</b>（含稅）—— 五個人吃到飽大概 ¥2,500–3,000／人</li><li class='warn'>📱 <b>用官方「鳥貴族アプリ」訂位</b>（也可用 HotPepper／EPARK）<br>☎ 050-1807-6594</li><li><b>JR 京都站中央口步行 7 分</b>｜地下鐵烏丸線北改札 2 號出口步行 3 分<br><span style='color:var(--dim)'>你們從飯店（八百屋町）過去比從車站近</span></li><li>🕐 <b>17:00–翌 1:00</b>（依店舖略有不同，App 上會顯示）｜國產雞、現點現烤<br>「トリキ晩餐会」是均一價的招牌組合</li><li class='warn'>🍙 <b>回飯店前順便買明早的早餐 ×5</b>（京都站或飯店附近超商）</li></ul>"},
 {a:"21:05",b:"21:25",t:"🏨 回飯店 Check-in",q:HK}]},
 
 d2:{label:"Day 2",date:"11/14 六",dnum:14,tzn:"日本時間",title:"伊根・昇龍觀・飛龍觀",lat:35.5686,lon:135.1938,wxc:"天橋立",
@@ -450,24 +453,27 @@ s:[
 {a:"07:32",b:"08:47",t:"🚆 特急 きのさき1號 京都 → 福知山",g:["JR Pass","已劃位"],k:"move",dir:["京都駅","福知山駅","transit"],x:"<ul><li>車上吃早餐</li><li>這班可以用 WEST-TR 線上劃位</li></ul>"},
 {a:"08:47",b:"08:55",t:"🚉 福知山轉乘",g:["只有8分鐘"],dead:1,q:"福知山駅",x:"<ul><li class='warn'><b>同站轉月台，不出閘門。下車就走，不要買東西</b></li><li class='warn'>沒接上 → 等 09:59 的はしだて1號（10:40 到天橋立），<b>回到原案，後面仍走得完</b></li></ul>"},
 {a:"08:55",b:"09:33",t:"🚆 特急 たんごリレー1號 福知山 → 天橋立",g:["JR Pass","自由席"],dead:1,k:"move",dir:["福知山駅","天橋立駅","transit"],x:"<ul><li class='warn'><b>丹後鐵道路段無法用 Pass 線上劃位</b>，連綠色窗口也不行</li><li><b>直接搭 2 號車自由席</b>，不用劃位</li><li>想要指定席就到日本後在丹鐵有人車站窗口買</li></ul>",w:[["京都丹後鉄道","https://trains.willer.co.jp/"]]},
-{a:"09:33",b:"09:52",t:"🎫 丹鐵窗口買周遊券 ×5",g:["¥3,500"],dead:1,q:"天橋立駅",x:"<ul><li>涵蓋：丹海巴士・伊根灣遊覽船・傘松纜車吊椅・天橋立觀光船</li><li>散買約 ¥3,400，價差 ¥100，但<b>巴士只收現金、無 IC 卡</b>才是決定因素</li><li>一個人買五張，其他人先去廁所</li></ul>",w:[["丹後海陸交通","https://www.tankai.jp/"]]},
+{a:"09:33",b:"09:52",t:"🎫 丹鐵窗口買周遊券 ×5",g:["¥3,500"],dead:1,q:"天橋立駅",x:"<ul><li>涵蓋：丹海巴士・伊根灣遊覽船・傘松纜車吊椅・天橋立觀光船</li><li>散買約 ¥3,400，價差 ¥100，但<b>省去每段掏錢</b>才是決定因素<br><span style='color:var(--dim)'>丹海巴士<b>不能用 ICOCA／Suica</b>，可以刷卡感應（VISA/JCB/AMEX）或付現</span></li><li>一個人買五張，其他人先去廁所</li></ul>",w:[["丹後海陸交通","https://www.tankai.jp/"]]},
 {a:"09:52",b:"10:00",t:"🚶 步行至天橋立桟橋",k:"move"},
-{a:"10:00",b:"10:12",t:"⛴️ 觀光船 天橋立 → 一の宮",g:["周遊券","12分"],q:"天橋立桟橋",x:"<ul><li><b>早上就橫渡沙洲</b>，比坐巴士繞一圈有趣</li><li>留意 90 度旋轉的迴旋橋</li></ul>"},
-{a:"10:12",b:"10:27",t:"🚶 一の宮桟橋 → 元伊勢籠神社巴士站",k:"move",dir:["一の宮桟橋 天橋立","元伊勢籠神社","walking"]},
-{a:"10:27",b:"10:57",t:"🚌 籠神社 → 伊根漁協前",g:["周遊券"],k:"move",dir:["元伊勢籠神社","伊根漁協前 バス停 京都府与謝郡伊根町","transit"],x:"<ul><li class='warn'>也可以省略早上的船，<b>直接搭 10:00 天橋立駅前 → 伊根的巴士</b>（10:58 到，時間一樣）</li></ul>"},
-{a:"10:57",b:"11:25",t:"🚶 伊根第一眼・舟屋外觀",g:["28分"],q:"伊根の舟屋 伊根浦",x:"<ul><li><b>海宮 11:30 才開，這段先走走</b></li><li>從漁協前沿海岸往南，<b>舟屋一樓是船庫、二樓住人</b>的構造從這裡看最清楚</li><li class='warn'>📷 逆光時段，<b>把舟屋當剪影拍</b>反而好看</li><li>11:25 走回舟屋日和，準備入店</li></ul>"},
-{a:"11:30",b:"12:30",t:"🍣 午餐：鮨割烹 海宮",bk:"wadatsumi",g:["可刷卡","90分"],dead:1,k:"eat",q:"鮨割烹 海宮 伊根 舟屋日和",food:"鮨割烹 海宮 伊根",x:"<ul><li class='warn'>🚨 <b>11:30 開店，訂位只接受 11:30 入店</b>（店家 2026 年改的規則）<br>L.O. 14:00｜水曜公休（11/14 週六有開）</li><li class='warn'>🚨 <b>只有 28 席</b>（吧台 10・2 樓 18）—— <b>訂位受理是「當月起三個月」，現在就能訂 11 月</b><br>☎ 0772-32-1710｜別等 11/08，那時可能已經滿了</li><li><b>2 樓靠窗看得到伊根灣</b> —— 訂位時指定</li><li>午餐套餐 ¥3,000–4,000／人｜刷卡可（VISA/Master/JCB/AMEX/Diners）</li><li>老闆每天早上到伊根漁港選魚，<b>當天漁獲決定菜色</b></li><li>11 月是<b>伊根鰤魚</b>的季節</li><li>店名取自海神「ワダツミ」與浦島傳說的「龍宮」</li></ul>"},
-{a:"12:30",b:"13:50",t:"🚶 舟屋散策 ＋ 向井酒造",g:["2.1km"],k:"move",dir:["鮨割烹 海宮 伊根 舟屋日和","伊根湾めぐり遊覧船のりば","walking"],x:"<ul><li class='warn'>🚨 <b>向井酒造 12:00–13:00 午休</b> —— <b>先散策，13:00 之後才去買酒</b><br>營業 9:00–12:00／13:00–17:00｜木曜公休（11/14 週六有開）</li><li class='warn'>💴 <b>只收現金</b>，不能刷卡｜不接受預約</li><li><b>伊根滿開</b> 300ml ¥1,430／720ml ¥2,860／1800ml ¥4,950<br>用紫黑米（古代米）釀的<b>粉紅色日本酒</b>，14 度、芳醇甘口<br>G20 大阪高峰會的午宴用酒</li><li class='warn'>✈️ <b>買了必須託運</b>，超過 100ml 不能帶上機</li><li>1754 年創業，伊根町唯一的酒藏，<b>酒藏正後方就是海</b><br>杜氏向井久仁子是京都府第一位女性杜氏</li><li>巴士「伊根」站步行 5 分｜☎ 0772-32-0003</li><li>散策重點：<b>舟屋一樓是船庫、二樓住人</b>，230 棟沿海排列</li><li class='warn'>🍶 <b>買 300ml 小瓶</b> —— 台灣入境酒類每人只有 1 公升，Day 5 還要買獺祭</li><li class='warn'>⏰ <b>13:50 前一定要走到「日出」乘船處</b>，那是接 14:00 遊覽船的死線</li></ul>"},
-{a:"14:00",b:"14:25",t:"🛥️ 伊根灣遊覽船",g:["周遊券","25分"],q:"伊根湾めぐり遊覧船のりば",x:"<ul><li><b>每小時 00 分、30 分發船</b></li><li>蝦味先 ¥100 餵海鷗｜船一開鳥就跟上來，<b>先開好連拍</b></li></ul>"},
-{a:"14:25",b:"14:46",t:"🍢 日出売店 ＋ 等巴士",g:["緩衝21分"],x:"<ul><li>名物<b>焼きちくわ</b></li></ul>"},
-{a:"14:46",b:"15:13",t:"🚌 日出 → 天橋立ケーブル下",g:["周遊券"],k:"move",dir:["伊根湾めぐり遊覧船のりば","天橋立ケーブル下","transit"],x:"<ul><li>前一班 13:37 發（14:04 到）、下一班 15:12 發</li></ul>"},
-{a:"15:13",b:"15:20",t:"🚶 步行至府中駅",k:"move"},
+{a:"10:00",b:"10:12",t:"⛴️ 觀光船 天橋立 → 一の宮",g:["周遊券","12分"],q:"天橋立桟橋",x:"<ul><li><b>每小時 00 分發船</b>，12 分鐘到對岸｜<b>走松並木要一小時，船只要 12 分</b></li><li class='warn'>📷 <b>上 2 樓露天甲板</b> —— 沒有遮蔽物，3.6 公里的白砂青松一覽無遺，這是全程最好的視野</li><li class='warn'>🦅 <b>飼料留到伊根再買</b> —— 這裡也能餵，但實際遊記說<b>伊根那邊的海鷗和老鷹多得多</b></li><li>松並木本身是防風林，內海很平穩，不太會晃</li><li>周遊券已含｜對岸「一の宮桟橋」上岸後走 6 分到府中駅（傘松纜車）</li></ul>"},
+{a:"10:12",b:"10:20",t:"🚶 一の宮桟橋 → 元伊勢籠神社",g:["6分"],id:"b8",k:"move",dir:["一の宮桟橋 天橋立","元伊勢籠神社","walking"],x:"<ul><li>下船後往北走，<b>一路是海邊小徑</b>，6 分鐘就到</li><li>巴士站牌「<b>天橋立元伊勢籠神社</b>」就在神社前面</li></ul>"},
+{a:"10:20",b:"11:05",t:"⛩️ 元伊勢籠神社",g:["45分","丹後一宮"],q:"元伊勢籠神社",w:[["官網","https://www.motoise.jp/"]],x:"<ul><li class='warn'>🚌 <b>這段是等巴士的時間，不是硬排的 —— 天橋立駅 10:57 發的那班約 11:10–11:20 會經過這裡</b><br>提早 10 分鐘回到站牌等</li><li><b>丹後一宮・元伊勢</b> —— 伊勢神宮的天照大神遷到伊勢之前，曾經奉祀在這裡</li><li><b>本殿的高欄上有五色座玉</b>，全日本只有這裡和伊勢神宮有</li><li>參道兩側的<b>狛犬是鎌倉時代的重要文化財</b>，據說曾經作祟被武士砍斷前腳</li><li class='warn'>💡 時間夠的話，往山上再走 15 分有<b>眞名井神社</b>（籠神社的奧宮），那裡的磐座氣氛完全不同</li></ul>"},
+{a:"11:10",b:"11:45",t:"🚌 籠神社 → 舟屋の里公園前",g:["🚨 天橋立駅10:57發","約35分"],dead:1,k:"move",dir:["元伊勢籠神社","道の駅舟屋の里伊根","transit"],x:"<ul><li class='warn'>🚨 <b>這是全天唯一一班能接上午餐的車</b>（駅探實測・休日班表）<br>天橋立駅 <b>10:57</b> 發 → 經籠神社約 <b>11:10–11:20</b> → 舟屋の里公園前約 11:45<br><b>上一班 08:56 趕不上、下一班 11:42 太晚</b></li><li class='warn'>⏰ <b>11:05 前一定要回到站牌</b>，寧可早等</li><li class='warn'>🔔 <b>上車就跟司機說在「舟屋の里公園前」下車</b>（不是「伊根」，那站更遠）</li><li>周遊券已含｜<b>不能用 ICOCA／Suica</b>，可刷卡感應或付現</li><li class='warn'>💡 確切的籠神社發車時刻請在出發前查 tankai.jp 或打 0772-42-0321，查到後用 <b>✎ 編輯</b> 改成正確時間</li></ul>"},
+{a:"11:45",b:"11:50",t:"🚶 巴士站 → レストラン舟屋",g:["5分・上坡"],k:"move",dir:["舟屋の里公園前","道の駅舟屋の里伊根","walking"],x:"<ul><li>道の駅在<b>高台上</b>，下車後往上走 5 分</li><li class='warn'>📷 <b>走到一半回頭看</b> —— 那個角度的舟屋群比餐廳裡還開闊</li></ul>"},
+{a:"11:50",b:"12:50",t:"🍣 午餐：レストラン舟屋",g:["🚨 營業時間待確認","只收現金","自助式"],bk:"funaya",dead:1,k:"eat",q:"レストラン舟屋 道の駅舟屋の里伊根",food:"レストラン舟屋 伊根",w:[["店家頁","https://www.ine-kankou.jp/taste/restaurant-funaya"]],x:"<ul><li class='warn'>🚨 <b>只收現金・自助式（自己端餐、自己收）</b> —— 五個人先確認錢包有現金</li><li class='warn'>🚨 <b>店不大，官方導覽寫「行列覚悟で」</b> —— 五個人可能要等，11:50 到算早的</li><li><b>2 樓露台 180 度看整片舟屋群</b> —— 遊記公認是伊根最好的攝影點，比在村子裡平視強太多<br>📷 <b>進門先卡靠窗的位子</b></li><li><b>招牌是「舟屋海鮮丼」</b>（每日換料、份量大到看不見飯，附小缽與魚骨湯，約 ¥1,500–2,000）<br>另有<b>あら煮定食</b>（漁夫口味的濃味燉魚骨，數量限定）、青島定食（煮・烤・生魚片三吃）</li><li class='warn'>🐟 <b>11 月是伊根鰤魚季的開始</b> —— <b>鰤魚涮涮鍋 ¥4,400／人需事前預約</b>，想吃就打電話</li><li>店長新田先生是漁協出身，<b>每天早上到漁港挑魚</b>，菜色隨當天漁獲換</li><li>☎ <b>0772-32-0750</b>｜亀島 459・道の駅舟屋の里 1F</li><li>1 樓賣店有<b>へしこ</b>（糠漬鯖魚）和一夜干</li></ul>"},
+{a:"12:50",b:"13:10",t:"🚶 下山至舟屋聚落",g:["下坡20分"],k:"move",dir:["道の駅舟屋の里伊根","伊根の舟屋 伊根浦","walking"],x:"<ul><li>從高台走回海邊的舟屋聚落，<b>一路下坡</b></li><li class='warn'>📷 <b>這段路的視角一直在變</b> —— 從俯瞰慢慢降到平視，邊走邊拍</li></ul>"},
+{a:"13:10",b:"13:45",t:"🚶 舟屋散策 ＋ 向井酒造",g:["35分"],q:"伊根の舟屋 伊根浦",x:"<ul><li class='warn'>🍶 <b>向井酒造 13:00 才開（中午休 12:00–13:00）</b>，你們 13:10 到剛好<br>9:00–12:00／13:00–17:00｜木曜公休（11/14 週六有開）｜<b>只收現金</b>｜不接受預約</li><li><b>伊根滿開</b> 300ml ¥1,430／720ml ¥2,860 —— <b>紫黑米釀的粉紅色日本酒</b>，G20 大阪高峰會用酒<br>🍶 <b>買 300ml 小瓶</b>：台灣入境酒類每人只有 1 公升，Day 5 還要買獺祭</li><li class='warn'>✈️ <b>買了必須託運</b>，超過 100ml 不能帶上機</li><li>1754 年創業，伊根唯一的酒藏，<b>酒藏正後方就是海</b>｜☎ 0772-32-0003</li><li>散策重點：<b>舟屋一樓是船庫、二樓住人</b>，230 棟沿 5 公里海岸排列</li></ul>"},
+{a:"13:45",b:"14:00",t:"🚶 舟屋 → 日出乘船處",g:["15分"],k:"move",dir:["伊根の舟屋 伊根浦","伊根湾めぐり遊覧船 日出","walking"],x:"<ul><li class='warn'>⏰ <b>14:00 那班船一定要搭上</b>，下一班 14:30 就趕不上 14:42 的巴士</li><li>沿海岸往北走，站牌與乘船處在同一處</li></ul>"},
+{a:"14:00",b:"14:25",t:"🛥️ 伊根灣遊覽船",g:["周遊券","25分"],q:"伊根湾めぐり遊覧船のりば",x:"<ul><li class='warn'>🌊 <b>荒天會停航</b> —— 出發前查「伊根湾めぐり遊覧船運行状況」<br>💡 <b>真的停航就跟站方問「海上タクシー」</b>，實際遊記說站方會介紹，小船反而更有臨場感</li><li class='warn'>🦅 <b>海鷗飼料 ¥100 在乘船處賣店買，不是船上</b> —— 上船前先買好<br>船一開鳥就跟上來，<b>先開好連拍</b>｜⚠️ 拿在手上會被搶</li><li><b>25 分鐘一圈</b>，繞行 250 棟舟屋、海岸線 5 公里</li><li>💡 <b>船長會用麥克風即席導覽</b> —— 寅次郎的外景地、G20 用酒的向井酒造，都會指給你看</li><li>大人 ¥1,200（<b>周遊券已含</b>）｜每小時 00 分、30 分發船，人多會加班</li><li>下船處「日出」站牌就在乘船處前面，接 14:46 的巴士很近</li></ul>"},
+{a:"14:25",b:"14:42",t:"🍢 日出売店 ＋ 等巴士",g:["緩衝21分"],x:"<ul><li>名物<b>焼きちくわ</b></li></ul>"},
+{a:"14:42",b:"15:15",t:"🚌 日出 → 天橋立ケーブル下",g:["✅ 駅探實測 14:42","車程約33分"],k:"move",dir:["伊根湾めぐり遊覧船のりば","天橋立ケーブル下","transit"],x:"<ul><li class='warn'>✅ <b>14:42 發車（駅探實測・休日班表）</b> —— 這班 15:40 到天橋立駅，約 <b>15:15</b> 經過ケーブル下<br><b>全天最不能錯過的一班車</b>，接不上昇龍觀、飛龍觀、はしだて8號會一起垮</li><li class='warn'>⏰ <b>14:35 就到站牌等</b>，乘船處旁邊就是</li><li class='warn'>🛟 <b>萬一沒搭上</b>：下一班 15:08（約 15:40 到ケーブル下），趕不上 16:15 的船 —— 直接放棄傘松，坐到天橋立駅逛智恩寺與迴旋橋，等 18:09 的はしだて8號</li><li class='warn'>🔔 上車前跟司機確認會停「天橋立ケーブル下」</li><li>周遊券已含｜💡 出發前再查一次，有變動用 <b>✎ 編輯</b> 改</li></ul>"},
+{a:"15:15",b:"15:20",t:"🚶 步行至府中駅",k:"move"},
 {a:"15:20",b:"15:28",t:"🚡 吊椅上山",g:["周遊券","8分"],q:"天橋立傘松公園 府中駅",x:"<ul><li class='warn'>☔ <b>下雨吊椅可能停駛</b> —— 停了就改搭旁邊的纜車，<b>票是共通的</b><br>纜車每小時 <b>0・15・30・45 分</b>發車，4 分鐘到</li><li class='warn'>🧥 <b>11 月吊椅上很冷，外套先穿好再上</b> —— 沒有頂棚也沒有擋風（跟南側 ビューランド 的不一樣）</li><li>吊椅單程 6–8 分</li><li>上下可以搭不同的 —— <b>上纜車、下吊椅</b>景色最好</li><li>票價往返 ¥800（<b>周遊券已含</b>）｜纜車定員 76 人</li><li class='warn'>✅ 2025 年的捲揚機更新工程<b>已完工</b>，11/14 正常營運</li></ul>"},
 {a:"15:28",b:"16:00",t:"🌲 傘松公園 昇龍觀",g:["32分"],q:"傘松公園",x:"<ul><li><b>股のぞき 發祥地就是這裡</b> —— 彎腰從胯下往後看，天橋立會變成「掛在天上的橋」</li><li>這個角度叫<b>昇龍觀</b>，跟傍晚南側的飛龍觀完全不同<br><b>一天看完兩個展望台的人不多</b></li><li>有免費望遠鏡｜アマテラス 賣店與餐廳</li><li class='warn'>⏰ <b>16:00 準時下山</b> —— 後面接 16:15 的觀光船，那是趕 はしだて8號 的關鍵</li></ul>"},
 {a:"16:00",b:"16:04",t:"🚡 纜車下山",g:["4分"],q:"傘松駅 天橋立",dead:1,x:"<ul><li class='warn'><b>纜車每小時 00／15／30／45 發車，11 月開到 17:00</b></li></ul>"},
 {a:"16:04",b:"16:12",t:"🚶 纜車站 → 一の宮桟橋",g:["8分"],k:"move",dir:["傘松公園ケーブル下","一の宮桟橋 天橋立","walking"]},
-{a:"16:15",b:"16:27",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["周遊券","12分"],q:"一の宮桟橋 天橋立",dead:1,x:"<ul><li class='warn'><b>末班是 16:45–16:57</b>，錯過 16:15 還有一班墊底</li><li class='warn'>兩班都沒趕上 → 就地搭巴士 16:44（17:11 到）或 17:24（17:51 到）</li></ul>"},
-{a:"16:32",b:"17:20",t:"🚠 天橋立ビューランド 飛龍觀",g:["🚨 上行末班約16:30","¥850 往返","選配"],q:"天橋立ビューランド",x:"<ul><li class='warn'>🚨 <b>這一站很可能上不去，別預設會成功</b><br>11/14 屬 <b>10/1–11/15 期間：9:00–17:00</b><br><b>吊椅上行末班約 16:30、下行末班約 16:50</b>（官網每季公告，出發前再確認）<br>你們 16:27 下船、16:32 到山腳 —— <b>只差幾分鐘，成功與否看當天實際末班</b></li><li class='warn'>💡 <b>16:30 前沒搭上就直接放棄</b>，去站前買便當，不要跟末班賭<br>昇龍觀（傘松）已經看過，飛龍觀是加分不是必要</li><li>吊椅單程 6 分・纜車 40 人定員｜往返 ¥850<br>下雨也能搭吊椅（有頂棚）</li><li><b>股のぞき</b>（彎腰從胯下看）就在這裡 —— 2016 年搞笑諾貝爾獎的研究題目</li><li>☎ 0772-22-1000｜天橋立駅步行 5 分</li></ul>"},
+{a:"16:15",b:"16:27",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["周遊券","12分"],q:"一の宮桟橋 天橋立",dead:1,x:"<ul><li><b>回程是每小時 15 分發船</b>（去程是 00 分），12 分鐘</li><li class='warn'>⏰ <b>16:15 這班一定要搭上</b> —— 錯過就是 17:15，飛龍觀直接泡湯<br>16:04 纜車下山、16:12 走到碼頭，<b>只有 3 分鐘緩衝</b></li><li>📷 傍晚回程的光線比早上好，<b>逆光剪影的松並木</b>很漂亮</li><li>下船後走 5 分到 ビューランド 山腳，接 16:32 的吊椅</li></ul>"},
+{a:"16:32",b:"17:20",t:"🚠 天橋立ビューランド 飛龍觀",g:["✅ 上行末班17:00","下行末班17:20","選配"],q:"天橋立ビューランド",x:"<ul><li class='warn'>✅ <b>來得及 —— 官方 10/1–11/15 期間的末班是這樣</b><br>售票 9:00–<b>17:00</b>｜<b>吊椅上行末班 17:00</b>、下行末班 17:20｜單軌上行末班 16:40<br>你們 16:32 到，<b>還有 28 分鐘餘裕</b>。買票直接搭吊椅上去</li><li class='warn'>⏰ <b>下行末班 17:20 是硬底線</b> —— 山上待到 17:10 就要往回走<br>接 18:09 的はしだて8號，那是今天最後一班回京都的指定席</li><li>吊椅<b>單程 6 分、一人一座、隨到隨搭</b>（單軌是定時發車，40 人一班）<br><b>吊椅有頂棚，下雨也能搭</b>（跟北側傘松的不一樣）</li><li class='warn'>🚨 <b>吊椅若逢檢修停駛，就只剩單軌</b> —— 40 人一班、沒有加班車，<b>尖峰時單程可能等一小時以上</b><br>出發前查 viewland.jp 的「年間運休預定表」確認 11/14 沒有檢修</li><li><b>股のぞき</b>（彎腰從胯下看）就在這裡 —— 2016 年搞笑諾貝爾獎的研究題目<br>山頂是小型遊樂園，有摩天輪、咖啡廳，也賣<b>天橋立布丁</b></li><li>☎ 0772-22-1000｜天橋立駅步行 5 分｜往返約 ¥1,000（出發前確認）</li></ul>"},
 {a:"17:20",b:"18:00",t:"⛩️ 站前散策 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'><b>先買便當</b>，站前 17:00～17:30 陸續打烊 —— 時間已晚，<b>便當優先</b></li><li>丹後花蛤便當／丹後牛燒肉便當・丹後黑豆茶包</li><li>智恩寺・<b>迴旋橋</b>・<b>日本三景碑</b></li></ul>"},
 {a:"18:09",b:"20:21",t:"🚆 特急 はしだて8號 → 京都",g:["全車指定席","已劃位"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li>直達不換車，車上吃便當</li></ul>"},
 {a:"20:30",b:"21:00",t:"🏨 回飯店",q:HKQ,x:"<ul><li>京都站超商<b>買明早早餐 ×5</b></li><li>今晚把大行李收 80%</li></ul>"}]},
@@ -478,48 +484,48 @@ s:[
 {a:"08:00",b:"08:20",t:"🏨 退房 → JR 京都站",g:["買早餐"],k:"move",dir:[HKQ,"京都駅","walking"]},
 {a:"08:40",b:"09:30",t:"🚆 みやこ路快速 → 奈良",g:["JR Pass"],k:"move",dir:["京都駅","JR奈良駅","transit"]},
 {a:"09:30",b:"09:55",t:"🧳 JR 奈良站人工寄行李 ×5",g:["¥3000~4000"],dead:1,q:"奈良市総合観光案内所",x:"<ul><li class='warn'><b>寄放成功後行程才正式開始</b></li></ul>"},
-{a:"09:55",b:"10:05",t:"🚌 JR 奈良 → 東大寺",g:["¥250"],k:"move",dir:["JR奈良駅","東大寺","transit"]},
+{a:"09:55",b:"10:05",t:"🚌 JR 奈良 → 東大寺",g:["¥250"],k:"move",dir:["JR奈良駅","東大寺","transit"],x:"<ul><li><b>班距</b>：奈良交通市內循環，約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"10:05",b:"10:25",t:"🦌 奈良公園餵鹿",g:["鹿仙貝¥200"],q:"奈良公園",x:"<ul><li><b>紙袋、地圖要收好</b></li></ul>"},
-{a:"10:30",b:"11:35",t:"🏯 東大寺大佛殿",g:["¥800"],q:"東大寺",w:[["官網","https://www.todaiji.or.jp/"]]},
-{a:"11:40",b:"11:55",t:"🚌 東大寺 → 近鐵奈良",g:["¥250"],k:"move",dir:["東大寺","近鉄奈良駅","transit"]},
+{a:"10:30",b:"11:35",t:"🏯 東大寺大佛殿",g:["¥800","🕐 11-3月 8:00-17:00"],q:"東大寺",w:[["官網","https://www.todaiji.or.jp/"]],x:"<ul><li class='warn'>🕐 <b>11 月～3 月是 8:00–17:00</b>（4–10 月才是 7:30–17:30）—— 你們 10:30 到沒問題</li><li class='warn'>🎫 <b>售票處人多會排隊</b>，五個人派一個去買就好</li><li><b>只看大佛殿 70 分鐘夠</b>；二月堂、法華堂全走完要 2–3 小時 —— 今天只看大佛殿</li><li><b>南大門的金剛力士像</b>（運慶・快慶，國寶）先看，比大佛還震撼</li><li>大佛柱底的<b>柱洞</b>跟大佛鼻孔一樣大，鑽過去據說保平安 —— <b>成年男生會卡住</b></li><li class='warn'>🦌 鹿仙貝 ¥200 —— <b>買了就要快發完</b>，拿在手上會被一群鹿追<br>鞠躬的鹿是討食不是有禮貌，餵完把手張開給牠看</li></ul>"},
+{a:"11:40",b:"11:55",t:"🚌 東大寺 → 近鐵奈良",g:["¥250"],k:"move",dir:["東大寺","近鉄奈良駅","transit"],x:"<ul><li><b>班距</b>：奈良交通市內循環，約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"11:55",b:"12:05",t:"🍡 中谷堂",g:["現金¥200"],k:"eat",q:"中谷堂 奈良 餅つき",food:"中谷堂 奈良",x:"<ul><li>高速搗餅，<b>站著吃掉</b></li></ul>"},
-{a:"12:10",b:"12:20",t:"🚆 近鐵 奈良 → 新大宮",g:["¥180"],k:"move",dir:["近鉄奈良駅","新大宮駅","transit"]},
-{a:"12:25",b:"13:15",t:"🍚 午餐：志津香 大宮店",g:["🕐 週日 11:00–14:30 L.O.","🚨 月1回不定休"],bk:"shizuka",dead:1,k:"eat",q:"志津香 大宮店 奈良市大宮町4-249-4",food:"釜めし志津香 大宮店",x:"<ul><li class='warn'>🚨 <b>每月有一次不定休 —— 10/20 訂位時務必確認 11/15 有開</b><br>官網有營業日曆：kamameshi-shizuka.jp/calendar</li><li><b>釜飯現點現煮要 30 分鐘</b> —— 這是訂位時就先點餐的原因，到了直接上菜</li><li>11/15（日）屬「金土日祝」：午餐 <b>11:00–14:30 L.O.</b>｜你們 12:25 到，來得及</li><li>椅子席 60・和室 8・有包廂｜☎ 0742-93-8029</li><li><b>近鐵新大宮站往南 5 分</b>｜JR 奈良站往西 10 分</li><li>招牌是<b>奈良七種釜めし</b>（蝦、蟹、星鰻、雞）</li></ul>"},
-{a:"13:20",b:"13:45",t:"🚆 近鐵 新大宮 → 西ノ京",g:["¥300"],k:"move",dir:["新大宮駅","西ノ京駅","transit"]},
-{a:"13:50",b:"14:50",t:"⛩️ 藥師寺",g:["¥1000","🕐 8:30–17:00（入場至 16:30）"],q:"薬師寺 奈良市西ノ京町457",x:"<ul><li>🎯 <b>大講堂的「佛足石」是這裡的重點</b> —— 753 年（奈良時代）製作，<b>日本現存最古的佛足石</b>，國寶。石上刻的是釋迦的足跡。</li><li class='warn'><b>2026 年 4 月被潑灑甘油汙損</b>，上部四處留下 1～2 平方公分的痕跡。犯人 8 月從關西機場再入境時被捕，坦承「會對感動的東西潑油祈禱」。<br>寺方維持正常參拜，但已表示要強化警備 —— <b>現場可能新增玻璃罩、拉繩或禁止拍照，以現場指示為準</b>。</li><li><b>東塔（國寶）＋ 西塔</b> —— 一座千年、一座昭和再建，站遠一點同框</li><li>金堂的<b>藥師三尊像</b>也值得停留</li></ul>",w:[["官網","https://yakushiji.or.jp/"]]},
-{a:"14:55",b:"15:15",t:"🚆 近鐵 西ノ京 → 新大宮",g:["¥300"],k:"move",dir:["西ノ京駅","新大宮駅","transit"]},
+{a:"12:10",b:"12:20",t:"🚆 近鐵 奈良 → 新大宮",g:["¥180"],k:"move",dir:["近鉄奈良駅","新大宮駅","transit"],x:"<ul><li><b>班距</b>：近鐵奈良線，約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"12:25",b:"13:15",t:"🍚 午餐：志津香 大宮店",g:["🕐 週日 11:00–14:30 L.O.","🚨 月1回不定休"],bk:"shizuka",dead:1,k:"eat",q:"志津香 大宮店 奈良市大宮町4-249-4",food:"釜めし志津香 大宮店",x:"<ul><li class='warn'>🚨 <b>遲到 15 分鐘就要付取消費</b>（官方明訂）<br>「預約當天在你來之前就開始煮」，所以當日取消也要付費<br><b>12:25 是死線，12:40 前沒到就要付錢</b></li><li class='warn'>📞 <b>電話訂位是「一個月前的同一天」開始</b> → <b>11/15 的位子 10/15 就能訂</b><br>☎ 0742-93-8029｜<b>好打通的時段：10–11 點、14–17 點</b>（其他時間會轉語音）<br><span style='color:var(--dim)'>另有線上訂位，開放日期跟電話不同</span></li><li class='warn'>🍚 <b>訂位時就把菜色講好</b> —— 店家會算好時間開始炊，你們到了直接上菜<br>沒先講的話<b>現點現煮要 30 分鐘</b></li><li class='warn'>📅 <b>火曜公休（遇假日照常）＋ 每月一次不定休</b><br>訂位時務必確認 11/15 有開｜官網有營業日曆</li><li>昼 11:00–14:30 L.O.｜11/15 是週日，晚上 17:00–19:00 也有開</li><li>招牌是<b>奈良七種釜めし</b>（鰻魚、蝦、雞、牡蠣等七種）｜<b>釜底的鍋巴最後一定要刮</b></li><li>💡 <b>公園店永遠大排長龍，大宮店座位多很多</b> —— 這是選大宮店的原因<br>近鐵新大宮站往南 5–10 分｜JR 奈良站往西 10–15 分</li><li class='warn'>⚠️ 就算有訂位，尖峰時段仍可能<b>稍等一下</b></li></ul>"},
+{a:"13:20",b:"13:45",t:"🚆 近鐵 新大宮 → 西ノ京",g:["¥300"],k:"move",dir:["新大宮駅","西ノ京駅","transit"],x:"<ul><li><b>班距</b>：需在大和西大寺轉橿原線，約 10–15 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"13:50",b:"14:50",t:"⛩️ 藥師寺",g:["¥1,000","🕐 8:30–17:00 受付16:30"],q:"薬師寺 奈良市西ノ京町457",x:"<ul><li class='warn'>🎯 <b>大講堂的「佛足石」是這裡的重點</b><br>753 年製作，<b>日本現存最古的佛足石，國寶</b>，石上刻的是釋迦的足跡<br><span style='color:#F5A79E'>🚨 2026 年 4 月遭潑甘油汙損，上部留下 1–2 平方公分的痕跡。寺方已強化警備 —— 現場可能有玻璃罩、拉繩或禁止拍照，<b>以現場指示為準</b></span></li><li><b>東塔（國寶）是 730 年的原件</b>，薬師寺唯一從創建留到現在的建築<br>看起來六層，實為三重塔，被讚為「<b>凍れる音楽</b>」<br>西塔是 1981 年再建 —— <b>兩塔顏色完全不同</b>，站遠一點同框最有感</li><li>💡 <b>東塔頂端的水煙有 24 尊飛天透雕</b>，塔上看不清楚，但<b>模型就在東僧坊</b>可以近看</li><li>金堂的<b>藥師三尊像</b>（國寶）黑亮的金銅佛，值得停留</li><li>🕐 8:30–17:00｜<b>拝観受付到 16:30</b>｜¥1,000（金堂・大講堂・東院堂）</li><li><b>近鐵西ノ京駅出站就到</b>，不用走路</li></ul>",w:[["官網","https://yakushiji.or.jp/"]]},
+{a:"14:55",b:"15:15",t:"🚆 近鐵 西ノ京 → 新大宮",g:["¥300"],k:"move",dir:["西ノ京駅","新大宮駅","transit"],x:"<ul><li><b>班距</b>：需在大和西大寺轉車，約 10–15 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"15:27",b:"15:42",t:"🧳 取回大行李 ×5",q:"奈良市総合観光案内所"},
 {a:"15:42",b:"15:50",t:"🚉 進站上月台",g:["8分"],dead:1,q:"JR奈良駅",x:"<ul><li class='warn'>案內所在<b>站外舊站房</b></li></ul>"},
 {a:"15:50",b:"16:25",t:"🚆 大和路快速 → 天王寺",g:["JR Pass"],dead:1,k:"move",dir:["JR奈良駅","天王寺駅","transit"],x:"<ul><li class='warn'>大和路快速<b>不到 JR 難波</b>，一定要在天王寺下車轉 Metro</li></ul>"},
-{a:"16:35",b:"16:45",t:"🚇 天王寺 → 大國町",g:["¥190"],k:"move",dir:["天王寺駅","大国町駅","transit"]},
+{a:"16:35",b:"16:45",t:"🚇 天王寺 → 大國町",g:["¥190"],k:"move",dir:["天王寺駅","大国町駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線，尖峰 3–5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HOQ,x:"<ul><li><b>換上舊的那件帽 T</b>，燒肉會沾味道</li></ul>"},
 {a:"17:20",b:"17:30",t:"🚶 飯店 → なんば站",k:"move",dir:[HOQ,"なんば駅","walking"]},
-{a:"17:33",b:"17:43",t:"🚇 なんば → 鶴橋",g:["¥190"],k:"move",dir:["なんば駅","鶴橋駅","transit"]},
+{a:"17:33",b:"17:43",t:"🚇 なんば → 鶴橋",g:["¥190"],k:"move",dir:["なんば駅","鶴橋駅","transit"],x:"<ul><li><b>班距</b>：千日前線，約 5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"17:43",b:"18:00",t:"🚶 鶴橋站 → 万正",g:["15分"],k:"move",dir:["鶴橋駅","万正 焼肉 大阪市生野区桃谷3-3-2","walking"],x:"<ul><li class='warn'>穿過住宅區，<b>先開好導航</b></li></ul>"},
-{a:"18:00",b:"19:30",t:"🔥 晚餐：万正 燒肉",bk:"manmasa",dead:1,g:["可吸菸","🕐 17:30–23:00 L.O.22:00","🚨 90分鐘制"],k:"eat",q:"万正 焼肉 大阪市生野区桃谷3-3-2",food:"万正 焼肉 桃谷",x:"<ul><li class='warn'>🚨 <b>90 分鐘座位制</b> —— 18:00 進，19:30 就要走，抓緊時間</li><li class='warn'>🥩 <b>肉類必須一開始一次點完</b>，追加要等很久。飲料、湯、飯可以中途加<br>五個人先在車上就講好要什麼</li><li><b>招牌是厚切鹽舌</b>，底下埋大量蒜頭，一定要沾著吃<br>⚠️ 隔天蒜味絕對消不掉，Day 4 有心理準備</li><li>17:30–23:00（L.O.22:00）｜月曜公休（一說月・水都休）<br><b>11/15 是週日，有開</b></li><li class='warn'>☎ 090-2592-9687｜<b>4 人以上才能事前訂位</b>，你們 5 人可以<br>沒訂位的話平日也要排一小時</li><li>食べログ 百名店｜鶴橋站步行 9–15 分｜全面吸菸可</li><li>七輪炭火燒，2 樓有和室</li></ul>"},
-{a:"19:35",b:"20:05",t:"🚇 鶴橋 → 難波",g:["近鐵或JR","¥180~230"],k:"move",dir:["鶴橋駅","難波駅 大阪","transit"],x:"<ul><li>近鐵難波線約 5 分，或 JR 大阪環狀線轉地鐵</li><li class='warn'>吃完燒肉<b>身上會有味道</b>，車上盡量別擠</li></ul>"},
-{a:"20:15",b:"20:30",t:"🐙 たこ焼道楽わなか 千日前本店",g:["🕐 10:00–22:30"],k:"eat",q:"たこ焼道楽わなか 千日前本店",food:"たこ焼道楽わなか 千日前本店",x:"<ul><li>なんば グランド花月旁</li><li>銅板現烤，行列名店</li></ul>",w:[["官網","http://takoyaki-wanaka.com/"]]},
+{a:"18:00",b:"19:30",t:"🔥 晚餐：万正 燒肉",bk:"manmasa",dead:1,g:["可吸菸","🕐 17:30–23:00 L.O.22:00","🚨 90分鐘制"],k:"eat",q:"万正 焼肉 大阪市生野区桃谷3-3-2",food:"万正 焼肉 桃谷",x:"<ul><li class='warn'>🥩 <b>入店前店員就會問你們要點什麼</b> —— 五個人在車上先講好<br><b>肉類一開始一次點完</b>，追加要等很久</li><li class='warn'>🧄 <b>招牌鹽舌每人限點一份</b>，五個人就是五份，不能多<br>肉底下埋大量生蒜，一定要沾著吃 —— <b>隔天蒜味絕對消不掉</b>，Day 4 有心理準備</li><li class='warn'>👞 <b>五人以上會被帶到二樓和室，要脫鞋</b><br>樓梯<b>每一階只有 20 公分深</b>，非常陡，小心踩空</li><li class='warn'>📞 <b>4 人以上才能事前訂位，你們 5 人可以</b> —— ☎ 090-2592-9687<br>沒訂位開店前就有 15–20 人在排，<b>要等一到兩小時</b><br><span style='color:var(--dim)'>有「90 分鐘制」的說法，訂位時順便確認</span></li><li>17:30–23:00（L.O.22:00）｜<b>月曜・水曜公休</b> → 11/15 是週日，有開</li><li>💴 おまかせ 約 ¥5,000，加點到 <b>¥7,000／人</b>｜食べログ 百名店</li><li>七輪炭火燒｜鶴橋站步行約 15 分｜全面吸菸可</li></ul>"},
+{a:"19:35",b:"20:05",t:"🚇 鶴橋 → 難波",g:["近鐵或JR","¥180~230"],k:"move",dir:["鶴橋駅","難波駅 大阪","transit"],x:"<ul><li>近鐵難波線約 5 分，或 JR 大阪環狀線轉地鐵</li><li class='warn'>吃完燒肉<b>身上會有味道</b>，車上盡量別擠</li><li><b>班距</b>：近鐵難波線或千日前線，約 5–8 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"20:15",b:"20:30",t:"🐙 たこ焼道楽わなか 千日前本店",g:["🕐 10:00–22:30"],k:"eat",q:"たこ焼道楽わなか 千日前本店",food:"たこ焼道楽わなか 千日前本店",x:"<ul><li class='warn'>🔥 <b>裡面超燙，絕對不要整顆塞進嘴裡</b><br>遊記共同心得：「不配飲料會燙傷」｜<b>跟店員說「よく焼き」也還是流心</b>，那是店家的做法</li><li><b>米其林指南大阪登錄</b>｜排隊看起來長但動很快 —— 實測<b>排第 5 位只等 5 分鐘</b></li><li><b>1–2 樓有 80 個座位</b>（自助式），下雨或想坐著吃都可以<br><span style='color:var(--dim)'>座位和商品都不接受預約</span></li><li>8 個 ¥500 起｜<b>おおいり ¥750 一盤四種味</b>（醬汁美乃滋、柴魚醬油、蔥鹽、明太美乃滋）—— 五個人點這個最划算<br>店家一押是<b>釜炊鹽味</b></li><li class='warn'>📅 <b>偶有臨時休業</b>，官網 takoyaki-wanaka.com 會公告</li><li>なんばグランド花月旁邊｜難波千日前 11-19</li></ul>",w:[["官網","https://takoyaki-wanaka.com/"]]},
 {a:"20:30",b:"20:45",t:"🥟 551蓬莱 本店（宵夜）",g:["🕐 10:00–22:00（火曜第1・3公休）"],k:"eat",q:"551蓬莱 本店 大阪市中央区難波3-6-3",food:"551蓬莱 本店",x:"<ul><li><b>豬肉包 ¥230／個</b>｜1 樓外帶、2–3 樓餐廳<br>本店限定有<b>叉燒包</b>與紅豆包（紅豆包 2 個起賣）</li><li class='warn'>⏰ <b>接近打烊會逐項賣完</b> —— 有人 21:20 去只剩豬肉包，還被通知「剩 30 個」<br>你們 20:30 到，趕得上但別拖</li><li class='warn'>🚨 <b>豬肉包不能帶回台灣</b>，當天吃完</li><li>なんば駅 11 號出口步行 1 分｜戎橋筋商店街中段｜☎ 06-6641-0551</li><li>順手買<b>冰棒</b>（アイスキャンデー ¥160），寒天配熱包子很對味</li></ul>"},
-{a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",g:["🕐 9:30–24:00"],q:"LIFE 大国町店",x:"<ul><li>20:00 後<b>半額戰場</b>・買 Day 4 早餐 ×5</li></ul>"}]},
+{a:"21:00",b:"21:40",t:"🛒 LIFE 大國町店",g:["🕐 9:30–24:00","藥品區到22:00","可免稅"],q:"LIFE 大国町店",x:"<ul><li class='warn'>💊 <b>藥品區只到 22:00</b>，你們 21:00 到只剩一小時 —— <b>要買藥的先去那一區</b><br>其他樓面營業到 <b>24:00</b>，慢慢逛沒問題</li><li class='warn'>🛂 <b>這裡有免稅</b> —— 記得帶護照，是回程前最後一個能退稅的超市</li><li>食品、酒、日用品、藥品、書籍、衣料都有，<b>比便利商店便宜很多</b></li><li>💳 可刷卡、PayPay、各種電子錢包｜<b>⚠️ PiTaPa 不能用</b></li><li>大國町站 <b>2 號出口</b>往北步行 2–3 分｜敷津西 1-4-1｜☎ 06-6631-0210</li><li>買明天早餐、水、宵夜、Day 4 路上的補給</li></ul>"}]},
 
 d4:{label:"Day 4",date:"11/16 一",dnum:16,tzn:"日本時間",title:"箕面・きすけ・大阪城・通天閣",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"17:45",w:"はり重 訂位入座",n:"已訂位 5 人・遲到會被取消。大阪城 15:50 就要離場"},
 s:[
 {a:"08:05",b:"08:15",t:"🚶 飯店 → 大國町站",g:["買早餐"],k:"move",dir:[HOQ,"大国町駅","walking"]},
-{a:"08:15",b:"08:50",t:"🚇 大國町 → 大阪梅田",g:["¥240"],k:"move",dir:["大国町駅","大阪梅田駅","transit"]},
-{a:"09:00",b:"09:30",t:"🚆 阪急梅田 → 箕面",g:["¥280"],k:"move",dir:["阪急大阪梅田駅","箕面駅","transit"],x:"<ul><li>石橋阪大前<b>同月台對側</b>轉箕面線</li></ul>"},
-{a:"09:35",b:"11:30",t:"🍁 箕面瀑布健行",g:["來回5.4km"],dead:1,q:"箕面大滝",x:"<ul><li>沿途老店有<b>炸楓葉（紅葉天婦羅）</b>，食用楓葉醃過裹麵糊現炸，箕面獨有</li><li class='warn'>11:00 沒到瀑布就折返</li></ul>"},
-{a:"11:41",b:"12:10",t:"🚆 箕面 → 阪急梅田",g:["¥280"],k:"move",dir:["箕面駅","阪急大阪梅田駅","transit"]},
+{a:"08:15",b:"08:50",t:"🚇 大國町 → 大阪梅田",g:["¥240"],k:"move",dir:["大国町駅","大阪梅田駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線，約 4 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"09:00",b:"09:30",t:"🚆 阪急梅田 → 箕面",g:["¥280"],k:"move",dir:["阪急大阪梅田駅","箕面駅","transit"],x:"<ul><li>石橋阪大前<b>同月台對側</b>轉箕面線</li><li><b>班距</b>：需在石橋阪大前轉箕面線，約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"09:35",b:"11:30",t:"🍁 箕面瀑布健行",g:["來回5.4km"],dead:1,q:"箕面大滝",x:"<ul><li class='warn'>🍁 <b>見頃 11 月中旬～12 月上旬 —— 11/16 剛好在期間內</b><br>這是<b>全程最可能看到滿樹紅葉的地方</b>，比 Day 1 的鞍馬貴船機率高</li><li><b>阪急箕面駅 → 大滝 2.8 公里、走 40 分</b>（來回 5.6 km）<br>全程舖裝、高低差不大，<b>一般運動鞋就夠</b>，不用登山鞋</li><li>沿路有<b>距離標示牌</b>不會迷路｜有昆蟲館、餐廳、寺廟可以停</li><li class='warn'>🍁 <b>もみじの天ぷら（炸楓葉）</b>—— 1300 年的銘菓，沿路好幾家，<b>現炸的最好吃</b></li><li class='warn'>⏰ <b>平日 11 點前人最少</b> —— 你們 9:35 出發剛好避開</li><li>滝高 33 公尺，大阪唯一入選「日本の滝百選」｜<b>滝壺水花大，相機小心</b></li></ul>"},
+{a:"11:41",b:"12:10",t:"🚆 箕面 → 阪急梅田",g:["¥280"],k:"move",dir:["箕面駅","阪急大阪梅田駅","transit"],x:"<ul><li><b>班距</b>：需在石橋阪大前轉車，約 10 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"12:20",b:"13:10",t:"🍜 午餐：うどん屋 きすけ",g:["只收現金","25席","🕐 月-金 12:00–16:00・火曜休"],k:"eat",q:"うどん屋きすけ 大阪市北区鶴野町4-1",food:"うどん屋 きすけ 中津",x:"<ul><li class='warn'>🚨 <b>12:00 才開，不是 11:00</b>｜月・水〜金 12:00–16:00｜土日 12:00–20:00｜<b>火曜公休</b><br>11/16 是週一，有開。（多個來源時間略有出入，<b>當天先用 Google 查一次</b>）</li><li class='warn'>🍜 <b>米其林大阪 2022 登錄・食べログ 百名店</b> —— 排隊是常態，<b>平日下午兩點還在排</b><br>你們 12:20 到，先派一個人去排，其他人在附近等</li><li><b>鯛ちくわ天と温泉たまごのぶっかけ</b> 是招牌，現炸竹輪天</li><li class='warn'><b>只收現金，五個人出門前都要確認錢包有現金</b></li><li class='warn'>沒有 5 人桌 → <b>拆 4+1 或 3+2</b></li><li>☎ 06-6375-5656｜コープ野村梅田A棟 1F</li><li>最近的是 Metro 谷町線<b>中崎町駅</b>，不是大阪站</li></ul>",
 w:[["🎯 精準座標","https://www.google.com/maps/search/?api=1&query=34.709305,135.501608"]]},
 {a:"13:10",b:"13:35",t:"🚶 きすけ → JR 大阪站",g:["約10分","含找月台"],k:"move",dir:["うどん屋 きすけ 大阪","大阪駅","walking"],x:"<ul><li>きすけ 在阪急東通商店街，走到 JR 大阪站約 10 分鐘</li><li>大阪站很大，<b>找環狀線月台再抓 10 分鐘</b></li></ul>"},
 {a:"13:40",b:"13:55",t:"🚆 JR 大阪 → 大阪城公園",g:["Pass免費"],k:"move",dir:["大阪駅","大阪城公園駅","transit"]},
-{a:"14:00",b:"15:50",t:"🏯 大阪城",g:["¥1200","🕐 9:00–17:00（入館至 16:30）"],dead:1,q:"大阪城天守閣",x:"<ul><li>含 <b>豊臣石垣館</b></li><li class='warn'>入館截止 16:30</li></ul>",w:[["官網","https://www.osakacastle.net/guide/"]]},
+{a:"14:00",b:"15:50",t:"🏯 大阪城",g:["¥1,200 含豊臣石垣館","🕐 9:00–18:00 最終入館17:30"],dead:1,q:"大阪城天守閣",x:"<ul><li class='warn'>🕐 <b>9:00–18:00，最終入館 17:30</b></li><li class='warn'>🎫 <b>先買 WEB 電子票就不用排售票口</b><br>現場排隊：平日約 15 分、週末 30–45 分、連假一小時以上<br>你們 11/16 是週一，但先買好比較保險</li><li>¥1,200（含<b>豊臣石垣館</b>）｜天守閣看完 <b>60–90 分鐘</b></li><li class='warn'>🚶 <b>「看得到天守閣之後還要走很久」</b> —— 這是所有遊記的共同抱怨，公園很大<br>從 JR 大阪城公園站走到天守閣入口要 15–20 分</li><li>天守閣 8 層樓，<b>有電梯但只到中間樓層</b>，上面還是要爬</li><li class='warn'>🕵️ <b>服部平次那張照片</b>：站在城外能看到天守閣全身的位置（本丸廣場或極樂橋一帶）<br>大拇指指自己、微側身、下巴微抬｜<b>天守閣在畫面右後方，人佔左側三分之二</b></li><li>🏯 <b>極樂橋</b>是柯南 TV SP 第 263 話的場景，就在你們路線上</li></ul>",w:[["官網","https://www.osakacastle.net/guide/"]]},
 {a:"15:55",b:"16:10",t:"🚆 JR 大阪城公園 → 新今宮",g:["Pass免費"],k:"move",dir:["大阪城公園駅","新今宮駅","transit"]},
-{a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["約¥1500","🕐 10:00–20:00（入場至 19:30）"],q:"通天閣",x:"<ul><li>日落約 16:50</li><li class='warn'>不要吃東西，肚子留給壽喜燒</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
-{a:"17:25",b:"17:45",t:"🚇 惠美須町 → 難波",g:["¥190"],k:"move",dir:["恵美須町駅","なんば駅","transit"]},
+{a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["¥1,200＋屋外¥300","🚨 需預約入場時間"],q:"通天閣",x:"<ul><li class='warn'>🚨 <b>買票必須預約入場時間，而且官方明說「傍晚之後可能賣完」</b><br>你們 16:25 到正好是那個時段 —— <b>強烈建議前一晚就線上買好</b><br>tsutenkaku.co.jp 有事前預約線上票</li><li class='warn'>💴 <b>一般展望台 ¥1,200</b>（2025/4 漲價）｜特別屋外展望台「天望パラダイス」<b>另加 ¥300</b><br>要上戶外那層就是 ¥1,500／人 —— 夕陽要看戶外那層才值得</li><li>🕐 10:00–20:00（<b>最終入場 19:30</b>）｜天望パラダイス 到 19:50（19:30 最終入場）｜無休</li><li class='warn'>⚠️ <b>閉館時人潮會一次湧出</b>，新世界晚上是尖峰 —— 逛完早點離開</li><li>逛完約 <b>30–60 分鐘</b>；加特別展望台和滑梯要 60–90 分</li><li><b>ビリケン</b>（幸運神）在 5 樓，<b>摸他的腳底</b>會實現願望</li><li>Metro 恵美須町站步行 3 分｜動物園前站步行 6–10 分</li><li class='warn'>📅 官方公告 <b>2026 年 3 月起營業時間有變更</b> —— 出發前再確認一次</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
+{a:"17:25",b:"17:45",t:"🚇 惠美須町 → 難波",g:["¥190"],k:"move",dir:["恵美須町駅","なんば駅","transit"],x:"<ul><li><b>班距</b>：堺筋線＋步行，或走路 15 分 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"17:45",b:"19:45",t:"🍲 晚餐：はり重 道頓堀本店",g:["🕐 17:00–21:00（2026/7起分段）","火曜公休"],bk:"harijyu",dead:1,k:"eat",q:"はり重 道頓堀本店",food:"はり重 道頓堀本店",x:"<ul><li class='warn'>🚨 <b>2026 年 7 月起改成分段營業</b>：11:30–14:00／<b>17:00–21:00</b><br>你們 17:45 到，在晚間時段內</li><li class='warn'>🚨 <b>公休是火曜不是水曜</b>（祝日、祝前日、12 月照常營業）<br>11/16 是週一，有開</li><li class='warn'>💴 <b>壽喜燒・涮涮鍋 ¥7,700 起／人</b>，五人約 ¥38,500 —— 這是全程最貴的一餐<br>午間特別菜單才 ¥6,050 起，但你們是晚餐</li><li>創業 1919 年，純和風建築，<b>2–3 樓是和室座敷</b></li><li>黑毛和牛薄切，<b>不用海鮮、只用長時間熬的牛筋割下</b></li><li>1 樓另有精肉店與洋食部（はり重グリル）</li><li>☎ 06-6211-7777｜難波站 14 號出口步行 3 分</li><li class='warn'>⏰ <b>遲到會被取消</b> —— 這是今日最硬</li></ul>"},
-{a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關","🕐 10:00–21:00"],q:"ビックカメラ なんば店",x:"<ul><li><b>定位是看看就好，沒有一定要買。</b>吹風機、美容儀、耳機、相機都有，21:00 硬關門</li></ul>"},
+{a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關","🕐 10:00–21:00"],q:"ビックカメラ なんば店",x:"<ul><li class='warn'>⏰ <b>21:00 關門，你們 20:00 到只有一小時</b> —— 五個人先分頭找，別一起逛<br>年中無休｜1F ソフマップ 與 8F outlet 也是 21:00</li><li class='warn'>🛂 <b>免稅要護照正本</b>，五個人各自結帳各自帶<br>結完帳<b>封條不要拆</b>，拆了在機場會被要求補稅</li><li><b>難波站步行 3 分</b>｜近鐵日本橋站 なんばウォーク 出口只要 1 分</li><li>3C、家電、藥妝、玩具都有，<b>比較好一次買完</b>｜千日前 2-10-1</li><li class='warn'>🔋 <b>買了行動電源要隨身，不能託運</b></li></ul>"},
 {a:"21:05",b:"21:20",t:"🚶 走回飯店",dead:1,k:"move",dir:["なんば駅",HOQ,"walking"],x:"<ul><li class='warn'><b>回房後打包八成</b></li></ul>"}]},
 
 d5:{label:"Day 5",date:"11/17 二",dnum:17,tzn:"日本時間",title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
@@ -527,22 +533,22 @@ crux:{t:"18:47",w:"抵達天王寺轉 JR",n:"五個人拖五個大行李箱出 M
 s:[
 {a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HOQ,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
 {a:"08:10",b:"08:20",t:"🚶 飯店 → 木津市場",k:"move",dir:[HOQ,"大阪木津卸売市場","walking"]},
-{a:"08:20",b:"09:20",t:"🐟 木津市場",g:["只收現金","無ATM","🕐 一般開放 5:00–11:00・日曜與休市日公休"],dead:1,k:"eat",q:"大阪木津市場",x:"<ul><li class='warn'><b>11:00 就幾乎全關</b></li><li>市場北側就是黑貓宅急便</li></ul>",w:[["官網","https://kizu-ichiba.com/"],["市場日曆","https://kizu-ichiba.com/calendar/"]]},
+{a:"08:20",b:"09:20",t:"🐟 木津市場",g:["只收現金","無ATM","🕐 6:00–11:00（最佳 8:30–10:30）","日・祝・不定期水曜休"],dead:1,k:"eat",q:"大阪木津市場",x:"<ul><li class='warn'>⏰ <b>6:00 開始營業，11:00 大部分店就關了</b><br>官方建議的黃金時段是 <b>8:30–10:30</b> —— 你們 8:20 到剛好卡在開頭</li><li class='warn'>🚨 <b>休市是日曜、祝日、加上「不定期的水曜」</b><br>11/17 是週二應該有開，但<b>出發前查 kizu-ichiba.com 的 2026 市場日曆</b>確認｜☎ 06-6631-1139</li><li>300 年歷史、日本最大級的民營批發市場，<b>高級料亭的廚師來這裡進貨</b></li><li>吃的：海鮮丼、壽司、鰻魚、烏龍麵都有，<b>かなえ寿司的「つかみ寿司」</b>是名物</li><li class='warn'>💴 <b>只收現金</b></li><li>難波站步行 10 分｜2 樓還有溫浴設施（岩盤浴、露天風呂），一早就開</li></ul>",w:[["官網","https://kizu-ichiba.com/"],["市場日曆","https://kizu-ichiba.com/calendar/"]]},
 {a:"09:20",b:"09:35",t:"🚶 木津市場 → 難波八阪神社",g:["約1km"],k:"move",dir:["大阪木津卸売市場","難波八阪神社","walking"]},
-{a:"09:35",b:"09:55",t:"🦁 難波八阪神社",g:["社務所9:00開","🕐 6:30–17:00・境內自由"],q:"難波八阪神社",x:"<ul><li>主要目標是<b>獅子頭御守</b>，社務所 9:00 才開，你們 9:35 到剛好</li></ul>"},
-{a:"10:10",b:"10:40",t:"🚇 なんば → 本町 → 大阪港",g:["¥290"],k:"move",dir:["なんば駅","大阪港駅","transit"]},
-{a:"10:45",b:"13:00",t:"🐋 海遊館",bk:"kaiyukan",dead:1,g:["¥2700~3500","🕐 10:00–20:00（入館至 19:00）","🚨 不可再入館"],q:"海遊館",x:"<ul><li class='warn'>🚨 <b>2026/6/15 起取消再入館</b> —— 出來就不能再進去，<b>東西一次逛完</b></li><li><b>10:00–20:00</b>｜最終入館 19:00｜逛完約 <b>1.5–2.5 小時</b></li><li class='warn'>💴 <b>票價變動制 ¥2,700–3,500</b>（依日期），<b>11/03 線上買 eTicket 時就知道實際金額</b><br>先買好可以直接進，不用排售票口</li><li>動線是<b>從上層往下繞</b>，8 樓開始</li><li>太平洋水槽的<b>鯨鯊與鬼蝠魟</b>是主角</li><li>大阪港站 1 號出口步行 5 分</li></ul>",w:[["官網","https://www.kaiyukan.com/"]]},
-{a:"13:05",b:"13:25",t:"🚇 大阪港 → 心齋橋",g:["¥290"],k:"move",dir:["大阪港駅","心斎橋駅","transit"]},
-{a:"13:30",b:"14:20",t:"🍜 午餐：にし家 本店",bk:"nishiya",dead:1,g:["180席","🕐 午餐 11:00–16:00","幾乎全年無休"],k:"eat",q:"にし家 本店 心斎橋",food:"にし家 本店 心斎橋",x:"<ul><li><b>午餐 11:00–16:00</b>（每天到 16 點都算午餐時段）｜晚餐 16:00–22:30<br>※日祝提早 30 分｜11/17 是週二，正常<br><b>幾乎全年無休</b>（只休年末年始）</li><li><b>烏龍麵免費加大、鍋裡的麵可無限續</b> —— 五個男生剛好</li><li>招牌<b>うどんちり</b>（登錄商標）套餐 ¥5,000 起／人</li><li>有 <b>4–8 人的暖桌包廂</b>，訂位時說五個人要包廂</li><li>創業昭和 32 年｜心斎橋站步行 3 分｜東心斎橋 1-18-18</li></ul>"},
-{a:"14:25",b:"14:45",t:"💊 OS DRUG 心齋橋店",g:["只收現金","🕐 10:00–21:00"],q:"OS DRUG 心斎橋店",x:"<ul><li><b>不退稅只收現金</b>，但未稅標價最低</li><li class='warn'>藥品每種最多 12 瓶，合計 36 瓶</li><li class='warn'>🎰 <b>要抽一番賞就在這裡順道去</b> —— 一番くじ公式ショップ <b>心斎橋PARCO 5F</b>（御堂筋線心斎橋站直結）<br>10:00–20:00｜☎ 0570-076-566｜在「バンダイナムコ Cross Store」裡面<br><b>大阪唯一在你們動線上的公式店</b>（日本橋店 2022 已倒）</li></ul>",
+{a:"09:35",b:"09:55",t:"🦁 難波八阪神社",g:["社務所9:00開","🕐 6:30–17:00・境內自由"],q:"難波八阪神社",x:"<ul><li class='warn'>🦁 <b>那顆巨大獅子頭「獅子殿」的嘴巴裡是舞台</b> —— 不只是裝飾<br>高 12 公尺，正月有神樂、夏祭有獅子舞在裡面表演<br>📷 <b>站在獅子正前方仰角拍</b>，把整張嘴框進去最有壓迫感</li><li><b>是「八阪」不是「八坂」</b> —— 總本山是京都的八坂神社，大阪這邊寫成八阪</li><li>獅子會「吞噬厄運」，主打<b>除厄、商賣繁盛、結緣</b></li><li>現在的社殿是戰後重建的</li><li>🕐 <b>無休</b>，境內自由參拜｜各線難波站步行 6 分</li><li class='warn'>⏰ 你們 9:35 到，<b>觀光客通常還沒湧入</b>，是拍照的好時段</li></ul>"},
+{a:"10:10",b:"10:40",t:"🚇 なんば → 本町 → 大阪港",g:["¥290"],k:"move",dir:["なんば駅","大阪港駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線轉中央線，各約 5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"10:45",b:"13:00",t:"🐋 海遊館",bk:"kaiyukan",dead:1,g:["¥2700~3500","🕐 10:00–20:00（入館至 19:00）","🚨 不可再入館"],q:"海遊館",x:"<ul><li class='warn'>🚨 <b>eTicket 是「日時指定」的，買的時候要選時段 —— 選 10:45</b><br>實際遊記：<b>10 點前到現場，卻只買得到 11:30 的場次</b><br>你們 11/03 線上先買好，這是最關鍵的一步</li><li class='warn'>⏰ <b>10:00–15:00 是尖峰</b>，你們 10:45 進正好在開頭<br><b>鯨鯊水槽最前排尖峰要等 20–40 分</b> —— 不用硬擠，往下層走人會少很多</li><li class='warn'>🚨 <b>2026/6/15 起取消再入館</b> —— 出來就不能再進去，東西一次逛完</li><li><b>10:00–20:00</b>（最終入館 19:00）｜<b>票價變動制 ¥2,700–3,500</b>，買 eTicket 時就知道實際金額</li><li><b>逛完約 2 小時</b>（你們排 135 分，剛好）｜動線<b>從 8 樓往下繞</b></li><li class='warn'>🍽️ <b>館內只有輕食</b>，要吃正餐去隔壁的<b>天保山マーケットプレイス</b><br>但你們 13:30 訂了にし家，館內別耽擱</li><li>大阪港站 1 號出口步行 5 分</li></ul>",w:[["官網","https://www.kaiyukan.com/"]]},
+{a:"13:05",b:"13:25",t:"🚇 大阪港 → 心齋橋",g:["¥290"],k:"move",dir:["大阪港駅","心斎橋駅","transit"],x:"<ul><li><b>班距</b>：中央線轉御堂筋線，各約 5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
+{a:"13:30",b:"14:20",t:"🍜 午餐：にし家 本店",bk:"nishiya",dead:1,g:["180席","🕐 午餐 11:00–16:00","幾乎全年無休"],k:"eat",q:"にし家 本店 心斎橋",food:"にし家 本店 心斎橋",x:"<ul><li class='warn'>🚪 <b>訂位時就說「五個人要包廂」</b> —— 店家明講「包廂請盡早預約」<br>有可容納 8 人的桌席包廂，暖桌式｜☎ <b>06-6241-9221</b></li><li><b>烏龍麵免費加大、鍋裡的麵可無限續</b> —— 五個男生剛好</li><li>招牌<b>うどんちり</b>（登錄商標的海鮮鍋）｜<b>午餐的すき焼きご膳評價特別好</b>，說「價格想像不到的好肉」<br>另一個名物是<b>肉づけうどん</b>（沾麵式烏龍麵，細麵有嚼勁）</li><li>食べログ <b>3.59</b>（960 則評論）｜創業昭和 32 年的老舖<br>假日中午店門口會排幾組，<b>11/17 是週二，比較好</b></li><li>午餐 11:00–16:00（每天到 16 點都算午餐）｜晚餐 16:00–22:30<br><b>幾乎全年無休</b>（只休年末年始）</li><li><b>心齋橋站步行 2 分</b>｜東心斎橋 1-18-18｜木造和風建築，在商業大樓群中很好認</li></ul>"},
+{a:"14:25",b:"14:45",t:"💊 OS DRUG 心齋橋店",g:["只收現金","🕐 10:00–21:00"],q:"OS DRUG 心斎橋店",x:"<ul><li class='warn'>💴 <b>不退稅、只收現金、不能用電子錢包</b> —— 但未稅標價本身最低<br>五個人出門前確認錢包有現金</li><li class='warn'>💊 <b>藥品每種最多 12 瓶，合計 36 瓶</b>（日本出境限制）</li><li><b>店門口的「本日の目玉商品」最便宜</b> —— 洗劑、柔軟精常有，先看那一區</li><li>心齋橋筋商店街裡藥妝店互相競爭，<b>整體比連鎖店便宜</b></li><li>🕐 10:00–21:00｜心齋橋站步行 1–2 分</li><li class='warn'>🎰 <b>要抽一番賞就在這裡順道去</b> —— 一番くじ公式ショップ <b>心斎橋PARCO 5F</b>（御堂筋線心斎橋站直結）<br>10:00–20:00｜在「バンダイナムコ Cross Store」裡面｜<b>大阪唯一在你們動線上的公式店</b>（日本橋店 2022 已倒）</li></ul>",
 w:[["🎰 一番くじ公式ショップ 心斎橋PARCO","https://www.google.com/maps/search/?api=1&query=%E4%B8%80%E7%95%AA%E3%81%8F%E3%81%98%E5%85%AC%E5%BC%8F%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97%20%E5%BF%83%E6%96%8E%E6%A9%8BPARCO%E5%BA%97"],["店鋪頁","https://bandainamco-am.co.jp/chara_shop/ichibankuji-official-shop/shop/shinsaibashi/"]]},
-{a:"14:45",b:"14:55",t:"🍮 りくろーおじさん なんば本店",g:["🕐 9:00–20:00"],k:"eat",q:"りくろーおじさん なんば本店",food:"りくろーおじさんの店 なんば本店",x:"<ul><li>現烤起司蛋糕，一顆五人分</li></ul>"},
-{a:"15:00",b:"15:30",t:"🔪 千日前道具屋筋",g:["18:00打烊"],q:"千日前道具屋筋商店街",x:"<ul><li><b>Design Pocket 食品模型磁鐵</b></li><li>買刀 → <b>必託運</b></li></ul>"},
+{a:"14:45",b:"14:55",t:"🍮 りくろーおじさん なんば本店",g:["🕐 9:00–20:00"],k:"eat",q:"りくろーおじさん なんば本店",food:"りくろーおじさんの店 なんば本店",x:"<ul><li class='warn'>🚨 <b>只買外帶，不要進 2–3 樓咖啡廳</b><br>咖啡廳要用 1 樓機器取號，<b>實測平日等 2 小時</b> —— 你們只有 15 分鐘</li><li class='warn'>⏰ <b>平日也要排 10–30 人</b>，週末會出動保全<br>隊伍會動，但五個人買<b>先講好各要幾個</b>再排</li><li><b>一次烤 12 個，烤好會敲鐘</b>然後蓋焼印 —— 剛出爐的還在抖</li><li>💴 <b>¥735／個</b>（以前 ¥500，漲了）｜1F 販售 9:00–20:00</li><li class='warn'>🧊 <b>當天吃完</b>，五個人一個就夠分｜買了不能託運壓到</li><li>難波站步行 5 分，戎橋筋商店街直走｜<b>不接受任何預約</b>（店頭、線上、電話都不行）</li></ul>"},
+{a:"15:00",b:"15:30",t:"🔪 千日前道具屋筋",g:["18:00打烊"],q:"千日前道具屋筋商店街",x:"<ul><li><b>150 公尺的拱廊街，約 50–60 家專門店</b> —— なんばグランド花月 南側，<b>紅底白字的大「道」招牌</b>是地標</li><li>專業廚師來這裡買，但<b>一般人也能買</b>：菜刀、鐵板、章魚燒烤盤、暖簾、招牌</li><li class='warn'>🍣 <b>蠟製食品模型</b>是這裡的名物 —— 壽司、蔬菜造型的鑰匙圈很適合當伴手禮<br>有些店可以<b>體驗自己做</b></li><li class='warn'>💳 <b>刷不刷卡每家不一樣</b>，帶點現金比較保險</li><li class='warn'>✈️ <b>菜刀一定要託運</b>，隨身會被沒收</li><li>難波站步行 3 分｜日本橋站步行 5 分</li></ul>"},
 {a:"15:35",b:"16:35",t:"🧸 でんでんタウン（扭蛋・動漫）",g:["🕐 多為 11:00–20:00"],q:"日本橋でんでんタウン",x:"<ul><li class='warn'>🚨 <b>一番くじ公式ショップ 大阪日本橋店已於 2022/8 閉店</b><br>原址（コスモビル 1–3F）現在是 <b>namco 大阪日本橋店</b>（電玩中心，10:00–24:00），1F 仍有賣一番賞但<b>不是公式店</b></li><li class='warn'>💡 <b>要抽公式店的，14:25 在心齋橋時就順道去 PARCO 5F</b></li><li>這裡主打<b>扭蛋、模型、動漫周邊</b> —— Super Potato、Jungle、駿河屋都在這條</li><li>多數店 11:00–20:00</li></ul>",w:[["一番くじ倶楽部","https://1kuji.com/"]]},
 {a:"16:40",b:"17:40",t:"🍖 晚餐：ニューベイブ 難波店",g:["🕐 11:00–20:00 無休","食券制"],k:"eat",q:"ニューベイブ 難波店 大阪市浪速区難波中1-14-12",food:"ニューベイブ 難波 とんかつ",x:"<ul><li><b>11:00–20:00・無午休・全年無休</b>（2026/3 實地報導確認）</li><li class='warn'>入口是<b>食券機</b>，先買票再入座 —— 五個人先想好要點什麼</li><li><b>白飯、高麗菜／萵苣、豬肉味噌湯無限續</b></li><li>難波駅 <b>5 號出口</b>徒步即到｜エベンエゼルビル 1F｜☎ 050-5456-5376</li><li>人氣店，平日傍晚通常不用排</li></ul>"},
 {a:"17:45",b:"18:00",t:"🚶 走回飯店",k:"move",dir:["ニューベイブ 難波店 大阪市浪速区難波中1-14-12",HOQ,"walking"]},
 {a:"18:00",b:"18:25",t:"🏨 取行李・最終打包",g:["25分"],q:HOQ,x:"<ul><li><b>託運</b>：液體、刀具｜<b>隨身</b>：行動電源、護照、收據</li></ul>"},
-{a:"18:35",b:"18:47",t:"🚇 大國町 → 天王寺",g:["¥190"],k:"move",dir:["大国町駅","天王寺駅","transit"]},
+{a:"18:35",b:"18:47",t:"🚇 大國町 → 天王寺",g:["¥190"],k:"move",dir:["大国町駅","天王寺駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線，約 4 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
 {a:"18:47",b:"19:02",t:"🚶 天王寺站轉乘",g:["15分"],dead:1,q:"天王寺駅",x:"<ul><li class='warn'>はるか 有異狀 → <b>立刻改南海空港急行</b></li></ul>"},
 {a:"19:05",b:"19:50",t:"🚆 はるか → 關西機場",g:["JR Pass"],k:"move",dir:["天王寺駅","関西空港駅","transit"]},
 {a:"19:55",b:"20:40",t:"🚨 Tax-Free KIOSK 退稅查驗",g:["3F中央"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>絕對不能先去託運行李</b></li></ul>"},
@@ -568,24 +574,24 @@ var BOOK=[
 ["10/14 之後","⚠️ たんごリレー1號 不用劃位","福知山 08:55 → 天橋立 09:33。丹後鐵道路段無法用 Pass 在線上、券売機或綠色窗口劃位。直接搭 2 號車自由席即可，想要指定席就到日本後在丹鐵有人車站窗口買。","tangorelay"],
 ["10/16（五）","📞 電話訂 万正（燒肉）","訂 11/15（日）18:00、5 人。電話 090-2592-9687。四人以上才能提前訂位，你們剛好跨過門檻，不用賭當天打電話。","manmasa"],
 ["10/17（六）台灣 09:00","劃 Day 5 はるか 指定席 ×5","天王寺 19:05 → 關西機場 19:50。回國那天的車，遲到就趕不上飛機。","haruka5"],
-["10/20（二）","📞 電話訂 志津香 大宮店（釜飯）","訂 11/15（日）12:25、5 人。電話 0742-93-8029。訂位時要一併把五個人的餐點都點好，店家才會配合時間備料，坐下就有得吃。","shizuka"],
+["10/15（三）起","📞 電話訂 志津香 大宮店（釜飯）","<b>訂 11/15（日）12:25、5 人。☎ 0742-93-8029</b><br><b>電話訂位是「一個月前同一天」開始 → 10/15 就能訂</b>，別拖。<br>好打通的時段：<b>10–11 點、14–17 點</b>（其他時間會轉語音）。<br>🚨 <b>訂位時一併把五個人的餐點點好</b> —— 店家會算時間開始炊，坐下就有得吃；沒先點要等 30 分鐘。<br>🚨 <b>務必確認 11/15 有開</b>（火曜公休外，每月還有一次不定休）。<br>⚠️ 提醒大家：<b>遲到 15 分鐘就要付取消費</b>。","shizuka"],
 ["11/01（日）","💻 網路訂 はり重（壽喜燒）","訂 11/16（一）17:45、5 人，可用一休.com 或樂天ぐるなび。訂的時候順便確認菜單價位 —— 這是目前唯一還沒確認的預算缺口。","harijyu"],
 ["11/01（日）","💻 網路訂 にし家 本店（烏龍麵）","訂 11/17（二）13:30、5 人。約 180 席，訂位主要是保險用。","nishiya"],
-["11/03（二）","🎫 海遊館 eTicket ×5","11/17 的票，五個人要選同一個入館時段。變動票價，且 2026/6/15 起不能再入館，一次逛完。","kaiyukan"],
+["11/03（二）","🎫 海遊館 eTicket ×5","<b>11/17 的票，五個人要選同一個入館時段 —— 選 10:45。</b><br>🚨 <b>這是日時指定制。</b>實際遊記：現場 10 點前到，卻只買得到 11:30 的場次 —— 沒先買會打亂整個上午。<br>票價是變動制（¥2,700–3,500），買的時候就知道實際金額。<br>⚠️ 2026/6/15 起<b>不能再入館</b>，出來就進不去了。","kaiyukan"],
 ["11/06（五）","📱 填寫 Visit Japan Web ×5","入境與海關申告。完成後把 QR Code 截圖存進相簿 —— 機場可能沒有網路。","vjw"],
 ["11/06（五）","📶 買好 eSIM ×5 並先安裝","五個人都要有網路，App 的同步、地圖、路線、翻譯全靠它。日本 5 天建議每人 3～5 GB。<b>在家有 Wi-Fi 時就先安裝好</b>，落地只要開啟數據漫遊即可。","esim"],
 ["11/08（日）","📞 電話：奈良市綜合觀光案內所","問「五個 28–32 吋行李箱收不收」。還要問受理時間、取件截止時間、每件價格。Day 3 一整天都建立在這件事上，寄不進去整天要重排。","naraluggage"],
-["🚨 現在就打（越早越好）","📞 電話訂 鮨割烹 海宮（伊根午餐）","<b>訂 11/14（六）11:30 入店、5 人</b>。☎ 0772-32-1710<br><b>店家 2026 年改規則：午餐訂位只接受 11:30 入店</b>，別報 12:00。<br><b>只有 28 席，訂位受理是「當月起三個月」—— 9 月就能訂 11 月，現在打剛好。</b><br>順便：指定 2 樓靠窗（看得到伊根灣）、確認下車站牌是「伊根漁協前」、11/14 確定營業（水曜公休）。","wadatsumi"],
+["11/08（日）","📞 電話問 レストラン舟屋（伊根午餐）","<b>☎ 0772-32-0750</b>（道の駅 舟屋の里 伊根 1F）<br>要問三件事：<br>① <b>11/14（六）幾點開、有沒有休</b>（營業時間我查不到可靠來源）<br>② <b>五個人要不要先講一聲</b> —— 官方導覽寫「店不大，行列覚悟で」<br>③ <b>伊根鰤魚涮涮鍋（¥4,400／人）要不要預約</b> —— 11 月正是鰤魚季開始，想吃就現在訂<br><br>⚠️ <b>只收現金、自助式</b>（自己端餐自己收）。<br>💡 原本排的海宮因為巴士班次接不上（11:54 才到、訂位只收 11:30）已改成這家。","funaya"],
 ["11/08（日）","📞 電話：向井酒造","<b>已查到：9:00–12:00／13:00–17:00（中午休息一小時）、木曜公休、只收現金、不接受預約。</b>11/14 是週六，應該有開。<br>要問的是：<b>「伊根滿開」300ml 小瓶有沒有庫存</b>（台灣入境酒類每人只有 1 公升，買小瓶才不會跟獺祭撞額度），以及 11/14 有沒有臨時休。☎ 0772-32-0003","mukai"],
 ["11/08（日）","📞 電話：ニューベイブ 難波店","問五個人能不能訂位。資料上沒寫清楚，如果不能訂就 16:40 現場排隊（通し營業，下午人較少）。","newbabe"],
-["11/12（四）出發當天","🚨 查 ちいかわもぐもぐ本舗 11/13 有沒有整理券","<b>Day 1 的今日最硬就是這家。</b>人多的日子採整理券／事前抽選制，<b>不是排隊就能進</b>。<br>看官方 X <b>@chiikawamgmg</b> 或 chiikawamogumogu.jp 的新着情報。<br>如果 11/13 要發整理券，多半得<b>開店時段（9:30）就去領</b> —— 那會打亂整個下午，要提前重排。","chiikawa"],
-["11/10（二）","📱 鳥貴族官方 App 訂位","訂 11/13（五）19:45、5 人。連鎖居酒屋，沒訂到也不會出事，是全部訂位裡最不緊急的一項。","torikizoku"]];
+["11/12（四）出發當天","👀 看一下 ちいかわもぐもぐ本舗 的 X","<b>平日通常自由入場，風險低</b>（實際遊記：平日下午去沒等）。<br>但看一下官方 X <b>@chiikawamgmg</b> 兩件事：<br>① 11/13 有沒有新商品發售（會爆滿）<br>② 想買的東西有沒有完售 —— <b>你們 16:15 才到，接近打烊，庫存是最少的時候</b>","chiikawa"],
+["11/10（二）","📱 鳥貴族官方 App 訂位","<b>訂 11/13（五）19:45、5 人 —— 店是「京都七条店」</b>（グラヴィビル 6 樓），不是「京都站前店」，那家不存在。<br>用官方「鳥貴族アプリ」訂，也可用 HotPepper／EPARK。☎ 050-1807-6594<br>連鎖居酒屋，沒訂到也不會出事，是全部訂位裡最不緊急的一項。","torikizoku"]];
 var TEL=[["万正","燒肉・Day 3","090-2592-9687"],["志津香 大宮店","釜飯・Day 3","0742-93-8029"],["ちいかわもぐもぐ本舗","Day 1","075-643-0050"],["藥師寺","Day 3","0742-33-6001"],["木津市場","Day 5","06-6631-1139"],["曼迪高級公寓酒店 京都車站","Day 1–2 住宿","075-353-1922"],["大阪難波西曼迪高級公寓","Day 3–4 住宿","06-6645-1700"],["福太郎","備案・大阪燒","06-6634-2951"],["日本 警察","緊急","110"],["日本 救護・消防","緊急","119"]];
 var CHECK=[
 ["叡電 11/13 的實際時刻表","紅葉期會加開臨時班次並改點，官方要接近日期才公布。Day 1 下午從出町柳到鞍馬、貴船那整條線都靠它。"],
-["丹海巴士 11/14 的實際時刻","要確認 10:27（籠神社→伊根漁協前）、14:46（日出→ケーブル下）、16:44 與 17:24（備援）這幾班。假日班表可能微調。"],
+["🚨 丹海巴士 11/14（週六）的實際時刻","<b>App 裡這兩班沒有正確時間，一定要自己查。</b><br>時刻表 <b>2026/4/1 改過</b>，且<b>週六走「休日」班表</b>。官網說「伊根線・蒲入線<b>增班中</b>」，班次比舊資料多。<br><br><b>要查兩班：</b><br>① 元伊勢籠神社 → 伊根：<b>11:25 前要到</b>（海宮 11:30 訂位）<br>② 伊根湾めぐり・日出 → 天橋立ケーブル下：<b>15:15 前要到</b>（車程 27 分，約 14:45 前發車）<br><br><b>怎麼查：</b>丹海官網 tankai.jp/routebus/ 有停留所查詢，或伊根町官網下載〈伊根線・蒲入線〉PDF，或打 <b>0772-42-0321</b>。<br>查到後<b>用行程格的 ✎ 編輯改成正確時間</b>。<br><br>🚨 <b>第 ② 班接不上，整個傍晚會垮</b>（昇龍觀＋飛龍觀＋はしだて8號）。"],
 ["きのさき1號 11/14 的實際時刻","福知山 8 分鐘轉乘的前提。誤點就接不上たんごリレー，早班的好處全沒了。"],
-["🚨 天橋立ビューランド 11/14 吊椅上行末班","<b>已查到：11/14 屬 10/1–11/15 期間，9:00–17:00，往返 ¥850。</b><br>但<b>吊椅上行末班時刻官網每季公告</b>，約 16:30。你們 16:32 才到山腳 —— <b>差幾分鐘就搭不上</b>。<br>出發前一週上 viewland.jp 查當日末班，或打 0772-22-1000。<br><b>搭不上就直接放棄，別賭。</b>"],
+["天橋立ビューランド 11/14 有沒有檢修","<b>✅ 末班已確認：10/1–11/15 期間吊椅上行末班 17:00、下行 17:20，售票到 17:00。你們 16:32 到，來得及。</b><br>唯一要確認的是<b>當天吊椅有沒有檢修停駛</b> —— 停了就只剩單軌（40 人一班、沒加班車、尖峰可能等一小時以上），那就放棄。<br>出發前查 viewland.jp 的「年間運休預定表」，或打 0772-22-1000。"],
 ["天橋立觀光船 11 月末班是否為 16:45","目前查到冬季末班是 16:45–16:57。這班沒了就只能改搭 16:44 或 17:24 的巴士回站。"],
 ["傘松吊椅與纜車的 11 月營運時間","目前資料是吊椅到 16:00、纜車到 17:00，纜車每小時 00／15／30／45 發車。這決定上山用吊椅、下山用纜車的安排。"],
 ["はり重 五人份的實際價位","目前預算是估的，這是全程唯一還沒確認的金額缺口。11/01 訂位時一併問。"],
@@ -787,8 +793,8 @@ function dayEnd(k){
  ss.forEach(function(x){var v=dnorm(k,toMin(x.b));if(v>e)e=v});
  DAYEND[k]=e;return e}
 /* Day 0 的行程在台灣（JST -60 分）；其餘在日本 */
-function tzOff(k){return (D[k]&&D[k].tz)||0}
 function tzName(k){return (D[k]&&D[k].tzn)||"日本時間"}
+function tzOff(k){return (D[k]&&D[k].tz)||0}
 /* 該天當地的「現在幾分」 */
 function nowMinFor(k){var j=jstNow();return ((j.getHours()*60+j.getMinutes())+tzOff(k)+1440)%1440}
 function tnorm(k,t){return dnorm(k,toMin(t))}
@@ -1528,7 +1534,7 @@ function editExp(id){
   e.amt=amt;
   e.cur=(box.querySelector('input[name=xc]:checked')||{value:'JPY'}).value;
   e.by=+(box.querySelector('input[name=xb]:checked')||{value:ST.me}).value;
-  e.who=who;e.note=document.getElementById('xnote').value.trim();
+  e.who=who;e.mt=Date.now();e.note=document.getElementById('xnote').value.trim();
   e.rate=rateVal();e.edited=Date.now();
   save();box.innerHTML='';box.dataset.id='';
   keepScroll(renderSplit);toast('已修改');if(ST.room)roomSync(true)};
@@ -1567,7 +1573,7 @@ function quickExp(){
   var who=[].filter.call(w.querySelectorAll('#qwho input'),function(x){return x.checked}).map(function(x){return +x.value});
   if(!who.length)who=[0,1,2,3,4];
   ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-   amt:amt,cur:c,rate:rateVal(),by:ST.me,who:who,note:document.getElementById('qnote').value.trim()});
+   amt:amt,cur:c,rate:rateVal(),by:ST.me,who:who,note:document.getElementById('qnote').value.trim(),mt:Date.now()});
   save();w.innerHTML='';w.dataset.mode='';
   toast('已記錄 '+(c==='TWD'?fmtNT(amt):fmtJP(amt))+'<br><span style="font-weight:400">'+meName()+' 付・'+who.length+' 人均分</span>');
   if(ST.room)roomSync(true)}}
@@ -1754,7 +1760,7 @@ if(speakSupported())loadVoices();
 var PICS={
  'd1':{
        '🏨 飯店寄大行李':'🏨 <b>飯店對面就是西本願寺</b> —— 世界遺產、境內免費、有巨大的銀杏樹。<br>寄完行李如果還有 5 分鐘，走過去拍一張再出發。',
-       '🍢 晚餐：鳥貴族 京都站前店':'🍢 <b>串燒上桌那盤</b>，還有五個人第一天落地的合照 —— <b>這是全程第一張團體照</b>，累歸累還是要拍。<br>店內是連鎖裝潢，重點在人不在店。',
+       '🍢 晚餐：鳥貴族 京都七条店':'🍢 <b>串燒上桌那盤</b>，還有五個人第一天落地的合照 —— <b>這是全程第一張團體照</b>，累歸累還是要拍。<br>店內是連鎖裝潢，重點在人不在店。',
        '🎰 一番くじ 京都イオンモール店':'🎰 <b>A 賞的實物展示</b>通常擺在最顯眼處，先拍再決定抽不抽。<br>抽到的那一刻、撕開券的瞬間 —— <b>五個人一起抽的表情比獎品好看</b>。',
        '🧸 ちいかわもぐもぐ本舗':'🧸 <b>稻荷達摩玩偶全 8 種一字排開</b>的陳列架是這裡的招牌畫面。<br>店面外觀有 ちいかわ 立牌，<b>參道背景帶到朱紅鳥居</b>最有京都感。<br><span style="color:#F09A90">部分店家禁止拍攝商品陳列，先看有沒有標示。</span>',
        '🛬 KIX 入境・領行李':'✈️ <b>入境章</b>蓋好後拍一張存證 —— 退稅查驗時如果護照被翻到別頁，有照片可以指給對方看。','🚋 叡電 出町柳 → 鞍馬':'🌰 <b>沿途的「もみじ隧道」</b>（二ノ瀬～市原）車內會關燈慢行，<b>坐右側</b>，用夜景模式或錄影。',
@@ -1768,7 +1774,7 @@ var PICS={
        '🚡 纜車下山':'🚞 <b>坐最前面，拍前窗視角</b> —— 沙洲會隨高度慢慢展開，跟吊椅完全不同的畫面。<br>玻璃有反光，<b>鏡頭貼近玻璃</b>就能消掉。只有 4 分鐘，上車先卡位。',
        '🚡 吊椅上山':'🚡 <b>單人吊椅要回頭拍</b> —— 後面四個人一字排開懸在半空，這張只有這裡拍得到。<br>腳下是逐漸展開的沙洲，<b>手機握緊，掉下去撿不回來</b>。',
        '🍢 日出売店 ＋ 等巴士':'🍢 <b>現烤的焼きちくわ</b>拿在手上，<b>背景帶到伊根灣</b>。<br>🔥 攤位上炭火烤竹輪的畫面也拍一張。<br>⏱️ 只有 21 分鐘，<b>拍完就吃、吃完上車</b> —— 這裡不能拖。',
-       '🍣 午餐：鮨割烹 海宮':'🐟 <b>鰤魚丼上桌那一刻先拍</b>，油脂反光最漂亮。<br>🪟 <b>窗外就是伊根灣</b> —— 把丼飯放窗邊，海景當背景，這是舟屋日和的特權。','⛴️ 觀光船 天橋立 → 一の宮':'🌅 <b>早上的沙洲光線最柔</b>，甲板上拍全景。<br>📐 <b>站船尾往回拍</b>，能看到船身劃開的水痕加上遠方的沙洲。<br>🌉 出發時會經過<b>迴旋橋</b>，看到警示燈就開錄影 —— 它會 90 度旋轉讓船通過。<br>🕐 只有 12 分鐘，<b>上船先卡欄杆位置</b>，坐下就拍不到了。',
+       '🍣 午餐：レストラン舟屋':'🐟 <b>鰤魚丼上桌那一刻先拍</b>，油脂反光最漂亮。<br>🪟 <b>窗外就是伊根灣</b> —— 把丼飯放窗邊，海景當背景，這是舟屋日和的特權。','⛴️ 觀光船 天橋立 → 一の宮':'🌅 <b>早上的沙洲光線最柔</b>，甲板上拍全景。<br>📐 <b>站船尾往回拍</b>，能看到船身劃開的水痕加上遠方的沙洲。<br>🌉 出發時會經過<b>迴旋橋</b>，看到警示燈就開錄影 —— 它會 90 度旋轉讓船通過。<br>🕐 只有 12 分鐘，<b>上船先卡欄杆位置</b>，坐下就拍不到了。',
        '🚶 舟屋散策 ＋ 向井酒造':'🏘️ <b>從陸側拍一整排舟屋倒映在海面</b> —— 這是伊根的招牌構圖。<br>📐 <b>蹲低、鏡頭貼近水面</b>，倒影會更完整，比站著拍好看很多。<br>🕐 下午順光，海面平靜時倒影最清楚。<br>💡 230 間舟屋連綿不斷，<b>找轉角處拍可以看到一整條弧線</b>。<br>🍶 向井酒造的店面與「伊根滿開」酒瓶也拍一張 —— <b>紅寶石色澤要對著光</b>。',
        '🛥️ 伊根灣遊覽船':'<b>海鷗會貼著船飛</b> —— 先開連拍，蝦味先舉高一點，鳥會入鏡。從海上拍舟屋是陸地拍不到的角度。',
        '🌲 傘松公園 昇龍觀':'🤸 <b>股のぞき</b>：背對沙洲、彎腰從胯下看，沙洲會像龍升天。<br>📷 <b>請人幫你拍兩張</b>：一張是彎腰的姿勢＋背後沙洲（給別人看的），一張是你從胯下看出去的實際畫面（自己拍）。<br>📐 展望台正面拍全景時，<b>把沙洲放在中軸線</b>。<br>🍁 11 月中旬<b>山上可能已有紅葉</b>，前景帶一點楓紅會加分。<br>⏱️ 只有 32 分鐘，<b>先拍再逛</b>。',
@@ -2169,12 +2175,14 @@ var ALIAS={
  'りくろー':'rikuro 起司蛋糕 蛋糕',
  '中谷堂':'nakatanidou 麻糬 艾草麻糬',
  '錦市場':'nishiki 市場 小吃',
+ 'レストラン舟屋':'壽司 海鮮丼 生魚片 伊根 舟屋 sushi',
  '関西国際空港':'kix 機場 免稅店 airport'
 };
 function aliasOf(name){
  name=String(name||'');
- for(var k in ALIAS){if(name.indexOf(k)>=0)return ALIAS[k]}
- return ''}
+ var out=[];
+ for(var k in ALIAS){if(name.indexOf(k)>=0)out.push(ALIAS[k])}
+ return out.join(' ')}
 function allPlaces(){
  var mine=(ST.myPlaces||[]).filter(function(x){return x&&(x.q||x.n||x.url)})
   .map(function(x){return {n:String(x.n||x.q||'地圖地點'),q:String(x.q||''),url:x.url||'',d:'我存的',mine:1,id:x.id}});
@@ -2295,7 +2303,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v105</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v136</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -2322,7 +2330,7 @@ function renderHelp(){
 
  h+=sec('Day 0 —— 出發前夜');
  h+=n('<b>11/12（四）晚上也排進去了。</b>最終打包檢查、群組對表、機捷、報到、過安檢。<br>'+
-   '<b style="color:#F09A90">機捷往機場的直達車末班是 23:00</b>，我排 22:30 那班 —— 五個人只要一個遲到就沒有備援班次。<br>'+
+   '<b style="color:#F09A90">機捷往機場的直達車末班是 23:00</b> —— 五個人只要一個遲到就沒有備援班次。<br>'+
    '<span style="color:var(--dim)">Day 1 的早餐在關西機場買（Lawson、FamilyMart 或販賣機都可以），帶上 HARUKA 吃。</span>');
 
  h+=sec('每天最常看的：日期分頁');
@@ -2598,7 +2606,7 @@ function renderSOS(){
         ["英語が話せる人はいますか","eigo ga hanaseru hito wa imasu ka","有人會說英文嗎"],
         ["すみません","sumimasen","不好意思／謝謝／打擾了"]];
  h+=J.map(function(x){return '<div class="exp"><span class="l">'+x[0]+'<small>'+x[1]+'</small></span><span class="r" style="font-size:13px;color:var(--dim)">'+x[2]+'</span></div>'}).join('');
- h+='<div class="hint" style="margin-top:8px">最實用的其實是「<b>すみません</b>」—— 什麼場合都能拿來開場。</div>';
+ h+='<div class="hint" style="margin-top:8px">最實用的是「<b>すみません</b>」—— 什麼場合都能拿來開場。</div>';
 
  main.innerHTML=h;
  [].forEach.call(main.querySelectorAll('[data-sos]'),function(x){x.oninput=function(){
@@ -2780,8 +2788,27 @@ function mergeRoom(o){
  var have={};ST.exp.forEach(function(x){if(x.id)have[x.id]=1});
  var n=0,list=o.exp||[];
  if(!Array.isArray(list))list=Object.keys(list).map(function(k){return list[k]});
- /* 只加入沒看過、且沒被刪掉的 */
- list.forEach(function(x){if(x&&x.id&&!have[x.id]&&ST.expDel.indexOf(x.id)<0){ST.exp.push(x);n++}});
+ /* 沒看過的就加入。看過的：內容不同時採用遠端，
+    但「我自己 90 秒內剛改過」的先留著（那筆還沒傳上去）。
+    ⚠️ 絕不比較兩支手機的時戳 —— 手機時鐘會差，比了會靜靜吃掉別人的修改 */
+ function sig(e){var w=e&&e.who;
+  if(!Array.isArray(w))w=[];
+  return [e&&e.amt,e&&e.cur,e&&e.by,w.join('.'),(e&&e.note)||''].join('|')}
+ var GRACE=90000, nowLocal=Date.now();
+ list.forEach(function(x){
+  if(!x||!x.id||ST.expDel.indexOf(x.id)>=0)return;
+  if(!have[x.id]){ST.exp.push(x);n++;return}
+  var idx=-1;ST.exp.forEach(function(y,i){if(y.id===x.id)idx=i});
+  if(idx<0)return;
+  var mineE=ST.exp[idx];
+  if(sig(mineE)===sig(x))return;                 /* 內容一樣，不動 */
+  var justEdited=mineE.mt&&(nowLocal-(+mineE.mt))<GRACE;
+  if(justEdited)return;                          /* 我剛改的，等它傳上去 */
+  if(typeof x.amt!=='number'||!isFinite(x.amt))return;   /* 型別怪的直接不採用 */
+  if(!Array.isArray(x.who))return;
+  var keep=mineE.mt;
+  ST.exp[idx]=x; ST.exp[idx].mt=keep;            /* 採用遠端內容，保留自己的時戳基準 */
+  n++});
  if(o.members)for(var i=0;i<5;i++){if(!ST.members[i]&&o.members[i])ST.members[i]=o.members[i]}
  if(o.shops){ST.shopAll=o.shops;
   /* 只有「這台裝置從未動過購物清單」才從雲端拉回（換手機的情境）。
@@ -2838,7 +2865,7 @@ function ledgerImport(code){
  ee.forEach(function(row){if(!row)return;var f=row.split(',');
   if(f.length<4)return;var id=f[0];if(!id||have[id]||ST.expDel.indexOf(id)>=0)return;
   ST.exp.push({id:id,amt:parseInt(f[1],10)||0,by:parseInt(f[2],10)||0,
-   who:(f[3]||'').split('.').filter(function(x){return x!==''}).map(Number),note:f.slice(4).join(',')||''});
+   who:(f[3]||'').split('.').filter(function(x){return x!==''}).map(Number),note:f.slice(4).join(',')||'',mt:Date.now()});
   added++});
  for(var i=0;i<5;i++){if(!ST.members[i]&&mm[i])ST.members[i]=mm[i]}
  save();return {ok:true,msg:'已合併 '+added+' 筆（重複的自動略過）'}}
@@ -2959,7 +2986,7 @@ function renderSplit(){
   var who=[].filter.call(main.querySelectorAll('#wsh input'),function(c){return c.checked}).map(function(c){return +c.value});
   if(!who.length)who=[0,1,2,3,4];
   var ec=(main.querySelector('input[name=ecur]:checked')||{value:'JPY'}).value;
-  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:amt,cur:ec,rate:rateVal(),by:by,who:who,note:document.getElementById('enote').value.trim()});
+  ST.exp.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:amt,cur:ec,rate:rateVal(),by:by,who:who,note:document.getElementById('enote').value.trim(),mt:Date.now()});
   save();renderSplit();toast('已記錄');if(ST.room)roomSync(true)};
  [].forEach.call(main.querySelectorAll('[data-x]'),function(b){
   var t=null;
