@@ -372,6 +372,14 @@ h2.sec.fold .ar{transform:rotate(-90deg)}
 .bal{border-radius:8px;display:flex;justify-content:space-between;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:6px;font-size:14px}
 .bal .p{font-size:15px;font-weight:600}
 .bal .plus{color:#8FCB97}.bal .minus{color:#F09A90}
+.geoline{display:flex;align-items:center;gap:7px;font-size:12px;padding:2px 0 7px 48px;margin-top:-4px}
+.geoline a{color:var(--cyan);text-decoration:none;font-weight:600}
+.geoline a.nav{margin-left:auto;background:rgba(155,139,196,.16);color:#C4B8E0;
+  border:1px solid rgba(155,139,196,.4);border-radius:999px;padding:2px 9px;font-size:11px}
+.geoline .ago{color:var(--dim)}
+.geoline.off{color:var(--faint)}
+.geoline.stale a{color:#F0C070}
+.geoline.stale .ago{color:#F0C070;opacity:.85}
 .mem{display:flex;gap:7px;margin-bottom:7px;align-items:center}
 .mem input{flex:1;background:var(--ground);border:1px solid var(--line);color:var(--paper);border-radius:3px;padding:9px 10px;font-size:14px;font-family:inherit}
 .mem span{color:var(--dim);font-size:13px;width:22px;text-align:center}
@@ -417,7 +425,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v183</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 <b style="color:var(--amber)">v194</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -503,8 +511,8 @@ s:[
 {a:"16:04",b:"16:12",t:"🚶 纜車站 → 一の宮桟橋",g:["8分"],k:"move",dir:["傘松公園ケーブル下","一の宮桟橋 天橋立","walking"],x:"<ul><li><b>府中駅出來往海邊走 8 分</b>，沿路有指標</li><li class='warn'>⏰ <b>16:15 的船是硬性條件</b> —— 下一班要等一小時，飛龍觀直接泡湯<br>16:12 到碼頭，<b>只有 3 分鐘緩衝，走快一點</b></li><li>📷 沿路會經過<b>元伊勢籠神社的大鳥居</b>，早上來過了，這次直接過</li></ul>"},
 {a:"16:15",b:"16:27",t:"⛴️ 觀光船 一の宮 → 天橋立",g:["周遊券","12分"],q:"一の宮桟橋 天橋立",dead:1,x:"<ul><li><b>回程是每小時 15 分發船</b>（去程是 00 分），12 分鐘</li><li class='warn'>⏰ <b>16:15 這班一定要搭上</b> —— 錯過就是 17:15，飛龍觀直接泡湯<br>16:04 纜車下山、16:12 走到碼頭，<b>只有 3 分鐘緩衝</b></li><li>📷 傍晚回程的光線比早上好，<b>逆光剪影的松並木</b>很漂亮</li><li>下船後走 5 分到 ビューランド 山腳，接 16:32 的吊椅</li></ul>"},
 {a:"16:32",b:"17:20",t:"🚠 天橋立ビューランド 飛龍觀",g:["✅ 上行末班17:00","下行末班17:20","選配"],q:"天橋立ビューランド",x:"<ul><li class='warn'>🚡 <b>強烈建議搭吊椅不要搭單軌電車</b>（兩週前的實訪）<br>「雙腳懸空吹著微風慢慢往上爬，<b>視野完全不會被玻璃窗擋住，拍照超級無敵美</b>」<br>往返 ¥850</li><li class='warn'>✅ <b>來得及 —— 官方 10/1–11/15 期間的末班是這樣</b><br>售票 9:00–<b>17:00</b>｜<b>吊椅上行末班 17:00</b>、下行末班 17:20｜單軌上行末班 16:40<br>你們 16:32 到，<b>還有 28 分鐘餘裕</b>。買票直接搭吊椅上去</li><li class='warn'>⏰ <b>下行末班 17:20 是硬底線</b> —— 山上待到 17:10 就要往回走<br>接 18:09 的はしだて8號，那是今天最後一班回京都的指定席</li><li>吊椅<b>單程 6 分、一人一座、隨到隨搭</b>（單軌是定時發車，40 人一班）<br><b>吊椅有頂棚，下雨也能搭</b>（跟北側傘松的不一樣）</li><li class='warn'>🚨 <b>吊椅若逢檢修停駛，就只剩單軌</b> —— 40 人一班、沒有加班車，<b>尖峰時單程可能等一小時以上</b><br>出發前查 viewland.jp 的「年間運休預定表」確認 11/14 沒有檢修</li><li><b>股のぞき</b>（彎腰從胯下看）就在這裡 —— 2016 年搞笑諾貝爾獎的研究題目<br>山頂是小型遊樂園，有摩天輪、咖啡廳，也賣<b>天橋立布丁</b></li><li>☎ 0772-22-1000｜天橋立駅步行 5 分｜往返約 ¥1,000（出發前確認）</li></ul>"},
-{a:"17:20",b:"18:00",t:"⛩️ 站前散策 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'>🍱 <b>必買：智恩寺前的「智恵の餅」</b>（紅豆餡包麻糬）—— 天橋立名物，四家老店各有做法<br>🍱 <b>便當推薦「丹後のばらずし」</b>（丹後散壽司，用鯖魚鬆做的，是這一帶的鄉土料理）<br><b>吃法：はしだて8號 上吃</b> —— 車程 2 小時 12 分，車上沒餐車</li><li class='warn'><b>先買便當</b>，站前 17:00～17:30 陸續打烊 —— 時間已晚，<b>便當優先</b></li><li>丹後花蛤便當／丹後牛燒肉便當・丹後黑豆茶包</li><li>智恩寺・<b>迴旋橋</b>・<b>日本三景碑</b></li><li class='warn'>🛟 <b>買不到便當怎麼辦</b>：天橋立站內有小賣店，<b>智恩寺前也有幾家土產店賣輕食</b>。<br>真的沒有就<b>忍到京都</b> —— 20:21 到，京都站有很多選擇，但那樣會餓兩個小時。</li></ul>"},
-{a:"18:09",b:"20:21",t:"🚆 特急 はしだて8號 → 京都",g:["全車指定席","已劃位"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li>直達不換車，車上吃便當</li></ul>"},
+{a:"17:20",b:"18:00",t:"🍱 站前散策 ＋ 買便當 ×5",g:["17:00起打烊"],dead:1,k:"eat",q:"智恩寺 天橋立",x:"<ul><li class='warn'>🍱 <b>必買：智恩寺前的「智恵の餅」</b>（紅豆餡包麻糬）—— 天橋立名物，四家老店各有做法<br>🍱 <b>便當推薦「丹後のばらずし」</b>（丹後散壽司，用鯖魚鬆做的，是這一帶的鄉土料理）<br><b>吃法：はしだて8號 上吃</b> —— 車程 2 小時 12 分，車上沒餐車</li><li class='warn'><b>先買便當</b>，站前 17:00～17:30 陸續打烊 —— 時間已晚，<b>便當優先</b></li><li>丹後花蛤便當／丹後牛燒肉便當・丹後黑豆茶包</li><li>智恩寺・<b>迴旋橋</b>・<b>日本三景碑</b></li><li class='warn'>🛟 <b>買不到便當怎麼辦</b>：天橋立站內有小賣店，<b>智恩寺前也有幾家土產店賣輕食</b>。<br>真的沒有就<b>忍到京都</b> —— 20:21 到，京都站有很多選擇，但那樣會餓兩個小時。</li></ul>"},
+{a:"18:09",b:"20:21",t:"🚆 特急 はしだて8號 → 京都",g:["全車指定席","已劃位"],k:"move",dir:["天橋立駅","京都駅","transit"],x:"<ul><li class='warn'>🎫 <b>全車指定席，已劃位</b> —— 對號入座，票要收好</li><li class='warn'>🍱 <b>車程 2 小時 12 分，車上沒有餐車</b><br>剛才在站前買的便當就是晚餐 —— <b>上車就可以開動</b></li><li>直達京都不用換車｜<b>坐左側</b>能看到宮津灣的傍晚海景</li><li class='warn'>🔋 <b>趁這兩小時充電</b>｜也可以把今天的帳先記一記，趁記憶還新</li></ul>"},
 {a:"20:21",b:"20:35",t:"🚶 京都站 → 鳥貴族 京都七条店",g:["步行 7分"],k:"move",dir:["京都駅","鳥貴族 京都七条店","walking"],x:"<ul><li class='warn'>🚉 <b>はしだて8號 到站後往中央口（北）走</b><br>七条通烏丸西入東境町 191　<b>グラヴィビル 6 樓</b>（在樓上，不是路面店）</li><li>💡 <b>地下鐵烏丸線北改札 2 號出口</b>出來只要 3 分，JR 中央口要 7 分</li><li class='warn'>🎒 行李還在身上 —— 店在 6 樓有電梯，不用扛</li></ul>"},
 {a:"20:35",b:"21:45",t:"🍢 晚餐：鳥貴族 京都七条店",g:["全品¥390均一","🕐 17:00–翌1:00"],bk:"torikizoku",dead:1,k:"eat",q:"鳥貴族 京都七条店",food:"鳥貴族 京都七条店",x:"<ul><li class='warn'>🍗 <b>必點：もも貴族焼（雞腿串）</b>—— 招牌，一份兩支<br>還有<b>釜飯</b>、<b>トリキ晩餐会</b>（均一價組合）<br><b>吃法：串燒上桌先問「たれ？塩？」</b>，第一次建議點たれ（醬燒），第二輪換塩試味道</li><li class='warn'>🍺 <b>今天走了一整天，這種時候最適合</b> —— 全品 ¥390 均一，現點現烤，不用看價錢<br>五個人吃到飽大概 ¥2,500–3,000／人</li><li><b>開到凌晨 1 點</b>，不用趕。想續攤也可以</li><li class='warn'>📱 <b>用官方「鳥貴族アプリ」訂位</b>（也可 HotPepper／EPARK）｜☎ 050-1807-6594</li><li>國產雞、現點現烤｜「<b>トリキ晩餐会</b>」是均一價的招牌組合<br>💡 <b>もも貴族焼</b>（雞腿串）和<b>釜飯</b>是必點</li><li class='warn'>🍙 <b>回飯店前順便買明早的早餐 ×5</b>（京都站或飯店附近超商）</li><li class='warn'>🛟 <b>客滿怎麼辦</b>：開到凌晨 1 點，<b>等一下就好</b>。<br>不想等的話京都站周邊晚上還開著的很多，<b>飯店附近也有 7-11 和 LIFE</b>。</li></ul>"},
 {a:"21:45",b:"22:05",t:"🏨 回飯店",g:["步行 18分"],k:"move",dir:["鳥貴族 京都七条店","曼迪高級公寓酒店 京都車站","walking"],x:"<ul><li>七条通往西走回八百屋町，<b>約 18 分</b></li><li class='warn'>🍙 <b>路上的 7-11 買明早早餐</b>，明天 08:00 就要退房</li><li>🧳 回去先整理行李，<b>明天要拖著上 みやこ路快速</b></li></ul>"}]},
@@ -529,7 +537,7 @@ s:[
 {a:"15:42",b:"15:50",t:"🚉 進站上月台",g:["8分"],dead:1,q:"JR奈良駅",x:"<ul><li class='warn'>案內所在<b>站外舊站房</b></li><li class='warn'>🛟 <b>取行李耽誤怎麼辦</b>：大和路快速約 15 分一班，<b>下一班還是到得了大阪</b>。<br>但 18:00 万正 有訂位、<b>遲到 15 分鐘會被算取消</b> —— 真的來不及就先打電話說。</li></ul>"},
 {a:"15:50",b:"16:25",t:"🚆 大和路快速 → 天王寺",g:["JR Pass"],dead:1,k:"move",dir:["JR奈良駅","天王寺駅","transit"],x:"<ul><li class='warn'>大和路快速<b>不到 JR 難波</b>，一定要在天王寺下車轉 Metro</li><li class='warn'>🛟 <b>誤點怎麼辦</b>：御堂筋線 4 分一班，天王寺到大國町很快。<br><b>Check-in 可以晚一點</b>，但 18:00 的万正 不能晚 —— 必要時<b>先去餐廳，行李晚點再拿回飯店</b>。</li></ul>"},
 {a:"16:35",b:"16:45",t:"🚇 天王寺 → 大國町",g:["¥190"],k:"move",dir:["天王寺駅","大国町駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線，尖峰 3–5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li></ul>"},
-{a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HOQ,x:"<ul><li><b>換上舊的那件帽 T</b>，燒肉會沾味道</li></ul>"},
+{a:"16:53",b:"17:15",t:"🏨 飯店 Check-in",q:HOQ,x:"<ul><li class='warn'>🛂 <b>Check-in 要五本護照</b>｜難波西曼迪高級公寓｜☎ 06-6645-1700</li><li class='warn'>👕 <b>換上舊的那件帽 T</b> —— 等一下的燒肉會沾一身味道，隔天消不掉</li><li class='warn'>⏰ <b>17:20 就要出門，只有 22 分鐘</b> —— 18:00 万正 訂位，90 分鐘制</li><li>💡 <b>接下來三晚都住這裡</b>，行李可以攤開</li></ul>"},
 {a:"17:20",b:"17:30",t:"🚶 飯店 → なんば站",k:"move",dir:[HOQ,"なんば駅","walking"],x:"<ul><li><b>從元町的飯店往北走 10 分</b>到なんば站</li><li>💡 走大國町站也可以（同樣 10 分），<b>看哪個順路</b></li><li class='warn'>🎒 <b>晚餐去鶴橋，東西別帶太多</b> —— 燒肉店空間小</li></ul>"},
 {a:"17:33",b:"17:43",t:"🚇 なんば → 鶴橋",g:["¥190"],k:"move",dir:["なんば駅","鶴橋駅","transit"],x:"<ul><li><b>班距</b>：千日前線，約 5 分一班 —— <b>時刻是參考，錯過下一班很快</b></li><li class='warn'>🚪 <b>鶴橋站下車走 5 號出口</b>（千日前線）—— 万正 方向</li></ul>"},
 {a:"17:43",b:"18:00",t:"🚶 鶴橋站 → 万正",g:["15分"],k:"move",dir:["鶴橋駅","万正 焼肉 大阪市生野区桃谷3-3-2","walking"],x:"<ul><li class='warn'>穿過住宅區，<b>先開好導航</b></li><li class='warn'>🚶 <b>從 5 號出口往東南，穿過住宅區約 15 分</b>（遊記說 9–15 分，抓長的算）<br>離開鶴橋車站前的韓國城街區後就沒什麼店，<b>先開好導航再走</b></li><li class='warn'>⏰ <b>18:00 是訂位時間，90 分鐘制從那時開始算</b> —— 早到沒關係，晚到會壓縮用餐</li></ul>"},
@@ -562,7 +570,7 @@ w:[["🎯 精準座標","https://www.google.com/maps/search/?api=1&query=34.7093
 d5:{label:"Day 5",date:"11/17 二",dnum:17,tzn:"日本時間",title:"木津早市・海遊館・でんでん・機場",lat:34.6937,lon:135.5023,wxc:"大阪",
 crux:{t:"18:47",w:"抵達天王寺轉 JR",n:"五個人拖五個大行李箱出 Metro 閘門走到 JR 月台，要 15 分鐘。19:05 的はるか 是回國班機前最後一班順的車，はるか 有異狀就立刻改南海空港急行。"},
 s:[
-{a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HOQ,x:"<ul><li class='warn'><b>先在市場東側大樓下的超商領現金</b></li></ul>"},
+{a:"07:50",b:"08:05",t:"🏨 退房・行李寄櫃檯",q:HOQ,x:"<ul><li class='warn'>🧳 <b>退房後行李寄飯店櫃檯</b> —— 晚上 18:00 回來拿，五件都要確認</li><li class='warn'>💴 <b>先在超商領現金</b> —— 木津市場<b>只收現金</b>，市場裡沒有 ATM</li><li class='warn'>🔑 鑰匙卡五張都要還｜🎒 今天只帶隨身包和購物袋<br>💡 <b>護照隨身</b>，退稅和登機都要用</li></ul>"},
 {a:"08:10",b:"08:20",t:"🚶 飯店 → 木津市場",k:"move",dir:[HOQ,"大阪木津卸売市場","walking"],x:"<ul><li><b>往北走 10 分</b>｜市場在敷津東 2-2-8</li><li class='warn'>⏰ <b>今天最後一天，行李寄飯店櫃檯</b> —— 晚上回來拿<br>只帶隨身包和購物袋出門</li><li class='warn'>💴 <b>市場只收現金</b>，出門前確認錢包</li></ul>"},
 {a:"08:20",b:"09:20",t:"🐟 木津市場",g:["只收現金","🕐 6:00–11:00","🎯 吃外圍食堂"],dead:1,k:"eat",q:"大阪木津市場",x:"<ul><li class='warn'>🎯 <b>直接去外圍的食堂，不要進去找內用</b><br>市場官網自己寫「<b>外回りに 8 店舗の飲食店</b>」，加上高速公路下的「<b>なんば木津まち横丁</b>」還有更多<br>Threads 上有人講得最實在：「木津<b>裡面能吃的攤位不像黑門那麼多，主要是去吃外面的食堂</b>」</li><li class='warn'>🚨 <b>不要排「木津魚市食堂」</b>（市場內最大那家海鮮丼）<br>6:00 開店，實測 <b>5:43 到就已經排了近 40 人，等了兩小時</b>｜排的幾乎都是外國人<br><b>你們 8:20 到，排不到</b>。海鮮丼 ¥2,600–3,000，CP 值也被批評過</li><li class='warn'>⚠️ <b>Threads 上的說法（照實寫）</b><br>有人說「<b>市場轉向排除觀光客，內用區也關閉了</b>」<br>同一串有人回「<b>只是限制部份區域，大部份地方還是可以進</b>」<br>另有人說「<b>外面排超長的丼飯就不用排了，裡面買一買都比那個好</b>」<br>👉 <b>我的判斷：內用區關閉這件事可信</b>（兩個立場不同的人都提到現場有立牌），全面排除不可信</li><li><b>外圍的選擇</b><br>🐙 <b>あっちち本舗</b> —— 6:00–22:00，章魚燒，市場外圍好找<br>🍜 <b>なんば木津まち横丁</b> —— 高速公路下的飲食街，早上有開的幾家<br>💡 <b>先繞外圍一圈看哪家有人再決定</b></li><li class='warn'>⏰ 市場本身 6:00 開、11:00 大部分關｜官方建議 8:30–10:30｜<b>11/17 週二有開</b><br>公休是日曜、祝日、不定期水曜｜💴 <b>只收現金</b></li><li>大國町站步行 3 分｜敷津東 2-2-8｜☎ 06-6631-1139</li><li class='warn'>🛟 <b>都排太長或沒開怎麼辦</b>：<b>麥當勞 なんば戎橋店</b>（24 小時，走 10 分）<br>💡 省下的一小時可以多睡，或提早去難波八阪神社</li></ul>",w:[["官網","https://kizu-ichiba.com/"],["市場日曆","https://kizu-ichiba.com/calendar/"]]},
 {a:"09:20",b:"09:35",t:"🚶 木津市場 → 難波八阪神社",g:["約1km"],k:"move",dir:["大阪木津卸売市場","難波八阪神社","walking"],x:"<ul><li><b>往西走 15 分</b>｜神社在元町 2-9-19</li><li>💡 沿路會經過飯店附近，<b>買太多可以先放回去</b></li><li class='warn'>📷 <b>9:35 到神社，觀光客通常還沒湧入</b>，是拍那顆巨大獅子頭的好時段</li></ul>"},
@@ -612,11 +620,11 @@ var BOOK=[
 ["11/03（二）","🎫 海遊館 eTicket ×5","<b>11/17 的票，五個人要選同一個入館時段。</b><br>🐋 <b>如果能選 10:15，就選 10:15</b> —— 鯨鯊餵食秀 10:30 那場才趕得上（一天只有 10:30 和 15:00 兩場）。<br>選不到就選 10:45，行程照原訂。<br>🚨 <b>這是日時指定制。</b>實際遊記：現場 10 點前到，卻只買得到 11:30 的場次 —— 沒先買會打亂整個上午。<br>票價是變動制（¥2,700–3,500），買的時候就知道實際金額。<br>⚠️ 2026/6/15 起<b>不能再入館</b>，出來就進不去了。","kaiyukan"],
 ["11/06（五）","📱 填寫 Visit Japan Web ×5","入境與海關申告。完成後把 QR Code 截圖存進相簿 —— 機場可能沒有網路。","vjw"],
 ["11/06（五）","📶 買好 eSIM ×5 並先安裝","五個人都要有網路，App 的同步、地圖、路線、翻譯全靠它。日本 5 天建議每人 3～5 GB。<b>在家有 Wi-Fi 時就先安裝好</b>，落地只要開啟數據漫遊即可。","esim"],
-["11/08（日）","🧳 奈良寄物（當天現場辦）","問「五個 28–32 吋行李箱收不收」。還要問受理時間、取件截止時間、每件價格。Day 3 一整天都建立在這件事上，寄不進去整天要重排。","<b>🚨 這一項最好在 11/13 或 11/14 先用 google 查清楚。</b><br>Day 3 一整天都建立在「五個大行李箱寄得進去」這件事上，寄不進去整天要重排。<br><b>不用打電話的做法：</b><br>① google「JR奈良駅 コインロッカー サイズ」看大型置物櫃數量<br>② JR 奈良站與近鐵奈良站都有投幣式置物櫃，<b>大型櫃約 ¥700／天</b><br>③ <b>備案：直接寄放在 Day 3 晚上要住的大阪飯店</b> —— 你們 16:53 才 Check-in，但多數飯店接受提早寄放。這個最保險，而且不用日文。<br>💡 <b>建議直接用備案 ③</b>，省掉奈良寄物的不確定性。"],
+["11/08（日）","🧳 奈良寄物（當天現場辦）","<b>🚨 這一項最好在 11/13 或 11/14 先用 google 查清楚。</b><br>Day 3 一整天都建立在「五個大行李箱寄得進去」這件事上，寄不進去整天要重排。<br><b>不用打電話的做法：</b><br>① google「JR奈良駅 コインロッカー サイズ」看大型置物櫃數量<br>② JR 奈良站與近鐵奈良站都有投幣式置物櫃，<b>大型櫃約 ¥700／天</b><br>③ <b>備案：直接寄放在 Day 3 晚上要住的大阪飯店</b> —— 你們 16:53 才 Check-in，但多數飯店接受提早寄放。這個最保險，而且不用日文。<br>💡 <b>建議直接用備案 ③</b>，省掉奈良寄物的不確定性。","narastore"],
 ["11/08（日）","🍽️ レストラン舟屋（不用訂位）","<b>✅ 不用訂位，走進去就好。</b><br><b>營業時間已確認：10:00–17:00、L.O. 16:00、火曜公休</b>（伊根町觀光協會與多個來源一致）→ <b>11/14 是週六，有開。</b><br>☎ <b>0772-32-0680</b>｜最多 108 席，比想像中大。<br><br>🐟 <b>只有想吃「伊根鰤魚涮涮鍋」才需要打電話預約</b> —— 11 月正是鰤魚季開始。沒訂就點海鮮丼，一樣好吃。<br>⚠️ <b>只收現金、自助式</b>（自己端餐自己收）。<br>💡 原本排的海宮因為巴士班次接不上（11:54 才到、訂位只收 11:30）已改成這家。","funaya"],
 
-["11/08（日）","🍶 向井酒造（不用訂位）","<b>已查到：9:00–12:00／13:00–17:00（中午休息一小時）、木曜公休、只收現金、不接受預約。</b>11/14 是週六，應該有開。<br>要問的是：<b>「伊根滿開」300ml 小瓶有沒有庫存</b>（台灣入境酒類每人只有 1 公升，買小瓶才不會跟獺祭撞額度），以及 11/14 有沒有臨時休。☎ 0772-32-0003","<b>✅ 不接受預約，走進去買就好。</b><br>9:00–12:00／<b>13:00–17:00（中午休一小時）</b>｜木曜公休（11/14 週六有開）｜<b>只收現金</b>。<br>你們 13:10 到，剛好開門。<br>🍶 <b>買 300ml 小瓶</b>（¥1,430）—— 台灣入境酒類每人只有 1 公升，Day 5 還要買獺祭。<br>⚠️ 買了必須託運。"],
-["11/08（日）","🍖 ニューベイブ（食券制・不收訂位）","問五個人能不能訂位。資料上沒寫清楚，如果不能訂就 16:40 現場排隊（通し營業，下午人較少）。","<b>✅ 食券制的店，基本上不收訂位，直接去。</b><br>11:00–20:00・無休（2026/3 實地報導確認）｜入口是<b>食券機</b>，先買票再入座。<br>你們 16:40 到，避開尖峰，通常不用排。<br>⚠️ 白飯、高麗菜、豬肉味噌湯無限續。"],
+["11/08（日）","🍶 向井酒造（不用訂位）","<b>✅ 不接受預約，走進去買就好。</b><br>9:00–12:00／<b>13:00–17:00（中午休一小時）</b>｜木曜公休（11/14 週六有開）｜<b>只收現金</b>。<br>你們 13:10 到，剛好開門。<br>🍶 <b>買 300ml 小瓶</b>（¥1,430）—— 台灣入境酒類每人只有 1 公升，Day 5 還要買獺祭。<br>⚠️ 買了必須託運。","mukai"],
+["11/08（日）","🍖 ニューベイブ（食券制・不收訂位）","<b>✅ 食券制的店，基本上不收訂位，直接去。</b><br>11:00–20:00・無休（2026/3 實地報導確認）｜入口是<b>食券機</b>，先買票再入座。<br>你們 16:40 到，避開尖峰，通常不用排。<br>⚠️ 白飯、高麗菜、豬肉味噌湯無限續。","newbabe"],
 ["11/12（四）出發當天","👀 看一下 ちいかわもぐもぐ本舗 的 X","<b>平日通常自由入場，風險低</b>（實際遊記：平日下午去沒等）。<br>但看一下官方 X <b>@chiikawamgmg</b> 兩件事：<br>① 11/13 有沒有新商品發售（會爆滿）<br>② 想買的東西有沒有完售 —— <b>你們 16:15 才到，接近打烊，庫存是最少的時候</b>","chiikawa"],
 ["11/01（日）","💻 訂 京うな和 本店（Day 1 晚餐）","<b>訂 11/13（五）19:25、5 人。☎ 075-252-2233</b><br>中京区堺町通四条上ル 553-2｜官網 kyo-unawa.com<br>🚪 <b>訂位時說五個人要包廂</b> —— 店裡有和風摩登的個室。<br>⏰ <b>11:00–21:00 無午休、全年無休</b>，21:00 打烊 —— 19:25 進去有 85 分鐘，剛好。<br>💡 有官網可以線上訂，也可打電話。<br><br>🍱 <b>ひつまぶし 三吃</b>是招牌：原味 → 加藥味 → 淋高湯茶泡飯。<b>要三吃就點 ひつまぶし，不要點一般鰻重。</b>","unawa"],
 ["11/10（二）","📱 鳥貴族 App 訂位（Day 2 晚餐）","<b>訂 11/14（六）20:35、5 人 —— 京都七条店</b>（グラヴィビル 6 樓）。<br>用官方「鳥貴族アプリ」訂，也可 HotPepper／EPARK。☎ 050-1807-6594<br>⏰ 開到<b>凌晨 1 點</b>，晚一點到也沒關係。<br>💡 你們那天 20:21 才從天橋立回到京都，<b>走路 7 分鐘就到</b>。","torikizoku"]];
@@ -745,6 +753,35 @@ if(ST.shopInit===undefined)ST.shopInit=false;
 if(!ST.sos)ST.sos={};
 if(ST.voice===undefined)ST.voice='';
 function ensureDays(){
+ /* 壞資料防護：同步或舊備份還原可能帶進非預期的型別 */
+ ["adhoc","edit","hide","chk","done","diet","dietX","paid","pos","avatars"]
+  .forEach(function(p){if(!ST[p]||typeof ST[p]!=='object'||Array.isArray(ST[p]))ST[p]={}});
+ ["exp","expDel","shop","myPlaces","packAdd"]
+  .forEach(function(p){if(!Array.isArray(ST[p]))ST[p]=[];
+   ST[p]=ST[p].filter(function(x){return x!==null&&x!==undefined})});
+ if(!Array.isArray(ST.members)||ST.members.length!==5)
+  ST.members=[0,1,2,3,4].map(function(i){return (ST.members&&ST.members[i])||''});
+ if(typeof ST.me!=='number'||ST.me<0||ST.me>4)ST.me=(ST.me===null?null:0);
+ if(typeof ST.geoRate!=='number'||ST.geoRate<0||ST.geoRate>2)ST.geoRate=0;
+ if(ST.room!==null&&typeof ST.room!=='string')ST.room=null;
+ if(ST.rate!==null&&typeof ST.rate!=='object')ST.rate=null;
+ /* 位置：每一筆都要有合法的經緯度 */
+ for(var _p=0;_p<5;_p++){var _v=ST.pos[_p];
+  if(_v&&(typeof _v.lat!=='number'||typeof _v.lng!=='number'))delete ST.pos[_p]}
+ /* 飲食：值一定是陣列，且不含 null */
+ for(var _d=0;_d<5;_d++){
+  if(ST.diet[_d]!==undefined&&!Array.isArray(ST.diet[_d]))delete ST.diet[_d];
+  else if(ST.diet[_d])ST.diet[_d]=ST.diet[_d].filter(Boolean);
+  if(ST.dietX[_d]!==undefined&&!Array.isArray(ST.dietX[_d]))delete ST.dietX[_d];
+  else if(ST.dietX[_d])ST.dietX[_d]=ST.dietX[_d].filter(Boolean)}
+ /* 分帳：每一筆都要有 id 和數字金額 */
+ ST.exp=ST.exp.filter(function(e){return e&&e.id&&typeof e.amt==='number'&&isFinite(e.amt)});
+ ST.exp.forEach(function(e){if(!Array.isArray(e.who))e.who=[0,1,2,3,4];
+  if(typeof e.by!=='number'||e.by<0||e.by>4)e.by=0});
+ /* 購物：每一筆都要有 id */
+ ST.shop=ST.shop.filter(function(x){return x&&x.id});
+ ST.myPlaces=ST.myPlaces.filter(function(x){return x&&(x.q||x.n||x.url)});
+ ST.packAdd=ST.packAdd.filter(function(x){return x&&x.name});
  ["adhoc","edit","hide","chk","done"].forEach(function(p){if(!ST[p]||typeof ST[p]!=='object')ST[p]={}});
  ["d0","d1","d2","d3","d4","d5"].forEach(function(k){
   if(!Array.isArray(ST.adhoc[k]))ST.adhoc[k]=[];
@@ -1848,7 +1885,7 @@ var PICS={
        '🍱 晚餐：京うな和 本店':'🍱 <b>鰻重開蓋的瞬間</b> —— 熱氣還在冒的時候最好看，從斜上方 45 度拍。<br>🥢 <b>三吃的三個階段各拍一張</b>：原味、加藥味、茶泡飯，排成一排很有故事。<br>🏮 店內是和風摩登，<b>木格柵與燈光</b>那一面適合當背景。',
  '⛩️ 伏見稻荷 千本鳥居':'<b>奧社前那段密度最高</b>。天黑後打燈，用夜景模式、手機靠著柱子穩住。<br>回頭拍會看到鳥居背面的黑色捐獻者名字，跟正面的朱紅完全不同。'},
  'd2':{
-       '⛩️ 站前散策 ＋ 買便當 ×5':'⛩️ <b>智恩寺的扇子御神籤</b>綁成一整片，<b>逆光拍</b>會透出扇面顏色，是這裡最上鏡的畫面。<br>🌉 <b>迴旋橋</b> —— 運氣好會遇到它 90 度旋轉讓船通過，<b>看到警示燈亮就開錄影</b>。<br>📜 <b>日本三景碑</b>是「到此一遊」的正式版，五個人站碑前拍一張。<br>🕐 你們 17:20 才到，<b>天已經黑了</b>，用夜景模式、找有燈的地方。',
+       '🍱 站前散策 ＋ 買便當 ×5':'⛩️ <b>智恩寺的扇子御神籤</b>綁成一整片，<b>逆光拍</b>會透出扇面顏色，是這裡最上鏡的畫面。<br>🌉 <b>迴旋橋</b> —— 運氣好會遇到它 90 度旋轉讓船通過，<b>看到警示燈亮就開錄影</b>。<br>📜 <b>日本三景碑</b>是「到此一遊」的正式版，五個人站碑前拍一張。<br>🕐 你們 17:20 才到，<b>天已經黑了</b>，用夜景模式、找有燈的地方。',
        '⛴️ 觀光船 一の宮 → 天橋立':'🌅 <b>16:15 這班剛好是夕陽時段</b>，甲板上拍沙洲逆光剪影。<br>靠岸前留意<b>迴旋橋</b>，運氣好會看到它 90 度旋轉讓船通過。',
        '🚡 吊椅下山':'🚞 <b>坐最前面，拍前窗視角</b> —— 沙洲會隨高度慢慢展開，跟吊椅完全不同的畫面。<br>玻璃有反光，<b>鏡頭貼近玻璃</b>就能消掉。只有 4 分鐘，上車先卡位。',
        '🚠 纜車上山':'🚡 <b>單人吊椅要回頭拍</b> —— 後面四個人一字排開懸在半空，這張只有這裡拍得到。<br>腳下是逐漸展開的沙洲，<b>手機握緊，掉下去撿不回來</b>。',
@@ -2463,6 +2500,123 @@ var ROUTE={
 };
 function routeOf(t){return ROUTE[t]||null}
 
+/* ---- 位置共享（開著 App 時更新，切背景會停） ---- */
+var GEOT=null, MYPOS=null;
+function geoOn(){return !!ST.geoShare}
+function bindGeo(rerender){
+ var gr=document.getElementById('georate');
+ if(gr)gr.onclick=function(){geoCycle();rerender();
+  toast('更新頻率：<b>'+geoRateName()+'</b><br><span style="font-weight:400">每 '+geoRateDesc()+'一次</span>')};
+ var gb=document.getElementById('geobtn');
+ if(gb)gb.onclick=function(){
+  if(!navigator.geolocation)return toast('這個瀏覽器不支援定位');
+  if(!geoOn()&&ST.me===null)return toast('先到上面設定你是誰');
+  geoToggle();rerender();
+  toast(geoOn()?'位置共享已開啟<br><span style="font-weight:400">房間裡的人互相看得到</span>':'已關閉，你的位置不再分享')}}
+function geoPanel(){
+ var h='';
+  h+='<div class="note" style="border-left-color:var(--cyan)">'+
+  '<div style="display:flex;align-items:center;gap:10px">'+
+  '<b style="flex:1">📍 位置共享</b>'+
+  '<button class="lk '+(geoOn()?'gone':'map')+'" id="geobtn">'+(geoOn()?'✓ 已開啟':'開啟')+'</button></div>'+
+  (geoOn()
+   ?('<div class="tags" style="margin:9px 0 7px">'+
+     '<button class="lk map" id="georate">⚡ '+geoRateName()+'（每 '+geoRateDesc()+'）</button></div>'+
+     (GEOERR==='denied'
+       ?'<div class="note" style="margin:0 0 8px;border-left-color:var(--red)"><b style="color:#FF8478">🚫 手機拒絕了定位權限</b><br>去<b>設定 → 隱私權 → 定位服務</b>，把瀏覽器的權限打開，再回來重按一次。</div>'
+       :(GEOERR?'<div class="note" style="margin:0 0 8px;border-left-color:var(--amber)"><b style="color:#F0C070">📡 抓不到 GPS</b><br>室內、地下街、地鐵裡常會這樣。<b>走到窗邊或戶外</b>就會恢復。</div>':''))+
+     (!ST.room?'<div class="note" style="margin:0 0 8px;border-left-color:var(--amber)"><b style="color:#F0C070">⚠️ 你還沒加入房間</b><br>位置<b>只有房間裡的人看得到</b> —— 先建立或加入房間。</div>':'')+
+     '<span style="color:var(--dim);font-size:12.5px">'+
+     '<b>切到背景就會停</b> —— 每一列的時間標示告訴你資料多舊，<b>超過 10 分鐘會標 ⚠️</b>。<br>'+
+     '👆 <b>點上面切換更新頻率</b>：即時 5 秒 → 省電 20 秒 → 超省電 1 分鐘。<br>'+
+     '<b>要找人的時候切「即時」，平常放「省電」就好</b> —— 切回 App 的瞬間本來就會立刻更新一次。<br>'+
+     '🔋 開著時<b>狀態列會一直顯示定位圖示</b>，這是正常的。<b>不用的時候記得關掉。</b></span>')
+   :'<span style="color:var(--dim);font-size:12.5px">打開後房間裡的人<b>互相</b>看得到位置。誰開了大家都看得到。<br><b>第一次會跳系統的權限對話框，要按「允許」。</b><br>🚨 <b>要真正的背景更新請用 Google 地圖的位置共享</b>（見「準備」頁）。</span>')+
+  '</div>';
+ return h}
+function anyPos(){if(!ST.pos)return false;for(var i=0;i<5;i++)if(ST.pos[i])return true;return false}
+function distM(a,b){
+ if(!a||!b)return null;
+ var R=6371000, t1=a.lat*Math.PI/180, t2=b.lat*Math.PI/180;
+ var dt=(b.lat-a.lat)*Math.PI/180, dl=(b.lng-a.lng)*Math.PI/180;
+ var x=Math.sin(dt/2)*Math.sin(dt/2)+Math.cos(t1)*Math.cos(t2)*Math.sin(dl/2)*Math.sin(dl/2);
+ return Math.round(R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)))}
+function fmtDist(m){
+ if(m===null)return '';
+ if(m<1000)return m+'m';
+ return (m/1000).toFixed(1)+'km'}
+function fmtAgo(ts){
+ if(!ts)return '';
+ var d=Math.round((Date.now()-ts)/1000);
+ if(d<20)return '剛剛';
+ if(d<60)return d+' 秒前';
+ if(d<3600)return Math.round(d/60)+' 分鐘前';
+ return Math.round(d/3600)+' 小時前'}
+/* 位置只拉 pos 節點（五人約 300 bytes） */
+function pullPosOnly(){
+ if(!fbReady())return;
+ try{
+  fetch(FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'/pos.json')
+  .then(function(r){return r.ok?r.json():null})
+  .then(function(o){
+   if(!o||typeof o!=='object')return;
+   if(!ST.pos)ST.pos={};
+   var ch=false;
+   for(var i=0;i<5;i++){
+    if(i===ST.me)continue;
+    var np=o[i];
+    if(!np||typeof np.lat!=='number'||typeof np.lng!=='number')continue;
+    var op=ST.pos[i];
+    if(!op||(+np.at||0)>(+op.at||0)){ST.pos[i]=np;ch=true}}
+   if(ch){save();if(cur==='sos')keepScroll(renderSOS)}
+  }).catch(function(){});
+ }catch(e){}}
+/* 位置只送自己那一筆（約 55 bytes） */
+function pushPosOnly(){
+ if(!fbReady()||ST.me===null||!MYPOS)return;
+ try{
+  fetch(FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'/pos/'+ST.me+'.json',
+   {method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(MYPOS)})
+  .catch(function(){});
+ }catch(e){}}
+var GEOERR=null;
+function pushPos(){
+ if(!geoOn()||ST.me===null||!navigator.geolocation)return;
+ navigator.geolocation.getCurrentPosition(function(p){
+  GEOERR=null;
+  MYPOS={lat:p.coords.latitude,lng:p.coords.longitude,at:Date.now()};
+  if(!ST.pos)ST.pos={};
+  ST.pos[ST.me]=MYPOS;
+  save(); pushPosOnly(); pullPosOnly();
+  if(cur==='sos')keepScroll(renderSOS);else if(cur==='prep')keepScroll(renderPrep);
+ },function(e){
+  GEOERR=(e&&e.code===1)?'denied':((e&&e.code===3)?'timeout':'fail');
+  if(cur==='split')keepScroll(renderSplit);
+ },{enableHighAccuracy:false,maximumAge:Math.max(4000,geoMs()-1000),timeout:8000})}
+var GEORATE=[[5000,'即時','5 秒'],[20000,'省電','20 秒'],[60000,'超省電','1 分鐘']];
+function geoMs(){var i=ST.geoRate||0;return (GEORATE[i]||GEORATE[0])[0]}
+function geoRateName(){var i=ST.geoRate||0;return (GEORATE[i]||GEORATE[0])[1]}
+function geoRateDesc(){var i=ST.geoRate||0;return (GEORATE[i]||GEORATE[0])[2]}
+function geoCycle(){
+ ST.geoRate=((ST.geoRate||0)+1)%GEORATE.length;
+ save();if(geoOn())geoStart()}
+function geoStart(){
+ geoStop();
+ if(!geoOn())return;
+ pushPos();
+ GEOT=setInterval(pushPos,geoMs())}
+function geoStop(){if(GEOT){clearInterval(GEOT);GEOT=null}}
+function geoToggle(){
+ ST.geoShare=!ST.geoShare;
+ if(!ST.geoShare){
+  if(ST.pos&&ST.me!==null)delete ST.pos[ST.me];
+  geoStop()
+ }else geoStart();
+ save(); if(ST.room)roomSync(true)}
+/* 切回 App 立刻更新一次 */
+try{document.addEventListener('visibilitychange',function(){
+ if(!document.hidden&&geoOn())pushPos()})}catch(e){}
+
 /* ---- 官方社群帳號（只收錄實際查證過的） ----
    官方帳號會公告臨時休業、特別班次、完售資訊，比第三方網站即時 */
 var SNS={
@@ -2836,7 +2990,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v183</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v194</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3038,16 +3192,17 @@ function backupFromFile(file){
  fr.onload=function(){var r=backupRestore(fr.result);toast(r.msg);if(r.ok){cur='help';render()}};
  fr.readAsText(file)}
 function backupCode(){
- var o={v:24,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
+ var o={v:25,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
   chk:ST.chk,done:ST.done,edit:ST.edit,hide:ST.hide,adhoc:ST.adhoc,room:ST.room,expDel:ST.expDel,shopInit:ST.shopInit,packAdd:ST.packAdd,packHide:ST.packHide,myPlaces:ST.myPlaces,picOpen:ST.picOpen,packOnlyTodo:ST.packOnlyTodo,compact:ST.compact,
   album:ST.album,rate:ST.rate,sos:ST.sos};
  return 'K5BK'+b64e(JSON.stringify(o))}
 function backupRestore(code){
  code=(code||'').trim();
+ if(code.indexOf('K5')===0&&code.indexOf('K5BK')!==0)return {ok:false,msg:'這是<b>分帳同步碼</b>，不是備份代碼<br><span style="font-weight:400">請到「分帳」頁的「離線同步碼」貼上</span>'};
  if(code.indexOf('K5BK')!==0)return {ok:false,msg:'這不是備份代碼'};
  var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
  try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
- ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
+ ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
   if(o[k]!==undefined)ST[k]=o[k]});
  ensureDays();save();return {ok:true,msg:'已還原'}}
 
@@ -3140,6 +3295,29 @@ function renderSOS(){
   '③ 還是找不到就<b>直接去今天的集合點</b>，不用再聯絡<br>'+
   '④ <b>手機沒電的人負責去集合點等</b>，有電的人去找<br>'+
   '<span style="color:#F5A79E">⚠️ 出發前先講好這四步，現場才不會亂。</span></div>';
+ /* 走散時直接在這裡看誰在哪 */
+ if(anyPos()){
+  h+='<div class="note" style="border-left-color:var(--cyan)"><b>📍 大家現在在哪</b>'+
+   [0,1,2,3,4].map(function(i){
+    var nm=(ST.members[i]||'').trim(); if(!nm&&i!==ST.me)return '';
+    var p=(ST.pos&&ST.pos[i])||null;
+    if(!p)return '<div class="geoline off" style="padding-left:0">'+mem(i)+'　⚪ 未開啟</div>';
+    var me=(ST.pos&&ST.me!==null)?ST.pos[ST.me]:null;
+    var d=(i!==ST.me&&me)?distM(me,p):null;
+    var stale=(Date.now()-(+p.at||0))>600000;
+    return '<div class="geoline'+(stale?' stale':'')+'" style="padding-left:0"><b style="flex:0 0 auto;color:var(--text2)">'+mem(i)+'</b>'+
+     '<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+p.lat+','+p.lng+'">'+
+     (stale?'⚠️ ':'📍 ')+(i===ST.me?'我':(d!==null?fmtDist(d):'看位置'))+'</a>'+
+     '<span class="ago">'+fmtAgo(p.at)+'</span>'+
+     (i!==ST.me?'<a class="nav" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'&travelmode=walking">帶我去</a>':'')+
+     '</div>'}).join('')+
+   '<div class="hint" style="margin-top:7px">在「<b>準備</b>」頁可以開啟位置共享。<b>只有開著 App 的人會更新。</b></div></div>'}
+ h+='<div class="note" style="border-left-color:var(--cyan)">'+
+  '<b>📍 先看 Google 地圖的位置共享</b><br>'+
+  '如果出發前五個人都開了，<b>直接看地圖就知道誰在哪</b>，不用猜。<br>'+
+  '<div class="tags" style="margin-top:9px">'+
+  '<a class="lk nav" target="_blank" rel="noopener" href="https://www.google.com/maps">🗺️ 開啟 Google 地圖</a></div>'+
+  '<span style="color:var(--dim)">沒開的話：右上角大頭貼 → 位置資訊分享 → 新的分享</span></div>';
 
  h+='<h2 class="sec">立刻要打的電話</h2>';
  var E=[["🚨 警察","犯罪、失竊、交通事故、遺失物報案","110"],
@@ -3379,7 +3557,7 @@ function rateAge(){if(!ST.rate.at)return '';
  var h=Math.floor((Date.now()-ST.rate.at)/3600000);
  if(h<1)return '剛剛更新';if(h<24)return h+' 小時前';return Math.floor(h/24)+' 天前'}
 function fetchRate(cb){
- if(ST.rate.manual)return cb&&cb(null);
+ if(ST.rate&&ST.rate.manual)return cb&&cb(null);
  fetch('https://open.er-api.com/v6/latest/JPY').then(function(r){return r.json()})
  .then(function(o){
   if(o&&o.rates&&o.rates.TWD){ST.rate={v:o.rates.TWD,at:Date.now(),manual:false};save();
@@ -3396,7 +3574,7 @@ var FB_DB="https://kansai-a631b-default-rtdb.asia-southeast1.firebasedatabase.ap
 var SYNCING=false,LASTPULL=0,FBPOLL=null;
 function fbReady(){return !!FB_DB && !!ST.room}
 function fbURL(){return FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'.json'}
-function roomPayload(){return {v:1,paid:ST.paid||{},diet:ST.diet||{},dietX:ST.dietX||{},members:ST.members,exp:ST.exp,expDel:ST.expDel,at:Date.now()}}
+function roomPayload(){return {v:1,pos:ST.pos||{},paid:ST.paid||{},diet:ST.diet||{},dietX:ST.dietX||{},members:ST.members,exp:ST.exp,expDel:ST.expDel,at:Date.now()}}
 function mergeRoom(o){
  if(!o)return 0;
  /* 合併別人的刪除紀錄 */
@@ -3433,6 +3611,15 @@ function mergeRoom(o){
  if(o.paid&&typeof o.paid==='object'){
   if(!ST.paid)ST.paid={};
   Object.keys(o.paid).forEach(function(k){if(!ST.paid[k])ST.paid[k]=o.paid[k]})}
+ /* 位置：別人的取比較新的；自己的不動（自己的最準） */
+ if(o.pos&&typeof o.pos==='object'){
+  if(!ST.pos)ST.pos={};
+  for(var pi=0;pi<5;pi++){
+   if(pi===ST.me)continue;
+   var np=o.pos[pi];
+   if(!np||typeof np.lat!=='number'||typeof np.lng!=='number')continue;
+   var op=ST.pos[pi];
+   if(!op||(+np.at||0)>(+op.at||0))ST.pos[pi]=np}}
  /* 飲食限制：別人填的自己這邊也要看得到（只補空的，不覆蓋自己的） */
  if(o.diet&&typeof o.diet==='object'){
   if(!ST.diet)ST.diet={};
@@ -3478,6 +3665,7 @@ function roomSync(silent){
    if(!formOpen()){if(cur==='split')keepScroll(renderSplit);else if(cur==='shop')keepScroll(renderShop)}
    if(!silent)toast(n?('已同步 ・ 收到 '+n+' 筆新紀錄'):'已同步 ・ 沒有新紀錄')})})}
 FBPOLL=setInterval(function(){if(fbReady()&&(cur==='split'||cur==='shop')&&!formOpen())roomSync(true)},10000);
+setInterval(function(){if(fbReady()&&cur==='sos'&&anyPos())pullPosOnly()},8000);
 
 /* ---- 分帳同步碼 ---- */
 function b64e(str){return btoa(unescape(encodeURIComponent(str))).replace(/=+$/,'')}
@@ -3488,6 +3676,7 @@ function ledgerCode(){
  return 'K5'+b64e(m+'|'+e+'|'+(ST.expDel||[]).join(','))}
 function ledgerImport(code){
  code=(code||'').trim();
+ if(code.indexOf('K5BK')===0)return {ok:false,msg:'這是<b>備份代碼</b>，不是分帳同步碼<br><span style="font-weight:400">請到「準備」頁的「備份與還原」貼上</span>'};
  if(code.indexOf('K5')!==0)return {ok:false,msg:'這不是分帳同步碼'};
  var raw=b64d(code.slice(2));if(raw===null)return {ok:false,msg:'同步碼壞了或不完整'};
  var parts=raw.split('|'),mm=parts[0].split(','),ee=(parts[1]||'').split(';');
@@ -3534,14 +3723,16 @@ function renderSplit(){
    if(!nm&&!isMe)return '';
    return '<div class="mem"><span class="avwrap">'+avatarHTML(i,38)+(isMe?'<input type="file" accept="image/*" data-av="'+i+'">':'')+'</span>'+
     '<input data-m="'+i+'" value="'+nm.replace(/"/g,'&quot;')+'" placeholder="成員 '+(i+1)+'"'+(isMe?'':' disabled style="opacity:.6"')+'>'+
-    (isMe?'<span style="flex:0 0 auto;font-size:11.5px;color:var(--cyan);font-weight:700">你</span>':'')+'</div>'}).join('')+
+    (isMe?'<span style="flex:0 0 auto;font-size:11.5px;color:var(--cyan);font-weight:700">你</span>':'')+'</div>'+
+    ''}).join('')+
   '<div class="hint">只能改自己的名字和頭像。<b>其他人的資料會透過房間自動同步過來</b>，加入房間後就會出現。</div></div>';
+
   h+='<h2 class="sec">匯率</h2>';
  h+='<div class="note">'+(r?('<b>¥1 = '+r.toFixed(4)+' 台幣</b> ・ ¥1,000 ≈ '+fmtNT(1000*r)+'<br><span style="color:var(--dim)">'+
-    (ST.rate.manual?'手動設定':'自動取得 ・ '+rateAge())+'</span>')
+    ((ST.rate&&ST.rate.manual)?'手動設定':'自動取得 ・ '+rateAge())+'</span>')
    :'<b style="color:#F09A90">尚未取得匯率</b><br><span style="color:var(--dim)">自動取得需要網路。也可以按下面的「手動輸入」自己填，例如用機場實際換到的匯率。</span>')+
    '<div class="tags" style="margin-top:9px"><button class="lk map" id="rtupd">重新取得</button>'+
-   '<button class="lk web" id="rtman">手動輸入</button>'+(ST.rate.manual?'<button class="lk rm" id="rtauto">改回自動</button>':'')+'</div></div>';
+   '<button class="lk web" id="rtman">手動輸入</button>'+((ST.rate&&ST.rate.manual)?'<button class="lk rm" id="rtauto">改回自動</button>':'')+'</div></div>';
  h+='<h2 class="sec">結算</h2>';
  h+='<div class="note">總支出 <b>'+fmtJP(tot)+'</b>'+(r?' <span style="color:var(--dim)">≈ '+fmtNT(tot*r)+'</span>':'')+' ・ 共 '+ST.exp.length+' 筆<br>'+
    (r?'<span style="color:var(--dim)">每人平均 '+fmtJP(tot/5)+' ≈ '+fmtNT(tot/5*r)+'</span>':'')+'</div>';
@@ -3615,7 +3806,7 @@ function renderSplit(){
  [].forEach.call(main.querySelectorAll('[data-m]'),function(inp){inp.onchange=function(){ST.members[+inp.dataset.m]=inp.value.trim();save();renderSplit()}});
  [].forEach.call(main.querySelectorAll('[data-av]'),function(inp){inp.onchange=function(){pickAvatar(+inp.dataset.av,inp.files[0])}});
  var ru=document.getElementById('rtupd');
- if(ru)ru.onclick=function(){toast('取得中…');ST.rate.manual=false;fetchRate(function(e){
+ if(ru)ru.onclick=function(){toast('取得中…');if(!ST.rate)ST.rate={};ST.rate.manual=false;fetchRate(function(e){
   if(e)toast('取得失敗 ・ 可手動輸入');else toast('匯率已更新')})};
  var rm=document.getElementById('rtman');
  if(rm)rm.onclick=function(){var v=prompt('輸入 1 日圓等於多少台幣\n（例如 0.21）',rateVal()||'0.21');
@@ -3940,11 +4131,31 @@ function renderPrep(){
   '<h2 class="sec">共享相簿</h2>'+
   '<div class="note"><b>'+(ST.album?'已設定':'尚未設定')+'</b><br>'+(ST.album?'<span style="word-break:break-all;color:var(--cyan)">'+ST.album+'</span>':'網頁沒辦法直接讀寫手機相簿，所以這裡連的是你們已經建好的共享相簿。<b>建議用 LINE 群組相簿</b>，五個人都能上傳。貼上共享連結之後，每天頁面上的「📷 共享相簿」就能一鍵開啟。')+
   '<div class="tags" style="margin-top:9px"><button class="lk map" id="setalb">'+(ST.album?'更改連結':'設定連結')+'</button>'+(ST.album?'<button class="lk rm" id="clralb">清除</button>':'')+'</div></div>'+
-  '<h2 class="sec">現金</h2>'+cash+'<h2 class="sec">團隊規則</h2>'+rules+
+  '<h2 class="sec">現金</h2>'+cash+'<h2 class="sec">位置共享</h2>'+
+  geoPanel()+
+  
+  '<div class="note" style="border-left-color:var(--cyan)">'+
+  '<b>📍 用 Google 地圖：真正的背景更新</b><br>'+
+  '用 <b>Google 地圖</b>就好 —— 它是原生 App，<b>真的會在背景更新</b>，網頁做不到這件事。免費、iOS 和 Android 都能用。<br><br>'+
+  '<b>怎麼設定（出發前五個人一起弄，五分鐘）</b><br>'+
+  '① 打開 <b>Google 地圖</b><br>'+
+  '② 點<b>右上角的大頭貼</b><br>'+
+  '③ 選「<b>位置資訊分享</b>」<br>'+
+  '④ 「<b>新的分享</b>」→ 時間選「<b>直到你關閉這項設定為止</b>」<br>'+
+  '⑤ 選要分享給誰，或<b>複製連結貼到群組</b><br>'+
+  '⑥ <b>五個人都做一次</b> —— 互相分享才有意義<br><br>'+
+  '<span style="color:#8FCB97"><b>互相</b>分享，不是單向。你也被看得到，大家才會願意開。</span><br>'+
+  '<span style="color:var(--dim)">回國後記得關掉。</span></div>'+
+  '<div class="note"><b>為什麼不做在這個 App 裡</b><br>'+
+  '網頁 App <b>拿不到背景定位</b> —— Service Worker 裡沒有 geolocation 這個介面，這是瀏覽器的限制。<br>'+
+  '就算做了，也只有<b>開著 App 的時候</b>會更新，關掉就停 —— <b>那時候正是最需要的時候</b>。<br>'+
+  '💡 <b>「📍 帶我去」只用你自己的位置</b>，跟其他人在哪無關。</div>'+
+  '<h2 class="sec">團隊規則</h2>'+rules+
   '<h2 class="sec">出發前還要查</h2>'+
   CHECK.map(function(x,i){var id='c'+i,on=ST.chk[id];
    return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span></label>'}).join('');
  bindDiet(renderPrep);
+ bindGeo(renderPrep);
  [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
   if(!cb)return;
   cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save()}});

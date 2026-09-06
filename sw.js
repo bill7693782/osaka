@@ -1,5 +1,5 @@
-/* 關西五日 · Service Worker v4 */
-var CACHE='kansai5-v183';
+/* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
+var CACHE='kansai5-v194';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
@@ -13,7 +13,7 @@ self.addEventListener('install',function(e){
 
 self.addEventListener('activate',function(e){
   e.waitUntil(caches.keys().then(function(ks){
-    return Promise.all(ks.map(function(k){ if(k!==CACHE) return caches.delete(k); }));
+    return Promise.all(ks.filter(function(k){ return k.indexOf('kansai5-')===0; }).map(function(k){ if(k!==CACHE) return caches.delete(k); }));
   }).then(function(){ return self.clients.claim(); }));
 });
 
@@ -29,7 +29,7 @@ self.addEventListener('fetch',function(e){
         var cp=r.clone();
         caches.open(CACHE).then(function(c){ c.put(req,cp); });
         return r;
-      }).catch(function(){ return caches.match(req); })
+      }).catch(function(){ return caches.open(CACHE).then(function(c){ return c.match(req); }); })
     );
     return;
   }
@@ -39,7 +39,7 @@ self.addEventListener('fetch',function(e){
 
   // App 本體：快取優先，背景更新
   e.respondWith(
-    caches.match(req).then(function(hit){
+    caches.open(CACHE).then(function(c){ return c.match(req); }).then(function(hit){
       var net=fetch(req).then(function(r){
         if(r&&r.status===200){
           var cp=r.clone();
