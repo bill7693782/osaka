@@ -264,6 +264,13 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .rtb ol{margin:0;padding-left:20px}
 .rtb ol li{margin:0 0 7px;padding-left:2px}
 .rte{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);color:var(--moss);font-size:12.5px;font-weight:600}
+.updbtn{display:none;flex:0 0 auto;min-height:30px;border-radius:999px;padding:0 11px;margin-right:7px;
+ border:1px solid var(--amber);background:rgba(232,163,61,.18);color:#F0C070;
+ font-weight:800;font-size:12px;font-family:inherit;cursor:pointer;white-space:nowrap;
+ animation:updpulse 2s ease-in-out infinite}
+.updbtn.on{display:inline-flex;align-items:center}
+@keyframes updpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,163,61,.5)}50%{box-shadow:0 0 0 6px rgba(232,163,61,0)}}
+@media (prefers-reduced-motion:reduce){.updbtn{animation:none}}
 .pic{margin-top:8px;background:rgba(232,163,61,.08);border:1px solid rgba(232,163,61,.25);border-radius:5px;
   font-size:13px;color:#E4D3B4;line-height:1.6;overflow:hidden}
 .pic .pich{display:flex;align-items:center;gap:6px;padding:7px 11px;cursor:pointer;user-select:none;font-size:12px}
@@ -414,7 +421,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="updbtn" id="updbtn" title="有新版">✨ 有新版</button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -425,7 +432,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer>關西五日 <b style="color:var(--amber)">v194</b> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer><span id="fver" style="cursor:pointer">關西五日 <b style="color:var(--amber)">v200</b></span> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -559,9 +566,9 @@ s:[
 w:[["🎯 精準座標","https://www.google.com/maps/search/?api=1&query=34.709305,135.501608"]]},
 {a:"13:10",b:"13:35",t:"🚶 きすけ → JR 大阪站",g:["約10分","含找月台"],k:"move",dir:["うどん屋 きすけ 大阪","大阪駅","walking"],x:"<ul><li>きすけ 在阪急東通商店街，走到 JR 大阪站約 10 分鐘</li><li>大阪站很大，<b>找環狀線月台再抓 10 分鐘</b></li></ul>"},
 {a:"13:40",b:"13:55",t:"🚆 JR 大阪 → 大阪城公園",g:["Pass免費"],k:"move",dir:["大阪駅","大阪城公園駅","transit"],x:"<ul><li><b>大阪環狀線，外回り（京橋方向）</b>，4 站約 12 分</li><li class='warn'>🚉 <b>大阪站很大，環狀線在 1～2 番月台</b> —— 找月台要抓 10 分鐘</li><li class='warn'>🚶 <b>大阪城公園站下車後，走到天守閣入口還要 15–20 分</b><br>「看得到天守閣之後還要走很久」是所有遊記的共同抱怨</li><li>JR Pass 涵蓋</li></ul>"},
-{a:"14:00",b:"15:50",t:"🏯 大阪城",g:["¥1,200 含豊臣石垣館","🕐 9:00–18:00 最終入館17:30"],dead:1,q:"大阪城天守閣",x:"<ul><li class='warn'>🕐 <b>9:00–18:00，最終入館 17:30</b></li><li class='warn'>🎫 <b>先買 WEB 電子票就不用排售票口</b><br>現場排隊：平日約 15 分、週末 30–45 分、連假一小時以上<br>你們 11/16 是週一，但先買好比較保險</li><li>¥1,200（含<b>豊臣石垣館</b>）｜天守閣看完 <b>60–90 分鐘</b></li><li class='warn'>🚶 <b>「看得到天守閣之後還要走很久」</b> —— 這是所有遊記的共同抱怨，公園很大<br>從 JR 大阪城公園站走到天守閣入口要 15–20 分</li><li>天守閣 8 層樓，<b>有電梯但只到中間樓層</b>，上面還是要爬</li><li class='warn'>🕵️ <b>服部平次那張照片</b>：站在城外能看到天守閣全身的位置（本丸廣場或極樂橋一帶）<br>大拇指指自己、微側身、下巴微抬｜<b>天守閣在畫面右後方，人佔左側三分之二</b></li><li>🏯 <b>極樂橋</b>是柯南 TV SP 第 263 話的場景，就在你們路線上</li><li class='warn'>🛟 <b>售票排太長怎麼辦</b>：<b>先線上買 WEB 電子票</b>就不用排。<br>真的排不下去就<b>只逛西之丸庭園和外圍</b>（免費），天守閣從外面拍也很好看 —— 服部平次那張照片本來就是在城外拍。</li></ul>",w:[["官網","https://www.osakacastle.net/guide/"]]},
+{a:"14:00",b:"15:50",t:"🏯 大阪城",g:["¥1,200 含豊臣石垣館","🕐 9:00–18:00 最終入館17:30"],dead:1,q:"大阪城天守閣",x:"<ul><li class='warn'>⛵ <b>必搭：大阪城御座船</b>（原價 ¥1,800，周遊卡免費）<br><b>20 分鐘遊內護城河</b>｜乘船處在<b>極樂橋旁</b>，天守閣旁邊｜<b>10–15 分一班</b>，幾乎不用等<br>⏰ <b>末班 16:30</b>，你們 14:00 到很充裕｜當天 9:30 開始售票｜<b>惡劣天候停駛</b></li><li class='warn'>⛵ <b>船上看得到的三樣東西</b><br>① <b>日本最高的石垣</b> —— 從水面仰望，那個角度陸地上看不到<br>② <b>大名的刻印</b> —— 當年各藩負責搬運的記號，近到看得清楚<br>③ <b>人面石</b> —— 嵌在石垣裡的驅邪石，船頭會指給你看<br>📷 <b>各定點都有拍照時間</b>｜11 月石垣縫裡長出的樹會轉紅<br>💡 金箔船身，照《豐臣期大坂圖屏風》裡秀吉的「鳳凰丸」復刻的｜開放式甲板沒側壁</li><li class='warn'>🎫 <b>大阪周遊パス：天守閣 ¥1,200 ＋ 御座船 ¥1,800 都免費</b>｜沒有的話線上買 WEB 電子票也免排隊</li><li class='warn'>🕐 <b>9:00–18:00，最終入館 17:30</b></li><li class='warn'>🎫 <b>先買 WEB 電子票就不用排售票口</b><br>現場排隊：平日約 15 分、週末 30–45 分、連假一小時以上<br>你們 11/16 是週一，但先買好比較保險</li><li>¥1,200（含<b>豊臣石垣館</b>）｜天守閣看完 <b>60–90 分鐘</b></li><li class='warn'>🚶 <b>「看得到天守閣之後還要走很久」</b> —— 這是所有遊記的共同抱怨，公園很大<br>從 JR 大阪城公園站走到天守閣入口要 15–20 分</li><li>天守閣 8 層樓，<b>有電梯但只到中間樓層</b>，上面還是要爬</li><li class='warn'>🕵️ <b>服部平次那張照片</b>：站在城外能看到天守閣全身的位置（本丸廣場或極樂橋一帶）<br>大拇指指自己、微側身、下巴微抬｜<b>天守閣在畫面右後方，人佔左側三分之二</b></li><li>🏯 <b>極樂橋</b>是柯南 TV SP 第 263 話的場景，就在你們路線上</li><li class='warn'>🛟 <b>售票排太長怎麼辦</b>：<b>先線上買 WEB 電子票</b>就不用排。<br>真的排不下去就<b>只逛西之丸庭園和外圍</b>（免費），天守閣從外面拍也很好看 —— 服部平次那張照片本來就是在城外拍。</li></ul>",w:[["官網","https://www.osakacastle.net/guide/"]]},
 {a:"15:55",b:"16:10",t:"🚆 JR 大阪城公園 → 新今宮",g:["Pass免費"],k:"move",dir:["大阪城公園駅","新今宮駅","transit"],x:"<ul><li><b>環狀線內回り（天王寺方向）</b>，約 15 分</li><li class='warn'>🗼 <b>新今宮下車後走到通天閣約 10 分</b>，或轉堺筋線到惠美須町（3 號出口最近，步行 3 分）</li><li>JR Pass 涵蓋</li></ul>"},
-{a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["¥1,200＋屋外¥300","🚨 需預約入場時間"],q:"通天閣",x:"<ul><li class='warn'>🚨 <b>排隊 40 分鐘是家常便飯</b> —— 建築老舊、電梯空間小<br>你們 16:25 到、17:25 要走去はり重 —— <b>扣掉排隊只剩 20 分鐘</b><br>👉 <b>線上先買票：比現場便宜，而且免排隊入場</b>（tsutenkaku.co.jp）</li><li class='warn'>💴 <b>展望台 ¥1,200｜溜滑梯（TOWER SLIDER）¥1,000｜Dive & Walk ¥3,000</b><br>溜滑梯是從 3 樓螺旋滑到 1 樓，10 秒｜<b>時間不夠就只上展望台</b></li><li class='warn'>🚨 <b>買票必須預約入場時間，而且官方明說「傍晚之後可能賣完」</b><br>你們 16:25 到正好是那個時段 —— <b>強烈建議前一晚就線上買好</b><br>tsutenkaku.co.jp 有事前預約線上票</li><li class='warn'>💴 <b>一般展望台 ¥1,200</b>（2025/4 漲價）｜特別屋外展望台「天望パラダイス」<b>另加 ¥300</b><br>要上戶外那層就是 ¥1,500／人 —— 夕陽要看戶外那層才值得</li><li>🕐 10:00–20:00（<b>最終入場 19:30</b>）｜天望パラダイス 到 19:50（19:30 最終入場）｜無休</li><li class='warn'>⚠️ <b>閉館時人潮會一次湧出</b>，新世界晚上是尖峰 —— 逛完早點離開</li><li>逛完約 <b>30–60 分鐘</b>；加特別展望台和滑梯要 60–90 分</li><li><b>ビリケン</b>（幸運神）在 5 樓，<b>摸他的腳底</b>會實現願望</li><li>Metro 恵美須町站步行 3 分｜動物園前站步行 6–10 分</li><li class='warn'>📅 官方公告 <b>2026 年 3 月起營業時間有變更</b> —— 出發前再確認一次</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
+{a:"16:25",b:"17:20",t:"🗼 通天閣 夕陽",g:["¥1,200＋屋外¥300","🚨 需預約入場時間"],q:"通天閣",x:"<ul><li class='warn'>🎢 <b>溜滑梯（TOWER SLIDER）這次沒排</b> —— 時間給了御座船<br>官方寫「入場閘門到出口約 30 分鐘」，你們只有 55 分鐘，塞不下<br>💡 <b>現場如果人少、換得到時段，再看要不要滑</b>（周遊卡平日免費）<br>從 3 樓沿電梯塔外圍繞一圈半到地下 1 樓，全長 60 公尺、10 秒｜限 120cm 以上、120kg 以下、7–65 歲</li><li class='warn'>🎫 <b>有大阪周遊パス的話免排隊、展望台與溜滑梯都免費</b><br>沒有的話：展望台 ¥1,200、溜滑梯 ¥1,000 —— <b>線上先買也能免排隊</b><br>詳細算法見「資訊」頁的<b>票券要不要買</b></li><li class='warn'>🚨 <b>排隊 40 分鐘是家常便飯</b> —— 建築老舊、電梯空間小<br>你們 16:25 到、17:25 要走去はり重 —— <b>扣掉排隊只剩 20 分鐘</b><br>👉 <b>線上先買票：比現場便宜，而且免排隊入場</b>（tsutenkaku.co.jp）</li><li class='warn'>💴 <b>展望台 ¥1,200｜溜滑梯（TOWER SLIDER）¥1,000｜Dive & Walk ¥3,000</b><br>溜滑梯是從 3 樓螺旋滑到 1 樓，10 秒｜<b>時間不夠就只上展望台</b></li><li class='warn'>🚨 <b>買票必須預約入場時間，而且官方明說「傍晚之後可能賣完」</b><br>你們 16:25 到正好是那個時段 —— <b>強烈建議前一晚就線上買好</b><br>tsutenkaku.co.jp 有事前預約線上票</li><li class='warn'>💴 <b>一般展望台 ¥1,200</b>（2025/4 漲價）｜特別屋外展望台「天望パラダイス」<b>另加 ¥300</b><br>要上戶外那層就是 ¥1,500／人 —— 夕陽要看戶外那層才值得</li><li>🕐 10:00–20:00（<b>最終入場 19:30</b>）｜天望パラダイス 到 19:50（19:30 最終入場）｜無休</li><li class='warn'>⚠️ <b>閉館時人潮會一次湧出</b>，新世界晚上是尖峰 —— 逛完早點離開</li><li>逛完約 <b>30–60 分鐘</b>；加特別展望台和滑梯要 60–90 分</li><li><b>ビリケン</b>（幸運神）在 5 樓，<b>摸他的腳底</b>會實現願望</li><li>Metro 恵美須町站步行 3 分｜動物園前站步行 6–10 分</li><li class='warn'>📅 官方公告 <b>2026 年 3 月起營業時間有變更</b> —— 出發前再確認一次</li></ul>",w:[["官網","https://www.tsutenkaku.co.jp/"]]},
 {a:"17:25",b:"17:45",t:"🚇 惠美須町 → 難波",g:["¥190"],k:"move",dir:["恵美須町駅","なんば駅","transit"],x:"<ul><li><b>班距</b>：堺筋線＋步行，或走路 15 分 —— <b>時刻是參考，錯過下一班很快</b></li><li class='warn'>🚪 <b>惠美須町站 3 號出口</b>離通天閣最近（步行 3 分）<br>動物園前站則要走 6–10 分</li></ul>"},
 {a:"17:45",b:"19:45",t:"🍲 晚餐：はり重 道頓堀本店",g:["🕐 17:00–21:00（2026/7起分段）","火曜公休"],bk:"harijyu",dead:1,k:"eat",q:"はり重 道頓堀本店",food:"はり重 道頓堀本店",x:"<ul><li class='warn'>🚪 <b>入口走錯會進到別的部門</b> —— はり重有三個獨立入口<br><b>吃壽喜燒要從「道頓堀那一側」進去</b>｜1 樓的グリル（洋食部）和カレー（輕食）是不同入口</li><li class='warn'>🧦 <b>店內是榻榻米，玄關就要脫鞋</b> —— 那天走了箕面 5.6 公里，<b>襪子先確認一下</b><br>別穿難脫的鞋</li><li class='warn'>🥚 <b>Threads 上的吃法</b>：涮好的和牛<b>蘸生蛋液</b>，另外<b>獨家柚子醋＋芝麻醬也是絕配</b><br>穿和服的店員會桌邊代煮</li><li class='warn'>🥩 <b>必點：黑毛和牛すき焼き</b>（¥7,700 起）—— 用店家特製割下<br><b>吃法：夾起來在生蛋液裡滾一圈再吃</b>。蛋要打散但別打太久，保留一點蛋白的黏性最好裹肉<br>💡 <b>女将會親自示範怎麼吃</b>，第一片讓她煮，之後自己來</li><li>🍚 <b>最後一定要用剩下的割下煮飯或烏龍麵</b> —— 吸滿肉汁的那口是精華<br>1 樓的<b>はり重グリル</b>（洋食部）以炸牛排 ビフカツ 出名，這次沒時間但值得記著</li><li class='warn'>🚨 <b>2026 年 7 月起改成分段營業</b>：11:30–14:00／<b>17:00–21:00</b><br>你們 17:45 到，在晚間時段內</li><li class='warn'>🚨 <b>公休是火曜不是水曜</b>（祝日、祝前日、12 月照常營業）<br>11/16 是週一，有開</li><li class='warn'>💴 <b>壽喜燒・涮涮鍋 ¥7,700 起／人</b>，五人約 ¥38,500 —— 這是全程最貴的一餐<br>午間特別菜單才 ¥6,050 起，但你們是晚餐</li><li>創業 1919 年，純和風建築，<b>2–3 樓是和室座敷</b></li><li>黑毛和牛薄切，<b>不用海鮮、只用長時間熬的牛筋割下</b></li><li>1 樓另有精肉店與洋食部（はり重グリル）</li><li>☎ 06-6211-7777｜難波站 14 號出口步行 3 分</li><li class='warn'>⏰ <b>遲到會被取消</b> —— 這是今日最硬</li><li class='warn'>🚪 <b>難波站 14 號出口</b>，步行 3 分 —— 御堂筋沿線，純和風建築很好認</li><li class='warn'>🛟 <b>訂位落空怎麼辦</b>：1 樓的<b>はり重グリル</b>（洋食部）不用訂位，炸牛排 ビフカツ 也是名物。<br>或道頓堀整條都是餐廳，<b>不要為了一家店耽誤太久</b>。</li></ul>"},
 {a:"20:00",b:"21:00",t:"🔌 ビックカメラ なんば店",g:["21:00關","🕐 10:00–21:00"],q:"ビックカメラ なんば店",x:"<ul><li class='warn'>🏷️ <b>8 樓有 Outlet 特價區</b> —— 展示品、包裝瑕疵品便宜不少，先上去看<br>7 層樓高，除了 3C 還有藥妝、美容家電、寢具、遊戲機、玩具</li><li class='warn'>🚪 <b>近鐵日本橋站步行 1 分</b>（最近）｜難波站要走 3 分<br>🕐 10:00–21:00 —— <b>你們 20:00 到只剩一小時，先想好要買什麼</b></li><li class='warn'>⏰ <b>21:00 關門，你們 20:00 到只有一小時</b> —— 五個人先分頭找，別一起逛<br>年中無休｜1F ソフマップ 與 8F outlet 也是 21:00</li><li class='warn'>🛂 <b>免稅要護照正本</b>，五個人各自結帳各自帶<br>結完帳<b>封條不要拆</b>，拆了在機場會被要求補稅</li><li><b>難波站步行 3 分</b>｜近鐵日本橋站 なんばウォーク 出口只要 1 分</li><li>3C、家電、藥妝、玩具都有，<b>比較好一次買完</b>｜千日前 2-10-1</li><li class='warn'>🔋 <b>買了行動電源要隨身，不能託運</b></li><li class='warn'>🚪 <b>近鐵日本橋站「なんばウォーク」出口步行 1 分</b>（最近）｜難波站 B17／B19／B21 出口步行 3 分</li></ul>"},
@@ -681,6 +688,17 @@ var PACK=[
  ["暈車暈船藥","🚨 Day 2 有兩趟船"],
  ["OK 繃 ＋ 水泡貼布","🚨 Day 4 箕面來回 5.4 公里"],
  ["感冒藥、退燒止痛藥",""]]],
+["📸 出發前要截圖存相簿（建一個「日本」相簿）",[
+ ["VJW QR Code ×5","🚨 <b>入境審查機台前掃這個</b>，後面排著人 —— 從相簿點開最快，不要放在任何 App 裡<br>機場可能沒網路，一定要截圖"],
+ ["護照資料頁 ×5","遺失時補辦要用。<b>跟正本分開存</b>"],
+ ["JR Pass 兌換券","10/13 買完立刻截圖"],
+ ["四班特急的劃位確認","はるか ×2、きのさき1號、はしだて8號"],
+ ["海遊館 eTicket ×5","11/03 買完截圖"],
+ ["餐廳訂位確認 ×6","万正、志津香、京うな和、はり重、にし家、鳥貴族"],
+ ["飯店訂房確認 ×2","曼迪京都車站、難波西曼迪"],
+ ["旅遊保險單號與緊急電話",""],
+ ["回程機票 GK057","入境時可能被問"],
+ ["💡 iPhone 加到「最愛」／Android 加到「我的最愛」","翻找更快"]]],
 ["🪪 證件與金錢",[
  ["護照正本","效期 6 個月以上"],
  ["護照影本 ＋ 手機翻拍","分開存放"],
@@ -688,7 +706,7 @@ var PACK=[
  ["現金 ¥60,000 以上","其中 ¥10,000 換成千圓鈔與硬幣"],
  ["西瓜卡（餘額 ¥3,000 以上）",""],
  ["JR Pass 兌換券",""],
- ["VJW QR Code 已截圖存相簿",""]]],
+ ["VJW QR Code 已截圖存相簿","詳見上面的「📸 出發前要截圖」清單"]]],
 ["🧴 盥洗保養",[
  ["牙刷牙膏、洗面乳",""],
  ["保養品（分裝 <100ml）",""],
@@ -2990,7 +3008,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v194</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v200</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3308,7 +3326,7 @@ function renderSOS(){
     return '<div class="geoline'+(stale?' stale':'')+'" style="padding-left:0"><b style="flex:0 0 auto;color:var(--text2)">'+mem(i)+'</b>'+
      '<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+p.lat+','+p.lng+'">'+
      (stale?'⚠️ ':'📍 ')+(i===ST.me?'我':(d!==null?fmtDist(d):'看位置'))+'</a>'+
-     '<span class="ago">'+fmtAgo(p.at)+'</span>'+
+     '<span class="ago">'+fmtAgo(p.at)+(stale?'（可能已移動）':'')+'</span>'+
      (i!==ST.me?'<a class="nav" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+p.lat+','+p.lng+'&travelmode=walking">帶我去</a>':'')+
      '</div>'}).join('')+
    '<div class="hint" style="margin-top:7px">在「<b>準備</b>」頁可以開啟位置共享。<b>只有開著 App 的人會更新。</b></div></div>'}
@@ -3488,6 +3506,30 @@ function renderInfo(){
  h+='<div class="note" style="border-left-color:var(--moss)"><b>每人小計 '+fmtJP(tot)+nt(tot)+'</b><br>'+
     '<b>五人合計 '+fmtJP(tot*5)+nt(tot*5)+'</b><br>'+
     '<span style="color:var(--dim)">はり重 的價位還沒確認，可能再往上。藥妝、3C、伴手禮另計。</span></div>';
+ h+='<h2 class="sec">🎫 票券要不要買 —— 全部算過了</h2>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>結論：只有 Day 4 值得買一日券，其他都是原價最划算。</b><br><span style="color:var(--dim)">以下每一項都用官網價格算過，不是抄別人的攻略。</span></div>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>✅ Day 4（11/16 一）大阪周遊パス ¥3,500</b><br>'+
+  '<b>你們用得到的原價</b><br>'+
+  '・大阪城天守閣 <b>¥1,200</b><br>'+
+  '・通天閣 一般展望台 <b>¥1,200</b><br>'+
+  '・<b>大阪城御座船 ¥1,800</b>（20 分鐘遊船，周遊卡免費）<br>'+
+  '・地鐵 大國町↔梅田、惠美須町↔難波 約 <b>¥480</b><br>'+
+  '合計 <b>¥4,680</b> → <b style="color:#8FCB97">每人省 ¥1,180，五人 ¥5,900</b><br><br>'+
+  '<b>💡 真正的好處是免排隊入場</b><br>通天閣現場排 40 分鐘是常態。你們 16:25 到、17:25 要走去はり重 —— <b>那 40 分鐘比 ¥380 值錢</b>。<br><br>'+
+  '💡 溜滑梯 ¥1,000 也免費（平日），現場有時間就順便滑。<br>'+
+  '⚠️ 御座船末班 16:30、惡劣天候停駛｜溜滑梯限 120cm 以上、120kg 以下、7–65 歲。<br>'+
+  '🛒 官網 osaka-amazing-pass.com｜線上買 QR 碼，不用換實體票</div>';
+ h+='<div class="note"><b>✅ Day 1（11/13 五）叡電一日券「えぇきっぷ」¥1,200</b><br>'+
+  '叡電三段（出町柳→鞍馬→貴船口→出町柳）原價約 <b>¥1,190</b> —— <b>幾乎打平</b>。<br>'+
+  '但附帶<b>沿線寺社與店家的優待</b>，等於折扣白拿。<b>維持原案，出町柳站買。</b><br><br>'+
+  '❌ <b>不要買「地下鉄＆えいでん 鞍馬・貴船日帰りきっぷ」¥2,100</b><br>'+
+  '它的京阪範圍<b>只有三条～出町柳</b> —— 你們的<b>東福寺和伏見稻荷都在三条以南，不在範圍內</b>。<br>'+
+  '實際用得到只有叡電 ¥1,190 ＋ 地鐵兩段 ¥440 = ¥1,630，<b style="color:#FF8478">買了虧 ¥470</b>。</div>';
+ h+='<div class="note"><b>✅ Day 5（11/17 二）エンジョイエコカード ¥820</b><br>'+
+  '地鐵與巴士一日無限搭（平日 ¥820、假日 ¥620）。<br>'+
+  '你們那天：難波→本町→大阪港 ¥290｜大阪港→心齋橋 ¥290｜大國町→天王寺 ¥240 = <b>¥820</b><br>'+
+  '<b>剛好打平，但附帶景點折扣</b> —— 折扣白拿。<br>💡 天王寺→關西機場那段走 <b>JR Pass</b>，不算在內。</div>';
+ h+='<div class="note"><b>❌ 查過會虧的三張</b><br><b>鞍馬・貴船日帰りきっぷ ¥2,100</b>（京阪只到三条，東福寺與伏見稻荷都不在範圍）<br><b>奈良・斑鳩 1day ¥2,100</b>（JR Pass 已包京都→奈良→天王寺）<br><b>海遊館</b>（周遊卡已取消，JAF 也沒有 —— 但 11/17 週二本來就是平日低價）</div>';
  h+='<h2 class="sec">現金與卡片怎麼分配</h2>';
   h+='<div class="hint" style="margin:0 0 10px">🚨 <b>伊根、天橋立一帶沒有 ATM</b> —— Day 2 出發前確認身上有 ¥8,000 以上。<br>'+
    '真的不夠：KIX 入境大廳、京都站、各大車站的 7-11 都收台灣提款卡。</div>';
@@ -4267,7 +4309,47 @@ var t0=todayKey();if(t0)cur=t0;
 render();fetchWX();fetchRate();
 if('serviceWorker' in navigator && location.protocol!=='file:'){
  window.addEventListener('load',function(){
-  navigator.serviceWorker.register('sw.js').catch(function(){})})}
+  navigator.serviceWorker.register('sw.js').then(function(reg){
+   /* 有新版就跳橫幅，不用刪掉重裝 */
+   function watch(w){
+    if(!w)return;
+    w.addEventListener('statechange',function(){
+     if(w.state==='installed'&&navigator.serviceWorker.controller)showUpd()});}
+   watch(reg.installing);
+   reg.addEventListener('updatefound',function(){watch(reg.installing)});
+   /* 每次切回 App 檢查一次；至少隔 30 秒 */
+   var last=0;
+   function chk(){var n=Date.now();if(n-last<30000)return;last=n;try{reg.update()}catch(e){}}
+   document.addEventListener('visibilitychange',function(){if(!document.hidden)chk()});
+   setTimeout(chk,3000);
+  }).catch(function(){})})}
+/* 點底部版本號也能手動檢查 */
+try{document.getElementById('fver').onclick=function(){
+ if(!('serviceWorker' in navigator))return toast('這個瀏覽器不支援離線更新');
+ toast('檢查中⋯');
+ navigator.serviceWorker.getRegistration().then(function(r){
+  if(!r)return toast('尚未安裝離線快取');
+  if(r.waiting||r.installing){showUpd();return}
+  r.update().then(function(){
+   setTimeout(function(){
+    navigator.serviceWorker.getRegistration().then(function(r2){
+     if(r2&&(r2.waiting||r2.installing))showUpd();
+     else toast('✅ 已經是最新版')})},1200)
+  }).catch(function(){toast('檢查失敗 ・ 確認網路')})
+ }).catch(function(){toast('檢查失敗')})}}catch(e){}
+function showUpd(){
+ var b=document.getElementById('updbtn');
+ if(!b||b.classList.contains('on'))return;
+ b.classList.add('on');
+ try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
+ toast('✨ <b>有新版</b><br><span style="font-weight:400">點右上角的「有新版」就更新，資料不會不見</span>');
+ b.onclick=function(){
+  b.textContent='更新中⋯';
+  navigator.serviceWorker.getRegistration().then(function(r){
+   var w=r&&(r.waiting||r.installing);
+   if(w&&w.postMessage)try{w.postMessage({type:'SKIP_WAITING'})}catch(e){}
+   setTimeout(function(){location.reload()},400);
+  }).catch(function(){location.reload()})}}
 </script>
 </body>
 </html>
