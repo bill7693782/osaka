@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v204';
+var CACHE='kansai5-v205';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
@@ -45,6 +45,9 @@ self.addEventListener('fetch',function(e){
 
   // 只處理同源請求，地圖等外部連結交給瀏覽器
   if(url.origin!==location.origin) return;
+
+  // 版本檢查用的 sw.js?_=... 一律走網路，不能給快取
+  if(url.pathname.indexOf('sw.js')>=0) return;
 
   // App 本體：快取優先，背景更新
   e.respondWith(
