@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v200';
+var CACHE='kansai5-v203';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
@@ -18,7 +18,12 @@ self.addEventListener('activate',function(e){
 });
 
 self.addEventListener('message',function(e){
-  if(e.data&&e.data.type==='SKIP_WAITING') self.skipWaiting();
+  if(!e.data) return;
+  if(e.data.type==='SKIP_WAITING') self.skipWaiting();
+  /* 回報自己的快取版本，讓頁面判斷要不要提示更新 */
+  if(e.data.type==='VER'&&e.ports&&e.ports[0]){
+    try{ e.ports[0].postMessage(CACHE); }catch(err){}
+  }
 });
 
 self.addEventListener('fetch',function(e){

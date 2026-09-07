@@ -264,13 +264,18 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .rtb ol{margin:0;padding-left:20px}
 .rtb ol li{margin:0 0 7px;padding-left:2px}
 .rte{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);color:var(--moss);font-size:12.5px;font-weight:600}
-.updbtn{display:none;flex:0 0 auto;min-height:30px;border-radius:999px;padding:0 11px;margin-right:7px;
- border:1px solid var(--amber);background:rgba(232,163,61,.18);color:#F0C070;
- font-weight:800;font-size:12px;font-family:inherit;cursor:pointer;white-space:nowrap;
+
+.vbtn{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;min-height:30px;
+ border-radius:999px;padding:0 9px;margin-right:7px;font-family:inherit;cursor:pointer;
+ white-space:nowrap;font-size:11.5px;font-weight:700;
+ border:1px solid var(--line);background:transparent;color:var(--dim)}
+.vbtn .vdot{font-size:10px;opacity:.9}
+.vbtn.ok{color:#8FCB97;border-color:rgba(99,164,108,.4);background:rgba(99,164,108,.12)}
+.vbtn.warn{color:var(--dim)}
+.vbtn.new{color:#F0C070;border-color:var(--amber);background:rgba(232,163,61,.18);
  animation:updpulse 2s ease-in-out infinite}
-.updbtn.on{display:inline-flex;align-items:center}
 @keyframes updpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,163,61,.5)}50%{box-shadow:0 0 0 6px rgba(232,163,61,0)}}
-@media (prefers-reduced-motion:reduce){.updbtn{animation:none}}
+@media (prefers-reduced-motion:reduce){.vbtn{animation:none}}
 .pic{margin-top:8px;background:rgba(232,163,61,.08);border:1px solid rgba(232,163,61,.25);border-radius:5px;
   font-size:13px;color:#E4D3B4;line-height:1.6;overflow:hidden}
 .pic .pich{display:flex;align-items:center;gap:6px;padding:7px 11px;cursor:pointer;user-select:none;font-size:12px}
@@ -421,7 +426,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="updbtn" id="updbtn" title="有新版">✨ 有新版</button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v203 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -432,7 +437,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
-<footer><span id="fver" style="cursor:pointer">關西五日 <b style="color:var(--amber)">v200</b></span> ・ 加入主畫面即可當 App<br><span id="fstore" style="color:#6E7C8C"></span></footer>
+<footer>關西五日 ・ 加入主畫面即可當 App<br><span style="color:#6E7C8C">版本與更新在右上角</span><br><span id="fstore" style="color:#6E7C8C"></span></footer>
 <script>
 var MAP=function(q){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)};
 var DIR=function(a,b,m){return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a)+"&destination="+encodeURIComponent(b)+"&travelmode="+(m||"transit")};
@@ -3008,7 +3013,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v200</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v203</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4314,42 +4319,75 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
    function watch(w){
     if(!w)return;
     w.addEventListener('statechange',function(){
-     if(w.state==='installed'&&navigator.serviceWorker.controller)showUpd()});}
+     if(w.state==='installed'&&navigator.serviceWorker.controller)maybeUpd()});}
    watch(reg.installing);
    reg.addEventListener('updatefound',function(){watch(reg.installing)});
    /* 每次切回 App 檢查一次；至少隔 30 秒 */
    var last=0;
    function chk(){var n=Date.now();if(n-last<30000)return;last=n;try{reg.update()}catch(e){}}
-   document.addEventListener('visibilitychange',function(){if(!document.hidden)chk()});
+   document.addEventListener('visibilitychange',function(){if(!document.hidden){chk();setTimeout(refreshVst,900)}});
    setTimeout(chk,3000);
+   setTimeout(refreshVst,1500);
+   navigator.serviceWorker.addEventListener('controllerchange',function(){setTimeout(refreshVst,300)});
   }).catch(function(){})})}
-/* 點底部版本號也能手動檢查 */
-try{document.getElementById('fver').onclick=function(){
- if(!('serviceWorker' in navigator))return toast('這個瀏覽器不支援離線更新');
- toast('檢查中⋯');
- navigator.serviceWorker.getRegistration().then(function(r){
-  if(!r)return toast('尚未安裝離線快取');
-  if(r.waiting||r.installing){showUpd();return}
-  r.update().then(function(){
-   setTimeout(function(){
-    navigator.serviceWorker.getRegistration().then(function(r2){
-     if(r2&&(r2.waiting||r2.installing))showUpd();
-     else toast('✅ 已經是最新版')})},1200)
-  }).catch(function(){toast('檢查失敗 ・ 確認網路')})
- }).catch(function(){toast('檢查失敗')})}}catch(e){}
-function showUpd(){
- var b=document.getElementById('updbtn');
- if(!b||b.classList.contains('on'))return;
- b.classList.add('on');
- try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}
- toast('✨ <b>有新版</b><br><span style="font-weight:400">點右上角的「有新版」就更新，資料不會不見</span>');
- b.onclick=function(){
-  b.textContent='更新中⋯';
+
+var APPVER='kansai5-v203';
+/* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
+function swVer(cb){
+ if(!('serviceWorker' in navigator))return cb(null);
+ var c=navigator.serviceWorker.controller;
+ if(!c)return cb(null);
+ var done=false;
+ try{
+  var ch=new MessageChannel();
+  ch.port1.onmessage=function(ev){if(!done){done=true;cb(ev.data)}};
+  c.postMessage({type:'VER'},[ch.port2]);
+  setTimeout(function(){if(!done){done=true;cb(null)}},1200);
+ }catch(e){cb(null)}}
+/* 只有「SW 的版本 ≠ 這一頁的版本」才是真的有新版 */
+function maybeUpd(){
+ swVer(function(v){
+  if(v&&v!==APPVER)showUpd();
+ })}
+/* 底部常駐顯示目前狀態，不用點也看得到 */
+function setVst(kind,txt){
+ var b=document.getElementById('vbtn');
+ if(!b)return;
+ b.className='vbtn '+kind;
+ b.innerHTML=(kind==='new'?'✨ 有新版':(APPVER.replace('kansai5-','')+' <span class="vdot">'+txt+'</span>'));
+ b.title=(kind==='new'?'有新版 ・ 點一下更新':'目前版本 ・ 點一下檢查更新')}
+function refreshVst(){
+ if(!('serviceWorker' in navigator)||location.protocol==='file:')
+  return setVst('warn','離線關');
+ swVer(function(v){
+  if(!v)return setVst('warn','⋯');
+  if(v===APPVER)setVst('ok','✅');
+  else setVst('new','')})}
+/* header 版本鈕：有新版就更新，沒有就檢查 */
+try{document.getElementById('vbtn').onclick=function(){
+ var b=this;
+ if(b.classList.contains('new')){
+  b.innerHTML='更新中⋯';
   navigator.serviceWorker.getRegistration().then(function(r){
    var w=r&&(r.waiting||r.installing);
    if(w&&w.postMessage)try{w.postMessage({type:'SKIP_WAITING'})}catch(e){}
    setTimeout(function(){location.reload()},400);
-  }).catch(function(){location.reload()})}}
+  }).catch(function(){location.reload()});
+  return}
+ if(!('serviceWorker' in navigator))return toast('這個瀏覽器不支援離線更新');
+ setVst('warn','⋯');
+ navigator.serviceWorker.getRegistration().then(function(r){
+  if(!r){setVst('warn','離線關');return toast('尚未安裝離線快取')}
+  r.update().catch(function(){});
+  setTimeout(function(){
+   swVer(function(v){
+    if(!v){setVst('warn','⋯');return toast('離線快取還在啟動<br><span style="font-weight:400">關掉 App 再開一次就好</span>')}
+    if(v!==APPVER){showUpd();toast('✨ <b>有新版</b><br><span style="font-weight:400">再點一次右上角的版本鈕就更新</span>')}
+    else{setVst('ok','✅');toast('✅ <b>已經是最新版</b><br><span style="font-weight:400">'+APPVER.replace('kansai5-','')+'</span>')}})},1400)
+ }).catch(function(){setVst('warn','⋯');toast('檢查失敗 ・ 確認網路')})}}catch(e){}
+function showUpd(){
+ setVst('new','');
+ try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}}
 </script>
 </body>
 </html>
