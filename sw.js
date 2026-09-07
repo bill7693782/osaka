@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v224';
+var CACHE='kansai5-v225';
 var PREFIX='kansai5-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
@@ -14,7 +14,22 @@ self.addEventListener('install',function(e){
 
 self.addEventListener('activate',function(e){
   e.waitUntil(caches.keys().then(function(ks){
-    return Promise.all(ks.filter(function(k){ return k.indexOf(PREFIX)===0; }).map(function(k){ if(k!==CACHE) return caches.delete(k); }));
+    return Promise.all(
+      /* ① 清掉自己的舊版快取 */
+      ks.filter(function(k){ return k.indexOf(PREFIX)===0; })
+        .map(function(k){ if(k!==CACHE) return caches.delete(k); })
+      /* ② 清掉「別的專案的快取裡，屬於我這個 scope 的殘留」
+            —— 曾經誤傳別的專案的 sw.js 時會留下這種東西 */
+      .concat(ks.filter(function(k){ return k.indexOf(PREFIX)!==0; }).map(function(k){
+        return caches.open(k).then(function(c){
+          return c.keys().then(function(reqs){
+            return Promise.all(reqs.filter(function(r){
+              return r.url.indexOf(self.registration.scope)===0;
+            }).map(function(r){ return c.delete(r); }));
+          });
+        }).catch(function(){});
+      }))
+    );
   }).then(function(){ return self.clients.claim(); }));
 });
 
