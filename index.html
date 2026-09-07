@@ -426,7 +426,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v216 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v217 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -749,7 +749,8 @@ function dayIcon(k,size){
  return '<svg viewBox="0 0 24 24" width="'+(size||18)+'" height="'+(size||18)+'" style="color:'+t.c+';flex:0 0 auto">'+t.ic+'</svg>'}
 function dayColor(k){return (DAYTHEME[k]||{}).c||'var(--amber)'}
 
-var KEY="kansai5_v3",ST={adhoc:{},edit:{},hide:{},chk:{},done:{},members:["","","","",""],exp:[],avatars:["","","","",""],album:""},CAN=false;
+var LSKEY="kansai5_v3";        /* localStorage．與其他專案不可相同 */
+var KEY=LSKEY,ST={adhoc:{},edit:{},hide:{},chk:{},done:{},members:["","","","",""],exp:[],avatars:["","","","",""],album:""},CAN=false;
 try{var raw=localStorage.getItem(KEY);if(raw)ST=JSON.parse(raw);localStorage.setItem(KEY+"_t","1");localStorage.removeItem(KEY+"_t");CAN=true}catch(e){CAN=false}
 ["adhoc","edit","hide","chk","done"].forEach(function(p){if(!ST[p])ST[p]={}});
 if(!ST.members||ST.members.length!==5)ST.members=["","","","",""];
@@ -3016,7 +3017,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v216</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v217</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3217,15 +3218,17 @@ function backupFromFile(file){
  if(!file)return;var fr=new FileReader();
  fr.onload=function(){var r=backupRestore(fr.result);toast(r.msg);if(r.ok){cur='help';render()}};
  fr.readAsText(file)}
+var BK_PREFIX="K5BK";          /* 備份碼 */
+var LG_PREFIX="K5";            /* 同步碼．注意 K5BK 以 K5 開頭，驗證時要先擋掉 */
 function backupCode(){
  var o={v:25,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
   chk:ST.chk,done:ST.done,edit:ST.edit,hide:ST.hide,adhoc:ST.adhoc,room:ST.room,expDel:ST.expDel,shopInit:ST.shopInit,packAdd:ST.packAdd,packHide:ST.packHide,myPlaces:ST.myPlaces,picOpen:ST.picOpen,packOnlyTodo:ST.packOnlyTodo,compact:ST.compact,
   album:ST.album,rate:ST.rate,sos:ST.sos};
- return 'K5BK'+b64e(JSON.stringify(o))}
+ return BK_PREFIX+b64e(JSON.stringify(o))}
 function backupRestore(code){
  code=(code||'').trim();
- if(code.indexOf('K5')===0&&code.indexOf('K5BK')!==0)return {ok:false,msg:'這是<b>分帳同步碼</b>，不是備份代碼<br><span style="font-weight:400">請到「分帳」頁的「離線同步碼」貼上</span>'};
- if(code.indexOf('K5BK')!==0)return {ok:false,msg:'這不是備份代碼'};
+ if(code.indexOf(LG_PREFIX)===0&&code.indexOf(BK_PREFIX)!==0)return {ok:false,msg:'這是<b>分帳同步碼</b>，不是備份代碼<br><span style="font-weight:400">請到「分帳」頁的「離線同步碼」貼上</span>'};
+ if(code.indexOf(BK_PREFIX)!==0)return {ok:false,msg:'這不是備份代碼'};
  var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
  try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
  ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
@@ -3748,11 +3751,11 @@ function b64d(str){try{return decodeURIComponent(escape(atob(str)))}catch(e){ret
 function ledgerCode(){
  var m=ST.members.map(function(x){return (x||'').replace(/[|;,]/g,'')}).join(',');
  var e=ST.exp.map(function(x){return [x.id||'',x.amt,x.by,x.who.join('.'),(x.note||'').replace(/[|;,]/g,' ')].join(',')}).join(';');
- return 'K5'+b64e(m+'|'+e+'|'+(ST.expDel||[]).join(','))}
+ return LG_PREFIX+b64e(m+'|'+e+'|'+(ST.expDel||[]).join(','))}
 function ledgerImport(code){
  code=(code||'').trim();
- if(code.indexOf('K5BK')===0)return {ok:false,msg:'這是<b>備份代碼</b>，不是分帳同步碼<br><span style="font-weight:400">請到「準備」頁的「備份與還原」貼上</span>'};
- if(code.indexOf('K5')!==0)return {ok:false,msg:'這不是分帳同步碼'};
+ if(code.indexOf(BK_PREFIX)===0)return {ok:false,msg:'這是<b>備份代碼</b>，不是分帳同步碼<br><span style="font-weight:400">請到「準備」頁的「備份與還原」貼上</span>'};
+ if(code.indexOf(LG_PREFIX)!==0)return {ok:false,msg:'這不是分帳同步碼'};
  var raw=b64d(code.slice(2));if(raw===null)return {ok:false,msg:'同步碼壞了或不完整'};
  var parts=raw.split('|'),mm=parts[0].split(','),ee=(parts[1]||'').split(';');
  (parts[2]||'').split(',').forEach(function(id){if(id&&ST.expDel.indexOf(id)<0)ST.expDel.push(id)});
@@ -4370,7 +4373,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v216';
+var APPVER='kansai5-v217';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
