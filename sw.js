@@ -1,5 +1,6 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v212';
+var CACHE='kansai5-v216';
+var PREFIX='kansai5-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install',function(e){
@@ -13,7 +14,7 @@ self.addEventListener('install',function(e){
 
 self.addEventListener('activate',function(e){
   e.waitUntil(caches.keys().then(function(ks){
-    return Promise.all(ks.filter(function(k){ return k.indexOf('kansai5-')===0; }).map(function(k){ if(k!==CACHE) return caches.delete(k); }));
+    return Promise.all(ks.filter(function(k){ return k.indexOf(PREFIX)===0; }).map(function(k){ if(k!==CACHE) return caches.delete(k); }));
   }).then(function(){ return self.clients.claim(); }));
 });
 
