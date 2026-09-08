@@ -127,7 +127,9 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
   flex-wrap:wrap;background:rgba(0,0,0,.12)}
 .hero .bot>span{display:inline-flex;align-items:center;gap:4px}
 .hero .bot b{color:var(--paper);font-weight:650}
-.hero .bot .tot{margin-left:auto}
+.hero .bot .tot{margin-left:auto;white-space:nowrap}
+.bot .totnote{flex:0 0 100%;margin:0;font-size:11px;color:var(--faint);line-height:1.5;font-weight:400}
+
 .hero .bot .tot b{color:var(--amber);font-size:14.5px;font-variant-numeric:tabular-nums}
 .bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 11px;align-items:stretch}
 .bar button,.bar a{flex:1 1 auto;background:var(--surface2);background:linear-gradient(180deg,#242D37,#1C232B);
@@ -478,7 +480,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v236 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v238 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -1217,8 +1219,8 @@ function render(){
     (w?'<span>'+w.ic+' <b>'+w.hi+'°/'+w.lo+'°</b>'+(w.pop==null?'':' ☔'+w.pop+'%')+'</span>':'')+
     '<span>🚃 <b>'+fmtJP(C.move)+'</b></span>'+
     '<span>🎫 <b>'+fmtJP(C.other)+'</b></span>'+
-    '<span class="tot">合計 <b>'+fmtJP(C.total)+'</b>'+(rr?' ≈ '+fmtNT(C.total*rr):'')+
-     '<span style="color:var(--dim);font-weight:400;font-size:11px"> 只算標籤上有寫金額的，餐費見「資訊」頁</span></span>'+
+    '<span class="tot">合計 <b>'+fmtJP(C.total)+'</b>'+(rr?' ≈ '+fmtNT(C.total*rr):'')+'</span>'+
+    '<span class="totnote">只算標籤上有寫金額的，餐費見「資訊」頁</span>'+
    '</div></div>';
  var nConf=Object.keys(CONF).length;
  var cruxAlive=list.some(function(x){return x.a===v.crux.t});
@@ -3187,7 +3189,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v236</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v238</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3608,6 +3610,7 @@ function renderSOS(){
  h+='<div class="hint" style="margin-top:8px">最實用的是「<b>すみません</b>」—— 什麼場合都能拿來開場。</div>';
  h+='<h2 class="sec">每天會用到的日文</h2>';
  var J2=[["五人です","go-nin desu","五個人（進店第一句）"],
+        ["これ、持ち帰ってもいいですか","kore, mochikaette mo ii desu ka","這個可以帶走嗎（飯店備品）"],
         ["予約した〇〇です","yoyaku shita ___ desu","我有訂位，姓〇〇"],
         ["これをください","kore o kudasai","我要這個（指著菜單）"],
         ["おすすめは何ですか","osusume wa nan desu ka","有什麼推薦的"],
@@ -4220,6 +4223,27 @@ function renderPack(){
 
  var nHide=Object.keys(ST.packHide).length,nAdd=ST.packAdd.length;
  var h='<div class="store '+(tot&&dn===tot?'on':'off')+'" style="margin-bottom:12px">已打包 '+dn+' / '+tot+' 項</div>';
+ h+='<h2 class="sec">🏨 飯店備品哪些能帶走</h2>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>判斷標準只有一個：能不能重複使用</b><br>'+
+  '<b>用過下一個客人就不能用的</b> ＝ 消耗品，可以帶<br>'+
+  '<b>洗一洗還能再用的</b> ＝ 備品，不能帶</div>';
+ h+='<div class="note"><b>✅ 可以帶走</b><br>'+
+  '牙刷、梳子、棉花棒、刮鬍刀、沐浴海綿<br>'+
+  '<b>小包裝</b>的洗髮精／潤髮乳／沐浴乳<br>'+
+  '茶包、咖啡包、掛耳包</div>';
+ h+='<div class="note" style="border-left-color:var(--red)"><b>❌ 不能帶走</b><br>'+
+  '🚨 <b>毛巾（浴巾、洗臉巾都算）</b> —— 最多人搞錯的一項<br>'+
+  '睡衣、浴衣、浴袍、<b>拖鞋</b>、杯子<br>'+
+  '<b>大瓶裝</b>的洗髮精沐浴乳（補充式的）<br>'+
+  '吹風機、空氣清淨機、電熱水壺、衣架<br><br>'+
+  '⚠️ <b>你們住的兩間都是公寓式</b> —— 廚房器具、洗衣機、微波爐、餐具<b>全部是備品</b></div>';
+ h+='<div class="note" style="border-left-color:var(--amber)"><b>🚨 毛巾不見飯店會打電話</b><br>'+
+  '有實例是退房後櫃檯發現少一條就聯絡客人。<b>不小心裝進行李箱的話，立刻拿回去就沒事。</b><br>'+
+  '嚴格說這是<b>刑法第 235 條竊盜罪</b> —— 初犯通常口頭警告，但真的有人被報案。</div>';
+ h+='<div class="note"><b>💡 判斷不出來就這樣看</b><br>'+
+  '官網或訂房頁寫「<b>アメニティ</b>」「<b>無料</b>」的通常可以帶<br>'+
+  '寫「<b>備品</b>」「<b>貸し出し</b>」的一律不行<br><br>'+
+  '不確定就問櫃檯：「<b>これ、持ち帰ってもいいですか</b>」（這個可以帶走嗎）</div>';
  h+='<h2 class="sec">🦶 這趟走多少路</h2>';
  h+='<div class="note" style="border-left-color:var(--red)">'+
   '<b>四天的步行都超過三小時 —— 鞋子是這趟最重要的裝備</b><br>'+
@@ -4609,7 +4633,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v236';
+var APPVER='kansai5-v238';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
