@@ -268,9 +268,15 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .rte{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);color:var(--moss);font-size:12.5px;font-weight:600}
 
 .lk.who{background:rgba(155,139,196,.18);color:#C4B8E0;border-color:rgba(155,139,196,.45)}
-.peekpg{position:absolute;top:0;left:0;width:100%;
- pointer-events:none;will-change:transform;z-index:1}
-main{position:relative;overflow-x:clip}
+/* 下一頁預覽：用 fixed 定位，不依賴父層有沒有 position */
+/* 拖曳中：給 main 底色，兩頁才不會疊在一起看 */
+body.swiping main{background:var(--bg)}
+.peekpg{position:fixed;left:0;right:0;
+ top:var(--peektop,120px);bottom:0;
+ padding:0 16px 84px;max-width:660px;margin:0 auto;
+ overflow:hidden;pointer-events:none;will-change:transform;
+ z-index:1;background:var(--bg)}
+body{overflow-x:hidden}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -307,9 +313,15 @@ main{position:relative;overflow-x:clip}
  animation:updpulse 2s ease-in-out infinite}
 @keyframes updpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,163,61,.5)}50%{box-shadow:0 0 0 6px rgba(232,163,61,0)}}
 @media (prefers-reduced-motion:reduce){.lk.who{background:rgba(155,139,196,.18);color:#C4B8E0;border-color:rgba(155,139,196,.45)}
-.peekpg{position:absolute;top:0;left:0;width:100%;
- pointer-events:none;will-change:transform;z-index:1}
-main{position:relative;overflow-x:clip}
+/* 下一頁預覽：用 fixed 定位，不依賴父層有沒有 position */
+/* 拖曳中：給 main 底色，兩頁才不會疊在一起看 */
+body.swiping main{background:var(--bg)}
+.peekpg{position:fixed;left:0;right:0;
+ top:var(--peektop,120px);bottom:0;
+ padding:0 16px 84px;max-width:660px;margin:0 auto;
+ overflow:hidden;pointer-events:none;will-change:transform;
+ z-index:1;background:var(--bg)}
+body{overflow-x:hidden}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -486,7 +498,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v242 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v243 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -3195,7 +3207,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v242</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v243</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4639,7 +4651,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v242';
+var APPVER='kansai5-v243';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
@@ -4770,6 +4782,12 @@ function showUpd(){
   killPeek();
   peek=document.createElement('div');
   peek.className='peekpg';
+  /* 讓預覽從 header 下方開始，跟 main 對齊 */
+  try{
+   var hd=document.querySelector('header');
+   var top=hd&&hd.getBoundingClientRect?hd.getBoundingClientRect().bottom:120;
+   peek.style.setProperty('--peektop',Math.max(0,top)+'px');
+  }catch(e){}
   peek.style.transform='translateX('+(side>0?'100%':'-100%')+')';
   peek.innerHTML=htmlOf(k);
   peekK=k;
@@ -4804,13 +4822,14 @@ function showUpd(){
    if(Math.abs(mx)<10)return;
    if(Math.abs(mx)<Math.abs(my)*1.5){active=false;return}
    decided=true;
+   try{document.body.classList.add('swiping')}catch(e){}
    /* 決定方向後，把下一頁畫出來 */
    var i=idx(), ni=mx<0?i+1:i-1;
    _dir=mx<0?-1:1;
    if(ni>=0&&ni<TABS.length)makePeek(TABS[ni],_dir<0?1:-1);
   }
   if(Math.abs(my)>60||Math.abs(my)>Math.abs(mx)*0.8){
-   active=false;decided=false;setX(0,true);setTimeout(killPeek,260);return}
+   active=false;decided=false;setX(0,true);setTimeout(function(){killPeek();try{document.body.classList.remove('swiping')}catch(e){}},260);return}
   var i2=idx();
   if((mx>0&&i2<=0)||(mx<0&&i2>=TABS.length-1))mx*=0.28;
   dx=mx;setX(mx,false);
@@ -4831,6 +4850,7 @@ function showUpd(){
      speechSynthesis.cancel();if(typeof SPK!=='undefined')SPK.cur=null}
     cur=TABS[ni];editing=null;
     killPeek();
+    try{document.body.classList.remove('swiping')}catch(e){}
     if(main){main.style.transition='none';main.style.transform=''}
     render();
     busy=false;
@@ -4839,7 +4859,7 @@ function showUpd(){
    },240);
   }else{
    setX(0,true);
-   setTimeout(killPeek,260);
+   setTimeout(function(){killPeek();try{document.body.classList.remove('swiping')}catch(e){}},260);
    if(ni<0&&Math.abs(dx)>60)toast('已經是第一頁');
    else if(ni>=TABS.length&&Math.abs(dx)>60)toast('已經是最後一頁');
   }
@@ -4849,7 +4869,7 @@ function showUpd(){
   document.addEventListener('touchstart',onStart,{passive:true});
   document.addEventListener('touchmove',onMove,{passive:false});
   document.addEventListener('touchend',onEnd,{passive:true});
-  document.addEventListener('touchcancel',function(){active=false;decided=false;setX(0,true);setTimeout(killPeek,260)},{passive:true});
+  document.addEventListener('touchcancel',function(){active=false;decided=false;setX(0,true);setTimeout(function(){killPeek();try{document.body.classList.remove('swiping')}catch(e){}},260)},{passive:true});
  }catch(e){}
 })();
 </script>
