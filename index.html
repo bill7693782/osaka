@@ -268,6 +268,9 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
 .rte{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);color:var(--moss);font-size:12.5px;font-weight:600}
 
 .lk.who{background:rgba(155,139,196,.18);color:#C4B8E0;border-color:rgba(155,139,196,.45)}
+.peekpg{position:absolute;top:0;left:0;width:100%;
+ pointer-events:none;will-change:transform;z-index:1}
+main{position:relative;overflow-x:clip}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -304,6 +307,9 @@ main.anim{animation:fadein .3s cubic-bezier(.16,.9,.3,1)}
  animation:updpulse 2s ease-in-out infinite}
 @keyframes updpulse{0%,100%{box-shadow:0 0 0 0 rgba(232,163,61,.5)}50%{box-shadow:0 0 0 6px rgba(232,163,61,0)}}
 @media (prefers-reduced-motion:reduce){.lk.who{background:rgba(155,139,196,.18);color:#C4B8E0;border-color:rgba(155,139,196,.45)}
+.peekpg{position:absolute;top:0;left:0;width:100%;
+ pointer-events:none;will-change:transform;z-index:1}
+main{position:relative;overflow-x:clip}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -480,7 +486,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v241 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v242 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -3189,7 +3195,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v241</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v242</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4633,7 +4639,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v241';
+var APPVER='kansai5-v242';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
@@ -4724,15 +4730,12 @@ function showUpd(){
  setVst('new','');
  try{if(navigator.vibrate)navigator.vibrate(30)}catch(e){}}
 
-/* ===== 左右滑換頁（手指跟著走）=====
-   ① 手指移動時畫面即時跟著位移，看得到下一頁在哪個方向
-   ② 放手後：超過 25% 寬度或滑得夠快 → 換頁；否則彈回
-   ③ 一開始要先確認是橫滑（橫向 > 縱向 1.5 倍且橫向 > 10px）才接手
-   ④ 起點在按鈕、連結、輸入框、可橫捲的區塊上就不接手
-   ⑤ 到頭到尾會有阻尼，拖不動那麼遠 */
+/* ===== 左右滑換頁（看得到下一頁）=====
+   拖曳時把下一頁真的渲染出來擺在旁邊，兩頁一起跟著手指走。
+   放手後超過 25% 或滑得快 → 滑完成；否則彈回。 */
 (function(){
  var TABS=['help','d0','d1','d2','d3','d4','d5','split','shop','pack','info','sos','rain','share','prep'];
- var x0=0,y0=0,t0=0,dx=0,decided=false,active=false,W=320;
+ var x0=0,y0=0,t0=0,dx=0,decided=false,active=false,W=320,peek=null,peekK=null,busy=false;
  function noSwipe(el){
   var n=el,d=0;
   while(n&&n!==document.body&&d<8){
@@ -4743,69 +4746,110 @@ function showUpd(){
    n=n.parentNode;d++}
   return false}
  function idx(){return TABS.indexOf(cur)}
+ /* 相鄰兩頁的 HTML 先算好放著 —— 拖曳當下不能現算（Day 1 要 40ms 會卡） */
+ var CACHE2={};
+ function warm(){
+  var i=idx();if(i<0)return;
+  [i-1,i+1].forEach(function(n){
+   if(n<0||n>=TABS.length)return;
+   var k=TABS[n];
+   if(CACHE2[k]&&CACHE2[k].for===cur)return;
+   var save=cur;
+   try{cur=k;render();CACHE2[k]={html:main.innerHTML,for:save}}catch(e){}
+   cur=save;
+   try{render()}catch(e){}});}
+ function htmlOf(k){
+  var c=CACHE2[k];
+  if(c&&c.html)return c.html;
+  return '<div style="padding:40px 16px;text-align:center;color:var(--dim)">'+
+   (D[k]?D[k].label:'')+'<br><span style="font-size:12px">放開手就會載入</span></div>'}
+ /* 換頁或閒置時預先算好，不影響拖曳流暢度 */
+ var warmT=null;
+ function scheduleWarm(){clearTimeout(warmT);warmT=setTimeout(warm,400)}
+ function makePeek(k,side){
+  killPeek();
+  peek=document.createElement('div');
+  peek.className='peekpg';
+  peek.style.transform='translateX('+(side>0?'100%':'-100%')+')';
+  peek.innerHTML=htmlOf(k);
+  peekK=k;
+  var host=(main&&main.parentNode)||document.body;
+  if(host&&host.appendChild)try{host.appendChild(peek)}catch(e){peek=null}}
+ function killPeek(){
+  if(peek&&peek.parentNode)peek.parentNode.removeChild(peek);
+  peek=null;peekK=null}
  function setX(px,anim){
-  if(!main)return;
-  main.style.transition=anim?'transform .22s cubic-bezier(.22,.61,.36,1)':'none';
-  main.style.transform=px?'translateX('+px+'px)':'';}
+  var tr=anim?'transform .24s cubic-bezier(.22,.61,.36,1)':'none';
+  if(main){main.style.transition=tr;main.style.transform=px?'translateX('+px+'px)':''}
+  if(peek){
+   peek.style.transition=tr;
+   var base=(dxDir()>0?W:-W);
+   peek.style.transform='translateX('+(base+px)+'px)'}}
+ var _dir=0;
+ function dxDir(){return _dir}
  function onStart(e){
+  if(busy)return;
   var t=e.touches&&e.touches[0];if(!t)return;
-  decided=false;active=false;dx=0;
+  decided=false;active=false;dx=0;_dir=0;killPeek();
   if(noSwipe(e.target)||idx()<0)return;
   x0=t.clientX;y0=t.clientY;t0=Date.now();
   try{W=(main&&main.offsetWidth)||window.innerWidth||320}catch(err){W=320}
   active=true}
  function onMove(e){
-  if(!active)return;
+  if(!active||busy)return;
   var t=e.touches&&e.touches[0];if(!t)return;
   var mx=t.clientX-x0, my=t.clientY-y0;
   if(!decided){
-   /* 還沒決定是橫滑還是捲頁 */
-   if(Math.abs(my)>12&&Math.abs(my)>=Math.abs(mx)){active=false;return}  /* 是在捲頁，放手 */
-   if(Math.abs(mx)<10)return;                                            /* 還太小，先不判斷 */
-   if(Math.abs(mx)<Math.abs(my)*1.5){active=false;return}                /* 角度不夠水平 */
-   decided=true}
-  /* 接手之後仍持續驗證：中途變成往下拉就交還給捲頁 */
+   if(Math.abs(my)>12&&Math.abs(my)>=Math.abs(mx)){active=false;return}
+   if(Math.abs(mx)<10)return;
+   if(Math.abs(mx)<Math.abs(my)*1.5){active=false;return}
+   decided=true;
+   /* 決定方向後，把下一頁畫出來 */
+   var i=idx(), ni=mx<0?i+1:i-1;
+   _dir=mx<0?-1:1;
+   if(ni>=0&&ni<TABS.length)makePeek(TABS[ni],_dir<0?1:-1);
+  }
   if(Math.abs(my)>60||Math.abs(my)>Math.abs(mx)*0.8){
-   active=false;decided=false;setX(0,true);return}
-  /* 到頭到尾加阻尼，拖不動那麼遠 */
-  var i=idx();
-  if((mx>0&&i<=0)||(mx<0&&i>=TABS.length-1))mx*=0.28;
-  dx=mx;
-  setX(mx,false);
+   active=false;decided=false;setX(0,true);setTimeout(killPeek,260);return}
+  var i2=idx();
+  if((mx>0&&i2<=0)||(mx<0&&i2>=TABS.length-1))mx*=0.28;
+  dx=mx;setX(mx,false);
   if(e.cancelable)try{e.preventDefault()}catch(err){}}
  function onEnd(){
-  if(!active){setX(0,false);return}
+  if(!active){setX(0,false);killPeek();return}
   active=false;
-  if(!decided){setX(0,false);return}
+  if(!decided){setX(0,false);killPeek();return}
   var dt=Date.now()-t0, v=Math.abs(dx)/Math.max(dt,1);
-  var far=Math.abs(dx)>W*0.25;      /* 拖超過四分之一 */
-  var fast=v>0.5&&Math.abs(dx)>40;  /* 或者滑得夠快（每毫秒 0.5px 以上）*/
-  var i=idx();
-  var ni=dx<0?i+1:i-1;
+  var far=Math.abs(dx)>W*0.25, fast=v>0.5&&Math.abs(dx)>40;
+  var i=idx(), ni=dx<0?i+1:i-1;
   if((far||fast)&&ni>=0&&ni<TABS.length){
-   /* 先把畫面滑出去，再換頁 */
-   setX(dx<0?-W*0.35:W*0.35,true);
+   busy=true;
+   /* 滑完整段：目前頁滑出、下一頁滑到定位 */
+   setX(dx<0?-W:W,true);
    setTimeout(function(){
     if(typeof speakSupported==='function'&&speakSupported()&&speechSynthesis.speaking){
      speechSynthesis.cancel();if(typeof SPK!=='undefined')SPK.cur=null}
     cur=TABS[ni];editing=null;
-    /* 從反方向滑入 */
-    setX(dx<0?W*0.3:-W*0.3,false);
+    killPeek();
+    if(main){main.style.transition='none';main.style.transform=''}
     render();
-    setTimeout(function(){setX(0,true)},16);
+    busy=false;
+    scheduleWarm();
     try{if(navigator.vibrate)navigator.vibrate(10)}catch(err){}
-   },130);
+   },240);
   }else{
-   setX(0,true);   /* 不夠，彈回原位 */
+   setX(0,true);
+   setTimeout(killPeek,260);
    if(ni<0&&Math.abs(dx)>60)toast('已經是第一頁');
    else if(ni>=TABS.length&&Math.abs(dx)>60)toast('已經是最後一頁');
   }
   dx=0;decided=false}
+ scheduleWarm();
  try{
   document.addEventListener('touchstart',onStart,{passive:true});
   document.addEventListener('touchmove',onMove,{passive:false});
   document.addEventListener('touchend',onEnd,{passive:true});
-  document.addEventListener('touchcancel',function(){active=false;decided=false;setX(0,true)},{passive:true});
+  document.addEventListener('touchcancel',function(){active=false;decided=false;setX(0,true);setTimeout(killPeek,260)},{passive:true});
  }catch(e){}
 })();
 </script>
