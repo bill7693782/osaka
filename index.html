@@ -478,7 +478,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v233 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v234 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -3186,7 +3186,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v233</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v234</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4219,6 +4219,23 @@ function renderPack(){
 
  var nHide=Object.keys(ST.packHide).length,nAdd=ST.packAdd.length;
  var h='<div class="store '+(tot&&dn===tot?'on':'off')+'" style="margin-bottom:12px">已打包 '+dn+' / '+tot+' 項</div>';
+ h+='<h2 class="sec">🦶 這趟走多少路</h2>';
+ h+='<div class="note" style="border-left-color:var(--red)">'+
+  '<b>四天的步行都超過三小時 —— 鞋子是這趟最重要的裝備</b><br>'+
+  '<b>Day 1</b> 約 <b>3 小時</b>（貴船山路來回 50 分 ＋ 伏見稻荷 90 分）<br>'+
+  '<b>Day 2</b> 約 <b>3 小時 50 分</b> —— <b>全程最硬</b>，天橋立沙洲、舟屋聚落、傘松都在走<br>'+
+  '<b>Day 3</b> 約 1 小時 10 分 —— 唯一輕鬆的一天<br>'+
+  '<b>Day 4</b> 約 <b>3 小時 15 分</b>（箕面健行來回 <b>5.4 公里</b>就佔 2 小時）<br>'+
+  '<b>Day 5</b> 約 <b>4 小時</b> —— 市場、道具屋筋、でんでんタウン 一路逛到機場</div>';
+ h+='<div class="note"><b>👟 鞋子怎麼準備</b><br>'+
+  '<b>穿已經穿習慣的</b> —— <b>不要穿新鞋</b>，這種強度一定磨腳<br>'+
+  '⚠️ <b>Day 2 的舟屋和 Day 4 的箕面有石階與碎石路</b>，鞋底要有抓地力<br>'+
+  '⚠️ <b>Day 3 東大寺、Day 4 はり重要脫鞋</b> —— 好脫的鞋比較方便，襪子先確認<br>'+
+  '💡 <b>OK 繃和痠痛貼布放隨身包</b>，起水泡當下就要處理</div>';
+ h+='<div class="note"><b>🎒 減輕負擔的三個做法</b><br>'+
+  '<b>① 大行李寄車站</b> —— Day 3 已經排了奈良寄物<br>'+
+  '<b>② 買的東西先寄回飯店</b> —— Day 4 Bic Camera 買太多就別拖著走<br>'+
+  '<b>③ 隨身包越輕越好</b> —— 水一瓶就夠，日本到處有自動販賣機</div>';
  h+='<h2 class="sec">11 月中要穿什麼</h2>';
  h+='<div class="note" style="border-left-color:var(--cyan)">'+
   '<b>🧥 11 月中已經要「冬天用的大衣」，不是薄外套</b><br>'+
@@ -4591,7 +4608,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v233';
+var APPVER='kansai5-v234';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
