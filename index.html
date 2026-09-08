@@ -478,7 +478,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v234 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v236 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -712,8 +712,8 @@ var CHECK=[
 ["台灣門號保留可收簡訊","信用卡海外刷卡的 OTP 驗證碼會發到台灣門號。iPhone 雙卡請保留台灣 SIM 收簡訊、eSIM 走數據。"],
 ["用 Google Maps 實測飯店到各站的步行時間","大阪飯店到大國町、なんば、難波八阪神社、木津市場的時間目前是推估的。差 3 分鐘就會影響 Day 5 早上的神社時段。"]];
 var HOTELS=[
-{n:"曼迪高級公寓酒店 京都車站",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 京都府京都市下京区八百屋町1番地<br><span style='color:var(--dim)'>1 Yaoyacho, Shimogyo Ward, Kyoto</span>",tel:"075-353-1922",q:HKQ,note:"日文名 MONday Apart Premium 京都駅（七条堀川）<br>京都站步行約 11 分・對面是西本願寺<br>全室附廚房與洗衣機・44 間客房・15:00 入住／10:00 退房",web:"https://hotel-monday.com/apartment/kyoto/"},
-{n:"WELLSTAY難波",d:"Day 3–4（11/15、11/16）",addr:"〒556-0016 大阪府大阪市浪速区元町 2-8-10",tel:"06-6695-7071",q:HOQ,note:"<b>地下鐵なんば站 5 號出口步行 5–6 分</b>｜<b>大國町站 2 號出口步行 5 分</b><br>60 間客房・<b>最大可住 9 人的房型</b>・15:00 入住／<b>10:00 退房</b><br>附洗衣間・微波爐・冰箱・咖啡吧檯｜可刷卡<br>⚠️ <b>退房 10:00，比曼迪早一小時</b>",web:"https://well-stay.com/namba/"}];
+{n:"曼迪高級公寓酒店 京都車站",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 京都府京都市下京区八百屋町1番地<br><span style='color:var(--dim)'>1 Yaoyacho, Shimogyo Ward, Kyoto</span>",tel:"075-353-1922",q:HKQ,note:"日文名 MONday Apart Premium 京都駅（七条堀川）<br>京都站步行約 11 分・對面是西本願寺<br>全室附廚房與洗衣機・44 間客房・<b>15:00 入住／10:00 退房</b><br>💡 <b>自動 Check-in 機、24 小時可入住</b>（護照掃描）—— Day 1 晚上 21:35 到也沒問題<br>⚠️ <b>24:00 後大門上鎖</b>，按入口旁的對講機",web:"https://hotel-monday.com/apartment/kyoto/"},
+{n:"WELLSTAY難波",d:"Day 3–4（11/15、11/16）",addr:"〒556-0016 大阪府大阪市浪速区元町 2-8-10",tel:"06-6695-7071",q:HOQ,note:"<b>地下鐵なんば站 5 號出口步行 5–6 分</b>｜<b>大國町站 2 號出口步行 5 分</b><br>60 間客房・<b>最大可住 9 人的房型</b>・15:00 入住／<b>10:00 退房</b><br>附洗衣間・微波爐・冰箱・咖啡吧檯｜可刷卡<br>⚠️ <b>退房 10:00</b>（跟京都的曼迪一樣）",web:"https://well-stay.com/namba/"}];
 var WMO={0:["☀️","晴"],1:["🌤️","大致晴"],2:["⛅","多雲時晴"],3:["☁️","陰"],45:["🌫️","霧"],48:["🌫️","霧凇"],51:["🌦️","毛毛雨"],53:["🌦️","毛毛雨"],55:["🌧️","毛毛雨"],61:["🌦️","小雨"],63:["🌧️","中雨"],65:["🌧️","大雨"],71:["🌨️","小雪"],73:["🌨️","中雪"],75:["❄️","大雪"],80:["🌦️","陣雨"],81:["🌧️","陣雨"],82:["⛈️","強陣雨"],95:["⛈️","雷雨"]};
 
 var PACK=[
@@ -1244,6 +1244,7 @@ function render(){
    '<span class="sw">'+st.w+'</span>'+
    '<div class="tags" style="margin-top:7px">'+
    '<a class="lk nav" target="_blank" rel="noopener" href="'+NAV(st.q,'walking')+'">📍 帶我去</a>'+
+   '<a class="lk map" target="_blank" rel="noopener" href="'+MAP(st.q)+'">🗺️ 看地圖</a>'+
    '<a class="lk web" href="tel:'+st.t.replace(/-/g,'')+'">☎ '+st.t+'</a></div></div>'})();
  /* 我的版本：有人改過就顯示切換列 */
  h+=(function(){
@@ -3186,7 +3187,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v234</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v236</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4608,7 +4609,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v234';
+var APPVER='kansai5-v236';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
