@@ -277,6 +277,25 @@ body.swiping main{background:var(--bg)}
  overflow:hidden;pointer-events:none;will-change:transform;
  z-index:1;background:var(--bg)}
 body{overflow-x:hidden}
+.leaves{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+ --leafsvg:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l1.6 4.3 4-1.4-1.8 3.9 4.2 1.2-3.6 2.4 3 3.2-4.4-.3.5 4.4-3.6-2.6-3.6 2.6.5-4.4-4.4.3 3-3.2L3.9 10l4.2-1.2L6.3 4.9l4 1.4z'/></svg>")}
+.leaf{position:absolute;top:-8vh;width:14px;height:14px;opacity:0;
+ will-change:transform,opacity;background:currentColor;
+ -webkit-mask:var(--leafsvg) center/contain no-repeat;
+ mask:var(--leafsvg) center/contain no-repeat;
+ animation:fall linear infinite}
+@keyframes fall{
+ 0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}
+ 8%{opacity:.5}92%{opacity:.32}
+ 100%{transform:translate3d(var(--drift,30px),108vh,0) rotate(var(--spin,320deg));opacity:0}}
+.leaf:nth-child(1){left:8%;color:#C4553B;animation-duration:15s;animation-delay:0s;--drift:34px;--spin:300deg;width:13px;height:13px}
+.leaf:nth-child(2){left:26%;color:#D4762F;animation-duration:19s;animation-delay:-4s;--drift:-26px;--spin:-260deg;width:11px;height:11px}
+.leaf:nth-child(3){left:44%;color:#B8452E;animation-duration:17s;animation-delay:-9s;--drift:40px;--spin:380deg;width:15px;height:15px}
+.leaf:nth-child(4){left:63%;color:#CE8A3A;animation-duration:21s;animation-delay:-13s;--drift:-34px;--spin:-300deg;width:12px;height:12px}
+.leaf:nth-child(5){left:79%;color:#A83E2B;animation-duration:16s;animation-delay:-6s;--drift:28px;--spin:340deg;width:14px;height:14px}
+.leaf:nth-child(6){left:92%;color:#D9954A;animation-duration:23s;animation-delay:-17s;--drift:-22px;--spin:-280deg;width:10px;height:10px}
+body.swiping .leaves{display:none}
+@media (prefers-reduced-motion:reduce){.leaves{display:none}}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -322,6 +341,25 @@ body.swiping main{background:var(--bg)}
  overflow:hidden;pointer-events:none;will-change:transform;
  z-index:1;background:var(--bg)}
 body{overflow-x:hidden}
+.leaves{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+ --leafsvg:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l1.6 4.3 4-1.4-1.8 3.9 4.2 1.2-3.6 2.4 3 3.2-4.4-.3.5 4.4-3.6-2.6-3.6 2.6.5-4.4-4.4.3 3-3.2L3.9 10l4.2-1.2L6.3 4.9l4 1.4z'/></svg>")}
+.leaf{position:absolute;top:-8vh;width:14px;height:14px;opacity:0;
+ will-change:transform,opacity;background:currentColor;
+ -webkit-mask:var(--leafsvg) center/contain no-repeat;
+ mask:var(--leafsvg) center/contain no-repeat;
+ animation:fall linear infinite}
+@keyframes fall{
+ 0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}
+ 8%{opacity:.5}92%{opacity:.32}
+ 100%{transform:translate3d(var(--drift,30px),108vh,0) rotate(var(--spin,320deg));opacity:0}}
+.leaf:nth-child(1){left:8%;color:#C4553B;animation-duration:15s;animation-delay:0s;--drift:34px;--spin:300deg;width:13px;height:13px}
+.leaf:nth-child(2){left:26%;color:#D4762F;animation-duration:19s;animation-delay:-4s;--drift:-26px;--spin:-260deg;width:11px;height:11px}
+.leaf:nth-child(3){left:44%;color:#B8452E;animation-duration:17s;animation-delay:-9s;--drift:40px;--spin:380deg;width:15px;height:15px}
+.leaf:nth-child(4){left:63%;color:#CE8A3A;animation-duration:21s;animation-delay:-13s;--drift:-34px;--spin:-300deg;width:12px;height:12px}
+.leaf:nth-child(5){left:79%;color:#A83E2B;animation-duration:16s;animation-delay:-6s;--drift:28px;--spin:340deg;width:14px;height:14px}
+.leaf:nth-child(6){left:92%;color:#D9954A;animation-duration:23s;animation-delay:-17s;--drift:-22px;--spin:-280deg;width:10px;height:10px}
+body.swiping .leaves{display:none}
+@media (prefers-reduced-motion:reduce){.leaves{display:none}}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
  border:1px solid rgba(91,168,196,.35);background:rgba(91,168,196,.08);font-size:13px;line-height:1.55}
 .stayb .sh{color:var(--cyan);font-weight:700;margin-right:7px}
@@ -498,7 +536,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v246 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v248 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -859,6 +897,7 @@ function ensureDays(){
    ST[p]=ST[p].filter(function(x){return x!==null&&x!==undefined})});
  if(!Array.isArray(ST.members)||ST.members.length!==5)
   ST.members=[0,1,2,3,4].map(function(i){return (ST.members&&ST.members[i])||''});
+ if(typeof ST.noLeaf!=='boolean')ST.noLeaf=false;
  if(typeof ST.me!=='number'||ST.me<0||ST.me>4)ST.me=(ST.me===null?null:0);
  if(typeof ST.geoRate!=='number'||ST.geoRate<0||ST.geoRate>2)ST.geoRate=0;
  if(ST.room!==null&&typeof ST.room!=='string')ST.room=null;
@@ -1190,7 +1229,8 @@ function renderSearch(q){
  main.innerHTML=h;
  [].forEach.call(main.querySelectorAll('[data-go]'),function(c){c.onclick=function(){
   document.getElementById('q').value='';cur=c.dataset.go;render()}});
- makeFoldable();topIfTabChanged()}
+ makeFoldable();topIfTabChanged();
+ try{if(window.__leaves)window.__leaves()}catch(e){}}
 
 function render(){
  var qv=(document.getElementById('q')||{}).value||'';
@@ -3208,7 +3248,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v246</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v248</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3422,7 +3462,7 @@ function backupRestore(code){
  if(code.indexOf(BK_PREFIX)!==0)return {ok:false,msg:'這不是備份代碼'};
  var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
  try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
- ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
+ ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','noLeaf','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
   if(o[k]!==undefined)ST[k]=o[k]});
  ensureDays();save();return {ok:true,msg:'已還原'}}
 
@@ -4678,7 +4718,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v246';
+var APPVER='kansai5-v248';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
@@ -4787,24 +4827,41 @@ function showUpd(){
  function idx(){return TABS.indexOf(cur)}
  /* 相鄰兩頁的 HTML 先算好放著 —— 拖曳當下不能現算（Day 1 要 40ms 會卡） */
  var CACHE2={};
+ /* 預熱一次要 90ms 以上，拆成一頁一頁做，中間讓瀏覽器喘口氣 */
+ var warmQ=[],warmRunning=false;
+ function warmOne(){
+  if(touching){warmRunning=false;scheduleWarm();return}   /* 使用者開始操作，立刻停手 */
+  if(!warmQ.length){warmRunning=false;return}
+  var k=warmQ.shift();
+  if(!(CACHE2[k]&&CACHE2[k].for===cur)){
+   /* 用離線容器算，不動到畫面上的 main —— 省掉一次重繪 */
+   var save=cur, realMain=main, tmp=document.createElement('div');
+   try{
+    main=tmp;cur=k;render();
+    CACHE2[k]={html:tmp.innerHTML,for:save};
+   }catch(e){}
+   main=realMain;cur=save;}
+  /* 用 requestIdleCallback 等瀏覽器有空再做下一頁 */
+  var next=function(){warmOne()};
+  if(typeof requestIdleCallback==='function')requestIdleCallback(next,{timeout:800});
+  else setTimeout(next,120)}
  function warm(){
   var i=idx();if(i<0)return;
-  [i-1,i+1].forEach(function(n){
-   if(n<0||n>=TABS.length)return;
-   var k=TABS[n];
-   if(CACHE2[k]&&CACHE2[k].for===cur)return;
-   var save=cur;
-   try{cur=k;render();CACHE2[k]={html:main.innerHTML,for:save}}catch(e){}
-   cur=save;
-   try{render()}catch(e){}});}
+  warmQ=[];
+  [i+1,i-1].forEach(function(n){   /* 先算下一頁，那個比較常用 */
+   if(n>=0&&n<TABS.length)warmQ.push(TABS[n])});
+  if(!warmRunning){warmRunning=true;warmOne()}}
  function htmlOf(k){
   var c=CACHE2[k];
   if(c&&c.html)return c.html;
   return '<div style="padding:40px 16px;text-align:center;color:var(--dim)">'+
    (D[k]?D[k].label:'')+'<br><span style="font-size:12px">放開手就會載入</span></div>'}
  /* 換頁或閒置時預先算好，不影響拖曳流暢度 */
- var warmT=null;
- function scheduleWarm(){clearTimeout(warmT);warmT=setTimeout(warm,400)}
+ var warmT=null,touching=false;
+ /* 手還在螢幕上就不預熱 —— 那 60ms 卡住的就是使用者的手勢 */
+ function scheduleWarm(){clearTimeout(warmT);warmT=setTimeout(function(){
+  if(touching){scheduleWarm();return}   /* 還在摸，晚點再說 */
+  warm()},1200)}
  function makePeek(k,side){
   killPeek();
   peek=document.createElement('div');
@@ -4834,6 +4891,7 @@ function showUpd(){
  var _dir=0;
  function dxDir(){return _dir}
  function onStart(e){
+  touching=true;clearTimeout(warmT);
   if(busy)return;
   var t=e.touches&&e.touches[0];if(!t)return;
   decided=false;active=false;dx=0;_dir=0;killPeek();
@@ -4863,6 +4921,7 @@ function showUpd(){
   dx=mx;setX(mx,false);
   if(e.cancelable)try{e.preventDefault()}catch(err){}}
  function onEnd(){
+  touching=false;scheduleWarm();
   if(!active){setX(0,false);killPeek();return}
   active=false;
   if(!decided){setX(0,false);killPeek();return}
@@ -4898,6 +4957,39 @@ function showUpd(){
   document.addEventListener('touchmove',onMove,{passive:false});
   document.addEventListener('touchend',onEnd,{passive:true});
   document.addEventListener('touchcancel',function(){active=false;decided=false;setX(0,true);setTimeout(function(){killPeek();try{document.body.classList.remove('swiping')}catch(e){}},260)},{passive:true});
+ }catch(e){}
+})();
+
+/* ===== 紅葉飄落：只在賞楓那幾天 ===== */
+(function(){
+ var LEAFDAYS={d1:1,d2:1,d4:1};
+ var box=null;
+ function ensure(){
+  if(box)return box;
+  box=document.createElement('div');
+  box.className='leaves';box.setAttribute('aria-hidden','true');
+  var h='';for(var i=0;i<6;i++)h+='<i class="leaf"></i>';
+  box.innerHTML=h;
+  if(document.body&&document.body.insertBefore)
+   document.body.insertBefore(box,document.body.firstChild);
+  return box}
+ window.__leaves=function(){
+  try{
+   if(ST&&ST.noLeaf){if(box&&box.parentNode)box.parentNode.removeChild(box);box=null;return}
+   if(LEAFDAYS[cur]){ensure();if(box)box.style.display=''}
+   else if(box)box.style.display='none';
+  }catch(e){}};
+ /* 長按 header 的日本時間可以開關楓葉 */
+ try{
+  var jst=document.getElementById('jst'),tmr=null;
+  if(jst){
+   jst.addEventListener('touchstart',function(){
+    tmr=setTimeout(function(){
+     ST.noLeaf=!ST.noLeaf;save();window.__leaves();
+     try{if(navigator.vibrate)navigator.vibrate(20)}catch(e){}
+     toast(ST.noLeaf?'楓葉關閉了':'🍁 楓葉打開了<br><span style="font-weight:400">長按時間可以再關掉</span>')},700)},{passive:true});
+   ['touchend','touchmove','touchcancel'].forEach(function(ev){
+    jst.addEventListener(ev,function(){clearTimeout(tmr)},{passive:true})});}
  }catch(e){}
 })();
 </script>
