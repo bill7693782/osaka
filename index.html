@@ -536,7 +536,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v248 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v250 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -1547,7 +1547,8 @@ function render(){
  if(rd)rd.onclick=function(){
   ask('清除 '+D[cur].label+' 的打卡紀錄？','落後偵測會歸零。',function(){
    ST.done[cur]={};save();keepScroll(render);toast('已清除打卡')});};
- makeFoldable();topIfTabChanged()}
+ makeFoldable();topIfTabChanged();
+ try{if(window.__leaves)window.__leaves()}catch(e){}}
 
 function openForm(id){
  var w=document.getElementById('formwrap');
@@ -3248,7 +3249,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v248</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v250</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4718,7 +4719,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v248';
+var APPVER='kansai5-v250';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
@@ -4973,12 +4974,22 @@ function showUpd(){
   if(document.body&&document.body.insertBefore)
    document.body.insertBefore(box,document.body.firstChild);
   return box}
- window.__leaves=function(){
+ var lastCur=null,lastNo=null;
+ function apply(){
   try{
-   if(ST&&ST.noLeaf){if(box&&box.parentNode)box.parentNode.removeChild(box);box=null;return}
+   if(ST&&ST.noLeaf){
+    if(box){try{(box.parentNode||document.body).removeChild(box)}catch(e){}}
+    box=null;return}
    if(LEAFDAYS[cur]){ensure();if(box)box.style.display=''}
    else if(box)box.style.display='none';
-  }catch(e){}};
+  }catch(e){}}
+ window.__leaves=apply;
+ /* 不靠各個 render 函式呼叫 —— 自己盯著 cur 變化，
+    這樣以後新增分頁或改渲染流程都不會漏掉 */
+ setInterval(function(){
+  var no=!!(ST&&ST.noLeaf);
+  if(cur===lastCur&&no===lastNo)return;
+  lastCur=cur;lastNo=no;apply()},250);
  /* 長按 header 的日本時間可以開關楓葉 */
  try{
   var jst=document.getElementById('jst'),tmr=null;
