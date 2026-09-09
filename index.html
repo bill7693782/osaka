@@ -279,21 +279,21 @@ body.swiping main{background:var(--bg)}
 body{overflow-x:hidden}
 .leaves{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
  --leafsvg:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l1.6 4.3 4-1.4-1.8 3.9 4.2 1.2-3.6 2.4 3 3.2-4.4-.3.5 4.4-3.6-2.6-3.6 2.6.5-4.4-4.4.3 3-3.2L3.9 10l4.2-1.2L6.3 4.9l4 1.4z'/></svg>")}
-.leaf{position:absolute;top:-8vh;width:14px;height:14px;opacity:0;
+.leaf{position:absolute;top:-8vh;width:28px;height:28px;opacity:0;
  will-change:transform,opacity;background:currentColor;
  -webkit-mask:var(--leafsvg) center/contain no-repeat;
  mask:var(--leafsvg) center/contain no-repeat;
  animation:fall linear infinite}
 @keyframes fall{
  0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}
- 8%{opacity:.5}92%{opacity:.32}
+ 8%{opacity:.42}92%{opacity:.26}
  100%{transform:translate3d(var(--drift,30px),108vh,0) rotate(var(--spin,320deg));opacity:0}}
-.leaf:nth-child(1){left:8%;color:#C4553B;animation-duration:15s;animation-delay:0s;--drift:34px;--spin:300deg;width:13px;height:13px}
-.leaf:nth-child(2){left:26%;color:#D4762F;animation-duration:19s;animation-delay:-4s;--drift:-26px;--spin:-260deg;width:11px;height:11px}
-.leaf:nth-child(3){left:44%;color:#B8452E;animation-duration:17s;animation-delay:-9s;--drift:40px;--spin:380deg;width:15px;height:15px}
-.leaf:nth-child(4){left:63%;color:#CE8A3A;animation-duration:21s;animation-delay:-13s;--drift:-34px;--spin:-300deg;width:12px;height:12px}
-.leaf:nth-child(5){left:79%;color:#A83E2B;animation-duration:16s;animation-delay:-6s;--drift:28px;--spin:340deg;width:14px;height:14px}
-.leaf:nth-child(6){left:92%;color:#D9954A;animation-duration:23s;animation-delay:-17s;--drift:-22px;--spin:-280deg;width:10px;height:10px}
+.leaf:nth-child(1){left:6%;color:#C4553B;animation-duration:16s;animation-delay:0s;--drift:52px;--spin:300deg;width:30px;height:30px}
+.leaf:nth-child(2){left:24%;color:#D4762F;animation-duration:20s;animation-delay:-5s;--drift:-44px;--spin:-260deg;width:24px;height:24px}
+.leaf:nth-child(3){left:43%;color:#B8452E;animation-duration:18s;animation-delay:-9s;--drift:60px;--spin:380deg;width:34px;height:34px}
+.leaf:nth-child(4){left:62%;color:#CE8A3A;animation-duration:22s;animation-delay:-13s;--drift:-50px;--spin:-300deg;width:26px;height:26px}
+.leaf:nth-child(5){left:78%;color:#A83E2B;animation-duration:17s;animation-delay:-7s;--drift:46px;--spin:340deg;width:32px;height:32px}
+.leaf:nth-child(6){left:91%;color:#D9954A;animation-duration:24s;animation-delay:-17s;--drift:-38px;--spin:-280deg;width:22px;height:22px}
 body.swiping .leaves{display:none}
 @media (prefers-reduced-motion:reduce){.leaves{display:none}}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
@@ -343,21 +343,21 @@ body.swiping main{background:var(--bg)}
 body{overflow-x:hidden}
 .leaves{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
  --leafsvg:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l1.6 4.3 4-1.4-1.8 3.9 4.2 1.2-3.6 2.4 3 3.2-4.4-.3.5 4.4-3.6-2.6-3.6 2.6.5-4.4-4.4.3 3-3.2L3.9 10l4.2-1.2L6.3 4.9l4 1.4z'/></svg>")}
-.leaf{position:absolute;top:-8vh;width:14px;height:14px;opacity:0;
+.leaf{position:absolute;top:-8vh;width:28px;height:28px;opacity:0;
  will-change:transform,opacity;background:currentColor;
  -webkit-mask:var(--leafsvg) center/contain no-repeat;
  mask:var(--leafsvg) center/contain no-repeat;
  animation:fall linear infinite}
 @keyframes fall{
  0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}
- 8%{opacity:.5}92%{opacity:.32}
+ 8%{opacity:.42}92%{opacity:.26}
  100%{transform:translate3d(var(--drift,30px),108vh,0) rotate(var(--spin,320deg));opacity:0}}
-.leaf:nth-child(1){left:8%;color:#C4553B;animation-duration:15s;animation-delay:0s;--drift:34px;--spin:300deg;width:13px;height:13px}
-.leaf:nth-child(2){left:26%;color:#D4762F;animation-duration:19s;animation-delay:-4s;--drift:-26px;--spin:-260deg;width:11px;height:11px}
-.leaf:nth-child(3){left:44%;color:#B8452E;animation-duration:17s;animation-delay:-9s;--drift:40px;--spin:380deg;width:15px;height:15px}
-.leaf:nth-child(4){left:63%;color:#CE8A3A;animation-duration:21s;animation-delay:-13s;--drift:-34px;--spin:-300deg;width:12px;height:12px}
-.leaf:nth-child(5){left:79%;color:#A83E2B;animation-duration:16s;animation-delay:-6s;--drift:28px;--spin:340deg;width:14px;height:14px}
-.leaf:nth-child(6){left:92%;color:#D9954A;animation-duration:23s;animation-delay:-17s;--drift:-22px;--spin:-280deg;width:10px;height:10px}
+.leaf:nth-child(1){left:6%;color:#C4553B;animation-duration:16s;animation-delay:0s;--drift:52px;--spin:300deg;width:30px;height:30px}
+.leaf:nth-child(2){left:24%;color:#D4762F;animation-duration:20s;animation-delay:-5s;--drift:-44px;--spin:-260deg;width:24px;height:24px}
+.leaf:nth-child(3){left:43%;color:#B8452E;animation-duration:18s;animation-delay:-9s;--drift:60px;--spin:380deg;width:34px;height:34px}
+.leaf:nth-child(4){left:62%;color:#CE8A3A;animation-duration:22s;animation-delay:-13s;--drift:-50px;--spin:-300deg;width:26px;height:26px}
+.leaf:nth-child(5){left:78%;color:#A83E2B;animation-duration:17s;animation-delay:-7s;--drift:46px;--spin:340deg;width:32px;height:32px}
+.leaf:nth-child(6){left:91%;color:#D9954A;animation-duration:24s;animation-delay:-17s;--drift:-38px;--spin:-280deg;width:22px;height:22px}
 body.swiping .leaves{display:none}
 @media (prefers-reduced-motion:reduce){.leaves{display:none}}
 .stayb{margin:0 0 9px;padding:10px 12px;border-radius:11px;
@@ -536,7 +536,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v250 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v251 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -3249,7 +3249,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v250</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v251</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4719,7 +4719,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v250';
+var APPVER='kansai5-v251';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
@@ -4963,7 +4963,8 @@ function showUpd(){
 
 /* ===== 紅葉飄落：只在賞楓那幾天 ===== */
 (function(){
- var LEAFDAYS={d1:1,d2:1,d4:1};
+ /* 全部分頁都飄 —— 這是賞楓之旅 */
+ var LEAFDAYS=null;
  var box=null;
  function ensure(){
   if(box)return box;
@@ -4980,8 +4981,7 @@ function showUpd(){
    if(ST&&ST.noLeaf){
     if(box){try{(box.parentNode||document.body).removeChild(box)}catch(e){}}
     box=null;return}
-   if(LEAFDAYS[cur]){ensure();if(box)box.style.display=''}
-   else if(box)box.style.display='none';
+   ensure();if(box)box.style.display='';
   }catch(e){}}
  window.__leaves=apply;
  /* 不靠各個 render 函式呼叫 —— 自己盯著 cur 變化，
