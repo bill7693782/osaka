@@ -464,6 +464,13 @@ h2.sec.fold .ar{transform:rotate(-90deg)}
 .chk .x{flex:1;font-size:14px}
 .chk .x small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
 .chk.done .x{opacity:.42;text-decoration:line-through}
+.taskrow{display:flex;align-items:stretch;gap:6px;margin-bottom:7px;scroll-margin-top:145px}
+.taskrow .chk{flex:1;min-width:0;margin:0}
+.taskowner{width:104px;flex:0 0 104px;background:var(--surface2);border:1px solid var(--line);border-radius:4px;color:var(--paper);font:inherit;font-size:12px;padding:7px 4px}
+.tasksummary{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.tasksummary b{color:var(--amber)}
+.tasklink{display:block;width:100%;text-align:left;background:var(--surface2);border:1px solid var(--line);border-radius:5px;color:var(--paper);font:inherit;font-size:12.5px;padding:8px 10px;margin-top:5px;cursor:pointer}
+.tasklink small{display:block;color:var(--dim);font-size:11px}
 .tel{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:7px;color:var(--paper);text-decoration:none}
 .tel .n{font-size:14.5px}.tel .n small{display:block;color:var(--dim);font-size:12px}
 .tel .num{font-size:14px;color:var(--amber);white-space:nowrap}
@@ -536,7 +543,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v251 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v253 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -714,11 +721,11 @@ w:[["🎰 一番くじ公式ショップ 心斎橋PARCO","https://www.google.com
 {a:"18:35",b:"18:47",t:"🚇 大國町 → 天王寺",g:["¥190"],k:"move",dir:["大国町駅","天王寺駅","transit"],x:"<ul><li><b>班距</b>：御堂筋線，約 4 分一班 —— <b>時刻是參考，錯過下一班很快</b></li><li class='warn'>🚪 御堂筋線，<b>天王寺站下車後跟著「JR」指標走</b> —— 轉 はるか 要走一段，這是排 15 分鐘的原因</li></ul>"},
 {a:"18:47",b:"19:02",t:"🚶 天王寺站轉乘",g:["15分"],dead:1,q:"天王寺駅",x:"<ul><li class='warn'>はるか 有異狀 → <b>立刻改南海空港急行</b></li><li class='warn'>🛟 <b>轉乘來不及怎麼辦</b>：はるか 約 30 分一班，<b>下一班 19:35</b>（20:20 到機場）。<br>還來得及，但退稅和報到會很趕。<br>💡 <b>真的趕不上就搭南海電鐵</b>（難波發車，比較常有班次），或 JR 關空快速。</li></ul>"},
 {a:"19:05",b:"19:50",t:"🚆 はるか → 關西機場",g:["JR Pass"],k:"move",dir:["天王寺駅","関西空港駅","transit"],x:"<ul><li class='warn'>🎫 <b>指定席已劃位</b>，對號入座｜約 45 分直達</li><li class='warn'>🧳 <b>五個大箱</b>：車廂兩端有大型行李放置區，上車先放好</li><li>💡 <b>這是最後一段 JR Pass 的行程</b>，之後票券就沒用了</li><li class='warn'>⏰ <b>19:50 到機場，23:10 起飛</b> —— 中間要退稅查驗、報到託運、過安檢，時間不算多</li></ul>"},
-{a:"19:55",b:"20:40",t:"🚨 Tax-Free KIOSK 退稅查驗",g:["3F中央"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'>🚨 <b>你們是新制上路第 13 天 —— 專家建議「比平時提早 1 到 1.5 小時到機場」</b><br>2026/11/1 全面改為「先付含稅、機場退稅」，11–12 月是最混亂的過渡期<br>你們 19:50 到、23:10 起飛，<b>時間夠但別在免稅店耗太久</b></li><li class='warn'>🔑 <b>最關鍵：購物當下就要登錄退款方式</b>（信用卡或銀行帳戶）<br>「退款方式要在<b>購物階段先處理好</b>，設定好後到機場才不會手忙腳亂」<br>👉 <b>每一家店結帳時都要確認有登錄</b>，沒登錄到機場就退不了</li><li class='warn'>💴 <b>門檻：同一店同日未稅 ¥5,000 以上</b>（含稅 ¥5,500）<br>✅ 新制<b>取消了 ¥500,000 消耗品上限</b>，買多少都能退<br>✅ <b>消耗品不用再密封包裝</b> —— 藥妝零食可以當場拆來吃</li><li class='warn'>📍 <b>退稅區在出境大廳、安檢之前</b> —— 過了安檢就辦不了<br>⏱️ 退款到帳：<b>信用卡 1–2 週、銀行轉帳 2–4 週</b>（不是當場拿現金）</li><li class='warn'>🧳 <b>要託運的免稅品必須在託運前先查驗</b> —— 順序是「退稅 → 報到託運」，不能反過來</li><li class='warn'><b>絕對不能先去託運行李</b></li><li class='warn'>🛟 <b>排太長怎麼辦</b>：2026/11 新制上路，<b>可能比預期久</b>。<br><b>派一個人先去報到託運</b>，其他人排退稅。<br>真的趕不上就<b>放棄退稅</b> —— 幾千日圓不值得誤機。</li></ul>"},
+{a:"19:55",b:"20:40",t:"🚨 Tax-Free KIOSK 退稅查驗",g:["3F中央"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'>🚨 <b>2026/11/1 起改為先付含稅價、離境時查驗，再由店家或委託業者退款</b><br>你們 19:50 到、23:10 起飛，<b>別在免稅店耗太久</b></li><li class='warn'>🔑 <b>購物時向各店確認退款方式與所需資料</b>，依店家的指示辦理；退款時間也以店家公告為準</li><li class='warn'>💴 <b>門檻：同一店同日未稅 ¥5,000 以上</b>（含稅 ¥5,500）<br>✅ 新制取消消耗品的特殊密封包裝與 ¥500,000 上限<br>🚫 <b>同一筆交易的退稅品須全部帶出境；少了一件，整筆交易就不能退稅</b></li><li class='warn'>📍 <b>先在出境大廳、託運前完成查驗</b>，關西機場也可依官方指示使用 Visit Japan Web；若顯示需要檢查，帶商品到海關查驗</li><li class='warn'>🧳 <b>要託運的免稅品必須在託運前先查驗</b> —— 順序是「查驗 → 報到託運」，不能反過來</li><li class='warn'>🛟 <b>排太長怎麼辦</b>：先確認登機與報到截止時間。真的趕不上就<b>放棄退稅</b>，不要為了退款誤機。</li></ul>"},
 {a:"20:40",b:"21:15",t:"✈️ 捷星報到托運",g:["起飛前 60 分關櫃","🚨 五人合併秤重"],dead:1,q:"関西国際空港 第1ターミナル 出発",x:"<ul><li class='warn'>🚨 <b>捷星是「看總重量、不限件數」，五個人的額度可以合併</b><br>假設五人各買 20kg = <b>100kg 一起算</b>，一個人 25kg、另一個 15kg 也過<br>⚠️ 但<b>單件不能超過 32kg</b><br>👉 <b>秤重前先把五個箱子排在一起</b>，重的分一點到輕的箱子</li><li class='warn'>💰 <b>現場加購最貴，一定要提前上網買</b><br>價格順序：訂票時 ＜ 事後上管理預訂 ＜ <b>機場現場（最貴）</b><br>捷星日本(GK)：<b>首 15kg 按機場價，超過每公斤另計</b><br>👉 <b>發現要超重，立刻用手機上 Jetstar App 加購</b>，比在櫃檯買便宜</li><li class='warn'>🎒 <b>手提行李是隱藏額度</b> —— 每人 7kg，五個人 <b>35kg</b><br>託運超重時，把<b>重的東西移到隨身包</b>（藥妝、電器）<br>⚠️ 手提是「登機箱＋隨身包合計 7kg」，地勤看總重<br>⚠️ 分成兩袋的伴手禮，<b>地勤會要求合成一袋</b>才讓過</li><li class='warn'>🔋 <b>行動電源嚴禁託運</b> —— 五個人的都要在隨身包<br>⚠️ 買的電器如果內建鋰電池（相機、刮鬍刀），<b>也不能託運</b></li><li class='warn'>⏰ <b>櫃檯起飛前 60 分鐘（22:10）關閉</b><br>實訪：提早 2.5 小時到還是<b>大排長龍，開三個櫃檯等 30 分鐘</b><br>你們 20:40 到（提早 2.5 小時），<b>時間剛好，不要更晚</b><br>🛟 <b>排太長</b>：先用 Jetstar App 線上報到，只排託運隊伍</li><li>🧳 <b>行李長最後清點五件</b>｜出發前用行李秤先量過（行李清單裡有）</li><li class='warn'>🛟 <b>趕不上關櫃（22:10）怎麼辦</b><br>捷星<b>不接受遲到報到</b>，錯過就是重買機票。<br>👉 <b>提早一小時到，不要賭</b>｜19:50 抵達關西機場後，<b>先報到再去買東西</b><br>💡 真的遲到：立刻到捷星櫃檯問改簽，但廉航改簽費用通常接近重買</li><li class='warn'>☎️ <b>出事打這支</b>｜日本境內 <b>0570-550-538</b>（9:00–21:00）｜手機打 <b>050-3163-8538</b><br>兩支都是<b>按 2 選英語</b>｜24 小時英語：<b>+61-3-9645-5999</b>（國際電話收費）</li></ul>"},
-{a:"21:15",b:"22:20",t:"🛍️ KIX 免稅店",q:"関西国際空港 第1ターミナル",g:["65分","🕐 多數 6:30–最終航班・部分 24 小時"],dead:1,x:"<ul><li class='warn'><b>先買便當帶去登機門</b></li><li>酒類每人 1 公升，<b>五人分裝</b></li><li class='warn'>🛟 <b>時間不夠怎麼辦</b>：<b>直接去登機門</b>。<br>免稅店的東西台灣機場也買得到，<b>不要為了買東西賭登機時間</b>。</li></ul>"},
-{a:"22:20",b:"22:50",t:"🚶 前往登機門",g:["起飛前20分關門"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>捷星登機門通常起飛前 20 分鐘關閉</b> —— 22:50 前一定要到</li><li>KIX 第一航廈國際線登機門可能要搭接駁電車，<b>多抓 10 分鐘</b></li><li>最後上廁所、裝水</li><li class='warn'>🛟 <b>找不到登機門怎麼辦</b>：<b>看電子看板確認</b>，捷星有時會臨時換門。<br>國際線可能要搭接駁電車，<b>不確定就問地勤</b>，不要自己猜。</li></ul>"},
-{a:"22:50",b:"23:10",t:"✈️ 登機",q:"関西国際空港 第1ターミナル",g:["五人清點"],x:"<ul><li class='warn'>🚪 <b>起飛前 20 分鐘關艙門</b>（22:50）—— 那不是「開始登機」是「關門」<br>👉 <b>22:30 前一定要到登機門</b>，關西機場第一航廈很大，走過去要時間</li><li class='warn'>🧳 <b>行李長最後清點</b>：五個人、五件隨身行李、五本護照<br>🔋 <b>行動電源在隨身包不在託運箱</b>（最後確認一次）</li><li class='warn'>🍱 <b>捷星餐點要另外買</b> —— 在免稅店先買好帶上機<br>登機門附近有販賣機，但深夜可能沒東西</li><li>⌚ <b>手錶調回台灣時間</b>，慢一小時<br>😴 機上四小時，<b>能睡就睡</b> —— 01:30 落地是凌晨，回家還有一段路</li></ul>"},
+{a:"21:15",b:"22:00",t:"🛍️ KIX 免稅店",q:"関西国際空港 第1ターミナル",g:["45分","🕐 多數 6:30–最終航班・部分 24 小時"],dead:1,x:"<ul><li class='warn'><b>先買便當帶去登機門；22:00 就往登機門走</b></li><li>酒類每人 1 公升，<b>五人分裝</b></li><li class='warn'>🛟 <b>時間不夠怎麼辦</b>：<b>直接去登機門</b>。<br>免稅店的東西台灣機場也買得到，<b>不要為了買東西賭登機時間</b>。</li></ul>"},
+{a:"22:00",b:"22:30",t:"🚶 前往登機門",g:["22:30 前到登機門"],dead:1,q:"関西国際空港 第1ターミナル",x:"<ul><li class='warn'><b>22:30 前一定要到登機門</b>，以登機證與機場公告的時間為準；不要把關門時間當抵達時間</li><li>KIX 第一航廈國際線登機門可能要搭接駁電車，<b>多抓 10 分鐘</b></li><li>最後上廁所、裝水</li><li class='warn'>🛟 <b>找不到登機門怎麼辦</b>：<b>看電子看板確認</b>，捷星有時會臨時換門。<br>國際線可能要搭接駁電車，<b>不確定就問地勤</b>，不要自己猜。</li></ul>"},
+{a:"22:30",b:"22:50",t:"✈️ 登機",q:"関西国際空港 第1ターミナル",g:["五人清點","依登機證時間"],x:"<ul><li class='warn'>🚪 <b>22:30 前到登機門，依登機證與現場公告登機</b>；不要等到預估關門時間才到</li><li class='warn'>🧳 <b>行李長最後清點</b>：五個人、五件隨身行李、五本護照<br>🔋 <b>行動電源在隨身包不在託運箱</b>（最後確認一次）</li><li class='warn'>🍱 <b>捷星餐點要另外買</b> —— 在免稅店先買好帶上機<br>登機門附近有販賣機，但深夜可能沒東西</li><li>⌚ <b>手錶調回台灣時間</b>，慢一小時<br>😴 機上四小時，<b>能睡就睡</b> —— 01:30 落地是凌晨，回家還有一段路</li></ul>"},
 {a:"23:10",b:"23:59",t:"🛫 GK057 返台",g:["01:30 抵桃園"],x:"<ul><li><b>23:10 起飛，01:30 抵桃園</b>（台灣時間）</li><li class='warn'>⌚ <b>手錶調回台灣時間</b>，慢一小時</li><li class='warn'>🔋 <b>行動電源在隨身包不在託運箱</b></li><li>😴 機上四小時，<b>能睡就睡</b> —— 落地是凌晨，回家還要一段路</li><li>🍱 捷星餐點要另外買，<b>上機前先在免稅店買點東西</b></li></ul>"}]},
 split:{label:"分帳",date:"五人"},
 shop:{label:"購物",date:"個人"},
@@ -887,10 +894,12 @@ if(ST.picOpen===undefined)ST.picOpen=false;
 if(ST.compact===undefined)ST.compact=false;
 if(ST.shopInit===undefined)ST.shopInit=false;
 if(!ST.sos)ST.sos={};
-if(ST.voice===undefined)ST.voice='';
+ if(ST.voice===undefined)ST.voice='';
+ if(!ST.tasks||typeof ST.tasks!=='object'||Array.isArray(ST.tasks))ST.tasks={};
+ if(!ST.taskPending||typeof ST.taskPending!=='object'||Array.isArray(ST.taskPending))ST.taskPending={};
 function ensureDays(){
  /* 壞資料防護：同步或舊備份還原可能帶進非預期的型別 */
- ["adhoc","edit","hide","chk","done","diet","dietX","paid","pos","avatars","plans"]
+  ["adhoc","edit","hide","chk","done","diet","dietX","paid","pos","avatars","plans","tasks","taskPending"]
   .forEach(function(p){if(!ST[p]||typeof ST[p]!=='object'||Array.isArray(ST[p]))ST[p]={}});
  ["exp","expDel","shop","myPlaces","packAdd"]
   .forEach(function(p){if(!Array.isArray(ST[p]))ST[p]=[];
@@ -927,6 +936,27 @@ function ensureDays(){
 ensureDays();
 function save(){if(!CAN)return;try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
 function mem(i){return ST.members[i]||("成員"+(i+1))}
+function taskItems(){return BOOK.map(function(x,i){return {id:'bk_'+(x[3]||('n'+i)),title:x[1],due:x[0],detail:x[2],group:'訂位與劃位'}})
+ .concat(CHECK.map(function(x,i){return {id:'c'+i,title:x[0],due:'出發前',detail:x[1],group:'出發前還要查'}}))}
+function taskState(id){var x=ST.tasks[id];return x&&typeof x==='object'?x:{done:!!ST.chk[id],owner:-1}}
+function taskEsc(x){return String(x||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function setTask(id,change){var old=taskState(id),x={done:!!old.done,owner:typeof old.owner==='number'?old.owner:-1};
+ if(change.done!==undefined)x.done=!!change.done;
+ if(change.owner!==undefined)x.owner=change.owner;
+ ST.tasks[id]=x;ST.chk[id]=x.done;ST.taskPending[id]=true;save();
+ if(fbReady())pushTask(id)}
+function taskRow(x){var v=taskState(x.id),on=!!v.done;
+ return '<div class="taskrow" id="task-'+x.id+'"><label class="chk'+(on?' done':'')+'" data-id="'+x.id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x.title+'<small>'+x.due+(x.detail?' ・ '+x.detail:'')+'</small></span></label>'+
+ '<select class="taskowner" data-task-owner="'+x.id+'" aria-label="'+taskEsc(x.title)+' 負責人"><option value="-1">未指派</option>'+
+ [0,1,2,3,4].map(function(i){return '<option value="'+i+'"'+(v.owner===i?' selected':'')+'>'+taskEsc(mem(i))+'</option>'}).join('')+'</select></div>'}
+function taskDue(x){var m=/^(\d{1,2})\/(\d{1,2})/.exec(x.due||'');return m?+m[1]*100+(+m[2]):1112}
+function taskDashboard(){var all=taskItems(),open=all.filter(function(x){return !taskState(x.id).done}),pending=Object.keys(ST.taskPending).length;
+ open.sort(function(a,b){return taskDue(a)-taskDue(b)});
+ var list=open.slice(0,6).map(function(x){var s=taskState(x.id);
+  return '<button class="tasklink" data-task-jump="'+x.id+'">'+taskEsc(x.title)+'<small>'+taskEsc(x.due)+' ・ '+taskEsc(s.owner>=0?mem(s.owner):'未指派')+'</small></button>'}).join('');
+ return '<h2 class="sec">五人行前進度</h2><div class="note"><div class="tasksummary"><span><b>'+open.length+'</b> 項未完成／共 '+all.length+' 項</span><span>'+ (ST.room?(pending?'⏳ '+pending+' 項待同步':'☁️ 房間同步'):'📱 僅此手機')+'</span></div>'+
+ (open.length?list+(open.length>6?'<div class="hint">還有 '+(open.length-6)+' 項，往下看完整清單</div>':''):'<b>全部完成 ✓</b>')+
+ '<div class="hint">每項可勾選完成並指派負責人。加入房間後會同步給五個人；離線修改會在下次連線時補送。</div></div>'}
 
 var nav=document.getElementById('nav'),main=document.getElementById('main'),toastEl=document.getElementById('toast'),live=document.getElementById('live');
 var cur='d1',editing=null,WX={},WXFAR=0;
@@ -1030,7 +1060,7 @@ Object.keys(D).forEach(function(k){var v=D[k],b=document.createElement('button')
  if(DAYTHEME[k]){b.style.setProperty('--dayc',DAYTHEME[k].c);b.classList.add('dayt')}
  b.onclick=function(){var q=document.getElementById('q');if(q)q.value='';
   if(speakSupported()&&speechSynthesis.speaking){speechSynthesis.cancel();SPK.cur=null}
-  cur=k;editing=null;render()};b.dataset.k=k;
+   cur=k;editing=null;render();if(k==='prep'&&fbReady())roomSync(true)};b.dataset.k=k;
  if(k==='split')b.classList.add('sep');
  b.style.position='relative';
  nav.appendChild(b)});
@@ -2746,7 +2776,7 @@ var ROUTE={
  ["<b>指定席已劃位</b>，對號入座","約 45 分直達"],
  "關西機場站，<b>往 T1 走</b>"],
 "🚶 前往登機門":["免稅店逛完",
- ["🚨 <b>捷星登機門通常起飛前 20 分關閉 → 22:50 前一定要到</b>",
+ ["🚨 <b>22:30 前到登機門；登機與關門時間以登機證和現場公告為準</b>",
   "KIX 第一航廈國際線<b>可能要搭接駁電車</b>，多抓 10 分鐘",
   "最後上廁所、裝水"],
  "登機門"]
@@ -3249,7 +3279,7 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v251</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v253</span>');
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3399,7 +3429,7 @@ function renderHelp(){
    '點搜尋結果會跳到對應分頁，<b>點搜尋框右邊的 ✕ 或直接點任一分頁</b>都能返回。');
 
  h+=sec('備份 —— 這個很重要');
- h+=w('<b>所有資料只存在你這支手機裡。</b><br>清除瀏覽器資料、換手機、iOS 回收 PWA 空間，行程調整、購物清單、行李勾選、大頭貼都會消失。<br><br>'+
+ h+=w('<b>個人資料與未同步的修改仍要備份。</b><br>清除瀏覽器資料、換手機、iOS 回收 PWA 空間，行程調整、行李勾選、大頭貼等資料可能會消失。<br><br>'+
    '「準備」分頁 → <b>⬇️ 下載備份檔</b>（建議用這個，含大頭貼也不會失敗）→ 存到雲端硬碟或傳給自己。<br>'+
    '要還原時按 <b>⬆️ 從檔案還原</b>。<br><br>'+
    '也可以按「產生短代碼」複製一段文字貼到備忘錄，<b>但短代碼不含大頭貼</b>。<br>'+
@@ -3421,13 +3451,13 @@ function renderHelp(){
    '<span style="color:var(--dim)">上方顯示打包進度，只算沒隱藏的項目。你的增補只存在自己手機上。</span><br><br>'+
    '<b>資訊</b>　每人預算彙總（含台幣換算）、2026 退稅新制、隨身 vs 託運、台灣海關規定。<br><br>'+
    '<b>分享</b>　QR Code 給其他人掃、共享相簿連結、離線快取狀態。<br><br>'+
-   '<b>準備</b>　你的身分、<b>航班資訊</b>、<b>備份與還原</b>、住宿資料、訂位與劃位清單、電話簿、現金配置、死線提醒設定、團隊規則、出發前還要查的事。');
+   '<b>準備</b>　五人共用行前進度與負責人、<b>航班資訊</b>、<b>備份與還原</b>、住宿資料、訂位與劃位清單、電話簿、現金配置、死線提醒設定、團隊規則、出發前還要查的事。');
 
  h+=sec('離線與更新');
  h+=g('<b>離線可用</b><br>App 會把自己整份存進手機，<b>飛航模式、地下鐵、訊號差的地方都能開</b>。天氣和匯率會顯示上次抓到的資料。<br>'+
    '<span style="color:var(--dim)">地圖、路線、搜尋這些需要網路的功能離線時無法使用。</span>');
  h+=n('<b>更新到新版</b><br>如果底部版本號不是最新，在網址後面加上 <b>?v=數字</b>（例如 ?v=17）強制更新。<br>已經加到主畫面的話快取會很頑固 —— <b>把桌面圖示刪掉，用瀏覽器重開網址，再重新加入主畫面。</b>');
- h+=w('<b>資料存在哪裡</b><br>勾選、購物清單、分帳、大頭貼都存在<b>你自己的手機裡</b>，不會自動備份。<br>清除瀏覽器資料會全部消失。重要的東西（例如分帳）記得用「複製」功能備份到群組。');
+ h+=w('<b>資料存在哪裡</b><br>行前進度與負責人加入房間後會同步；個人設定、行李勾選與大頭貼仍存在<b>你自己的手機裡</b>。<br>清除瀏覽器資料可能讓本機資料消失，出發前記得下載備份檔。');
 
  h+=sec('五人團最重要的三條');
  h+=w('<b>1. 三個不准現場討論的決定</b><br>Day 2 午餐拖到 14:00 後就放棄遊覽船；Day 3 沒趕上 15:50 的 JR 就搭下一班並打給万正；Day 5 はるか 有異狀立刻改南海空港急行。<b>詳見「準備」分頁。</b>'+
@@ -3453,9 +3483,9 @@ function backupFromFile(file){
 var BK_PREFIX="K5BK";          /* 備份碼 */
 var LG_PREFIX="K5";            /* 同步碼．注意 K5BK 以 K5 開頭，驗證時要先擋掉 */
 function backupCode(){
- var o={v:27,plans:ST.plans,who:ST.who,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
+ var o={v:28,plans:ST.plans,who:ST.who,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
   chk:ST.chk,done:ST.done,edit:ST.edit,hide:ST.hide,adhoc:ST.adhoc,room:ST.room,expDel:ST.expDel,shopInit:ST.shopInit,packAdd:ST.packAdd,packHide:ST.packHide,myPlaces:ST.myPlaces,picOpen:ST.picOpen,packOnlyTodo:ST.packOnlyTodo,compact:ST.compact,
-  album:ST.album,rate:ST.rate,sos:ST.sos};
+   album:ST.album,rate:ST.rate,sos:ST.sos,tasks:ST.tasks,taskPending:ST.taskPending};
  return BK_PREFIX+b64e(JSON.stringify(o))}
 function backupRestore(code){
  code=(code||'').trim();
@@ -3463,7 +3493,7 @@ function backupRestore(code){
  if(code.indexOf(BK_PREFIX)!==0)return {ok:false,msg:'這不是備份代碼'};
  var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
  try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
- ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','noLeaf','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet'].forEach(function(k){
+  ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','noLeaf','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet','tasks','taskPending'].forEach(function(k){
   if(o[k]!==undefined)ST[k]=o[k]});
  ensureDays();save();return {ok:true,msg:'已還原'}}
 
@@ -3856,25 +3886,23 @@ function renderInfo(){
   '<b>② Day 3 奈良寄行李</b> —— 五個大箱約 <b>¥3,000</b>，人工窗口只收現金<br>'+
   '💡 那天總支出約 <b>¥5,500／人</b>，是全程最高的一天</div>';
  h+='<h2 class="sec">2026 日本離境退稅新制（11/01 上路）</h2>';
- h+='<div class="note" style="border-left-color:var(--red)"><b>核心順序：市區先付含稅價 → 包裝可拆 → 機場先做 KIOSK 查驗 → 才能託運行李。</b></div>';
+ h+='<div class="note" style="border-left-color:var(--red)"><b>核心順序：市區先付含稅價 → 退稅品完整帶到機場 → 託運前完成海關查驗 → 店家或委託業者退款。</b></div>';
  h+='<div class="note" style="border-left-color:var(--red)">'+
   '<b>🚨 你們是新制上路第 13 天</b><br>'+
-  '新制 <b>2026/11/1</b> 才全面實施，你們 11/13 到 —— <b>11 至 12 月是最混亂的過渡期</b>。<br>'+
+   '新制 <b>2026/11/1</b> 起實施，你們 11/13 抵達；請為離境查驗保留時間。<br>'+
   '專家建議：<b>比平時提早 1 到 1.5 小時到機場</b>。你們 19:50 到、23:10 起飛，時間夠，但<b>別在免稅店耗太久</b>。<br><br>'+
-  '<b>🔑 最關鍵：購物當下就要登錄退款方式</b><br>'+
-  '結帳時要選好退款要匯到<b>信用卡還是銀行帳戶</b>。<b>沒登錄的話，到機場才發現退不了。</b><br>'+
-  '👉 <b>每一家店結帳時都確認一次。</b><br><br>'+
-  '<b>💴 門檻與到帳</b><br>'+
+   '<b>🔑 購物時確認退款方式</b><br>'+
+   '退款由各免稅店或其委託業者辦理；<b>結帳時向店家確認所需資料、退款方式與預計時間。</b><br><br>'+
+  '<b>💴 門檻與退款</b><br>'+
   '・同一店同日<b>未稅 ¥5,000 以上</b>（含稅 ¥5,500）才能退<br>'+
-  '・新制<b>取消 ¥500,000 消耗品上限</b>，買多少都能退<br>'+
-  '・<b>不是當場拿現金</b> —— 信用卡 1–2 週、銀行轉帳 2–4 週才入帳<br>'+
+   '・新制<b>取消 ¥500,000 消耗品上限</b>，但只限本人能攜帶出境的數量<br>'+
+  '・通過機場查驗後，由免稅店或其委託業者退款；方式與到帳時間請向店家確認<br>'+
   '・<b>退稅區在出境大廳、安檢之前</b>，過了安檢就辦不了</div>';
  h+='<div class="note"><b>在市區買東西時</b><br>'+
    '・結帳直接支付含稅價，<b>無法現場扣掉 10%</b><br>'+
    '・<b>護照正本要隨身</b>，影本和手機照片都無效。走自動通關的人務必請官員<b>補蓋入境章</b>，沒章不能退稅<br>'+
-   '・掃描店家 QR Code、確認護照資料，<b>建議選信用卡刷退</b><br>'+
-   '・<b>護照、信用卡、發票上的名字必須一致</b> —— 五個人切勿互相代刷<br>'+
-   '・透明密封袋規定取消了，藥妝食品可以當場拆開裝箱，但須在 90 天內親自帶出境<br>'+
+   '・依各店指示提供資料並確認退款方式，五個人各自保管自己的購買紀錄<br>'+
+   '・消耗品特殊密封包裝規定取消了，可以拆封整理行李；<b>同一筆交易的退稅品要全部帶出境，吃掉或用掉其中一件，該筆交易就無法完成退稅查驗</b><br>'+
    '・<b>紙本收據全部留著</b>，海關可能抽查</div>';
  h+='<div class="note" style="border-left-color:var(--red)"><b>在 KIX T1 的致命死角</b><br>'+
    '<b>絕對不能先去捷星櫃檯託運行李。</b>要拉著全部行李先到 <b>3F 出境大廳中央的 Tax-Free KIOSK</b> 掃護照。<br>'+
@@ -3932,6 +3960,28 @@ var FB_DB="https://kansai-a631b-default-rtdb.asia-southeast1.firebasedatabase.ap
 var SYNCING=false,LASTPULL=0,FBPOLL=null;
 function fbReady(){return !!FB_DB && !!ST.room}
 function fbURL(){return FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'.json'}
+var TASKFLIGHT={};
+function taskURL(id){return FB_DB.replace(/\/$/,'')+'/rooms/'+ST.room+'/tasks/'+id+'.json'}
+function pushTask(id){
+ if(!fbReady()||!ST.taskPending[id]||TASKFLIGHT[id])return;
+ if(!ST.tasks[id])ST.tasks[id]={done:!!ST.chk[id],owner:-1};
+ var sent=ST.tasks[id],room=ST.room;TASKFLIGHT[id]=true;
+ fetch(taskURL(id),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(sent)})
+ .then(function(r){if(!r.ok)throw 0;
+  if(ST.room===room&&ST.tasks[id]===sent){delete ST.taskPending[id];save()}})
+ .catch(function(){})
+ .then(function(){delete TASKFLIGHT[id];if(ST.taskPending[id]&&ST.tasks[id]!==sent)pushTask(id)})}
+function flushTasks(){Object.keys(ST.taskPending).forEach(pushTask)}
+function mergeTasks(remote){
+ remote=remote&&typeof remote==='object'&&!Array.isArray(remote)?remote:{};
+ taskItems().forEach(function(item){var id=item.id,r=remote[id],local=taskState(id);
+  if(r&&typeof r.done==='boolean'&&!ST.taskPending[id]){
+   var owner=+r.owner;
+   ST.tasks[id]={done:r.done,owner:Number.isInteger(owner)&&owner>=0&&owner<5?owner:-1};
+   ST.chk[id]=r.done;
+  }else if(!r&&!ST.taskPending[id]&&(local.done||local.owner>=0)){
+   ST.tasks[id]={done:!!local.done,owner:local.owner};ST.taskPending[id]=true;
+  }})}
 function roomPayload(){return {v:1,me:ST.me,plan:myPlan(),who:ST.who||{},pos:ST.pos||{},paid:ST.paid||{},diet:ST.diet||{},dietX:ST.dietX||{},members:ST.members,exp:ST.exp,expDel:ST.expDel,at:Date.now()}}
 function mergeRoom(o){
  if(!o)return 0;
@@ -3995,7 +4045,8 @@ function mergeRoom(o){
   if(!ST.dietX)ST.dietX={};
   for(var dj=0;dj<5;dj++){if(dj===ST.me)continue;
    if(Array.isArray(o.dietX[dj])&&o.dietX[dj].length)ST.dietX[dj]=o.dietX[dj]}}
- if(o.members)for(var i=0;i<5;i++){if(!ST.members[i]&&o.members[i])ST.members[i]=o.members[i]}
+  if(o.members)for(var i=0;i<5;i++){if(!ST.members[i]&&o.members[i])ST.members[i]=o.members[i]}
+  mergeTasks(o.tasks);
  if(o.shops){ST.shopAll=o.shops;
   /* 只有「這台裝置從未動過購物清單」才從雲端拉回（換手機的情境）。
      已經動過就代表刪空是使用者的意思，不可以復活 */
@@ -4006,7 +4057,10 @@ function roomCreate(cb){
  if(!FB_DB)return cb('no-config');
  var id=Math.random().toString(36).slice(2,6)+Math.random().toString(36).slice(2,6);
  ST.room=id;
- fetch(fbURL(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(roomPayload())})
+ var payload=roomPayload(),initial={};
+ taskItems().forEach(function(x){var v=taskState(x.id);if(v.done||v.owner>=0)initial[x.id]={done:!!v.done,owner:v.owner}});
+ payload.tasks=initial;
+ fetch(fbURL(),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
  .then(function(r){if(!r.ok)throw 0;save();cb(null,id)})
  .catch(function(){ST.room='';cb('write-fail')})}
 function roomPush(cb){
@@ -4025,12 +4079,13 @@ function roomPull(cb){
  .catch(function(){cb&&cb('offline',0)})}
 function roomSync(silent){
  if(!fbReady()||SYNCING)return;SYNCING=true;
- roomPull(function(e,n){
-  if(e){SYNCING=false;if(!silent)toast('同步失敗 ・ 檢查網路');return}
-  roomPush(function(){SYNCING=false;
-   if(!formOpen()){if(cur==='split')keepScroll(renderSplit);else if(cur==='shop')keepScroll(renderShop)}
-   if(!silent)toast(n?('已同步 ・ 收到 '+n+' 筆新紀錄'):'已同步 ・ 沒有新紀錄')})})}
-FBPOLL=setInterval(function(){if(fbReady()&&(cur==='split'||cur==='shop')&&!formOpen())roomSync(true)},10000);
+  roomPull(function(e,n){
+   if(e){SYNCING=false;if(!silent)toast('同步失敗 ・ 檢查網路');return}
+   flushTasks();
+   roomPush(function(){SYNCING=false;
+    if(!formOpen()){if(cur==='split')keepScroll(renderSplit);else if(cur==='shop')keepScroll(renderShop);else if(cur==='prep')keepScroll(renderPrep)}
+    if(!silent)toast(n?('已同步 ・ 收到 '+n+' 筆新紀錄'):'已同步 ・ 沒有新紀錄')})})}
+ FBPOLL=setInterval(function(){if(fbReady()&&(cur==='split'||cur==='shop'||cur==='prep')&&!formOpen())roomSync(true)},10000);
 setInterval(function(){if(fbReady()&&cur==='sos'&&anyPos())pullPosOnly()},8000);
 
 /* ---- 分帳同步碼 ---- */
@@ -4506,7 +4561,7 @@ function renderPrep(){
   '<button class="lk web" id="bkmk">產生短代碼</button>'+
   '<button class="lk web" id="bkrs">貼上代碼還原</button></div>'+
   '<div class="hint">建議用<b>下載備份檔</b> —— 含大頭貼時代碼會很長，貼上容易失敗。檔案存到雲端硬碟或傳給自己最保險。</div></div><div id="bkbox"></div>';
- var hot=who+dietBlock()+renderFlight()+bak+'<h2 class="sec">住宿</h2>'+HOTELS.map(function(h){
+  var hot=taskDashboard()+who+dietBlock()+renderFlight()+bak+'<h2 class="sec">住宿</h2>'+HOTELS.map(function(h){
   return '<div class="hotel"><h4>'+h.n+'</h4><div class="sub">'+h.d+'<br>'+h.addr+'</div>'+
   '<div class="tags"><a class="lk map" target="_blank" rel="noopener" href="'+MAP(h.q)+'">🗺️ 地圖</a>'+
   '<a class="lk web" target="_blank" rel="noopener" href="'+h.web+'">🔗 官網</a>'+
@@ -4535,8 +4590,7 @@ function renderPrep(){
  '<b>計時員</b>：每個紅線提前 10 分鐘喊一次</div>'+
  '<div class="note"><b>20 分鐘法則</b><br>任何排隊超過 20 分鐘就換一家，或乾脆不吃。這趟已經有四家高分店，少一家不會怎樣，但一次遲到會連鎖崩掉整個下午 —— 五個人的時間要乘以五。</div>';
  main.innerHTML=st+hot+'<h2 class="sec">訂位與劃位</h2>'+
-  BOOK.map(function(x,i){var id='bk_'+(x[3]||('n'+i)),on=ST.chk[id];
-   return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[1]+'<small>'+x[0]+(x[2]?' ・ '+x[2]:'')+'</small></span></label>'}).join('')+
+   BOOK.map(function(x,i){return taskRow({id:'bk_'+(x[3]||('n'+i)),title:x[1],due:x[0],detail:x[2]})}).join('')+
   '<h2 class="sec">電話簿</h2>'+
   TEL.map(function(t){return '<a class="tel" href="tel:'+t[2].replace(/-/g,'')+'"><span class="n">'+t[0]+'<small>'+t[1]+'</small></span><span class="num mono">'+t[2]+'</span></a>'}).join('')+
   '<h2 class="sec">死線提醒（鎖屏也會響）</h2>'+
@@ -4576,13 +4630,20 @@ function renderPrep(){
   '💡 <b>「📍 帶我去」只用你自己的位置</b>，跟其他人在哪無關。</div>'+
   '<h2 class="sec">團隊規則</h2>'+rules+
   '<h2 class="sec">出發前還要查</h2>'+
-  CHECK.map(function(x,i){var id='c'+i,on=ST.chk[id];
-   return '<label class="chk'+(on?' done':'')+'" data-id="'+id+'"><input type="checkbox"'+(on?' checked':'')+'><span class="x">'+x[0]+(x[1]?'<small>'+x[1]+'</small>':'')+'</span></label>'}).join('');
+   CHECK.map(function(x,i){return taskRow({id:'c'+i,title:x[0],due:'出發前',detail:x[1]})}).join('');
  bindDiet(renderPrep);
  bindGeo(renderPrep);
- [].forEach.call(main.querySelectorAll('.chk'),function(l){var cb=l.querySelector('input');
-  if(!cb)return;
-  cb.onchange=function(){l.classList.toggle('done',cb.checked);ST.chk[l.dataset.id]=cb.checked;save()}});
+  [].forEach.call(main.querySelectorAll('.taskrow .chk'),function(l){var cb=l.querySelector('input');
+   if(!cb)return;
+   cb.onchange=function(){setTask(l.dataset.id,{done:cb.checked});keepScroll(renderPrep)}});
+  [].forEach.call(main.querySelectorAll('[data-task-owner]'),function(s){s.onchange=function(){
+   setTask(s.dataset.taskOwner,{owner:+s.value});keepScroll(renderPrep)}});
+  [].forEach.call(main.querySelectorAll('[data-task-jump]'),function(b){b.onclick=function(){
+   var target=document.getElementById('task-'+b.dataset.taskJump);if(!target)return;
+   var body=target.closest('.secbody');
+   if(body&&body.classList.contains('fold')){body.classList.remove('fold');
+    var head=body.previousElementSibling;if(head){head.classList.remove('fold');ST.chk[foldKey(head.textContent)]=false;save()}}
+   target.scrollIntoView({behavior:'smooth',block:'center'})}});
  var pp=document.getElementById('picpref');
  if(pp)pp.onclick=function(){ST.picOpen=!ST.picOpen;save();keepScroll(renderPrep);
   toast(ST.picOpen?'拍照重點改為預設展開':'拍照重點改為預設收起')};
@@ -4719,7 +4780,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v251';
+var APPVER='kansai5-v253';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);

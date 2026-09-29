@@ -1,5 +1,5 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v251';
+var CACHE='kansai5-v253';
 var PREFIX='kansai5-';
 var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 
@@ -65,17 +65,21 @@ self.addEventListener('fetch',function(e){
   // 版本檢查用的 sw.js?_=... 一律走網路，不能給快取
   if(url.pathname.indexOf('sw.js')>=0) return;
 
+  // 導覽頁忽略分享網址上的版本參數，離線開啟 ?v=... 也能命中預存首頁。
+  // ?u=... 是使用者主動更新，優先取網路上的新版。
+  var key=req.mode==='navigate'?new Request(url.origin+url.pathname):req;
+  var updating=req.mode==='navigate'&&url.searchParams.has('u');
   // App 本體：快取優先，背景更新
   e.respondWith(
-    caches.open(CACHE).then(function(c){ return c.match(req); }).then(function(hit){
+    caches.open(CACHE).then(function(c){ return c.match(key); }).then(function(hit){
       var net=fetch(req).then(function(r){
         if(r&&r.status===200){
           var cp=r.clone();
-          caches.open(CACHE).then(function(c){ c.put(req,cp); });
+          caches.open(CACHE).then(function(c){ c.put(key,cp); });
         }
         return r;
       }).catch(function(){ return hit; });
-      return hit||net;
+      return updating?net:(hit||net);
     })
   );
 });
