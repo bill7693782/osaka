@@ -35,10 +35,12 @@ header{position:sticky;top:0;z-index:20;background:rgba(19,26,34,.97);backdrop-f
 .brand .qbtn{background:none;border:1px solid var(--line);color:var(--dim);border-radius:999px;
   width:30px;height:30px;font-size:14px;cursor:pointer;padding:0;flex:0 0 auto}
 .brand .qbtn.on{border-color:var(--cyan);color:var(--cyan)}
+.brand a.qbtn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 .clock{display:flex;align-items:center;gap:7px}
 .clock .jst{font-size:23px;font-weight:750;color:var(--amber);letter-spacing:-.045em;
   font-variant-numeric:tabular-nums;text-shadow:0 0 22px color-mix(in srgb,var(--amber) 26%,transparent)}
 .clock .zn{font-size:9.5px;color:var(--dim);line-height:1.15;text-align:right;letter-spacing:.04em}
+@media(max-width:360px){.brand{padding-left:10px;padding-right:10px;gap:5px}.brand b{font-size:11px}.clock{gap:4px}.clock .jst{font-size:21px}.clock .zn{font-size:8px}.brand .qbtn{width:28px;height:28px}.clock .vbtn{padding:0 6px;margin-right:0}}
 nav{display:flex;gap:5px;overflow-x:auto;padding:0 16px 7px;scrollbar-width:none;-ms-overflow-style:none}
 nav::-webkit-scrollbar{display:none}
 ::-webkit-scrollbar{width:9px}
@@ -543,7 +545,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v253 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v254 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn" href="kansai-guide-v254.pdf" target="_blank" rel="noopener" title="PDF 行程速覽" aria-label="開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -3279,7 +3281,8 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v253</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v254</span>');
+ h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>8 頁整理每天路線、關鍵交通與必守時間，適合出發前快速對表或列印。逐站細節與導航仍在 App。<div class="tags"><a class="lk map" href="kansai-guide-v254.pdf" target="_blank" rel="noopener">開啟 PDF 速覽</a></div></div>';
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4780,7 +4783,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v253';
+var APPVER='kansai5-v254';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);
