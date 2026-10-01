@@ -11,9 +11,9 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v259.png');
-const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v259.png');
-const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v259.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v260.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v260.png');
+const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v260.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
@@ -138,6 +138,8 @@ try {
             tocButtons:document.querySelectorAll('#pdftocgrid button[data-p]').length,
             tripLabel:document.querySelector('#pdftocgrid button.trip')?.childNodes[0]?.textContent||'',
             storedPage:localStorage.getItem('osaka_pdf_page'),currentTab:typeof cur==='undefined'?'':cur,
+            detailText:document.querySelector('#pdfdetail')?.textContent||'',detailHidden:!!document.querySelector('#pdfdetail')?.hidden,
+            shareUrl:document.querySelector('#pdfshare')?.getAttribute('data-share-url')||'',
             topClient:view?.querySelector('.pdfbar')?.clientWidth||0,topScroll:view?.querySelector('.pdfbar')?.scrollWidth||0,
             bottomClient:view?.querySelector('.pdfpager')?.clientWidth||0,bottomScroll:view?.querySelector('.pdfpager')?.scrollWidth||0,
             historyState:history.state};
@@ -155,6 +157,18 @@ try {
       }, sessionId);
       const tocShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(tocScreenshot, Buffer.from(tocShot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdftocgrid button[data-p="5"]')?.click()` }, sessionId);
+      await pause(350);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfdetail')?.click()` }, sessionId);
+      await pause(350);
+      const bridged = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `({readerHidden:document.querySelector('#pdfview')?.hidden,currentTab:typeof cur==='undefined'?'':cur,dayTitle:document.querySelector('.hero .top .w')?.textContent?.trim()||''})`,
+      }, sessionId);
+      await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
+      await pause(350);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfcount')?.click()` }, sessionId);
+      await pause(80);
       await send('Runtime.evaluate', { expression: `document.querySelector('#pdftocgrid button[data-p="0"]')?.click()` }, sessionId);
       await pause(350);
       await send('Runtime.evaluate', { expression: `document.querySelector('#pdfnext')?.click()` }, sessionId);
@@ -176,7 +190,7 @@ try {
         returnByValue: true,
         expression: `({hidden:document.querySelector('#pdfview')?.hidden,dayTitle:document.querySelector('.hero .top .w')?.textContent?.trim()||''})`,
       }, sessionId);
-      pdfFlow = { opened: opened.result.value, tocMenu: tocMenu.result.value, navigated: navigated.result.value, zoomed: zoomed.result.value, closed: closed.result.value };
+      pdfFlow = { opened: opened.result.value, tocMenu: tocMenu.result.value, bridged: bridged.result.value, navigated: navigated.result.value, zoomed: zoomed.result.value, closed: closed.result.value };
     }
     if (size.width !== 375) {
       await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
