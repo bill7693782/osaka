@@ -529,6 +529,19 @@ h2.sec.fold .ar{transform:rotate(-90deg)}
 #modal .mcancel{background:transparent;border:1px solid var(--line);color:var(--dim)}
 #modal .mok{background:var(--red);border:1px solid var(--red);color:#fff;font-weight:700}
 #modal .mok.safe{background:var(--cyan);border-color:var(--cyan);color:var(--ground)}
+#pdfview{position:fixed;inset:0;z-index:90;background:var(--ground);display:flex;flex-direction:column;
+  height:100vh;height:100dvh}
+#pdfview[hidden]{display:none}
+.pdfbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;min-height:56px;
+  padding:calc(7px + env(safe-area-inset-top)) 10px 7px;background:#131A22;border-bottom:1px solid var(--line)}
+.pdfbar button,.pdfbar a{min-height:44px;border:1px solid var(--line2);border-radius:999px;padding:0 13px;
+  display:inline-flex;align-items:center;justify-content:center;background:var(--surface2);color:var(--paper);
+  font:inherit;font-size:13px;font-weight:700;line-height:1.1;text-decoration:none;white-space:nowrap;cursor:pointer}
+.pdfbar .pdfback{border-color:rgba(91,168,196,.5);color:var(--cyan)}
+.pdfbar strong{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;font-size:13px}
+#pdfframe{display:block;flex:1 1 auto;width:100%;min-height:0;border:0;background:#fff}
+body.pdf-open{overflow:hidden}
+@media(max-width:360px){.pdfbar{gap:5px;padding-left:6px;padding-right:6px}.pdfbar button,.pdfbar a{padding:0 10px}.pdfbar strong{font-size:0}.pdfbar strong:after{content:'PDF';font-size:12px}}
 #totop{position:fixed;right:16px;bottom:calc(22px + env(safe-area-inset-bottom));width:44px;height:44px;
   border-radius:50%;background:#242D37;border:1px solid var(--line2);color:var(--paper);
   font-size:17px;cursor:pointer;display:none;z-index:40;box-shadow:var(--shadow-lg);
@@ -546,7 +559,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v256 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn" href="kansai-guide-v255.pdf" target="_blank" rel="noopener" title="PDF 行程速覽" aria-label="開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v257 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn pdf-open" href="kansai-guide-v255.pdf" title="PDF 行程速覽" aria-label="在 App 內開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -555,6 +568,15 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <main id="main"></main>
 <div id="modal"><div class="mbox"><div class="mtitle" id="mtitle"></div><div class="mtext" id="mtext"></div>
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
+<section id="pdfview" hidden aria-label="PDF 行程速覽">
+  <div class="pdfbar">
+    <button class="pdfback" id="pdfback" type="button">← 回行程</button>
+    <strong>關西五日・PDF 速覽</strong>
+    <a href="kansai-guide-v255.pdf" target="_blank" rel="noopener" aria-label="在新視窗開啟 PDF">另開</a>
+    <a href="kansai-guide-v255.pdf" download aria-label="下載 PDF">下載</a>
+  </div>
+  <iframe id="pdfframe" title="關西五日 PDF 行程速覽"></iframe>
+</section>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
 <footer>關西五日 ・ 加入主畫面即可當 App<br><span style="color:#6E7C8C">版本與更新在右上角</span><br><span id="fstore" style="color:#6E7C8C"></span></footer>
@@ -568,6 +590,28 @@ var HK="京都市下京区七条通東堀川西入八百屋町1番地",HO="大�
 /* 地圖查詢用：飯店名稱比純地址精準得多 */
 var HKQ="〒600-8262 京都府京都市下京区八百屋町1",
     HOQ="WELLSTAY難波 大阪市浪速区元町2-8-10";
+
+/* PDF 留在 App 裡閱讀；返回鍵與頂端按鈕都回到原本行程位置 */
+(function(){
+ var view=document.getElementById('pdfview'),frame=document.getElementById('pdfframe'),back=document.getElementById('pdfback');
+ var pushed=false;
+ function show(addHistory){
+  if(!view||!frame)return;
+  if(!frame.getAttribute('src'))frame.setAttribute('src','kansai-guide-v255.pdf#view=FitH');
+  view.hidden=false;document.body.classList.add('pdf-open');
+  if(addHistory){try{history.pushState({pdfViewer:true},'',location.href);pushed=true}catch(e){}}
+ }
+ function hide(){if(!view)return;view.hidden=true;document.body.classList.remove('pdf-open')}
+ document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a.pdf-open'):null;
+  if(!a)return;e.preventDefault();show(true)
+ });
+ if(back)back.addEventListener('click',function(){if(pushed)history.back();else hide()});
+ window.addEventListener('popstate',function(e){
+  if(e.state&&e.state.pdfViewer){pushed=true;show(false)}else{pushed=false;hide()}
+ });
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!view.hidden){if(pushed)history.back();else hide()}});
+})();
 
 var D={
 help:{label:"使用說明",date:"先看這個"},
@@ -3356,8 +3400,8 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v256</span>');
- h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>8 頁整理每天主線、關鍵交通與必守時間，適合出發前快速對表或列印。逐站細節與導航仍在 App。<div class="tags"><a class="lk map" href="kansai-guide-v255.pdf" target="_blank" rel="noopener">開啟 PDF 速覽</a></div></div>';
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v257</span>');
+ h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>8 頁整理每天主線、關鍵交通與必守時間，適合出發前快速對表或列印。逐站細節與導航仍在 App。<div class="tags"><a class="lk map pdf-open" href="kansai-guide-v255.pdf">在 App 內開啟 PDF</a></div></div>';
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4862,7 +4906,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v256';
+var APPVER='kansai5-v257';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);

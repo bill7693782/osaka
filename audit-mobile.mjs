@@ -11,7 +11,8 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v256.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v257.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v257.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
@@ -69,6 +70,7 @@ try {
     { width: 430, height: 932 },
   ];
   const reports = [];
+  let pdfFlow = null;
   for (const size of sizes) {
     await send('Emulation.setDeviceMetricsOverride', {
       ...size, screenWidth: size.width, screenHeight: size.height,
@@ -120,9 +122,31 @@ try {
     if (size.width === 375) {
       const shot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(screenshot, Buffer.from(shot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
+      await pause(900);
+      const opened = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => {
+          const view=document.querySelector('#pdfview'),back=document.querySelector('#pdfback'),frame=document.querySelector('#pdfframe');
+          const r=back?.getBoundingClientRect();
+          return {visible:!!view&&!view.hidden,bodyLocked:document.body.classList.contains('pdf-open'),
+            frameSrc:frame?.getAttribute('src')||'',backHeight:r?+r.height.toFixed(1):0,
+            hasExternal:!!view?.querySelector('a[target="_blank"]'),hasDownload:!!view?.querySelector('a[download]'),
+            historyState:history.state};
+        })()`,
+      }, sessionId);
+      const pdfShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
+      fs.writeFileSync(pdfScreenshot, Buffer.from(pdfShot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfback')?.click()` }, sessionId);
+      await pause(350);
+      const closed = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `({hidden:document.querySelector('#pdfview')?.hidden,dayTitle:document.querySelector('.hero .top .w')?.textContent?.trim()||''})`,
+      }, sessionId);
+      pdfFlow = { opened: opened.result.value, closed: closed.result.value };
     }
   }
-  console.log(JSON.stringify({ url, screenshot, reports }, null, 2));
+  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, pdfFlow, reports }, null, 2));
 } finally {
   try { ws?.close(); } catch {}
   browser.kill();
