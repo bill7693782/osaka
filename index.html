@@ -474,6 +474,14 @@ h2.sec.fold .ar{transform:rotate(-90deg)}
 .tasksummary b{color:var(--amber)}
 .tasklink{display:block;width:100%;text-align:left;background:var(--surface2);border:1px solid var(--line);border-radius:5px;color:var(--paper);font:inherit;font-size:12.5px;padding:8px 10px;margin-top:5px;cursor:pointer}
 .tasklink small{display:block;color:var(--dim);font-size:11px}
+.cc{background:linear-gradient(145deg,rgba(91,168,196,.16),rgba(28,35,43,.96));border:1px solid rgba(91,168,196,.35);border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:var(--inset)}
+.cchead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;font-size:13px}.cchead b{font-size:15px}.cchead span{color:var(--cyan);font-size:11px;font-weight:750}
+.ccgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ccitem{background:rgba(10,15,21,.34);border:1px solid var(--line);border-radius:6px;padding:8px 9px;min-width:0}.ccitem small{display:block;color:var(--dim);font-size:10.5px;margin-bottom:2px}.ccitem b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ccitem b.good{color:#8FCB97}.ccitem b.warn{color:#F0C070}
+.ccbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;padding-bottom:1px}.ccbtns>*{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:var(--surface2);color:var(--paper);font:inherit;font-size:12px;font-weight:700;padding:8px 11px;text-decoration:none;cursor:pointer;min-height:36px}
+.wxact{border-left-color:var(--cyan)}.wxact.warn{border-left-color:var(--amber)}.wxact.bad{border-left-color:var(--red);background:linear-gradient(135deg,rgba(228,87,74,.13),var(--surface))}.wxline{display:flex;align-items:center;gap:8px}.wxline .wxic{font-size:25px}.wxline .wxmain{flex:1}.wxline .wxmain b{font-size:14.5px}.wxline .wxmeta{font-size:11.5px;color:var(--dim)}
+.inlinepanel{display:none;margin-bottom:10px}.inlinepanel.on{display:block}.readyrow{display:flex;align-items:flex-start;gap:9px;padding:9px 10px;border-bottom:1px solid var(--line);font-size:13px}.readyrow:last-child{border-bottom:0}.readyrow input{width:18px;height:18px;accent-color:var(--moss);flex:0 0 auto}.readyrow span{flex:1}.readyrow small{display:block;color:var(--dim);font-size:11px;margin-top:2px}.readyrow.done span{opacity:.55;text-decoration:line-through}
+.walletcard{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:12px;margin-bottom:9px}.wallethead{display:flex;align-items:center;gap:9px}.wallethead .wi{font-size:23px}.wallethead .wt{flex:1;min-width:0}.wallethead .wt b{display:block;font-size:14px}.wallethead .wt small{display:block;color:var(--dim);font-size:11.5px}.wallethead .ws{font-size:10.5px;color:var(--amber);white-space:nowrap}.walletfields{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px}.walletfields input{min-width:0;background:var(--ground);border:1px solid var(--line);border-radius:5px;color:var(--paper);font:inherit;font-size:12.5px;padding:9px}.walletshot{display:block;width:100%;max-height:340px;object-fit:contain;background:#fff;border-radius:6px;margin-top:9px}.walletactions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.walletactions button,.walletactions label{border:1px solid var(--line);border-radius:999px;background:var(--surface2);color:var(--paper);font:inherit;font-size:11.5px;font-weight:700;padding:7px 10px;cursor:pointer}.walletactions .danger{color:#F09A90}
+@media(max-width:350px){.ccgrid,.walletfields{grid-template-columns:1fr}.ccitem b{white-space:normal}}
 .tel{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:7px;color:var(--paper);text-decoration:none}
 .tel .n{font-size:14.5px}.tel .n small{display:block;color:var(--dim);font-size:12px}
 .tel .num{font-size:14px;color:var(--amber);white-space:nowrap}
@@ -594,7 +602,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v261 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn pdf-open" href="kansai-guide-v255.pdf" title="PDF 行程速覽" aria-label="在 App 內開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v262 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn pdf-open" href="kansai-guide-v255.pdf" title="PDF 行程速覽" aria-label="在 App 內開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -919,6 +927,7 @@ w:[["🎰 一番くじ公式ショップ 心斎橋PARCO","https://www.google.com
 split:{label:"分帳",date:"五人"},
 shop:{label:"購物",date:"個人"},
 pack:{label:"行李",date:"打包"},
+wallet:{label:"票券",date:"離線錢包"},
 info:{label:"資訊",date:"預算・退稅"},
 sos:{label:"緊急",date:"出事時"},
 rain:{label:"備案",date:"雨天・誤點"},
@@ -1035,6 +1044,20 @@ var CHECK=[
 ["eSIM 已安裝且測試過","出發前在家用 Wi-Fi 安裝，並確認 APN 設定正確、能切換。落地後才發現裝不起來就麻煩了。"],
 ["台灣門號保留可收簡訊","信用卡海外刷卡的 OTP 驗證碼會發到台灣門號。iPhone 雙卡請保留台灣 SIM 收簡訊、eSIM 走數據。"],
 ["用 Google Maps 實測飯店到各站的步行時間","大阪飯店到大國町、なんば、難波八阪神社、木津市場的時間目前是推估的。差 3 分鐘就會影響 Day 5 早上的神社時段。"]];
+var WALLET=[
+ {id:"gk050",ic:"✈️",t:"GK050 去程機票",sub:"11/13 02:30・桃園 T1 → 關西 T1"},
+ {id:"vjw",ic:"🛂",t:"Visit Japan Web",sub:"五人的入境／海關 QR 截圖",task:"bk_vjw"},
+ {id:"pass",ic:"🎫",t:"JR 關西廣域周遊券",sub:"11/13 起用・五人份",task:"bk_pass"},
+ {id:"haruka1",ic:"🚆",t:"はるか 去程指定席",sub:"11/13 07:54 KIX → 京都",task:"bk_haruka1"},
+ {id:"kinosaki",ic:"🚆",t:"きのさき1號",sub:"11/14 07:32 京都 → 福知山",task:"bk_kinosaki"},
+ {id:"hashidate8",ic:"🚆",t:"はしだて8號",sub:"11/14 18:09 天橋立 → 京都",task:"bk_hashidate8"},
+ {id:"hotel_kyoto",ic:"🏨",t:"京都住宿",sub:"曼迪高級公寓酒店・11/13–15"},
+ {id:"d3meal",ic:"🍽️",t:"Day 3 餐廳訂位",sub:"志津香＋焼肉鶴橋",task:"bk_yakiniku"},
+ {id:"hotel_osaka",ic:"🏨",t:"大阪住宿",sub:"WELLSTAY難波・11/15–17"},
+ {id:"harijyu",ic:"🍽️",t:"はり重訂位",sub:"11/16 17:45・五人",task:"bk_harijyu"},
+ {id:"kaiyukan",ic:"🐋",t:"海遊館 eTicket",sub:"11/17・五人同一時段",task:"bk_kaiyukan"},
+ {id:"gk057",ic:"✈️",t:"GK057 回程機票",sub:"11/17 23:10・關西 T1 → 桃園 T1"}
+];
 var HOTELS=[
 {n:"曼迪高級公寓酒店 京都車站",d:"Day 1–2（11/13、11/14）",addr:"〒600-8262 京都府京都市下京区八百屋町1番地<br><span style='color:var(--dim)'>1 Yaoyacho, Shimogyo Ward, Kyoto</span>",tel:"075-353-1922",q:HKQ,note:"日文名 MONday Apart Premium 京都駅（七条堀川）<br>京都站步行約 11 分・對面是西本願寺<br>全室附廚房與洗衣機・44 間客房・<b>15:00 入住／10:00 退房</b><br>💡 <b>自動 Check-in 機、24 小時可入住</b>（護照掃描）—— Day 1 晚上 21:35 到也沒問題<br>⚠️ <b>24:00 後大門上鎖</b>，按入口旁的對講機",web:"https://hotel-monday.com/apartment/kyoto/"},
 {n:"WELLSTAY難波",d:"Day 3–4（11/15、11/16）",addr:"〒556-0016 大阪府大阪市浪速区元町 2-8-10",tel:"06-6695-7071",q:HOQ,note:"<b>地下鐵なんば站 5 號出口步行 5–6 分</b>｜<b>大國町站 2 號出口步行 5 分</b><br>60 間客房・<b>最大可住 9 人的房型</b>・15:00 入住／<b>10:00 退房</b><br>附洗衣間・微波爐・冰箱・咖啡吧檯｜可刷卡<br>⚠️ <b>退房 10:00</b>（跟京都的曼迪一樣）",web:"https://well-stay.com/namba/"}];
@@ -1154,8 +1177,10 @@ if(ST.compact===undefined)ST.compact=false;
 if(ST.shopInit===undefined)ST.shopInit=false;
 if(!ST.sos)ST.sos={};
  if(ST.voice===undefined)ST.voice='';
- if(!ST.tasks||typeof ST.tasks!=='object'||Array.isArray(ST.tasks))ST.tasks={};
- if(!ST.taskPending||typeof ST.taskPending!=='object'||Array.isArray(ST.taskPending))ST.taskPending={};
+if(!ST.tasks||typeof ST.tasks!=='object'||Array.isArray(ST.tasks))ST.tasks={};
+if(!ST.taskPending||typeof ST.taskPending!=='object'||Array.isArray(ST.taskPending))ST.taskPending={};
+if(!ST.wallet||typeof ST.wallet!=='object'||Array.isArray(ST.wallet))ST.wallet={};
+if(!ST.weatherCache||typeof ST.weatherCache!=='object'||Array.isArray(ST.weatherCache))ST.weatherCache={};
 function ensureDays(){
  /* 壞資料防護：同步或舊備份還原可能帶進非預期的型別 */
   ["adhoc","edit","hide","chk","done","diet","dietX","paid","pos","avatars","plans","tasks","taskPending"]
@@ -1218,7 +1243,7 @@ function taskDashboard(){var all=taskItems(),open=all.filter(function(x){return 
  '<div class="hint">每項可勾選完成並指派負責人。加入房間後會同步給五個人；離線修改會在下次連線時補送。</div></div>'}
 
 var nav=document.getElementById('nav'),main=document.getElementById('main'),toastEl=document.getElementById('toast'),live=document.getElementById('live');
-var cur='d1',editing=null,WX={},WXFAR=0;
+var cur='d1',editing=null,WX=ST.weatherCache||{},WXFAR=0;
 /* 只有切換分頁時才捲到頂；同頁內互動保持原位 */
 var LASTTAB=null,KEEPSCROLL=false;
 /* 表單開在頁面上方，若使用者在下方按編輯會看不到 —— 開完捲過去並閃一下 */
@@ -1315,7 +1340,7 @@ function todayKey(){
  return null}
 function toast(m){toastEl.innerHTML=m;toastEl.classList.add('on');setTimeout(function(){toastEl.classList.remove('on')},2200)}
 Object.keys(D).forEach(function(k){var v=D[k],b=document.createElement('button');b.setAttribute('role','tab');
- b.innerHTML=(DAYTHEME[k]?dayIcon(k,13)+' ':'')+((k==='prep'||k==='split')?v.label:v.label+'<span class="d">'+v.date.slice(0,5)+'</span>');
+ b.innerHTML=(DAYTHEME[k]?dayIcon(k,13)+' ':'')+((k==='prep'||k==='split'||k==='wallet')?v.label:v.label+'<span class="d">'+v.date.slice(0,5)+'</span>');
  if(DAYTHEME[k]){b.style.setProperty('--dayc',DAYTHEME[k].c);b.classList.add('dayt')}
  b.onclick=function(){var q=document.getElementById('q');if(q)q.value='';
   if(speakSupported()&&speechSynthesis.speaking){speechSynthesis.cancel();SPK.cur=null}
@@ -1425,7 +1450,7 @@ function delayOf(k){
 
 function fetchWX(){
  /* 免費預報只到未來約 16 天，太遠就別打，否則伺服器回 400 */
- var j=jstNow(),start=new Date(2026,10,13);
+ var j=jstNow(),start=new Date(2026,10,12);
  var days=Math.round((start-new Date(j.getFullYear(),j.getMonth(),j.getDate()))/86400000);
  if(days>15){WXFAR=days;return}
  WXFAR=0;
@@ -1433,14 +1458,14 @@ function fetchWX(){
  Object.keys(pts).forEach(function(p){
   var c=p.split(',');
   var u="https://api.open-meteo.com/v1/forecast?latitude="+c[0]+"&longitude="+c[1]+
-   "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FTokyo&start_date=2026-11-13&end_date=2026-11-17";
+   "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&wind_speed_unit=ms&timezone=Asia%2FTokyo&start_date=2026-11-12&end_date=2026-11-17";
   fetch(u).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(o){
-   if(!o.daily)return;WX[p]=o.daily;if(D[cur]&&D[cur].lat&&!formOpen())keepScroll(render)}).catch(function(){})})}
+   if(!o.daily)return;WX[p]=o.daily;ST.weatherCache=WX;ST.weatherAt=Date.now();save();if(D[cur]&&D[cur].lat&&!formOpen())keepScroll(render)}).catch(function(){})})}
 
 function wxFor(k){var v=D[k];if(!v.lat)return null;var w=WX[v.lat+','+v.lon];if(!w)return null;
  var d="2026-11-"+pad(v.dnum),i=w.time.indexOf(d);if(i<0)return null;
  var c=WMO[w.weather_code[i]]||["🌡️","—"];
- return {ic:c[0],txt:c[1],hi:Math.round(w.temperature_2m_max[i]),lo:Math.round(w.temperature_2m_min[i]),pop:w.precipitation_probability_max[i]}}
+ return {ic:c[0],txt:c[1],hi:Math.round(w.temperature_2m_max[i]),lo:Math.round(w.temperature_2m_min[i]),pop:w.precipitation_probability_max[i],wind:w.wind_speed_10m_max?Math.round(w.wind_speed_10m_max[i]):null}}
 
 function updLive(){
  var j=jstNow();
@@ -1457,7 +1482,10 @@ function updLive(){
   var dd=Math.round((start-now)/86400000);
   live.classList.remove('late');
   live.innerHTML='<div class="l1"><span>出發倒數</span></div><div class="l2">'+(dd>0?'還有 '+dd+' 天':(dd<0?'旅程已結束':'今天就要出發'))+'</div>'+
-   '<div class="l3">11/12（四）22:30 台北車站機捷 ・ 11/13（五）02:30 桃園起飛<br>最近死線：10/13 買 Pass、10/14 台灣 09:00 搶きのさき1號與はしだて8號</div>';
+   '<div class="l3">11/12（四）22:30 台北車站機捷 ・ 11/13（五）02:30 桃園起飛<br>最近死線：10/13 買 Pass、10/14 台灣 09:00 搶きのさき1號與はしだて8號</div>'+
+   '<div class="ccbtns"><button id="liveprep">✓ 行前進度</button><button id="livewallet">🎫 離線票券</button><button id="liveday">🧭 Day 1 面板</button></div>';
+  var lp=document.getElementById('liveprep'),lw=document.getElementById('livewallet'),ld=document.getElementById('liveday');
+  if(lp)lp.onclick=function(){cur='prep';render()};if(lw)lw.onclick=function(){cur='wallet';render()};if(ld)ld.onclick=function(){cur='d1';render()};
   return}
  var list=slotsOf(tk),nowM=dnorm(tk,nowMinFor(tk)),ci=-1,ni=-1;
  for(var i=0;i<list.length;i++){var A=tnorm(tk,list[i].a),B=tnorm(tk,list[i].b);if(B<A)B+=1440;
@@ -1506,6 +1534,61 @@ function wxAlert(){
             :'箕面健行淋雨不會開心。考慮改成梅田室內一日：Bic Camera 提前、中崎町巷弄、中之島。')+'</div>'});
  return out}
 
+function wxDecision(k,w){
+ if(!w)return {cls:'',title:'預報尚未開放',body:'出發前約 16 天會自動載入。現在先依 11 月中旬準備冬季外套。'};
+ var bad=false,warn=false,parts=[];
+ if(k==='d2'&&w.wind!==null&&w.wind>=8){bad=true;parts.push('最大風速約 '+w.wind+' m/s，船班、吊椅與纜車可能停駛')}
+ if(k==='d2'&&w.pop>=50){bad=true;parts.push('傘松視野可能不佳，先看京都雨備')}
+ if(k==='d4'&&w.pop>=40){bad=true;parts.push('箕面步道濕滑，改走梅田／中之島室內方案')}
+ if(!bad&&w.pop>=50){warn=true;parts.push('帶折傘與防水外套，戶外段縮短')}
+ else if(!bad&&w.pop>=30){warn=true;parts.push('隨身包放折傘，鞋子選防滑的')}
+ if(w.lo<=10)parts.push('低溫 '+w.lo+'°，帶圍巾');else if(w.lo<=14)parts.push('早晚偏冷，採洋蔥式穿法');
+ if(!parts.length)parts.push('照原行程走；出門前再看一次即時預報');
+ return {cls:bad?'bad':(warn?'warn':''),title:bad?'建議啟動備案':(warn?'需要調整裝備':'可以照原案'),body:parts.join('；')} }
+function weatherActionCard(k,w){
+ var d=wxDecision(k,w),meta=w?(w.txt+' ・ '+w.hi+'°／'+w.lo+'° ・ 降雨 '+w.pop+'%'+(w.wind===null?'':' ・ 風 '+w.wind+' m/s')):'預計 10/27 起逐日出現可用預報';
+ return '<div class="note wxact '+d.cls+'"><div class="wxline"><span class="wxic">'+(w?w.ic:'🌤️')+'</span><span class="wxmain"><b>'+d.title+'</b><span class="wxmeta">'+meta+'</span></span></div><div style="margin-top:6px">'+d.body+'</div><div class="tags" style="margin-top:8px">'+
+  ((d.cls==='bad'||d.cls==='warn')?'<button class="lk web" id="wxrain">☔ 看雨天備案</button>':'')+
+  '<button class="lk map" id="wxrefresh">↻ 更新天氣</button></div></div>'}
+
+var DAY_TASKS={
+ d0:['bk_vjw','bk_esim'],d1:['bk_pass','bk_haruka1','bk_unawa'],
+ d2:['bk_kinosaki','bk_hashidate8','bk_tangorelay'],d3:['bk_shizuka','bk_yakiniku'],
+ d4:['bk_harijyu'],d5:['bk_kaiyukan','bk_nishiya','bk_haruka5']};
+function dayTaskProgress(k){var a=DAY_TASKS[k]||[],n=0;a.forEach(function(id){if(taskState(id).done)n++});return {done:n,total:a.length}}
+function packProgress(){var total=0,done=0;PACK.forEach(function(sec,si){sec[1].forEach(function(it,ii){var id='p'+si+'_'+ii;if(ST.packHide[id])return;total++;if(ST.chk[id])done++})});(ST.packAdd||[]).forEach(function(x){total++;if(ST.chk['pa_'+x.id])done++});return {done:done,total:total}}
+function readyItems(k,w){var wd=wxDecision(k,w);return [
+ {id:'passport',t:'護照與現金',n:'五本護照、日幣、信用卡、ICOCA'},
+ {id:'power',t:'手機與電力',n:'五支手機、行動電源、充電線'},
+ {id:'ticket',t:'今天的票券／QR',n:'到「票券」確認截圖能離線打開'},
+ {id:'weather',t:'天氣與穿著已確認',n:wd.title+'：'+wd.body},
+ {id:'deadline',t:'全員知道今日死線',n:(D[k]&&D[k].crux)?D[k].crux.t+' '+D[k].crux.w:'先看今天第一站'},
+ {id:'luggage',t:'離開前清點',n:k==='d0'||k==='d5'?'五件大行李＋五件隨身行李':'房卡、隨身包與當日用品'}]}
+function readyCount(k,w){var a=readyItems(k,w),n=0;a.forEach(function(x){if(ST.chk['go_'+k+'_'+x.id])n++});return {done:n,total:a.length}}
+function readinessPanel(k,w){var r=readyCount(k,w),tp=dayTaskProgress(k),pp=packProgress();
+ return '<div class="inlinepanel" id="readypanel"><div class="note" style="padding:0;overflow:hidden"><div style="padding:11px 12px;border-bottom:1px solid var(--line)"><b>出門前檢查 '+r.done+'/'+r.total+'</b><br><span style="color:var(--dim);font-size:11.5px">訂位票券 '+tp.done+'/'+tp.total+' 完成 ・ 行李清單 '+pp.done+'/'+pp.total+'</span></div>'+
+ readyItems(k,w).map(function(x){var on=!!ST.chk['go_'+k+'_'+x.id];return '<label class="readyrow'+(on?' done':'')+'"><input type="checkbox" data-ready="'+x.id+'"'+(on?' checked':'')+'><span>'+x.t+'<small>'+x.n+'</small></span></label>'}).join('')+'</div></div>'}
+function transitData(k){var jr=['JR 西日本即時狀態','https://trafficinfo.westjr.co.jp/?areaId=4'];
+ var ex=['JR 在來線特急','https://trafficinfo.westjr.co.jp/ex_index.html'];
+ if(k==='d2')return {note:'先看 JR 特急，再看丹鐵與丹海。接不上 08:55 たんごリレー就照備案頁重排。',links:[ex,['京都丹後鐵道','https://trains.willer.co.jp/train_info/'],['丹海巴士／船班','https://www.tankai.jp/']]};
+ if(k==='d3')return {note:'JR 奈良線異常就改近鐵京都線；不要為了省車資卡住寄物與午餐。',links:[jr,['近鐵運行情報','https://www.kintetsu.jp/unkou/unkou.html']]};
+ if(k==='d4')return {note:'大阪市區路網密；JR 異常就改 Osaka Metro，超過 15 分鐘不要原地等。',links:[jr,['Osaka Metro','https://subway.osakametro.co.jp/guide/subway_information.php']]};
+ if(k==='d5')return {note:'はるか 有異狀就回難波改南海空港急行，不等下一班。',links:[ex,['JR 近畿','https://trafficinfo.westjr.co.jp/?areaId=4'],['KIX 航班','https://www.kansai-airport.or.jp/flight/']]};
+ if(k==='d1')return {note:'JR 奈良線延誤超過 15 分鐘，改近鐵到丹波橋轉京阪伏見稻荷。',links:[jr,['近鐵運行情報','https://www.kintetsu.jp/unkou/unkou.html']]};
+ return {note:'出發前先確認航班與機場交通；有異常就提早處理。',links:[['KIX 航班','https://www.kansai-airport.or.jp/flight/'],jr]}}
+function transitPanel(k){var x=transitData(k);return '<div class="inlinepanel" id="transitpanel"><div class="note"><b>🚦 即時交通狀態</b><br>'+x.note+'<div class="tags" style="margin-top:8px">'+x.links.map(function(a){return '<a class="lk nav" target="_blank" rel="noopener" href="'+a[1]+'">'+a[0]+'</a>'}).join('')+'<button class="lk web" id="openrain">看完整替代方案</button></div><div class="hint">官方頁面需連線；離線時仍可查看 App 內的替代路線。</div></div></div>'}
+function commandCenter(k,list,isT,w,nowM){var nx=list[0]||null;
+ if(isT){for(var i=0;i<list.length;i++){var b=tnorm(k,list[i].b);if(b<tnorm(k,list[i].a))b+=1440;if(b>nowM){nx=list[i];break}}}
+ var dest=nx?(nx.q||(nx.dir?nx.dir[1]:'')):'',tp=dayTaskProgress(k),rc=readyCount(k,w);
+ return '<div class="cc"><div class="cchead"><b>今日出發面板</b><span>'+(isT?'LIVE':'行前預覽')+'</span></div><div class="ccgrid">'+
+  '<div class="ccitem"><small>'+(isT?'現在／下一站':'第一站')+'</small><b>'+(nx?(nx.a+' '+stripEmoji(stripTag(nx.t)).slice(0,16)):'行程已結束')+'</b></div>'+
+  '<div class="ccitem"><small>今日死線</small><b class="warn">'+D[k].crux.t+' '+D[k].crux.w+'</b></div>'+
+  '<div class="ccitem"><small>票券與訂位</small><b class="'+(tp.done===tp.total?'good':'warn')+'">'+tp.done+' / '+tp.total+' 完成</b></div>'+
+  '<div class="ccitem"><small>出門檢查</small><b class="'+(rc.done===rc.total?'good':'warn')+'">'+rc.done+' / '+rc.total+' 完成</b></div></div><div class="ccbtns">'+
+  (dest?'<a target="_blank" rel="noopener" href="'+NAV(dest,(nx.dir&&nx.dir[2])||'transit')+'">📍 下一站</a>':'')+
+  '<button id="ccready">✓ 出門檢查</button><button id="cctransit">🚦 交通狀態</button><button id="ccwallet">🎫 票券</button>'+
+  (isT?'<button id="ccjump">↓ 跳到現在</button>':'')+'</div></div>'}
+
 function renderSearch(q){
  var r=doSearch(q);
  var h='<div class="note">搜尋「<b>'+q+'</b>」找到 <b>'+r.length+'</b> 筆'+(r.length>=40?'（只顯示前 40 筆）':'')+
@@ -1535,6 +1618,7 @@ function render(){
  if(cur==='split')return renderSplit();
  if(cur==='shop')return renderShop();
  if(cur==='pack')return renderPack();
+ if(cur==='wallet')return renderWallet();
  if(cur==='info')return renderInfo();
  if(cur==='sos')return renderSOS();
  if(cur==='rain')return renderRain();
@@ -1549,8 +1633,7 @@ function render(){
  var nHidMove=fullList.length-list.length;
  var nEdit=Object.keys(ST.edit[cur]).length,nHide=Object.keys(ST.hide).filter(function(x){return x.indexOf(cur+':')===0}).length,nAdd=ST.adhoc[cur].length;
  var changed=nEdit+nHide+nAdd;
- var wa=wxAlert();
- var h=wa;
+ var h='';
  var C=dayCost(cur),rr=rateVal(),w=wxFor(cur);
  main.style.setProperty('--dayc',dayColor(cur));
  document.body.style.setProperty('--dayc',dayColor(cur));
@@ -1569,6 +1652,7 @@ function render(){
     '<span class="tot">合計 <b>'+fmtJP(C.total)+'</b>'+(rr?' ≈ '+fmtNT(C.total*rr):'')+'</span>'+
     '<span class="totnote">只算標籤上有寫金額的，餐費見「資訊」頁</span>'+
    '</div></div>';
+ h+=commandCenter(cur,fullList,isT,w,nowM)+weatherActionCard(cur,w)+readinessPanel(cur,w)+transitPanel(cur);
  var nConf=Object.keys(CONF).length;
  var cruxAlive=list.some(function(x){return x.a===v.crux.t});
  if(nConf)h+='<div class="warnbar">⚠️ <b>'+nConf+' 個項目時間重疊</b> —— 你改過的行程跟原本的撞在一起了。<br>'+
@@ -1803,6 +1887,17 @@ function render(){
  }});
  var jb=document.getElementById('jump');
  if(jb)jb.onclick=function(){var el=document.getElementById('s'+ni);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});else toast('現在不在行程時段內')};
+ var ccj=document.getElementById('ccjump');
+ if(ccj)ccj.onclick=function(){var el=document.getElementById('s'+ni);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});else toast('現在不在行程時段內')};
+ var ccr=document.getElementById('ccready');
+ if(ccr)ccr.onclick=function(){var x=document.getElementById('readypanel');if(x){x.classList.toggle('on');if(x.classList.contains('on'))x.scrollIntoView({behavior:'smooth',block:'center'})}};
+ var cct=document.getElementById('cctransit');
+ if(cct)cct.onclick=function(){var x=document.getElementById('transitpanel');if(x){x.classList.toggle('on');if(x.classList.contains('on'))x.scrollIntoView({behavior:'smooth',block:'center'})}};
+ var ccw=document.getElementById('ccwallet');if(ccw)ccw.onclick=function(){cur='wallet';render()};
+ var wxr=document.getElementById('wxrain'),opr=document.getElementById('openrain');
+ if(wxr)wxr.onclick=function(){cur='rain';render()};if(opr)opr.onclick=function(){cur='rain';render()};
+ var wxu=document.getElementById('wxrefresh');if(wxu)wxu.onclick=function(){toast(WXFAR?'還沒進入預報範圍':'正在更新天氣…');fetchWX()};
+ [].forEach.call(main.querySelectorAll('[data-ready]'),function(cb){cb.onchange=function(){ST.chk['go_'+cur+'_'+cb.dataset.ready]=cb.checked;save();keepScroll(render)}});
  var cpb=document.getElementById('copy');
  if(cpb)cpb.onclick=function(){copyDay(cur,list)};
  var adb=document.getElementById('addon');
@@ -3535,8 +3630,9 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v261</span>');
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v262</span>');
  h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>第一次會直接開目前 Day 的頁面；點頁名可開目錄，雙擊可放大。每個 Day 頁能直接回到 App 詳細行程，也能從目錄分享單頁給同行者。<div class="tags"><a class="lk map pdf-open" href="kansai-guide-v255.pdf">開啟行程速覽</a></div></div>';
+ h+='<div class="note" style="border-left-color:var(--moss)"><b>v262 今日出發工具</b><br>每天最上方整合下一站、死線、票券完成度與六項出門檢查。天氣會依降雨、低溫與 Day 2 風速直接建議照走或啟動雨備；「交通狀態」只列當天相關官方頁。<br><b>票券</b>分頁可存確認碼、座位與 QR 截圖，離線也能開啟。</div>';
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -3693,7 +3789,7 @@ function renderHelp(){
    '<b>出發前和旅途中各備份一次。</b>');
 
  h+=sec('分頁很多，怎麼快速找到');
- h+=n('上方一共 <b>15 個分頁</b>，可以左右滑動。<b>目前所在的分頁會自動捲到畫面中央</b>，不用自己找。<br>'+
+ h+=n('上方一共 <b>16 個分頁</b>，可以左右滑動。<b>目前所在的分頁會自動捲到畫面中央</b>，不用自己找。<br>'+
    '找不到某個功能時，<b>直接用最上方的搜尋框</b>最快。');
 
  h+=sec('其他分頁');
@@ -3706,7 +3802,8 @@ function renderHelp(){
    '<b>只想還原其中一項</b>　捲到最下面的「🙈 已隱藏的項目」，每項旁邊都有還原鈕。<br>'+
    '<b>☐ 只看未打包</b>　按這顆會把已勾選的藏起來，<b>剩下的就是還要做的事</b> —— 出發前最後檢查很好用。<br>'+
    '<span style="color:var(--dim)">上方顯示打包進度，只算沒隱藏的項目。你的增補只存在自己手機上。</span><br><br>'+
-   '<b>資訊</b>　每人預算彙總（含台幣換算）、2026 退稅新制、隨身 vs 託運、台灣海關規定。<br><br>'+
+  '<b>資訊</b>　每人預算彙總（含台幣換算）、2026 退稅新制、隨身 vs 託運、台灣海關規定。<br><br>'+
+  '<b>票券</b>　確認碼、座位與 QR 截圖的離線錢包；完整備份檔會連圖片一起保存。<br><br>'+
    '<b>分享</b>　QR Code 給其他人掃、共享相簿連結、離線快取狀態。<br><br>'+
    '<b>準備</b>　五人共用行前進度與負責人、<b>航班資訊</b>、<b>備份與還原</b>、住宿資料、訂位與劃位清單、電話簿、現金配置、死線提醒設定、團隊規則、出發前還要查的事。');
 
@@ -3740,9 +3837,9 @@ function backupFromFile(file){
 var BK_PREFIX="K5BK";          /* 備份碼 */
 var LG_PREFIX="K5";            /* 同步碼．注意 K5BK 以 K5 開頭，驗證時要先擋掉 */
 function backupCode(){
- var o={v:28,plans:ST.plans,who:ST.who,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
+ var o={v:29,plans:ST.plans,who:ST.who,geoShare:ST.geoShare,geoRate:ST.geoRate,me:ST.me,members:ST.members,avatars:ST.avatars,shop:ST.shop,exp:ST.exp,paid:ST.paid,diet:ST.diet,dietX:ST.dietX,
   chk:ST.chk,done:ST.done,edit:ST.edit,hide:ST.hide,adhoc:ST.adhoc,room:ST.room,expDel:ST.expDel,shopInit:ST.shopInit,packAdd:ST.packAdd,packHide:ST.packHide,myPlaces:ST.myPlaces,picOpen:ST.picOpen,packOnlyTodo:ST.packOnlyTodo,compact:ST.compact,
-   album:ST.album,rate:ST.rate,sos:ST.sos,tasks:ST.tasks,taskPending:ST.taskPending};
+   album:ST.album,rate:ST.rate,sos:ST.sos,tasks:ST.tasks,taskPending:ST.taskPending,wallet:ST.wallet};
  return BK_PREFIX+b64e(JSON.stringify(o))}
 function backupRestore(code){
  code=(code||'').trim();
@@ -3750,7 +3847,7 @@ function backupRestore(code){
  if(code.indexOf(BK_PREFIX)!==0)return {ok:false,msg:'這不是備份代碼'};
  var raw=b64d(code.slice(4));if(raw===null)return {ok:false,msg:'代碼壞了或不完整'};
  try{var o=JSON.parse(raw)}catch(e){return {ok:false,msg:'代碼格式錯誤'}}
-  ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','noLeaf','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet','tasks','taskPending'].forEach(function(k){
+  ['me','members','avatars','shop','shopInit','exp','expDel','paid','dietX','geoShare','geoRate','who','plans','noLeaf','packAdd','packHide','myPlaces','picOpen','packOnlyTodo','compact','chk','done','edit','hide','adhoc','room','album','rate','sos','diet','tasks','taskPending','wallet'].forEach(function(k){
   if(o[k]!==undefined)ST[k]=o[k]});
  ensureDays();save();return {ok:true,msg:'已還原'}}
 
@@ -3785,6 +3882,7 @@ function buildIndex(){
  TEL.forEach(function(x){idx.push({p:'準備',t:x[0]+' '+x[2],d:x[1],k:'prep'})});
  CHECK.forEach(function(x){idx.push({p:'準備',t:x[0],d:x[1],k:'prep'})});
  PACK.forEach(function(sec){sec[1].forEach(function(it){idx.push({p:'行李',t:it[0],d:it[1]||'',k:'pack'})})});
+ WALLET.forEach(function(x){var z=ST.wallet[x.id]||{};idx.push({p:'票券',t:x.t,d:x.sub+' '+(z.code||'')+' '+(z.note||''),k:'wallet'})});
  return idx}
 function doSearch(q){
  q=(q||'').trim().toLowerCase();if(q.length<1)return [];
@@ -4778,6 +4876,35 @@ function packForm(id){
   else{o.id=Date.now().toString(36)+Math.random().toString(36).slice(2,5);ST.packAdd.push(o)}
   save();f.innerHTML='';f.dataset.id='';keepScroll(renderPack);toast(id?'已修改':'已加入')}}
 
+/* ---- 離線票券錢包 ---- */
+function walletImage(file,id){
+ if(!file)return;var fr=new FileReader();
+ fr.onload=function(){var im=new Image();im.onload=function(){
+  var max=1200,sc=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');
+  c.width=Math.max(1,Math.round(im.width*sc));c.height=Math.max(1,Math.round(im.height*sc));
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+  var data='';try{data=c.toDataURL('image/webp',.86)}catch(e){data=c.toDataURL('image/jpeg',.86)}
+  if(!ST.wallet[id])ST.wallet[id]={};ST.wallet[id].img=data;save();renderWallet();toast('已存進離線票券錢包')};im.src=fr.result};
+ fr.readAsDataURL(file)}
+function renderWallet(){
+ var saved=0;WALLET.forEach(function(x){var z=ST.wallet[x.id]||{};if(z.code||z.note||z.img)saved++});
+ var h='<div class="note" style="border-left-color:var(--cyan)"><b>🎫 離線票券錢包</b><br>把確認碼、座位與 QR 截圖存進來；地下鐵或機場沒網路仍能打開。<br><span style="color:var(--dim)">已存 '+saved+'／'+WALLET.length+' 項。資料只留在這支手機與你下載的備份檔，不會上傳到共用房間。</span></div>';
+ h+=WALLET.map(function(x){var z=ST.wallet[x.id]||{},task=x.task?taskState(x.task):null,ok=!!(z.img||z.code||(task&&task.done));
+  return '<div class="walletcard" id="wallet-'+x.id+'"><div class="wallethead"><span class="wi">'+x.ic+'</span><span class="wt"><b>'+x.t+'</b><small>'+x.sub+'</small></span><span class="ws">'+(ok?'✓ 已準備':'待加入')+'</span></div>'+
+   '<div class="walletfields"><input data-wcode="'+x.id+'" placeholder="確認碼／座位／票號" value="'+taskEsc(z.code||'')+'"><input data-wnote="'+x.id+'" placeholder="備註" value="'+taskEsc(z.note||'')+'"></div>'+
+   (z.img?'<a href="'+z.img+'" target="_blank" rel="noopener"><img class="walletshot" src="'+z.img+'" alt="'+taskEsc(x.t)+' 截圖"></a>':'')+
+   '<div class="walletactions"><label>📷 '+(z.img?'更換截圖':'加入 QR／截圖')+'<input type="file" accept="image/*" data-wimg="'+x.id+'" style="display:none"></label>'+
+   (x.task&&!task.done?'<button data-wtask="'+x.task+'">✓ 標記任務完成</button>':'')+
+   (z.img?'<button class="danger" data-wrm="'+x.id+'">移除截圖</button>':'')+'</div></div>'}).join('');
+ h+='<div class="note"><b>使用方式</b><br>截圖後先開一次確認清晰度；QR Code 點圖片可放大。出發前再按「準備 → 下載備份檔」，票券圖片會一起備份。</div>';
+ main.innerHTML=h;
+ [].forEach.call(main.querySelectorAll('[data-wcode]'),function(x){x.onchange=function(){var id=x.dataset.wcode;if(!ST.wallet[id])ST.wallet[id]={};ST.wallet[id].code=x.value.trim();save();toast('已儲存確認碼')}});
+ [].forEach.call(main.querySelectorAll('[data-wnote]'),function(x){x.onchange=function(){var id=x.dataset.wnote;if(!ST.wallet[id])ST.wallet[id]={};ST.wallet[id].note=x.value.trim();save();toast('已儲存備註')}});
+ [].forEach.call(main.querySelectorAll('[data-wimg]'),function(x){x.onchange=function(){walletImage(x.files&&x.files[0],x.dataset.wimg)}});
+ [].forEach.call(main.querySelectorAll('[data-wtask]'),function(x){x.onclick=function(){setTask(x.dataset.wtask,{done:true});keepScroll(renderWallet);toast('已標記完成')}});
+ [].forEach.call(main.querySelectorAll('[data-wrm]'),function(x){x.onclick=function(){var id=x.dataset.wrm;ask('移除這張截圖？','確認碼與備註會保留。',function(){if(ST.wallet[id])delete ST.wallet[id].img;save();renderWallet();toast('已移除截圖')})}});
+ topIfTabChanged()}
+
 function renderPrep(){
  var st=CAN?'<div class="store on">✅ 儲存已啟用</div>':'<div class="store off">⚠️ 目前無法儲存 —— 請下載到手機用瀏覽器開啟</div>';
  var who='<h2 class="sec">你是誰</h2><div class="note"><b>目前身分：'+meName()+'</b><br>'+
@@ -4924,12 +5051,13 @@ function renderPrep(){
  if(bu)bu.onchange=function(){var f0=this.files[0];ask('從檔案還原？','會覆蓋這支手機目前的所有資料：身分、成員、購物清單、分帳、行程調整、勾選。',function(){backupFromFile(f0)})};
  var bm=document.getElementById('bkmk');
  if(bm)bm.onclick=function(){
-  var full=ST.avatars;ST.avatars=["","","","",""];
-  var code=backupCode();ST.avatars=full;
+  var full=ST.avatars,fullWallet=ST.wallet,shortWallet={};ST.avatars=["","","","",""];
+  Object.keys(fullWallet||{}).forEach(function(k){var z=fullWallet[k]||{};shortWallet[k]={code:z.code||'',note:z.note||''}});ST.wallet=shortWallet;
+  var code=backupCode();ST.avatars=full;ST.wallet=fullWallet;
   var box=document.getElementById('bkbox');
   box.innerHTML='<div class="form" style="border-style:solid"><div style="word-break:break-all;font-size:11px;color:var(--dim);background:var(--ground);padding:9px;border-radius:3px;max-height:120px;overflow:auto">'+code+'</div>'+
    '<div class="tags" style="margin-top:9px"><button class="lk map" id="bkcp">複製代碼</button></div>'+
-   '<div class="hint"><b>短代碼不含大頭貼</b>（約 '+Math.max(1,Math.round(code.length/1024))+' KB），適合貼到備忘錄。要完整備份請用「下載備份檔」。</div></div>';
+   '<div class="hint"><b>短代碼不含大頭貼與票券截圖</b>（約 '+Math.max(1,Math.round(code.length/1024))+' KB），適合貼到備忘錄。要完整備份請用「下載備份檔」。</div></div>';
   document.getElementById('bkcp').onclick=function(){
    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(function(){toast('已複製備份代碼')});
    else toast('請長按上面的代碼手動複製')}};
@@ -5017,7 +5145,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v261';
+var APPVER='kansai5-v262';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);

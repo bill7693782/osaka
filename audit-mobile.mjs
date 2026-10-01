@@ -11,9 +11,9 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v261.png');
-const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v261.png');
-const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v261.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v262.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v262.png');
+const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v262.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
@@ -73,6 +73,7 @@ try {
   const reports = [];
   const pdfLayouts = [];
   let pdfFlow = null;
+  let featureFlow = null;
   for (const size of sizes) {
     await send('Emulation.setDeviceMetricsOverride', {
       ...size, screenWidth: size.width, screenHeight: size.height,
@@ -124,6 +125,24 @@ try {
     if (size.width === 375) {
       const shot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(screenshot, Buffer.from(shot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#ccready')?.click();window.__readyWasOpen=document.querySelector('#readypanel')?.classList.contains('on');document.querySelector('[data-ready="passport"]')?.click();document.querySelector('#cctransit')?.click()` }, sessionId);
+      await pause(120);
+      const dashboard = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => ({command:!!document.querySelector('.cc'),readyOpened:!!window.__readyWasOpen,readyChecked:!!document.querySelector('[data-ready="passport"]')?.checked,transitOpen:document.querySelector('#transitpanel')?.classList.contains('on'),transitLinks:document.querySelectorAll('#transitpanel a').length,weatherText:document.querySelector('.wxact')?.textContent.trim().slice(0,90)||'',stormDecision:wxDecision('d2',{pop:70,wind:10,lo:8,hi:14}).cls}))()`,
+      }, sessionId);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#ccwallet')?.click()` }, sessionId);
+      await pause(120);
+      await send('Runtime.evaluate', { expression: `(() => {const x=document.querySelector('[data-wcode="gk050"]');if(x){x.value='TEST-OFFLINE';x.dispatchEvent(new Event('change',{bubbles:true}))}})()` }, sessionId);
+      await send('Runtime.evaluate', { expression: `document.querySelector('[data-k="d1"]')?.click();document.querySelector('[data-k="wallet"]')?.click()` }, sessionId);
+      await pause(120);
+      const walletFlow = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `({cards:document.querySelectorAll('.walletcard').length,fields:document.querySelectorAll('[data-wcode]').length,persisted:document.querySelector('[data-wcode="gk050"]')?.value||'',navSelected:document.querySelector('[data-k="wallet"]')?.getAttribute('aria-selected')})`,
+      }, sessionId);
+      featureFlow = { dashboard: dashboard.result.value, wallet: walletFlow.result.value };
+      await send('Runtime.evaluate', { expression: `document.querySelector('[data-k="d1"]')?.click()` }, sessionId);
+      await pause(120);
       await send('Runtime.evaluate', { expression: `localStorage.removeItem('osaka_pdf_page');document.querySelector('a.pdf-open')?.click()` }, sessionId);
       await pause(900);
       const opened = await send('Runtime.evaluate', {
@@ -205,7 +224,7 @@ try {
     }
   }
   pdfLayouts.sort((a,b) => a.width-b.width);
-  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, tocScreenshot, pdfLayouts, pdfFlow, reports }, null, 2));
+  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, tocScreenshot, pdfLayouts, pdfFlow, featureFlow, reports }, null, 2));
 } finally {
   try { ws?.close(); } catch {}
   browser.kill();
