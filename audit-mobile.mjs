@@ -11,8 +11,9 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v258.png');
-const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v258.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v259.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v259.png');
+const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v259.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
@@ -123,7 +124,7 @@ try {
     if (size.width === 375) {
       const shot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(screenshot, Buffer.from(shot.data, 'base64'));
-      await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
+      await send('Runtime.evaluate', { expression: `localStorage.removeItem('osaka_pdf_page');document.querySelector('a.pdf-open')?.click()` }, sessionId);
       await pause(900);
       const opened = await send('Runtime.evaluate', {
         returnByValue: true,
@@ -134,6 +135,9 @@ try {
             imageCount:pages?.querySelectorAll('img').length||0,loadedImages:[...pages.querySelectorAll('img')].filter(i=>i.complete&&i.naturalWidth>0).length,
             counter:document.querySelector('#pdfcount')?.textContent||'',backHeight:r?+r.height.toFixed(1):0,
             prevDisabled:!!document.querySelector('#pdfprev')?.disabled,hasDownload:!!view?.querySelector('a[download]'),
+            tocButtons:document.querySelectorAll('#pdftocgrid button[data-p]').length,
+            tripLabel:document.querySelector('#pdftocgrid button.trip')?.childNodes[0]?.textContent||'',
+            storedPage:localStorage.getItem('osaka_pdf_page'),currentTab:typeof cur==='undefined'?'':cur,
             topClient:view?.querySelector('.pdfbar')?.clientWidth||0,topScroll:view?.querySelector('.pdfbar')?.scrollWidth||0,
             bottomClient:view?.querySelector('.pdfpager')?.clientWidth||0,bottomScroll:view?.querySelector('.pdfpager')?.scrollWidth||0,
             historyState:history.state};
@@ -143,13 +147,23 @@ try {
         bottomClient: opened.result.value.bottomClient, bottomScroll: opened.result.value.bottomScroll });
       const pdfShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(pdfScreenshot, Buffer.from(pdfShot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfcount')?.click()` }, sessionId);
+      await pause(120);
+      const tocMenu = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => {const t=document.querySelector('#pdftoc');return {visible:!t.hidden,buttons:t.querySelectorAll('button[data-p]').length,here:t.querySelector('button.here')?.childNodes[0]?.textContent||'',trip:t.querySelector('button.trip')?.childNodes[0]?.textContent||'',historyState:history.state}})()`,
+      }, sessionId);
+      const tocShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
+      fs.writeFileSync(tocScreenshot, Buffer.from(tocShot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdftocgrid button[data-p="0"]')?.click()` }, sessionId);
+      await pause(350);
       await send('Runtime.evaluate', { expression: `document.querySelector('#pdfnext')?.click()` }, sessionId);
       await pause(550);
       const navigated = await send('Runtime.evaluate', {
         returnByValue: true,
         expression: `(() => {const p=document.querySelector('#pdfpages');return {counter:document.querySelector('#pdfcount')?.textContent||'',scrollLeft:+p.scrollLeft.toFixed(1),pageWidth:p.clientWidth}})()`,
       }, sessionId);
-      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfzoom')?.click()` }, sessionId);
+      await send('Runtime.evaluate', { expression: `(() => {const i=document.querySelectorAll('.pdfpage img')[1],r=i.getBoundingClientRect();i.dispatchEvent(new MouseEvent('dblclick',{bubbles:true,clientX:r.left+r.width/2,clientY:r.top+r.height/2}))})()` }, sessionId);
       await pause(100);
       const zoomed = await send('Runtime.evaluate', {
         returnByValue: true,
@@ -162,14 +176,14 @@ try {
         returnByValue: true,
         expression: `({hidden:document.querySelector('#pdfview')?.hidden,dayTitle:document.querySelector('.hero .top .w')?.textContent?.trim()||''})`,
       }, sessionId);
-      pdfFlow = { opened: opened.result.value, navigated: navigated.result.value, zoomed: zoomed.result.value, closed: closed.result.value };
+      pdfFlow = { opened: opened.result.value, tocMenu: tocMenu.result.value, navigated: navigated.result.value, zoomed: zoomed.result.value, closed: closed.result.value };
     }
     if (size.width !== 375) {
       await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
       await pause(350);
       const layout = await send('Runtime.evaluate', {
         returnByValue: true,
-        expression: `(() => {const v=document.querySelector('#pdfview'),t=v.querySelector('.pdfbar'),b=v.querySelector('.pdfpager');return {width:innerWidth,topClient:t.clientWidth,topScroll:t.scrollWidth,bottomClient:b.clientWidth,bottomScroll:b.scrollWidth}})()`,
+        expression: `(() => {const v=document.querySelector('#pdfview'),t=v.querySelector('.pdfbar'),b=v.querySelector('.pdfpager');return {width:innerWidth,topClient:t.clientWidth,topScroll:t.scrollWidth,bottomClient:b.clientWidth,bottomScroll:b.scrollWidth,counter:document.querySelector('#pdfcount').textContent,storedPage:localStorage.getItem('osaka_pdf_page'),currentTab:typeof cur==='undefined'?'':cur}})()`,
       }, sessionId);
       pdfLayouts.push(layout.result.value);
       await send('Runtime.evaluate', { expression: `document.querySelector('#pdfback')?.click()` }, sessionId);
@@ -177,7 +191,7 @@ try {
     }
   }
   pdfLayouts.sort((a,b) => a.width-b.width);
-  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, pdfLayouts, pdfFlow, reports }, null, 2));
+  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, tocScreenshot, pdfLayouts, pdfFlow, reports }, null, 2));
 } finally {
   try { ws?.close(); } catch {}
   browser.kill();
