@@ -15,7 +15,7 @@ vm.createContext(data);
 vm.runInContext(app.slice(begin, end), data);
 const days = data.D;
 
-const version = '254';
+const version = '255';
 const htmlPath = path.join(root, `kansai-guide-v${version}.html`);
 const pdfPath = path.join(root, `kansai-guide-v${version}.pdf`);
 const appUrl = 'https://bill7693782.github.io/osaka/';
@@ -23,19 +23,19 @@ const appUrl = 'https://bill7693782.github.io/osaka/';
 // 速覽版選出決策點、重要交通與主要活動；逐站說明保留在 App。
 const picks = {
   d0: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-  d1: [0, 1, 2, 3, 7, 8, 11, 13, 16, 17, 19, 23, 26],
-  d2: [0, 2, 3, 4, 5, 7, 10, 12, 14, 16, 18, 20, 21, 22, 24, 25, 26, 27, 29, 30],
-  d3: [0, 1, 2, 4, 5, 7, 9, 11, 13, 14, 15, 17, 21, 23, 24, 26, 27],
+  d1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  d2: [0, 1, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 21, 22, 24, 25, 26, 27],
+  d3: [0, 1, 2, 4, 5, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
   d4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-  d5: [0, 2, 4, 6, 8, 9, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+  d5: [0, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23],
 };
 const meta = {
   d0: { place: 'TAIPEI / DEPARTURE', route: '台北車站 → 桃園機場 → 關西', color: '#8fa3b8', tip: '護照、JR Pass、VJW 截圖與五人行李，出門前再確認一次。' },
-  d1: { place: 'KYOTO', route: '關西機場 → 鞍馬 → 貴船 → 伏見稻荷 → 京都', color: '#c98925', tip: '最晚 16:15 進ちいかわ本舗；晚餐 19:25 訂位。' },
-  d2: { place: 'INE / AMANOHASHIDATE', route: '京都 → 伊根舟屋 → 傘松公園 → 天橋立 → 京都', color: '#287f9b', tip: '福知山只留 8 分鐘轉乘；傍晚的吊椅、觀光船都有末班。' },
-  d3: { place: 'NARA / OSAKA', route: '京都 → 奈良 → 藥師寺 → 難波 → 鶴橋', color: '#a76643', tip: '五個行李先寄再玩；15:50 搭上往天王寺的 JR。' },
-  d4: { place: 'MINOH / OSAKA', route: '難波 → 箕面 → 梅田 → 大阪城 → 通天閣', color: '#7866ad', tip: '大阪城 15:50 離開；17:45 準時到はり重。' },
-  d5: { place: 'OSAKA / HOMECOMING', route: '木津市場 → 海遊館 → 難波 → 關西機場', color: '#4b8b5a', tip: '退稅查驗在託運前；22:30 前到登機門，以登機證為準。' },
+  d1: { place: 'KYOTO', route: '關西機場 → 伏見稻荷 → 飯店補眠 → 四条', color: '#c98925', tip: '紅眼班機後不跑山區；14:30 回飯店睡滿 2.5 小時。' },
+  d2: { place: 'INE / AMANOHASHIDATE', route: '京都 → 伊根舟屋 → 傘松公園 → 天橋立 → 京都', color: '#287f9b', tip: '福知山轉乘只有 8 分鐘；下午只留傘松，取消飛龍觀趕場。' },
+  d3: { place: 'NARA / OSAKA', route: '京都 → 奈良公園 → 難波 → 鶴橋', color: '#a76643', tip: '藥師寺改列下次；下午提早進大阪休息，17:20 再出門。' },
+  d4: { place: 'MINOH / OSAKA', route: '難波 → 箕面 → 梅田 → 大阪城 → 道頓堀', color: '#7866ad', tip: '通天閣改列下次；17:35 抵達はり重門口。' },
+  d5: { place: 'OSAKA / HOMECOMING', route: '木津市場 → 海遊館 → 最後購物 → 關西機場', color: '#4b8b5a', tip: '15:50 停止購物；18:20 搭はるか，退稅查驗在託運前。' },
 };
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -125,7 +125,7 @@ body{background:#ddd8cc;color:#1d2a31;font-family:"Microsoft JhengHei","Noto San
 <section class="page cover"><div class="kicker">A SMALL GUIDE FOR A BIG JOURNEY</div><div class="edition">TRAVEL EDITION · V${version}</div><div class="rule"></div><h1>關西<br>五日</h1><p class="sub">把重要時刻，放在眼前。</p><div class="dates">12 — 17 NOV 2026 · KYOTO / OSAKA</div><div class="journey">京都的山與鳥居，伊根的海，奈良的鹿，<br>再回到大阪的街與夜。<small>5 TRAVELLERS · 6 DAYS · 1 CLEAR ROUTE</small></div></section>
 <section class="page quick" style="--accent:#b8823a"><div class="topline"><span>BEFORE WE GO</span><span>02 / 08</span></div><h2>先看這一頁，<br>再開始旅行。</h2><p class="intro">PDF 看節奏與死線；地址、導航、訂位細節和即時調整請開 App。</p>
 <div class="grid"><div class="card"><span>去程航班</span><b>GK050 · 桃園 → 關西</b><p>11/13 凌晨 02:30 起飛<br>Day 0 晚上先前往機場</p></div><div class="card"><span>回程航班</span><b>GK057 · 關西 → 桃園</b><p>11/17 晚上 23:10 起飛<br>22:30 前到登機門</p></div><div class="card"><span>京都住宿</span><b>曼迪 京都車站</b><p>Day 1–2 · 京都站周邊</p></div><div class="card"><span>大阪住宿</span><b>WELLSTAY 難波</b><p>Day 3–5 · 難波／元町</p></div></div>
-<h3>三個先決定好的時刻</h3><div class="decision"><time>DAY 2</time><b>08:55 福知山轉乘；接不上就啟動替代路線。</b></div><div class="decision"><time>DAY 3</time><b>15:50 搭上往天王寺的 JR，晚餐有訂位。</b></div><div class="decision"><time>DAY 5</time><b>退稅查驗在託運前；22:30 前到登機門。</b></div>
+<h3>三個先決定好的時刻</h3><div class="decision"><time>DAY 1</time><b>14:30 回飯店補眠；第一天不跑山區。</b></div><div class="decision"><time>DAY 3</time><b>17:20 離開飯店，準時前往鶴橋晚餐。</b></div><div class="decision"><time>DAY 5</time><b>15:50 停止購物；18:20 搭はるか去機場。</b></div>
 <div class="appbox"><b>完整行程在 App</b><p>逐站導航、票券與訂位、天氣、備案、五人行前進度與分帳，都在手機裡。</p><a href="${appUrl}">${appUrl}</a></div></section>
 ${['d0','d1','d2','d3','d4','d5'].map((key, i) => dayPage(key, i + 3)).join('\n')}
 </body></html>`;
