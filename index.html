@@ -539,9 +539,24 @@ h2.sec.fold .ar{transform:rotate(-90deg)}
   font:inherit;font-size:13px;font-weight:700;line-height:1.1;text-decoration:none;white-space:nowrap;cursor:pointer}
 .pdfbar .pdfback{border-color:rgba(91,168,196,.5);color:var(--cyan)}
 .pdfbar strong{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;font-size:13px}
-#pdfframe{display:block;flex:1 1 auto;width:100%;min-height:0;border:0;background:#fff}
+.pdfpages{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-width:none;background:#20272D}
+.pdfpages::-webkit-scrollbar{display:none}
+.pdfpages.zoomed{overflow:hidden;scroll-snap-type:none}
+.pdfpage{flex:0 0 100%;width:100%;height:100%;margin:0;padding:10px 8px;scroll-snap-align:start;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-x pan-y pinch-zoom}
+.pdfpage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;background:#F8F5EE;
+  box-shadow:0 4px 20px rgba(0,0,0,.35);user-select:none;-webkit-user-drag:none}
+.pdfpage.zoom{align-items:flex-start;justify-content:flex-start;overflow:auto;touch-action:pan-x pan-y}
+.pdfpage.zoom img{width:185%;max-width:none;max-height:none;height:auto;margin:0}
+.pdfpager{flex:0 0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;
+  padding:7px 10px calc(7px + env(safe-area-inset-bottom));background:#131A22;border-top:1px solid var(--line)}
+.pdfpager button{min-height:44px;border:1px solid var(--line2);border-radius:999px;background:var(--surface2);
+  color:var(--paper);font:inherit;font-size:13px;font-weight:700;line-height:1;cursor:pointer;padding:0 14px}
+.pdfpager button:last-child{justify-self:end}.pdfpager span{color:var(--dim);font-size:11px;white-space:nowrap}
+.pdfpager button:disabled{opacity:.32}
 body.pdf-open{overflow:hidden}
-@media(max-width:360px){.pdfbar{gap:5px;padding-left:6px;padding-right:6px}.pdfbar button,.pdfbar a{padding:0 10px}.pdfbar strong{font-size:0}.pdfbar strong:after{content:'PDF';font-size:12px}}
+@media(max-width:360px){.pdfbar{gap:5px;padding-left:6px;padding-right:6px}.pdfbar button,.pdfbar a{padding:0 10px}.pdfbar strong{font-size:12px}.pdfpager{padding-left:6px;padding-right:6px}.pdfpager button{padding:0 11px}}
 #totop{position:fixed;right:16px;bottom:calc(22px + env(safe-area-inset-bottom));width:44px;height:44px;
   border-radius:50%;background:#242D37;border:1px solid var(--line2);color:var(--paper);
   font-size:17px;cursor:pointer;display:none;z-index:40;box-shadow:var(--shadow-lg);
@@ -559,7 +574,7 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <body>
 <header>
   <div class="brand"><b>關西五日</b>
-    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v257 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn pdf-open" href="kansai-guide-v255.pdf" title="PDF 行程速覽" aria-label="在 App 內開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
+    <div class="clock"><button class="vbtn" id="vbtn" title="版本 ・ 點一下檢查更新">v258 <span class="vdot">⋯</span></button><span class="jst mono" id="jst">--:--</span><span class="zn">日本<br>時間</span><a class="qbtn pdf-open" href="kansai-guide-v255.pdf" title="PDF 行程速覽" aria-label="在 App 內開啟 PDF 行程速覽">📄</a><button class="qbtn" id="qtoggle" title="搜尋">🔍</button></div>
   </div>
   <div id="qwrap" style="padding:0 16px 9px;position:relative;display:none"><input id="q" placeholder="🔍 搜尋行程、店家、電話、行李…" style="width:100%;background:var(--surface);border:1px solid var(--line);color:var(--paper);border-radius:999px;padding:8px 34px 8px 14px;font-size:13.5px;font-family:inherit"><button id="qx" style="display:none;position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;padding:0 6px">✕</button></div>
   <nav id="nav" role="tablist"></nav>
@@ -568,14 +583,24 @@ footer{color:var(--dim);font-size:12px;text-align:center;padding:28px 0 10px;lin
 <main id="main"></main>
 <div id="modal"><div class="mbox"><div class="mtitle" id="mtitle"></div><div class="mtext" id="mtext"></div>
 <div class="mbtns"><button class="mcancel" id="mcancel">取消</button><button class="mok" id="mok">確定</button></div></div></div>
-<section id="pdfview" hidden aria-label="PDF 行程速覽">
+<section id="pdfview" hidden role="dialog" aria-modal="true" aria-label="PDF 行程速覽">
   <div class="pdfbar">
     <button class="pdfback" id="pdfback" type="button">← 回行程</button>
-    <strong>關西五日・PDF 速覽</strong>
-    <a href="kansai-guide-v255.pdf" target="_blank" rel="noopener" aria-label="在新視窗開啟 PDF">另開</a>
-    <a href="kansai-guide-v255.pdf" download aria-label="下載 PDF">下載</a>
+    <strong id="pdfcount">PDF 1 / 8</strong>
+    <button id="pdfzoom" type="button" aria-label="放大目前頁面">放大</button>
+    <a href="kansai-guide-v255.pdf" download aria-label="下載原始 PDF">↓ PDF</a>
   </div>
-  <iframe id="pdfframe" title="關西五日 PDF 行程速覽"></iframe>
+  <div class="pdfpages" id="pdfpages" tabindex="0" aria-label="左右滑動切換 PDF 頁面">
+    <figure class="pdfpage"><img src="guide-pages/page-01.webp" alt="PDF 第 1 頁：關西五日封面" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-02.webp" alt="PDF 第 2 頁：出發前重點" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-03.webp" alt="PDF 第 3 頁：Day 0 出發前夜" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-04.webp" alt="PDF 第 4 頁：Day 1 京都" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-05.webp" alt="PDF 第 5 頁：Day 2 伊根與天橋立" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-06.webp" alt="PDF 第 6 頁：Day 3 奈良與大阪" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-07.webp" alt="PDF 第 7 頁：Day 4 箕面與大阪" loading="lazy" draggable="false"></figure>
+    <figure class="pdfpage"><img src="guide-pages/page-08.webp" alt="PDF 第 8 頁：Day 5 大阪與返程" loading="lazy" draggable="false"></figure>
+  </div>
+  <div class="pdfpager"><button id="pdfprev" type="button">‹ 上一頁</button><span>左右滑動翻頁</span><button id="pdfnext" type="button">下一頁 ›</button></div>
 </section>
 <button id="totop" title="回到頂端">↑</button>
 <div class="toast" id="toast"></div>
@@ -593,24 +618,57 @@ var HKQ="〒600-8262 京都府京都市下京区八百屋町1",
 
 /* PDF 留在 App 裡閱讀；返回鍵與頂端按鈕都回到原本行程位置 */
 (function(){
- var view=document.getElementById('pdfview'),frame=document.getElementById('pdfframe'),back=document.getElementById('pdfback');
- var pushed=false;
+ var view=document.getElementById('pdfview'),scroller=document.getElementById('pdfpages'),back=document.getElementById('pdfback');
+ var prev=document.getElementById('pdfprev'),next=document.getElementById('pdfnext'),count=document.getElementById('pdfcount'),zoom=document.getElementById('pdfzoom');
+ var pages=scroller?[].slice.call(scroller.querySelectorAll('.pdfpage')):[],pushed=false,page=0,scrollTick=0,moving=false;
+ function clamp(n){return Math.max(0,Math.min(pages.length-1,n))}
+ function setZoom(on){
+  pages.forEach(function(p){p.classList.remove('zoom');p.scrollTop=0;p.scrollLeft=0});
+  if(scroller)scroller.classList.toggle('zoomed',!!on);
+  if(on&&pages[page])pages[page].classList.add('zoom');
+  if(zoom){zoom.textContent=on?'縮小':'放大';zoom.setAttribute('aria-label',on?'縮小目前頁面':'放大目前頁面')}
+ }
+ function update(n,move,smooth){
+  page=clamp(n);setZoom(false);
+  if(count)count.textContent='PDF '+(page+1)+' / '+pages.length;
+  if(prev)prev.disabled=page===0;if(next)next.disabled=page===pages.length-1;
+  try{localStorage.setItem('osaka_pdf_page',String(page))}catch(e){}
+  if(move&&scroller){
+   moving=true;scroller.scrollTo({left:page*scroller.clientWidth,behavior:smooth?'smooth':'auto'});
+   setTimeout(function(){moving=false},smooth?420:20)
+  }
+ }
  function show(addHistory){
-  if(!view||!frame)return;
-  if(!frame.getAttribute('src'))frame.setAttribute('src','kansai-guide-v255.pdf#view=FitH');
+  if(!view||!scroller)return;
   view.hidden=false;document.body.classList.add('pdf-open');
+  var saved=0;try{saved=parseInt(localStorage.getItem('osaka_pdf_page')||'0',10)||0}catch(e){}
+  requestAnimationFrame(function(){update(saved,true,false);scroller.focus({preventScroll:true})});
   if(addHistory){try{history.pushState({pdfViewer:true},'',location.href);pushed=true}catch(e){}}
  }
- function hide(){if(!view)return;view.hidden=true;document.body.classList.remove('pdf-open')}
+ function hide(){if(!view)return;setZoom(false);view.hidden=true;document.body.classList.remove('pdf-open')}
  document.addEventListener('click',function(e){
   var a=e.target&&e.target.closest?e.target.closest('a.pdf-open'):null;
   if(!a)return;e.preventDefault();show(true)
  });
+ if(prev)prev.addEventListener('click',function(){update(page-1,true,true)});
+ if(next)next.addEventListener('click',function(){update(page+1,true,true)});
+ if(zoom)zoom.addEventListener('click',function(){setZoom(!scroller.classList.contains('zoomed'))});
+ if(scroller)scroller.addEventListener('scroll',function(){
+  if(moving||scroller.classList.contains('zoomed')||scrollTick)return;
+  scrollTick=requestAnimationFrame(function(){scrollTick=0;var n=Math.round(scroller.scrollLeft/Math.max(1,scroller.clientWidth));if(n!==page)update(n,false,false)})
+ },{passive:true});
+ window.addEventListener('resize',function(){if(view&&!view.hidden)update(page,true,false)});
  if(back)back.addEventListener('click',function(){if(pushed)history.back();else hide()});
  window.addEventListener('popstate',function(e){
   if(e.state&&e.state.pdfViewer){pushed=true;show(false)}else{pushed=false;hide()}
  });
- document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!view.hidden){if(pushed)history.back();else hide()}});
+ document.addEventListener('keydown',function(e){
+  if(view.hidden)return;
+  if(e.key==='Escape'){if(pushed)history.back();else hide()}
+  else if(e.key==='ArrowLeft')update(page-1,true,true);
+  else if(e.key==='ArrowRight')update(page+1,true,true)
+ });
+ update(0,false,false);
 })();
 
 var D={
@@ -3400,8 +3458,8 @@ function renderHelp(){
  function w(t){return '<div class="note" style="border-left-color:var(--red)">'+t+'</div>'}
  function g(t){return '<div class="note" style="border-left-color:var(--moss)">'+t+'</div>'}
 
- h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v257</span>');
- h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>8 頁整理每天主線、關鍵交通與必守時間，適合出發前快速對表或列印。逐站細節與導航仍在 App。<div class="tags"><a class="lk map pdf-open" href="kansai-guide-v255.pdf">在 App 內開啟 PDF</a></div></div>';
+ h+=n('<b>這份說明會一直留在 App 裡。</b><br>看不懂哪個按鈕、忘記某個功能怎麼用，回這一頁找。<br><span style="color:var(--dim)">目前身分：'+meName()+'　版本：v258</span>');
+ h+='<div class="note" style="border-left-color:var(--cyan)"><b>📄 PDF 行程速覽</b><br>8 頁整理每天主線、關鍵交通與必守時間。手機可左右滑頁、放大閱讀，並會記住上次頁次；也可下載原始 PDF 列印。<div class="tags"><a class="lk map pdf-open" href="kansai-guide-v255.pdf">開啟行程速覽</a></div></div>';
 
  h+=sec('最先做的三件事');
  h+=g('<b>① 選好你是誰</b><br>第一次開 App 會問「你是哪一位」。選了之後，你對行程的調整、你的購物清單都會記在你名下。<b>可以在「準備」分頁隨時更換。</b>'+
@@ -4906,7 +4964,7 @@ if('serviceWorker' in navigator && location.protocol!=='file:'){
  setInterval(function(){if(!document.hidden)refreshVst()},3600000);
 })();
 
-var APPVER='kansai5-v257';
+var APPVER='kansai5-v258';
 /* 問 Service Worker 它是哪一版；沒有 controller 就回 null */
 function swVer(cb){
  if(!('serviceWorker' in navigator))return cb(null);

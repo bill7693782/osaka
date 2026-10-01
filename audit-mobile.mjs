@@ -11,8 +11,8 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v257.png');
-const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v257.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v258.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v258.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
@@ -70,6 +70,7 @@ try {
     { width: 430, height: 932 },
   ];
   const reports = [];
+  const pdfLayouts = [];
   let pdfFlow = null;
   for (const size of sizes) {
     await send('Emulation.setDeviceMetricsOverride', {
@@ -127,26 +128,56 @@ try {
       const opened = await send('Runtime.evaluate', {
         returnByValue: true,
         expression: `(() => {
-          const view=document.querySelector('#pdfview'),back=document.querySelector('#pdfback'),frame=document.querySelector('#pdfframe');
+          const view=document.querySelector('#pdfview'),back=document.querySelector('#pdfback'),pages=document.querySelector('#pdfpages');
           const r=back?.getBoundingClientRect();
           return {visible:!!view&&!view.hidden,bodyLocked:document.body.classList.contains('pdf-open'),
-            frameSrc:frame?.getAttribute('src')||'',backHeight:r?+r.height.toFixed(1):0,
-            hasExternal:!!view?.querySelector('a[target="_blank"]'),hasDownload:!!view?.querySelector('a[download]'),
+            imageCount:pages?.querySelectorAll('img').length||0,loadedImages:[...pages.querySelectorAll('img')].filter(i=>i.complete&&i.naturalWidth>0).length,
+            counter:document.querySelector('#pdfcount')?.textContent||'',backHeight:r?+r.height.toFixed(1):0,
+            prevDisabled:!!document.querySelector('#pdfprev')?.disabled,hasDownload:!!view?.querySelector('a[download]'),
+            topClient:view?.querySelector('.pdfbar')?.clientWidth||0,topScroll:view?.querySelector('.pdfbar')?.scrollWidth||0,
+            bottomClient:view?.querySelector('.pdfpager')?.clientWidth||0,bottomScroll:view?.querySelector('.pdfpager')?.scrollWidth||0,
             historyState:history.state};
         })()`,
       }, sessionId);
+      pdfLayouts.push({ width: size.width, topClient: opened.result.value.topClient, topScroll: opened.result.value.topScroll,
+        bottomClient: opened.result.value.bottomClient, bottomScroll: opened.result.value.bottomScroll });
       const pdfShot = await send('Page.captureScreenshot', { format: 'png', fromSurface: true }, sessionId);
       fs.writeFileSync(pdfScreenshot, Buffer.from(pdfShot.data, 'base64'));
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfnext')?.click()` }, sessionId);
+      await pause(550);
+      const navigated = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => {const p=document.querySelector('#pdfpages');return {counter:document.querySelector('#pdfcount')?.textContent||'',scrollLeft:+p.scrollLeft.toFixed(1),pageWidth:p.clientWidth}})()`,
+      }, sessionId);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfzoom')?.click()` }, sessionId);
+      await pause(100);
+      const zoomed = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => {const p=document.querySelector('#pdfpages'),z=p.querySelector('.pdfpage.zoom'),i=z?.querySelector('img');return {viewerZoomed:p.classList.contains('zoomed'),pageZoomed:!!z,button:document.querySelector('#pdfzoom')?.textContent||'',imageWidth:i?+i.getBoundingClientRect().width.toFixed(1):0,viewerWidth:p.clientWidth}})()`,
+      }, sessionId);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfzoom')?.click()` }, sessionId);
       await send('Runtime.evaluate', { expression: `document.querySelector('#pdfback')?.click()` }, sessionId);
       await pause(350);
       const closed = await send('Runtime.evaluate', {
         returnByValue: true,
         expression: `({hidden:document.querySelector('#pdfview')?.hidden,dayTitle:document.querySelector('.hero .top .w')?.textContent?.trim()||''})`,
       }, sessionId);
-      pdfFlow = { opened: opened.result.value, closed: closed.result.value };
+      pdfFlow = { opened: opened.result.value, navigated: navigated.result.value, zoomed: zoomed.result.value, closed: closed.result.value };
+    }
+    if (size.width !== 375) {
+      await send('Runtime.evaluate', { expression: `document.querySelector('a.pdf-open')?.click()` }, sessionId);
+      await pause(350);
+      const layout = await send('Runtime.evaluate', {
+        returnByValue: true,
+        expression: `(() => {const v=document.querySelector('#pdfview'),t=v.querySelector('.pdfbar'),b=v.querySelector('.pdfpager');return {width:innerWidth,topClient:t.clientWidth,topScroll:t.scrollWidth,bottomClient:b.clientWidth,bottomScroll:b.scrollWidth}})()`,
+      }, sessionId);
+      pdfLayouts.push(layout.result.value);
+      await send('Runtime.evaluate', { expression: `document.querySelector('#pdfback')?.click()` }, sessionId);
+      await pause(200);
     }
   }
-  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, pdfFlow, reports }, null, 2));
+  pdfLayouts.sort((a,b) => a.width-b.width);
+  console.log(JSON.stringify({ url, screenshot, pdfScreenshot, pdfLayouts, pdfFlow, reports }, null, 2));
 } finally {
   try { ws?.close(); } catch {}
   browser.kill();
