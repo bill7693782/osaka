@@ -1,7 +1,7 @@
 /* 關西五日 · Service Worker v5 —— 快取只在自己的命名空間內操作 */
-var CACHE='kansai5-v263';
+var CACHE='kansai5-v264';
 var PREFIX='kansai5-';
-var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./kansai-guide-v263.pdf',
+var CORE=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./kansai-guide-v264.pdf',
  './guide-pages/page-01.webp','./guide-pages/page-02.webp','./guide-pages/page-03.webp','./guide-pages/page-04.webp',
  './guide-pages/page-05.webp','./guide-pages/page-06.webp','./guide-pages/page-07.webp','./guide-pages/page-08.webp'];
 

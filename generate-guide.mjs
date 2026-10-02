@@ -17,7 +17,7 @@ vm.createContext(data);
 vm.runInContext(app.slice(defsBegin, defsEnd) + '\n' + app.slice(begin, end), data);
 const days = data.D;
 
-const version = '263';
+const version = '264';
 const htmlPath = path.join(root, `kansai-guide-v${version}.html`);
 const pdfPath = path.join(root, `kansai-guide-v${version}.pdf`);
 const appUrl = 'https://bill7693782.github.io/osaka/';
@@ -25,7 +25,7 @@ const appUrl = 'https://bill7693782.github.io/osaka/';
 // 速覽版選出決策點、重要交通與主要活動；逐站說明保留在 App。
 const picks = {
   d0: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-  d1: [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18],
+  d1: [0, 1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 19],
   d2: [0, 1, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 21, 22, 24, 25, 26, 27],
   d3: [0, 1, 2, 4, 5, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
   d4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
@@ -33,7 +33,7 @@ const picks = {
 };
 const meta = {
   d0: { place: 'TAIPEI / DEPARTURE', route: '台北車站 → 桃園機場 → 關西', color: '#8fa3b8', tip: '護照、JR Pass、VJW 截圖與五人行李，出門前再確認一次。' },
-  d1: { place: 'HIEIZAN / KYOTO', route: '關西機場 → 山科 → 比叡山 → 四条', color: '#c98925', tip: '11:00 熟成豚、15:00 纜車下山、17:00 京うな和；東塔以外不加碼。' },
+  d1: { place: 'HIEIZAN / KYOTO', route: '關西機場 → 山科 → 比叡山 → 四条', color: '#c98925', tip: '12:05 離店、12:38 接駁巴士、15:00 纜車下山、17:00 京うな和。' },
   d2: { place: 'INE / AMANOHASHIDATE', route: '京都 → 伊根舟屋 → 傘松公園 → 天橋立 → 京都', color: '#287f9b', tip: '福知山轉乘只有 8 分鐘；下午只留傘松，取消飛龍觀趕場。' },
   d3: { place: 'NARA / OSAKA', route: '京都 → 奈良公園 → 難波 → 鶴橋', color: '#a76643', tip: '藥師寺改列下次；下午提早進大阪休息，17:20 再出門。' },
   d4: { place: 'MINOH / OSAKA', route: '難波 → 箕面 → 梅田 → 大阪城 → 道頓堀', color: '#7866ad', tip: '通天閣改列下次；17:35 抵達はり重門口。' },
