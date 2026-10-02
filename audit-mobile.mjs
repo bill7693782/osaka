@@ -11,9 +11,9 @@ if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
 const url = process.argv[2] || new URL('./index.html', import.meta.url).href;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-mobile-'));
-const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v262.png');
-const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v262.png');
-const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v262.png');
+const screenshot = path.join(os.tmpdir(), 'osaka-mobile-v263.png');
+const pdfScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-v263.png');
+const tocScreenshot = path.join(os.tmpdir(), 'osaka-mobile-pdf-toc-v263.png');
 const browser = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   '--remote-debugging-port=0', '--remote-allow-origins=*', `--user-data-dir=${profile}`,
