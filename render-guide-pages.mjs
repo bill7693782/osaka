@@ -9,7 +9,7 @@ const chrome = [
 ].find(fs.existsSync);
 if (!chrome) throw new Error('找不到 Chrome 或 Edge');
 
-const source = new URL('./kansai-guide-v264.html', import.meta.url).href;
+const source = new URL('./kansai-guide-v265.html', import.meta.url).href;
 const output = new URL('./guide-pages/', import.meta.url);
 fs.mkdirSync(output, { recursive: true });
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'osaka-guide-pages-'));

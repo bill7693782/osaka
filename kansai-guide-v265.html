@@ -1,0 +1,111 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>關西五日｜旅行速覽</title>
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#ddd8cc;color:#1d2a31;font-family:"Microsoft JhengHei","Noto Sans TC","Hiragino Sans",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:#f8f5ee;break-after:page;page-break-after:always}
+.page:last-child{break-after:auto;page-break-after:auto}
+.cover{padding:19mm 18mm;background:#16232b;color:#f6eee1}
+.cover:before{content:"";position:absolute;width:185mm;height:185mm;border:1px solid rgba(225,171,88,.29);border-radius:50%;right:-67mm;top:20mm;box-shadow:0 0 0 15mm rgba(225,171,88,.045),0 0 0 39mm rgba(225,171,88,.035)}
+.cover:after{content:"";position:absolute;width:92mm;height:92mm;border:1px solid rgba(225,171,88,.27);border-radius:50%;right:22mm;bottom:-40mm}
+.cover .kicker{font-size:9pt;letter-spacing:.35em;color:#d4a968;font-weight:700}
+.cover .rule{height:1px;background:#a9804d;margin:19mm 0 19mm;width:45mm}
+.cover h1{font-family:"Microsoft JhengHei","Noto Serif TC",serif;font-size:55pt;line-height:1.12;letter-spacing:.12em;margin:0 0 7mm;font-weight:600}
+.cover .sub{font-size:17pt;letter-spacing:.1em;color:#eacb9b;margin:0}
+.cover .dates{margin-top:15mm;font-size:11pt;letter-spacing:.16em}
+.cover .journey{position:absolute;left:18mm;right:18mm;bottom:26mm;border-top:1px solid rgba(255,255,255,.26);padding-top:8mm;font-size:12pt;line-height:2;color:#e6dfd1}
+.cover .journey small{display:block;font-size:8pt;color:#d4a968;letter-spacing:.2em;margin-top:4mm}
+.cover .edition{position:absolute;right:18mm;top:19mm;font-size:8pt;letter-spacing:.2em;color:#aab6b9}
+.quick{padding:14mm 17mm}
+.topline{display:flex;justify-content:space-between;align-items:center;height:11mm;border-top:2mm solid var(--accent,#b8823a);font-size:7.5pt;font-weight:700;letter-spacing:.2em;color:var(--accent,#93662f);padding-top:2mm}
+.quick h2{font-size:28pt;line-height:1.25;margin:10mm 0 3mm;letter-spacing:.04em}
+.quick .intro{font-size:10.5pt;color:#647078;margin:0 0 10mm}
+.quick .grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.quick .card{min-height:37mm;padding:6mm;border:1px solid #d5d2c9;background:#fffdf8}
+.quick .card span{display:block;font-size:8pt;letter-spacing:.12em;color:#997044;font-weight:800;margin-bottom:4mm}
+.quick .card b{font-size:14pt;line-height:1.4}.quick .card p{font-size:9.5pt;color:#52616b;line-height:1.65;margin:2mm 0 0}
+.quick h3{font-size:12pt;letter-spacing:.08em;margin:13mm 0 4mm;border-bottom:1px solid #b9b4a7;padding-bottom:2mm}
+.quick .decision{display:grid;grid-template-columns:24mm 1fr;gap:3mm;padding:3mm 0;border-bottom:1px solid #ded9cf;font-size:10.5pt}
+.quick .decision time{color:#a44b42;font-weight:800}.quick .decision b{font-weight:700}
+.quick .appbox{position:absolute;left:17mm;right:17mm;bottom:25mm;background:#1c3038;color:#f4ecdf;padding:7mm 8mm}
+.quick .appbox b{font-size:12pt}.quick .appbox p{font-size:9pt;line-height:1.6;margin:2mm 0;color:#e2dfd5}.quick .appbox a{color:#e9b972;font-size:10pt;text-decoration:none}
+.day{padding:0 16mm}
+.dayhead{display:grid;grid-template-columns:30mm 1fr;align-items:center;min-height:44mm;border-bottom:1px solid #d8d4ca;gap:4mm}
+.daynum{font:700 48pt/1 Georgia,serif;color:var(--accent)}
+.eyebrow{margin:0 0 2mm;color:var(--accent);font-size:8pt;font-weight:800;letter-spacing:.18em}
+.dayhead h2{font-size:18pt;line-height:1.3;margin:0 0 2mm;letter-spacing:.01em}.route{margin:0;color:#68767a;font-size:8.5pt}
+.crux{display:flex;align-items:center;gap:4mm;background:var(--accent);color:#fff;padding:3mm 4mm;margin:5mm 0 4mm;min-height:12mm}
+.crux span{font-size:8pt;border-right:1px solid rgba(255,255,255,.5);padding-right:4mm;white-space:nowrap}.crux b{font-size:10.5pt;line-height:1.3}
+.columns,.row{display:grid;grid-template-columns:20mm minmax(0,1fr) 32mm;gap:2mm;align-items:center}
+.columns{font-size:7pt;color:#909a9b;letter-spacing:.1em;padding:1mm 2mm 2mm;border-bottom:1px solid #c6c8c4}
+.row{min-height:8.25mm;border-bottom:1px solid #e2e0d9;padding:1.25mm 2mm}
+.row time{font:700 10pt/1.2 Consolas,monospace;color:#24343d}.rowtitle{font-size:9.4pt;line-height:1.28;font-weight:600}
+.row.hard{background:rgba(174,66,60,.065)}.row.hard time{color:#b14b42}.row.hard .rowtitle{font-weight:800}
+.tag{font-size:7.5pt;color:#6d7879;line-height:1.25;overflow:hidden;max-height:2.5em}
+.tip{position:absolute;left:16mm;right:16mm;bottom:22mm;border-top:1.5px solid var(--accent);padding-top:3mm;display:grid;grid-template-columns:27mm 1fr;gap:3mm}
+.tip span{font-size:6.5pt;font-weight:800;color:var(--accent);letter-spacing:.14em}.tip p{font-size:9pt;line-height:1.5;margin:0}
+.day footer{position:absolute;left:16mm;right:16mm;bottom:10mm;display:flex;justify-content:space-between;color:#849092;font-size:7pt;border-top:1px solid #d6d5ce;padding-top:3mm}
+@media screen{body{padding:12mm}.page{margin:0 auto 10mm;box-shadow:0 6px 35px #8d8980}}
+@media print{body{background:#fff;padding:0}}
+</style></head><body>
+<section class="page cover"><div class="kicker">A SMALL GUIDE FOR A BIG JOURNEY</div><div class="edition">TRAVEL EDITION · V265</div><div class="rule"></div><h1>關西<br>五日</h1><p class="sub">把重要時刻，放在眼前。</p><div class="dates">12 — 17 NOV 2026 · KYOTO / OSAKA</div><div class="journey">京都的山與鳥居，伊根的海，奈良的鹿，<br>再回到大阪的街與夜。<small>5 TRAVELLERS · 6 DAYS · 1 CLEAR ROUTE</small></div></section>
+<section class="page quick" style="--accent:#b8823a"><div class="topline"><span>BEFORE WE GO</span><span>02 / 08</span></div><h2>先看這一頁，<br>再開始旅行。</h2><p class="intro">PDF 看節奏與死線；地址、導航、訂位細節和即時調整請開 App。</p>
+<div class="grid"><div class="card"><span>去程航班</span><b>GK050 · 桃園 → 關西</b><p>11/13 凌晨 02:30 起飛<br>Day 0 晚上先前往機場</p></div><div class="card"><span>回程航班</span><b>GK057 · 關西 → 桃園</b><p>11/17 晚上 23:10 起飛<br>22:30 前到登機門</p></div><div class="card"><span>京都住宿</span><b>曼迪 京都車站</b><p>Day 1–2 · 京都站周邊</p></div><div class="card"><span>大阪住宿</span><b>WELLSTAY 難波</b><p>Day 3–5 · 難波／元町</p></div></div>
+<h3>三個先決定好的時刻</h3><div class="decision"><time>DAY 1</time><b>14:30 回飯店補眠；第一天不跑山區。</b></div><div class="decision"><time>DAY 3</time><b>17:20 離開飯店，準時前往鶴橋晚餐。</b></div><div class="decision"><time>DAY 5</time><b>15:50 停止購物；18:20 搭はるか去機場。</b></div>
+<div class="appbox"><b>完整行程在 App</b><p>逐站導航、票券與訂位、天氣、備案、五人行前進度與分帳，都在手機裡。</p><a href="https://bill7693782.github.io/osaka/">https://bill7693782.github.io/osaka/</a></div></section>
+<section class="page day" style="--accent:#8fa3b8">
+    <div class="topline"><span>TAIPEI / DEPARTURE</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">00</div>
+      <div><p class="eyebrow">出發前夜 · 11/12 四</p><h2>出發前夜・桃園 T1</h2><p class="route">台北車站 → 桃園機場 → 關西</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>22:30　搭上台北車站直達車</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row hard"><time>20:00</time><span class="rowtitle">最終打包 ＋ 全員檢查</span><span class="tag">五人各自確認</span></div><div class="row"><time>21:00</time><span class="rowtitle">群組最後對表</span></div><div class="row"><time>21:45</time><span class="rowtitle">前往台北車站 機捷 A1</span><span class="tag">提前 10 分到</span></div><div class="row hard"><time>22:30</time><span class="rowtitle">機捷直達車 台北車站 → 機場第一航廈</span><span class="tag">35分鐘</span></div><div class="row"><time>23:05</time><span class="rowtitle">抵達 T1 ＋ 找捷星櫃檯</span><span class="tag">第一航廈</span></div><div class="row hard"><time>23:30</time><span class="rowtitle">捷星報到託運</span><span class="tag">01:30 截止</span></div><div class="row"><time>00:30</time><span class="rowtitle">過安檢 ＋ 出境</span></div><div class="row"><time>01:30</time><span class="rowtitle">登機門候機</span><span class="tag">補眠</span></div><div class="row"><time>02:30</time><span class="rowtitle">GK050 桃園 → 關西</span><span class="tag">3小時30分</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>護照、JR Pass、VJW 截圖與五人行李，出門前再確認一次。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>03 / 08</span></footer>
+  </section>
+<section class="page day" style="--accent:#c98925">
+    <div class="topline"><span>HIEIZAN / KYOTO</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">01</div>
+      <div><p class="eyebrow">DAY 01 · 11/13 五</p><h2>比叡山賞楓・山科熟成豚</h2><p class="route">關西機場 → 山科 → 比叡山 → 京都 → 四条</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>12:05　結帳離開かわむら</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row"><time>06:00</time><span class="rowtitle">KIX 入境・領行李</span><span class="tag">5人5大箱</span></div><div class="row hard"><time>07:00</time><span class="rowtitle">人工窗口兌換 JR Pass ×5</span><span class="tag">護照正本</span></div><div class="row hard"><time>07:54</time><span class="rowtitle">HARUKA → 京都</span><span class="tag">JR Pass</span></div><div class="row hard"><time>09:15</time><span class="rowtitle">曼迪 京都車站・寄大行李</span><span class="tag">來回 75 分</span></div><div class="row"><time>10:35</time><span class="rowtitle">JR 京都 → 山科</span><span class="tag">JR Pass</span></div><div class="row hard"><time>11:00</time><span class="rowtitle">午餐：熟成豚 かわむら</span><span class="tag">已決定</span></div><div class="row hard"><time>12:17</time><span class="rowtitle">JR 山科 → 比叡山坂本</span><span class="tag">JR湖西線</span></div><div class="row hard"><time>12:38</time><span class="rowtitle">比叡山坂本站 → 纜車坂本站</span><span class="tag">江若巴士41系統</span></div><div class="row hard"><time>13:00</time><span class="rowtitle">坂本纜車上山</span><span class="tag">往返¥1,830</span></div><div class="row"><time>13:11</time><span class="rowtitle">纜車延曆寺站 → 東塔</span><span class="tag">山路約10–15分</span></div><div class="row hard"><time>13:25</time><span class="rowtitle">比叡山延曆寺・東塔賞楓</span><span class="tag">巡拜料¥1,000</span></div><div class="row hard"><time>14:45</time><span class="rowtitle">東塔 → 15:00 坂本纜車下山</span><span class="tag">15:00準時搭</span></div><div class="row"><time>15:20</time><span class="rowtitle">纜車坂本 → 曼迪（巴士轉JR）</span><span class="tag">巴士＋JR</span></div><div class="row"><time>16:05</time><span class="rowtitle">曼迪 Check-in・洗澡・補眠</span><span class="tag">2小時15分</span></div><div class="row hard"><time>19:00</time><span class="rowtitle">晚餐：京うな和 本店 四条堺町</span><span class="tag">19:00已決定</span></div><div class="row"><time>20:46</time><span class="rowtitle">京都站 → 曼迪・直接休息</span><span class="tag">已完成Check-in</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>12:05 離店、15:00 下山、16:05 回飯店休息、19:00 京うな和。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>04 / 08</span></footer>
+  </section>
+<section class="page day" style="--accent:#287f9b">
+    <div class="topline"><span>INE / AMANOHASHIDATE</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">02</div>
+      <div><p class="eyebrow">DAY 02 · 11/14 六</p><h2>伊根舟屋・傘松昇龍觀</h2><p class="route">京都 → 伊根舟屋 → 傘松公園 → 天橋立 → 京都</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>08:55　福知山接上たんごリレー1號</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row"><time>06:15</time><span class="rowtitle">起床整理</span><span class="tag">今天最早</span></div><div class="row"><time>06:50</time><span class="rowtitle">走到 JR 京都站 ＋ 買早餐</span><span class="tag">領現金</span></div><div class="row"><time>07:32</time><span class="rowtitle">特急 きのさき1號 京都 → 福知山</span><span class="tag">JR Pass</span></div><div class="row hard"><time>08:47</time><span class="rowtitle">福知山轉乘</span><span class="tag">只有8分鐘</span></div><div class="row hard"><time>08:55</time><span class="rowtitle">特急 たんごリレー1號 福知山 → 天橋立</span><span class="tag">JR Pass</span></div><div class="row hard"><time>09:33</time><span class="rowtitle">丹鐵窗口買周遊券 ×5</span><span class="tag">¥3,500</span></div><div class="row"><time>10:00</time><span class="rowtitle">觀光船 天橋立 → 一の宮</span><span class="tag">周遊券</span></div><div class="row"><time>10:20</time><span class="rowtitle">元伊勢籠神社</span><span class="tag">55分</span></div><div class="row hard"><time>11:24</time><span class="rowtitle">籠神社 → 舟屋の里公園前</span><span class="tag">實查 11:24 發</span></div><div class="row hard"><time>12:02</time><span class="rowtitle">午餐：レストラン舟屋</span><span class="tag">10:00–17:00 L.O.16:00</span></div><div class="row"><time>13:20</time><span class="rowtitle">舟屋散策 ＋ 向井酒造</span><span class="tag">35分</span></div><div class="row"><time>14:00</time><span class="rowtitle">伊根灣遊覽船</span><span class="tag">周遊券</span></div><div class="row"><time>14:46</time><span class="rowtitle">日出 → 天橋立ケーブル下</span><span class="tag">實查 14:46 發</span></div><div class="row"><time>15:20</time><span class="rowtitle">纜車上山</span><span class="tag">4分</span></div><div class="row"><time>15:34</time><span class="rowtitle">傘松公園 昇龍觀</span><span class="tag">32分</span></div><div class="row"><time>16:35</time><span class="rowtitle">吊椅下山</span><span class="tag">隨到隨搭</span></div><div class="row"><time>17:15</time><span class="rowtitle">觀光船 一の宮 → 天橋立</span><span class="tag">周遊券</span></div><div class="row hard"><time>17:27</time><span class="rowtitle">站前散策 ＋ 買便當 ×5</span><span class="tag">便當優先</span></div><div class="row"><time>18:09</time><span class="rowtitle">特急 はしだて8號 → 京都</span><span class="tag">全車指定席</span></div><div class="row"><time>20:35</time><span class="rowtitle">回曼迪・洗澡早睡</span><span class="tag">步行 18分</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>福知山轉乘只有 8 分鐘；下午只留傘松，取消飛龍觀趕場。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>05 / 08</span></footer>
+  </section>
+<section class="page day" style="--accent:#a76643">
+    <div class="topline"><span>NARA / OSAKA</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">03</div>
+      <div><p class="eyebrow">DAY 03 · 11/15 日</p><h2>東大寺・奈良公園・鶴橋</h2><p class="route">京都 → 奈良公園 → 難波 → 鶴橋</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>17:20　休息完離開飯店去鶴橋</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row"><time>08:00</time><span class="rowtitle">曼迪退房 → JR 京都站</span><span class="tag">買早餐</span></div><div class="row"><time>08:40</time><span class="rowtitle">みやこ路快速 → 奈良</span><span class="tag">JR Pass</span></div><div class="row hard"><time>09:30</time><span class="rowtitle">JR 奈良站人工寄行李 ×5</span><span class="tag">¥3000~4000</span></div><div class="row"><time>10:05</time><span class="rowtitle">奈良公園餵鹿</span><span class="tag">鹿仙貝¥200</span></div><div class="row"><time>10:30</time><span class="rowtitle">東大寺大佛殿</span><span class="tag">¥800</span></div><div class="row"><time>11:55</time><span class="rowtitle">中谷堂</span><span class="tag">現金¥200</span></div><div class="row hard"><time>12:25</time><span class="rowtitle">午餐：志津香 大宮店</span><span class="tag">週日 11:00–14:30 L.O.</span></div><div class="row"><time>13:20</time><span class="rowtitle">志津香 → JR奈良站</span><span class="tag">步行約20分</span></div><div class="row"><time>13:45</time><span class="rowtitle">取回大行李 ×5</span><span class="tag">五件清點</span></div><div class="row"><time>14:15</time><span class="rowtitle">大和路快速 → 天王寺</span><span class="tag">約15分一班</span></div><div class="row"><time>14:55</time><span class="rowtitle">天王寺 → 大國町</span><span class="tag">¥190</span></div><div class="row"><time>15:20</time><span class="rowtitle">WELLSTAY難波 Check-in</span></div><div class="row"><time>15:40</time><span class="rowtitle">飯店休息・整理行李</span><span class="tag">90分完整休息</span></div><div class="row hard"><time>17:20</time><span class="rowtitle">WELLSTAY → なんば站</span></div><div class="row"><time>17:33</time><span class="rowtitle">なんば → 鶴橋</span><span class="tag">¥190</span></div><div class="row"><time>17:45</time><span class="rowtitle">鶴橋站 → 焼肉鶴橋</span><span class="tag">西口 1分</span></div><div class="row hard"><time>18:00</time><span class="rowtitle">晚餐：焼肉鶴橋 本店</span><span class="tag">A5和牛吃到飽</span></div><div class="row"><time>19:35</time><span class="rowtitle">鶴橋 → 難波</span><span class="tag">近鐵或JR</span></div><div class="row"><time>20:15</time><span class="rowtitle">たこ焼道楽わなか 千日前本店</span><span class="tag">加碼</span></div><div class="row"><time>20:35</time><span class="rowtitle">難波 → WELLSTAY</span><span class="tag">慢慢走回去</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>藥師寺改列下次；下午提早進大阪休息，17:20 再出門。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>06 / 08</span></footer>
+  </section>
+<section class="page day" style="--accent:#7866ad">
+    <div class="topline"><span>MINOH / OSAKA</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">04</div>
+      <div><p class="eyebrow">DAY 04 · 11/16 一</p><h2>箕面・大阪城・はり重</h2><p class="route">難波 → 箕面 → 梅田 → 大阪城 → 道頓堀</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>17:35　抵達はり重門口</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row"><time>08:05</time><span class="rowtitle">WELLSTAY → 大國町站</span><span class="tag">買早餐</span></div><div class="row"><time>08:15</time><span class="rowtitle">大國町 → 大阪梅田</span><span class="tag">¥240</span></div><div class="row"><time>09:00</time><span class="rowtitle">阪急梅田 → 箕面</span><span class="tag">¥280</span></div><div class="row hard"><time>09:35</time><span class="rowtitle">箕面瀑布健行</span><span class="tag">來回5.4km</span></div><div class="row"><time>11:41</time><span class="rowtitle">箕面 → 阪急梅田</span><span class="tag">¥280</span></div><div class="row"><time>12:20</time><span class="rowtitle">午餐：うどん屋 きすけ</span><span class="tag">只收現金</span></div><div class="row"><time>13:10</time><span class="rowtitle">きすけ → JR 大阪站</span><span class="tag">約10分</span></div><div class="row"><time>13:40</time><span class="rowtitle">JR 大阪 → 大阪城公園</span><span class="tag">Pass免費</span></div><div class="row hard"><time>14:00</time><span class="rowtitle">大阪城</span><span class="tag">¥1,200 含豊臣石垣館</span></div><div class="row"><time>15:35</time><span class="rowtitle">大阪城 → 難波</span><span class="tag">轉乘緩衝45分</span></div><div class="row"><time>16:20</time><span class="rowtitle">道頓堀休息・自由活動</span><span class="tag">55分緩衝</span></div><div class="row"><time>17:15</time><span class="rowtitle">前往はり重</span><span class="tag">17:35門口集合</span></div><div class="row hard"><time>17:45</time><span class="rowtitle">晚餐：はり重 道頓堀本店</span><span class="tag">17:00–21:00（2026/7起分段）</span></div><div class="row"><time>20:00</time><span class="rowtitle">ビックカメラ なんば店</span><span class="tag">加碼</span></div><div class="row"><time>21:05</time><span class="rowtitle">なんば → WELLSTAY難波</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>通天閣改列下次；17:35 抵達はり重門口。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>07 / 08</span></footer>
+  </section>
+<section class="page day" style="--accent:#4b8b5a">
+    <div class="topline"><span>OSAKA / HOMECOMING</span><span>KANSAI · 2026</span></div>
+    <header class="dayhead"><div class="daynum">05</div>
+      <div><p class="eyebrow">DAY 05 · 11/17 二</p><h2>木津早市・海遊館・提早到機場</h2><p class="route">木津市場 → 海遊館 → 最後購物 → 關西機場</p></div></header>
+    <div class="crux"><span>今日關鍵</span><b>15:50　停止購物、回飯店取行李</b></div>
+    <div class="timeline"><div class="columns"><span>時間</span><span>行程</span><span>提示</span></div><div class="row"><time>07:50</time><span class="rowtitle">WELLSTAY難波 退房・寄行李</span></div><div class="row hard"><time>08:20</time><span class="rowtitle">木津市場</span><span class="tag">只收現金</span></div><div class="row"><time>09:35</time><span class="rowtitle">難波八阪神社</span><span class="tag">社務所9:00開</span></div><div class="row hard"><time>10:45</time><span class="rowtitle">海遊館</span><span class="tag">¥2700~3500</span></div><div class="row"><time>13:05</time><span class="rowtitle">大阪港 → 心齋橋</span><span class="tag">¥290</span></div><div class="row hard"><time>13:30</time><span class="rowtitle">午餐：にし家 本店</span><span class="tag">180席</span></div><div class="row"><time>14:25</time><span class="rowtitle">OS DRUG 心齋橋店</span><span class="tag">只收現金</span></div><div class="row"><time>14:45</time><span class="rowtitle">りくろーおじさん なんば本店</span><span class="tag">9:00–20:00</span></div><div class="row hard"><time>15:00</time><span class="rowtitle">最後購物：道具屋筋／でんでん 二選一</span><span class="tag">50分</span></div><div class="row"><time>15:50</time><span class="rowtitle">回 WELLSTAY</span><span class="tag">停止購物</span></div><div class="row"><time>16:10</time><span class="rowtitle">取行李・最終打包</span><span class="tag">40分</span></div><div class="row"><time>17:17</time><span class="rowtitle">天王寺站轉乘</span><span class="tag">48分緩衝</span></div><div class="row hard"><time>18:20</time><span class="rowtitle">はるか → 關西機場</span><span class="tag">JR Pass</span></div><div class="row hard"><time>19:10</time><span class="rowtitle">Tax-Free KIOSK 退稅查驗</span><span class="tag">託運前查驗</span></div><div class="row hard"><time>20:10</time><span class="rowtitle">捷星報到托運</span><span class="tag">櫃檯約起飛前3小時開</span></div><div class="row"><time>20:50</time><span class="rowtitle">安檢・出境審查</span><span class="tag">40分</span></div><div class="row hard"><time>21:30</time><span class="rowtitle">KIX 免稅店</span><span class="tag">最多30分</span></div><div class="row hard"><time>22:00</time><span class="rowtitle">前往登機門</span><span class="tag">22:30 前到登機門</span></div><div class="row"><time>22:30</time><span class="rowtitle">登機</span><span class="tag">五人清點</span></div><div class="row"><time>23:10</time><span class="rowtitle">GK057 返台</span><span class="tag">01:30 抵桃園</span></div></div>
+    <div class="tip"><span>KEEP IN MIND</span><p>15:50 停止購物；18:20 搭はるか，退稅查驗在託運前。</p></div>
+    <footer><span>紅色時間＝必須守住的節點 · 詳情與導航請看 App</span><span>08 / 08</span></footer>
+  </section>
+</body></html>
